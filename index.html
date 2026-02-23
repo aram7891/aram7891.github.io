@@ -6,11 +6,11 @@
     <title>Andrés Ramírez | Clarity Before Connection</title>
     
     <!-- Optimizaciones SEO (Tono Intelectual y de Autor) -->
-    <meta name="description" content="Andrés Ramírez es autor de Mindful Match y Don’t Lose Yourself While Dating. Ensayos sobre discernimiento, capital emocional y claridad antes que conexión.">
+    <meta name="description" content="Andrés Ramírez es autor de Mindful Match y Don’t Lose Yourself While Dating. Ensayos clínicos sobre discernimiento, capital emocional y claridad antes que conexión.">
     <meta name="keywords" content="Andrés Ramírez, Clarity Before Connection, capital emocional, dinámicas relacionales, autoconocimiento, ensayos, Mindful Match, Don't Lose Yourself While Dating">
     <meta name="author" content="Andrés Ramírez">
     <meta property="og:title" content="Andrés Ramírez | Clarity Before Connection">
-    <meta property="og:description" content="Autor y ensayista. Análisis metodológico de dinámicas relacionales y auditoría técnica de capital emocional.">
+    <meta property="og:description" content="Autor. >
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.andresramirez.pro">
     <link rel="canonical" href="https://www.andresramirez.pro">
@@ -26,7 +26,7 @@
           "@id": "https://www.andresramirez.pro/#person",
           "name": "Andrés Ramírez",
           "url": "https://www.andresramirez.pro",
-          "jobTitle": "Author & Essayist",
+          "jobTitle": "Author",
           "knowsAbout": ["Relational Dynamics", "Emotional Capital", "Self-Awareness", "Cognitive Liquidity"]
         },
         {
@@ -73,7 +73,7 @@
                         ink: '#1A1A1A',
                         subtle: '#71717A',
                         divider: '#E4E4E7',
-                        accent: '#2563EB'
+                        accent: '#A67C52' /* Nuevo tono cobre/tierra editorial */
                     },
                     fontFamily: {
                         serif: ['"Playfair Display"', 'serif'],
@@ -138,7 +138,7 @@
         .lang-active { background: #1A1A1A; color: #FAFAFA; border-color: #1A1A1A; }
     </style>
 </head>
-<body class="font-sans antialiased selection:bg-ink selection:text-paper">
+<body class="font-sans antialiased selection:bg-accent selection:text-paper">
 
     <header class="fixed top-0 w-full z-50">
         <div id="announcement-banner" class="bg-ink text-paper text-[9px] md:text-[10px] uppercase tracking-[0.2em] font-bold">
@@ -156,10 +156,10 @@
             
             <div class="flex items-center space-x-6">
                 <div class="hidden lg:flex space-x-8 text-[10px] font-bold tracking-widest uppercase">
-                    <a href="javascript:void(0)" onclick="scrollToSection('home')" data-i18n="nav-home" class="hover:text-subtle transition-colors">Inicio</a>
-                    <a href="javascript:void(0)" onclick="scrollToSection('ai-tools')" data-i18n="nav-tools" class="hover:text-subtle transition-colors">Herramientas</a>
-                    <a href="javascript:void(0)" onclick="scrollToSection('books')" data-i18n="nav-books" class="hover:text-subtle transition-colors">Libros</a>
-                    <a href="javascript:void(0)" onclick="scrollToSection('essays')" data-i18n="nav-archive" class="hover:text-subtle transition-colors">Archivo</a>
+                    <a href="javascript:void(0)" onclick="scrollToSection('home')" data-i18n="nav-home" class="hover:text-accent transition-colors">Inicio</a>
+                    <a href="javascript:void(0)" onclick="scrollToSection('ai-tools')" data-i18n="nav-tools" class="hover:text-accent transition-colors">Herramientas</a>
+                    <a href="javascript:void(0)" onclick="scrollToSection('books')" data-i18n="nav-books" class="hover:text-accent transition-colors">Libros</a>
+                    <a href="javascript:void(0)" onclick="scrollToSection('essays')" data-i18n="nav-archive" class="hover:text-accent transition-colors">Archivo</a>
                 </div>
                 
                 <div class="flex items-center space-x-0 font-bold text-[9px]" role="group" aria-label="Language selector">
@@ -182,27 +182,38 @@
         <button onclick="toggleMobileMenu()" class="absolute top-6 right-6 font-bold uppercase tracking-widest text-xs" data-i18n="close">Cerrar</button>
     </div>
 
-    <section id="home" class="min-h-screen flex flex-col justify-center items-center px-6 text-center pt-40 pb-20">
-        <div class="mb-12 w-56 h-56 md:w-80 md:h-80 overflow-hidden rounded-full border border-divider shadow-sm bg-zinc-100">
-            <!-- Imagen neutral editorial B&W -->
-            <img src="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/unnamed%20(1).jpg" alt="Andrés Ramírez Portrait" class="author-photo w-full h-full">
+    <!-- HERO SECTION RENOVADO (ESTILO EDITORIAL) -->
+    <section id="home" class="min-h-screen flex flex-col-reverse md:flex-row justify-center items-center px-6 md:px-12 pt-32 pb-20 max-w-6xl mx-auto gap-12 md:gap-20">
+        
+        <!-- Bloque de Texto (Izquierda) -->
+        <div class="flex-1 text-left w-full mt-8 md:mt-0">
+            <p class="text-xs font-bold tracking-widest uppercase text-accent mb-6" data-i18n="hero-kicker">
+                Autor
+            </p>
+            
+            <h1 class="font-serif text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-8 text-ink" data-i18n="hero-title">
+                Claridad antes que Conexión.
+            </h1>
+            
+            <p class="text-xl md:text-2xl text-subtle leading-relaxed mb-10 border-l-4 border-accent/40 pl-6" data-i18n="hero-subtitle">
+                Porque el costo de amar sin discernir es perderte a ti mismo.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 mt-4">
+                <a href="https://essays.andresramirez.pro" target="_blank" class="px-8 py-3 bg-accent text-white text-lg font-serif italic hover:bg-opacity-90 transition-all shadow-sm text-center rounded-sm" data-i18n="hero-btn-read">
+                    Leer mis escritos
+                </a>
+                <a href="javascript:void(0)" onclick="scrollToSection('ai-tools')" class="px-8 py-3 bg-transparent text-ink text-lg font-serif italic border border-divider hover:border-ink transition-all shadow-sm text-center flex items-center justify-center rounded-sm" data-i18n="hero-btn-more">
+                    Más sobre mí
+                </a>
+            </div>
         </div>
-        
-        <p class="text-[10px] md:text-xs font-bold tracking-widest uppercase text-subtle mb-6 max-w-2xl leading-relaxed" data-i18n="hero-positioning">
-            Autor de Mindful Match y Don’t Lose Yourself While Dating.<br>Ensayos sobre discernimiento, capital emocional y claridad antes que conexión.
-        </p>
-        
-        <h1 class="font-serif text-4xl md:text-6xl lg:text-7xl leading-tight max-w-4xl mb-6" data-i18n="hero-title">Claridad antes que Conexión.</h1>
-        
-        <p class="font-serif italic text-xl md:text-2xl text-subtle max-w-2xl leading-relaxed mb-10" data-i18n="hero-subtitle">"Porque el costo de amar sin discernir es perderte a ti mismo."</p>
-        
-        <div class="flex flex-col sm:flex-row gap-6 mt-4">
-            <a href="javascript:void(0)" onclick="scrollToSection('books')" class="px-8 py-4 bg-ink text-paper text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-opacity-90 transition-all border border-ink shadow-sm" data-i18n="hero-btn-books">
-                Libros en Amazon
-            </a>
-            <a href="https://essays.andresramirez.pro" target="_blank" class="px-8 py-4 bg-transparent text-ink text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-white transition-all border border-divider shadow-sm" data-i18n="hero-btn-essays">
-                Leer Ensayos
-            </a>
+
+        <!-- Bloque de Imagen (Derecha) -->
+        <div class="flex-1 flex justify-center md:justify-end w-full">
+            <div class="w-64 h-64 md:w-80 md:h-80 lg:w-[400px] lg:h-[400px] overflow-hidden rounded-full border border-divider shadow-sm bg-zinc-100">
+                <img src="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/unnamed%20(1).jpg" alt="Andrés Ramírez Portrait" class="author-photo w-full h-full">
+            </div>
         </div>
     </section>
 
@@ -262,7 +273,7 @@
                     </div>
 
                     <div class="flex flex-col flex-1 h-full text-center sm:text-left">
-                        <span class="text-[9px] text-subtle uppercase tracking-[0.2em] font-bold mb-2">Libro Teórico</span>
+                        <span class="text-[9px] text-accent uppercase tracking-[0.2em] font-bold mb-2">Libro Teórico</span>
                         <h3 class="font-serif text-2xl mb-3 text-ink">Match Consciente</h3>
                         <p class="text-xs text-subtle leading-relaxed mb-6 flex-grow">
                             Una auditoría técnica sobre la selección de pareja. Aborda la disección de los patrones de atracción y el establecimiento de fronteras estructurales preventivas antes de comprometer capital emocional.
@@ -280,7 +291,7 @@
                     </div>
 
                     <div class="flex flex-col flex-1 h-full text-center sm:text-left">
-                        <span class="text-[9px] text-subtle uppercase tracking-[0.2em] font-bold mb-2">Workbook Clínico</span>
+                        <span class="text-[9px] text-accent uppercase tracking-[0.2em] font-bold mb-2">Workbook Clínico</span>
                         <h3 class="font-serif text-2xl mb-3 text-ink">No te abandones al buscar pareja</h3>
                         <p class="text-xs text-subtle leading-relaxed mb-6 flex-grow">
                             Pragmatismo clínico para la búsqueda de pareja. Proporciona marcos de trabajo estructurados para sostener la identidad individual y la liquidez cognitiva bajo presión relacional.
@@ -301,7 +312,7 @@
                     </div>
 
                     <div class="flex flex-col flex-1 h-full text-center sm:text-left">
-                        <span class="text-[9px] text-subtle uppercase tracking-[0.2em] font-bold mb-2">Theoretical Book</span>
+                        <span class="text-[9px] text-accent uppercase tracking-[0.2em] font-bold mb-2">Theoretical Book</span>
                         <h3 class="font-serif text-2xl mb-3 text-ink">Mindful Match</h3>
                         <p class="text-xs text-subtle leading-relaxed mb-6 flex-grow">
                             A technical audit of partner selection. Addresses the dissection of attraction patterns and the establishment of preventive structural boundaries before committing emotional capital.
@@ -319,7 +330,7 @@
                     </div>
 
                     <div class="flex flex-col flex-1 h-full text-center sm:text-left">
-                        <span class="text-[9px] text-subtle uppercase tracking-[0.2em] font-bold mb-2">Clinical Workbook</span>
+                        <span class="text-[9px] text-accent uppercase tracking-[0.2em] font-bold mb-2">Clinical Workbook</span>
                         <h3 class="font-serif text-2xl mb-3 text-ink">Don't Lose Yourself While Dating</h3>
                         <p class="text-xs text-subtle leading-relaxed mb-6 flex-grow">
                             Clinical pragmatism for dating. Provides structured frameworks to sustain individual identity and cognitive liquidity under high-stakes relational pressure.
@@ -397,6 +408,22 @@
         </div>
     </section>
 
+    <!-- SECCIÓN SELF LOVE CLUB -->
+    <section id="selfloveclub" class="py-32 border-t border-divider bg-white">
+        <div class="max-w-3xl mx-auto px-6 text-center">
+            <h2 class="font-serif text-4xl md:text-5xl text-ink mb-6" data-i18n="slc-title">SelfLoveClub</h2>
+            <p class="text-xl md:text-2xl text-subtle mb-8 font-serif italic" data-i18n="slc-subtitle">
+                Una plataforma conceptual dedicada a la claridad, el respeto propio y las decisiones relacionales conscientes.
+            </p>
+            <p class="text-sm text-subtle max-w-2xl mx-auto mb-12 leading-relaxed" data-i18n="slc-desc">
+                SelfLoveClub funciona como un proyecto de investigación cultural, combinando ensayos, artefactos digitales y experimentos comunitarios sobre el discernimiento emocional y la soberanía personal.
+            </p>
+            <a href="https://instagram.com/selfloveclubusa" target="_blank" class="read-btn" data-i18n="slc-link">
+                Explorar SelfLoveClub en Instagram
+            </a>
+        </div>
+    </section>
+
     <footer class="py-32 px-6 border-t border-divider bg-paper text-center">
         <div class="max-w-4xl mx-auto flex flex-col items-center">
             <div class="w-16 h-16 mb-8 overflow-hidden rounded-full border border-divider">
@@ -418,11 +445,11 @@
             es: {
                 "nav-home": "Inicio", "nav-tools": "Herramientas", "nav-books": "Libros", "nav-archive": "Archivo",
                 "close": "Cerrar", 
-                "hero-positioning": "Autor de Mindful Match y Don’t Lose Yourself While Dating.<br>Ensayos sobre discernimiento, capital emocional y claridad antes que conexión.",
+                "hero-kicker": "Autor",
                 "hero-title": "Claridad antes que Conexión.",
-                "hero-subtitle": "\"Porque el costo de amar sin discernir es perderte a ti mismo.\"",
-                "hero-btn-books": "Libros en Amazon",
-                "hero-btn-essays": "Leer Ensayos",
+                "hero-subtitle": "Porque el costo de amar sin discernir es perderte a ti mismo.",
+                "hero-btn-read": "Leer mis escritos",
+                "hero-btn-more": "Más sobre mí",
                 "banner-text": "HAZ DE LA LECTURA TU HERRAMIENTA DE CRECIMIENTO PERSONAL ¡DESCUBRE MIS OBRAS!",
                 "banner-link": "EXPLORAR LIBROS",
                 "tools-label": "Laboratorio de Discernimiento", "tools-title": "Interacción con la Claridad",
@@ -431,16 +458,20 @@
                 "tool2-title": "Auditoría Emocional", "tool2-subtitle": "Patrones de Activo/Pasivo",
                 "btn-analyze": "Obtener Perspectiva", "btn-generate": "Generar Nota de Campo",
                 "record-label": "Registro de Auditoría", "archive-label": "Hemeroteca", "tab-es": "Español", "tab-en": "Inglés",
-                "books-label": "Obras Publicadas", "books-sec-title": "Libros"
+                "books-label": "Obras Publicadas", "books-sec-title": "Libros",
+                "slc-title": "SelfLoveClub",
+                "slc-subtitle": "Una plataforma conceptual dedicada a la claridad, el respeto propio y las decisiones relacionales conscientes.",
+                "slc-desc": "SelfLoveClub funciona como un proyecto de investigación cultural, combinando ensayos, artefactos digitales y experimentos comunitarios sobre el discernimiento emocional y la soberanía personal.",
+                "slc-link": "Explorar SelfLoveClub en Instagram"
             },
             en: {
                 "nav-home": "Home", "nav-tools": "Tools", "nav-books": "Books", "nav-archive": "Archive",
                 "close": "Close", 
-                "hero-positioning": "Author of Mindful Match and Don’t Lose Yourself While Dating.<br>Essays on discernment, emotional capital, and clarity before connection.",
+                "hero-kicker": "Author",
                 "hero-title": "Clarity Before Connection.",
-                "hero-subtitle": "\"Because the cost of loving without discerning is to lose yourself.\"",
-                "hero-btn-books": "Books on Amazon",
-                "hero-btn-essays": "Read Essays",
+                "hero-subtitle": "Because attraction without discernment costs you yourself.",
+                "hero-btn-read": "Read my writing",
+                "hero-btn-more": "More about me",
                 "banner-text": "MAKE READING YOUR PERSONAL GROWTH TOOL! DISCOVER MY WORKS!",
                 "banner-link": "EXPLORE BOOKS",
                 "tools-label": "Discernment Laboratory", "tools-title": "Interaction with Clarity",
@@ -449,7 +480,11 @@
                 "tool2-title": "Emotional Audit", "tool2-subtitle": "Asset/Liability Patterns",
                 "btn-analyze": "Get Perspective", "btn-generate": "Generate Field Note",
                 "record-label": "Audit Record", "archive-label": "Archive", "tab-es": "Spanish", "tab-en": "English",
-                "books-label": "Published Works", "books-sec-title": "Books"
+                "books-label": "Published Works", "books-sec-title": "Books",
+                "slc-title": "SelfLoveClub",
+                "slc-subtitle": "A conceptual platform dedicated to clarity, self-respect, and conscious relational decisions.",
+                "slc-desc": "SelfLoveClub functions as a cultural research project, combining essays, digital artifacts, and community experiments on emotional discernment and personal sovereignty.",
+                "slc-link": "Explore SelfLoveClub on Instagram"
             }
         };
 
