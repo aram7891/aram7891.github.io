@@ -6,14 +6,56 @@
     <title>Andrés Ramírez | Clarity Before Connection</title>
     
     <!-- Optimizaciones SEO (Tono Intelectual y de Autor) -->
-    <meta name="description" content="Andrés Ramírez es autor y conferencista enfocado en dinámicas relacionales, capital emocional y autoconocimiento. Notas de campo y ensayos sobre claridad antes que conexión.">
-    <meta name="keywords" content="Andrés Ramírez, Clarity Before Connection, capital emocional, dinámicas relacionales, autoconocimiento, ensayos, Mindful Match, The Cost of Loving">
+    <meta name="description" content="Andrés Ramírez es autor de Mindful Match y Don’t Lose Yourself While Dating. Ensayos clínicos sobre discernimiento, capital emocional y claridad antes que conexión.">
+    <meta name="keywords" content="Andrés Ramírez, Clarity Before Connection, capital emocional, dinámicas relacionales, autoconocimiento, ensayos, Mindful Match, Don't Lose Yourself While Dating">
     <meta name="author" content="Andrés Ramírez">
     <meta property="og:title" content="Andrés Ramírez | Clarity Before Connection">
-    <meta property="og:description" content="Análisis metodológico de dinámicas relacionales y auditoría técnica de capital emocional.">
+    <meta property="og:description" content="Autor y ensayista. Análisis metodológico de dinámicas relacionales y auditoría técnica de capital emocional.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://andresramirez.pro">
-    <meta name="robots" content="index, follow">
+    <meta property="og:url" content="https://www.andresramirez.pro">
+    <link rel="canonical" href="https://www.andresramirez.pro">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+    
+    <!-- Schema.org para Autor y Libros -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://www.andresramirez.pro/#person",
+          "name": "Andrés Ramírez",
+          "url": "https://www.andresramirez.pro",
+          "jobTitle": "Author & Essayist",
+          "knowsAbout": ["Relational Dynamics", "Emotional Capital", "Self-Awareness", "Cognitive Liquidity"]
+        },
+        {
+          "@type": "Book",
+          "name": "Match Consciente",
+          "author": {"@id": "https://www.andresramirez.pro/#person"},
+          "inLanguage": "es"
+        },
+        {
+          "@type": "Book",
+          "name": "No te abandones al buscar pareja",
+          "author": {"@id": "https://www.andresramirez.pro/#person"},
+          "inLanguage": "es"
+        },
+        {
+          "@type": "Book",
+          "name": "Mindful Match",
+          "author": {"@id": "https://www.andresramirez.pro/#person"},
+          "inLanguage": "en"
+        },
+        {
+          "@type": "Book",
+          "name": "Don't Lose Yourself While Dating",
+          "author": {"@id": "https://www.andresramirez.pro/#person"},
+          "inLanguage": "en"
+        }
+      ]
+    }
+    </script>
     
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -145,16 +187,26 @@
             <!-- Imagen neutral editorial B&W -->
             <img src="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/unnamed%20(1).jpg" alt="Andrés Ramírez Portrait" class="author-photo w-full h-full">
         </div>
+        
+        <p class="text-[10px] md:text-xs font-bold tracking-widest uppercase text-subtle mb-6 max-w-2xl leading-relaxed" data-i18n="hero-positioning">
+            Autor de Mindful Match y Don’t Lose Yourself While Dating.<br>Ensayos sobre discernimiento, capital emocional y claridad antes que conexión.
+        </p>
+        
         <h1 class="font-serif text-4xl md:text-6xl lg:text-7xl leading-tight max-w-4xl mb-6" data-i18n="hero-title">Claridad antes que Conexión.</h1>
+        
         <p class="font-serif italic text-xl md:text-2xl text-subtle max-w-2xl leading-relaxed mb-10" data-i18n="hero-subtitle">"Porque el costo de amar sin discernir es perderte a ti mismo."</p>
         
-        <!-- Nuevo Botón "Read my writing" conectado a translations -->
-        <a href="https://essays.andresramirez.pro" target="_blank" class="px-8 py-4 bg-ink text-paper text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-opacity-90 transition-all border border-ink shadow-sm" data-i18n="hero-btn-read">
-            Leer mis escritos
-        </a>
+        <div class="flex flex-col sm:flex-row gap-6 mt-4">
+            <a href="javascript:void(0)" onclick="scrollToSection('books')" class="px-8 py-4 bg-ink text-paper text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-opacity-90 transition-all border border-ink shadow-sm" data-i18n="hero-btn-books">
+                Libros en Amazon
+            </a>
+            <a href="https://essays.andresramirez.pro" target="_blank" class="px-8 py-4 bg-transparent text-ink text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-white transition-all border border-divider shadow-sm" data-i18n="hero-btn-essays">
+                Leer Ensayos
+            </a>
+        </div>
     </section>
 
-    <section id="ai-tools" class="py-32 px-6 md:px-12 bg-white border-t border-b border-divider scroll-mt-[130px]">
+    <section id="ai-tools" class="py-32 px-6 md:px-12 bg-white border-t border-b border-divider">
         <div class="max-w-5xl mx-auto">
             <div class="text-center mb-16">
                 <span class="text-[10px] font-bold tracking-widest uppercase text-subtle mb-2 block" data-i18n="tools-label">Laboratorio de Discernimiento</span>
@@ -191,8 +243,8 @@
         </div>
     </section>
 
-    <!-- SECCIÓN DE LIBROS PREMIUM (Tono de Autor Intelectual) -->
-    <section id="books" class="py-32 px-6 md:px-12 bg-paper scroll-mt-[130px]">
+    <!-- SECCIÓN DE LIBROS PREMIUM (Tono de Autor Intelectual) - PORTADAS DE TEXTO -->
+    <section id="books" class="py-32 px-6 md:px-12 bg-paper">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-16">
                 <span class="text-[10px] font-bold tracking-widest uppercase text-subtle mb-3 block" data-i18n="books-label">Obras Publicadas</span>
@@ -213,7 +265,7 @@
                         <span class="text-[9px] text-subtle uppercase tracking-[0.2em] font-bold mb-2">Libro Teórico</span>
                         <h3 class="font-serif text-2xl mb-3 text-ink">Match Consciente</h3>
                         <p class="text-xs text-subtle leading-relaxed mb-6 flex-grow">
-                            Una disección técnica sobre la elección de pareja. Aborda la necesidad de auditar los patrones de atracción y establecer fronteras estructurales antes de comprometer el capital emocional.
+                            Una auditoría técnica sobre la selección de pareja. Aborda la disección de los patrones de atracción y el establecimiento de fronteras estructurales preventivas antes de comprometer capital emocional.
                         </p>
                         <a href="https://www.amazon.com/Match-Consciente-Encontrar-Perderse-Spanish-ebook/dp/B0GLB3NJ1F?ref_=ast_author_dp_rw&th=1&psc=1&dib=eyJ2IjoiMSJ9.wrL3oBw-QLFXSr5MVTOJ61ibDCE6nf74LNErPi89jKHVotu84I7AtVIeS4GwrLHuoxP0tvMajn9nXgo7Ezl28dmyWkpLrDWU2HmKNkX0bJ8.KqLi1DA1wGSiKjyNPXiG4X0wIeHcLt6X8ZeOOVwuTo0&dib_tag=AUTHOR" target="_blank" class="read-btn self-center sm:self-start mt-auto">Consultar en Amazon</a>
                     </div>
@@ -231,7 +283,7 @@
                         <span class="text-[9px] text-subtle uppercase tracking-[0.2em] font-bold mb-2">Workbook Clínico</span>
                         <h3 class="font-serif text-2xl mb-3 text-ink">No te abandones al buscar pareja</h3>
                         <p class="text-xs text-subtle leading-relaxed mb-6 flex-grow">
-                            Material de trabajo estructurado. Proporciona marcos prácticos para sostener la identidad individual y la liquidez cognitiva en entornos relacionales de alta presión.
+                            Pragmatismo clínico para la búsqueda de pareja. Proporciona marcos de trabajo estructurados para sostener la identidad individual y la liquidez cognitiva bajo presión relacional.
                         </p>
                         <a href="https://www.amazon.com/No-Abandones-Buscar-Pareja-Spanish-ebook/dp/B0GCRCDMQL?ref_=ast_author_dp_rw&th=1&psc=1&dib=eyJ2IjoiMSJ9.wrL3oBw-QLFXSr5MVTOJ61ibDCE6nf74LNErPi89jKHVotu84I7AtVIeS4GwrLHuoxP0tvMajn9nXgo7Ezl28dmyWkpLrDWU2HmKNkX0bJ8.KqLi1DA1wGSiKjyNPXiG4X0wIeHcLt6X8ZeOOVwuTo0&dib_tag=AUTHOR" target="_blank" class="read-btn self-center sm:self-start mt-auto">Consultar en Amazon</a>
                     </div>
@@ -252,7 +304,7 @@
                         <span class="text-[9px] text-subtle uppercase tracking-[0.2em] font-bold mb-2">Theoretical Book</span>
                         <h3 class="font-serif text-2xl mb-3 text-ink">Mindful Match</h3>
                         <p class="text-xs text-subtle leading-relaxed mb-6 flex-grow">
-                            A technical dissection of partner selection. Addresses the need to audit attraction patterns and establish structural boundaries before committing emotional capital.
+                            A technical audit of partner selection. Addresses the dissection of attraction patterns and the establishment of preventive structural boundaries before committing emotional capital.
                         </p>
                         <a href="https://www.amazon.com/Mindful-Match-Finding-Without-Yourself-ebook/dp/B0CTHSDWK5?ref_=ast_author_dp_rw&th=1&psc=1&dib=eyJ2IjoiMSJ9.wrL3oBw-QLFXSr5MVTOJ61ibDCE6nf74LNErPi89jKHVotu84I7AtVIeS4GwrLHuoxP0tvMajn9nXgo7Ezl28dmyWkpLrDWU2HmKNkX0bJ8.KqLi1DA1wGSiKjyNPXiG4X0wIeHcLt6X8ZeOOVwuTo0&dib_tag=AUTHOR" target="_blank" class="read-btn self-center sm:self-start mt-auto">View on Amazon</a>
                     </div>
@@ -270,7 +322,7 @@
                         <span class="text-[9px] text-subtle uppercase tracking-[0.2em] font-bold mb-2">Clinical Workbook</span>
                         <h3 class="font-serif text-2xl mb-3 text-ink">Don't Lose Yourself While Dating</h3>
                         <p class="text-xs text-subtle leading-relaxed mb-6 flex-grow">
-                            Structured working material. Provides practical frameworks to sustain individual identity and cognitive liquidity in high-pressure relational environments.
+                            Clinical pragmatism for dating. Provides structured frameworks to sustain individual identity and cognitive liquidity under high-stakes relational pressure.
                         </p>
                         <a href="https://www.amazon.com/Dont-Lose-Yourself-While-Dating-ebook/dp/B0GFPPVHLB?ref_=ast_author_dp_rw&th=1&psc=1&dib=eyJ2IjoiMSJ9.wrL3oBw-QLFXSr5MVTOJ61ibDCE6nf74LNErPi89jKHVotu84I7AtVIeS4GwrLHuoxP0tvMajn9nXgo7Ezl28dmyWkpLrDWU2HmKNkX0bJ8.KqLi1DA1wGSiKjyNPXiG4X0wIeHcLt6X8ZeOOVwuTo0&dib_tag=AUTHOR" target="_blank" class="read-btn self-center sm:self-start mt-auto">View on Amazon</a>
                     </div>
@@ -280,7 +332,7 @@
     </section>
 
     <!-- HEMEROTECA: Previews y PDFs Directos -->
-    <section id="essays" class="py-32 px-6 md:px-12 bg-white border-t border-divider scroll-mt-[130px]">
+    <section id="essays" class="py-32 px-6 md:px-12 bg-white border-t border-divider">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-16">
                 <span class="text-[10px] font-bold tracking-widest uppercase text-subtle mb-3 block" data-i18n="archive-label">Hemeroteca</span>
@@ -365,9 +417,12 @@
         const translations = {
             es: {
                 "nav-home": "Inicio", "nav-tools": "Herramientas", "nav-books": "Libros", "nav-archive": "Archivo",
-                "close": "Cerrar", "hero-title": "Claridad antes que Conexión.",
+                "close": "Cerrar", 
+                "hero-positioning": "Autor de Mindful Match y Don’t Lose Yourself While Dating.<br>Ensayos sobre discernimiento, capital emocional y claridad antes que conexión.",
+                "hero-title": "Claridad antes que Conexión.",
                 "hero-subtitle": "\"Porque el costo de amar sin discernir es perderte a ti mismo.\"",
-                "hero-btn-read": "Leer mis escritos",
+                "hero-btn-books": "Libros en Amazon",
+                "hero-btn-essays": "Leer Ensayos",
                 "banner-text": "HAZ DE LA LECTURA TU HERRAMIENTA DE CRECIMIENTO PERSONAL ¡DESCUBRE MIS OBRAS!",
                 "banner-link": "EXPLORAR LIBROS",
                 "tools-label": "Laboratorio de Discernimiento", "tools-title": "Interacción con la Claridad",
@@ -380,9 +435,12 @@
             },
             en: {
                 "nav-home": "Home", "nav-tools": "Tools", "nav-books": "Books", "nav-archive": "Archive",
-                "close": "Close", "hero-title": "Clarity Before Connection.",
+                "close": "Close", 
+                "hero-positioning": "Author of Mindful Match and Don’t Lose Yourself While Dating.<br>Essays on discernment, emotional capital, and clarity before connection.",
+                "hero-title": "Clarity Before Connection.",
                 "hero-subtitle": "\"Because the cost of loving without discerning is to lose yourself.\"",
-                "hero-btn-read": "Read my writing",
+                "hero-btn-books": "Books on Amazon",
+                "hero-btn-essays": "Read Essays",
                 "banner-text": "MAKE READING YOUR PERSONAL GROWTH TOOL! DISCOVER MY WORKS!",
                 "banner-link": "EXPLORE BOOKS",
                 "tools-label": "Discernment Laboratory", "tools-title": "Interaction with Clarity",
