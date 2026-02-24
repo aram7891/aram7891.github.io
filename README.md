@@ -125,6 +125,8 @@ Para que el sitio funcione en Vercel, los TXT **no** afectan el enrutamiento web
 - `_github-pages-challenge-aram7891` (si ya no usas GitHub Pages para este dominio).
 - TXT duplicado de SPF: tienes dos entradas de `v=spf1 include:icloud.com ~all`; deja solo una.
 - TXT aleatorio sin proveedor claro (`4f3fc13803cb36892bad3e4151e213`) **si no sabes qué servicio lo creó**.
+- TXT `4f3fc13803cb36892bad3e4151e213`: si en tu panel DNS no muestra etiqueta/proveedor asociado, elimínalo.
+  - Regla práctica: bórralo, espera 10-30 min y verifica correo/web. Si nada se rompe, era residual.
 
 ### MX (correo)
 
