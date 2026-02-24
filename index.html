@@ -56,7 +56,7 @@
     }
     </script>
 
-    <!-- MAQUILLAJE INSTANTÁNEO (Arregla el "Look Horrible" YA) -->
+    <!-- MAQUILLAJE INSTANTÁNEO -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -155,13 +155,13 @@
 
         <!-- LABORATORIO IA -->
         <section id="ai-tools" class="py-32 px-6 md:px-12 bg-white border-t border-b border-divider">
-            <div class="max-w-5xl mx-auto">
-                <div class="text-center mb-16">
+            <div class="max-w-5xl mx-auto text-center">
+                <div class="mb-16">
                     <span class="text-[10px] font-bold tracking-widest uppercase text-subtle mb-2 block" data-i18n="tools-label">Laboratorio de Discernimiento</span>
                     <h2 class="font-serif text-4xl mb-4" data-i18n="tools-title">Interacción con la Claridad</h2>
                     <p class="text-subtle text-sm max-w-xl mx-auto" data-i18n="tools-desc">Laboratorio práctico de discernimiento relacional. Convertimos confusión emocional en datos accionables mediante auditorías técnicas de capital emocional.</p>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 text-left">
                     <article class="p-10 flex flex-col shadow-sm border border-divider bg-white">
                         <h3 class="font-serif text-2xl mb-2 tracking-tight">Discernimiento Relacional</h3>
                         <p class="text-[9px] text-accent mb-6 uppercase tracking-[0.2em] font-bold">Perspectiva Técnica</p>
@@ -287,23 +287,68 @@
                 </article>
             </div>
         </section>
+
+        <!-- SELFLOVECLUB SECTION -->
+        <section id="selfloveclub" class="py-32 border-t border-divider bg-white">
+            <div class="max-w-3xl mx-auto px-6 text-center">
+                <h2 class="font-serif text-4xl md:text-5xl text-ink mb-6" data-i18n="slc-title">SelfLoveClub</h2>
+                <p class="text-xl md:text-2xl text-subtle mb-8 font-serif italic" data-i18n="slc-subtitle">
+                    Una plataforma conceptual dedicada a la claridad, el respeto propio y las decisiones relacionales conscientes.
+                </p>
+                <p class="text-sm text-subtle max-w-2xl mx-auto mb-12 leading-relaxed" data-i18n="slc-desc">
+                    SelfLoveClub funciona como un proyecto de investigación cultural, combinando ensayos, artefactos digitales y experimentos comunitarios sobre el discernimiento emocional y la soberanía personal.
+                </p>
+                <a href="https://instagram.com/selfloveclubusa" target="_blank" rel="noopener noreferrer" class="read-btn inline-block" data-i18n="slc-link">
+                    Explorar SelfLoveClub en Instagram
+                </a>
+            </div>
+        </section>
     </main>
 
     <footer class="py-32 px-6 border-t border-divider bg-paper text-center">
         <div class="mx-auto flex flex-col items-center">
+            <div class="w-16 h-16 mb-8 overflow-hidden rounded-full border border-divider">
+                <img src="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/unnamed%20(1).jpg" alt="Andrés Ramírez Portrait" class="w-full h-full object-cover grayscale">
+            </div>
             <div class="font-serif text-2xl mb-4 tracking-[0.3em] uppercase font-bold">ANDRÉS RAMÍREZ</div>
             <p class="text-[10px] text-subtle uppercase tracking-[0.3em] mb-12 italic">andres@selfloveclubstore.com</p>
             <div class="flex gap-10 text-[10px] font-bold uppercase tracking-[0.3em] text-subtle">
-                <a href="https://www.instagram.com/selfloveclubusa" target="_blank">Instagram</a>
-                <a href="https://x.com/selfloveclubusa" target="_blank">X / Twitter</a>
+                <a href="https://www.instagram.com/selfloveclubusa" target="_blank" class="hover:text-ink">Instagram</a>
+                <a href="https://x.com/selfloveclubusa" target="_blank" class="hover:text-ink">X / Twitter</a>
+                <a href="https://www.threads.net/@selfloveclubusa" target="_blank" class="hover:text-ink">Threads</a>
             </div>
+            <div class="text-[8px] text-gray-400 uppercase tracking-[0.4em] mt-16">&copy; 2026 Andrés Ramírez. All rights reserved.</div>
         </div>
     </footer>
 
     <script>
         const translations = {
-            es: { "nav-home": "Inicio", "nav-tools": "Herramientas", "nav-books": "Libros", "nav-archive": "Archivo", "hero-title": "Claridad antes que Conexión.", "hero-subtitle": "Porque el costo de amar sin discernir es perderte a ti mismo.", "hero-kicker": "Autor", "tools-label": "Laboratorio de Discernimiento", "tools-title": "Interacción con la Claridad", "tools-desc": "Laboratorio práctico de discernimiento relacional.", "tab-es": "Español", "tab-en": "Inglés", "archive-label": "Archivo", "archive-title": "Hemeroteca", "btn-analyze": "Obtener Perspectiva", "btn-generate": "Generar Nota", "banner-text": "HAZ DE LA LECTURA TU HERRAMIENTA DE CRECIMIENTO PERSONAL ¡DESCUBRE MIS OBRAS!", "banner-link": "EXPLORAR LIBROS" },
-            en: { "nav-home": "Home", "nav-tools": "Tools", "nav-books": "Books", "nav-archive": "Archive", "hero-title": "Clarity Before Connection.", "hero-subtitle": "Because the cost of loving without discerning is to lose yourself.", "hero-kicker": "Author", "tools-label": "Discernment Laboratory", "tools-title": "Interaction with Clarity", "tools-desc": "Practical relational discernment lab.", "tab-es": "Spanish", "tab-en": "English", "archive-label": "Archive", "archive-title": "Field Notes Archive", "btn-analyze": "Get Perspective", "btn-generate": "Generate Note", "banner-text": "MAKE READING YOUR PERSONAL GROWTH TOOL! DISCOVER MY WORKS!", "banner-link": "EXPLORE BOOKS" }
+            es: { 
+                "nav-home": "Inicio", "nav-tools": "Herramientas", "nav-books": "Libros", "nav-archive": "Archivo", 
+                "hero-title": "Claridad antes que Conexión.", "hero-subtitle": "Porque el costo de amar sin discernir es perderte a ti mismo.", 
+                "hero-kicker": "Autor", "tools-label": "Laboratorio de Discernimiento", "tools-title": "Interacción con la Claridad", 
+                "tools-desc": "Laboratorio práctico de discernimiento relacional. Convertimos confusión emocional en datos accionables mediante auditorías técnicas de capital emocional.", 
+                "tab-es": "Español", "tab-en": "Inglés", "archive-label": "Archivo", "archive-title": "Hemeroteca", 
+                "btn-analyze": "Obtener Perspectiva", "btn-generate": "Generar Nota", 
+                "banner-text": "HAZ DE LA LECTURA TU HERRAMIENTA DE CRECIMIENTO PERSONAL ¡DESCUBRE MIS OBRAS!", "banner-link": "EXPLORAR LIBROS",
+                "slc-title": "SelfLoveClub",
+                "slc-subtitle": "Una plataforma conceptual dedicada a la claridad, el respeto propio y las decisiones relacionales conscientes.",
+                "slc-desc": "SelfLoveClub funciona como un proyecto de investigación cultural, combinando ensayos, artefactos digitales y experimentos comunitarios sobre el discernimiento emocional y la soberanía personal.",
+                "slc-link": "Explorar SelfLoveClub en Instagram"
+            },
+            en: { 
+                "nav-home": "Home", "nav-tools": "Tools", "nav-books": "Books", "nav-archive": "Archive", 
+                "hero-title": "Clarity Before Connection.", "hero-subtitle": "Because the cost of loving without discerning is to lose yourself.", 
+                "hero-kicker": "Author", "tools-label": "Discernment Laboratory", "tools-title": "Interaction with Clarity", 
+                "tools-desc": "Practical relational discernment lab. We turn emotional confusion into actionable data through technical emotional capital audits.", 
+                "tab-es": "Spanish", "tab-en": "English", "archive-label": "Archive", "archive-title": "Field Notes Archive", 
+                "btn-analyze": "Get Perspective", "btn-generate": "Generate Note", 
+                "banner-text": "MAKE READING YOUR PERSONAL GROWTH TOOL! DISCOVER MY WORKS!", "banner-link": "EXPLORE BOOKS",
+                "slc-title": "SelfLoveClub",
+                "slc-subtitle": "A conceptual platform dedicated to clarity, self-respect, and conscious relational decisions.",
+                "slc-desc": "SelfLoveClub functions as a cultural research project, combining essays, digital artifacts, and community experiments on emotional discernment and personal sovereignty.",
+                "slc-link": "Explore SelfLoveClub on Instagram"
+            }
         };
 
         const aiPrompts = {
