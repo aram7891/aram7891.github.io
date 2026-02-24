@@ -1,281 +1,108 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="es">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andrés Ramírez | Estrategia & Desarrollo .PRO</title>
+
+    <!-- 1. SEGURIDAD: CSP estricta -->
     <meta http-equiv="Content-Security-Policy" 
           content="default-src 'self'; 
-                   script-src 'self' https://cdn.tailwindcss.com; 
+                   script-src 'self'; 
                    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; 
                    font-src https://fonts.gstatic.com; 
                    img-src 'self' https: data:; 
                    connect-src 'self';">
 
+    <!-- 2. SEO e IDIOMAS (Tus ensayos) -->
     <link rel="alternate" hreflang="es" href="https://www.andresramirez.pro/">
     <link rel="alternate" hreflang="en" href="https://www.andresramirez.pro/?lang=en">
 
+    <!-- 3. ESTILOS: Apuntando al archivo que Vercel va a generar -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- 4. JS: Cargado de forma diferida -->
     <script src="/js/app.js" defer></script>
 </head>
-<body class="font-sans antialiased selection:bg-accent selection:text-paper">
+<body class="bg-slate-50 text-slate-900 font-sans selection:bg-blue-100">
 
-    <header class="fixed top-0 w-full z-50">
-        <div id="announcement-banner" class="bg-ink text-paper text-[9px] md:text-[10px] uppercase tracking-[0.2em] font-bold flex items-center justify-center min-h-[40px] relative">
-            <div class="banner-content text-center py-2 px-10">
-                <span data-i18n="banner-text">HAZ DE LA LECTURA TU HERRAMIENTA DE CRECIMIENTO PERSONAL ¡DESCUBRE MIS OBRAS!</span>
-                <a href="#books" class="underline ml-2 hover:text-gray-300 transition-colors" data-i18n="banner-link">EXPLORAR LIBROS</a>
-            </div>
-            <button onclick="closeBanner()" class="absolute right-4 opacity-60 hover:opacity-100 p-1" aria-label="Cerrar aviso">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </button>
-        </div>
-        <nav id="navbar" class="w-full flex justify-between items-center px-6 py-4 md:px-12 bg-white/90 backdrop-blur-md border-b border-divider transition-all duration-300">
-            <div class="font-serif text-lg tracking-wide font-semibold uppercase">Andrés Ramírez</div>
-            <div class="flex items-center space-x-6">
-                <div class="hidden lg:flex space-x-8 text-[10px] font-bold tracking-widest uppercase">
-                    <a href="#home" data-i18n="nav-home" class="hover:text-accent transition-colors">Inicio</a>
-                    <a href="#ai-tools" data-i18n="nav-tools" class="hover:text-accent transition-colors">Herramientas</a>
-                    <a href="#books" data-i18n="nav-books" class="hover:text-accent transition-colors">Libros</a>
-                    <a href="#essays" data-i18n="nav-archive" class="hover:text-accent transition-colors">Archivo</a>
-                </div>
-                <div class="flex items-center space-x-0 font-bold text-[9px]">
-                    <button onclick="setLanguage('es')" id="btn-es" class="lang-switch lang-active rounded-l">ES</button>
-                    <button onclick="setLanguage('en')" id="btn-en" class="lang-switch rounded-r border-l-0">EN</button>
-                </div>
-                <button class="lg:hidden text-ink p-1" onclick="toggleMobileMenu()" aria-label="Abrir menú">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-                </button>
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
+        <nav class="max-w-6xl mx-auto px-6 h-16 flex justify-between items-center">
+            <a href="/" class="text-xl font-bold tracking-tighter">ANDRÉS RAMÍREZ<span class="text-blue-600">.PRO</span></a>
+            <div class="hidden md:flex space-x-8 text-sm font-medium">
+                <a href="#proyectos" class="hover:text-blue-600 transition">Proyectos</a>
+                <a href="#ensayos" class="hover:text-blue-600 transition">Ensayos</a>
+                <a href="mailto:andres@selfloveclubstore.com" class="px-4 py-2 bg-slate-900 text-white rounded-full hover:bg-slate-800 transition">Contacto</a>
             </div>
         </nav>
     </header>
 
-    <div id="mobile-menu" class="fixed inset-0 z-40 hidden flex-col justify-center items-center space-y-8 bg-paper/95 backdrop-blur-md">
-        <a href="#home" onclick="toggleMobileMenu();" class="font-serif text-2xl" data-i18n="nav-home">Inicio</a>
-        <a href="#ai-tools" onclick="toggleMobileMenu();" class="font-serif text-2xl" data-i18n="nav-tools">Herramientas</a>
-        <a href="#books" onclick="toggleMobileMenu();" class="font-serif text-2xl" data-i18n="nav-books">Libros</a>
-        <a href="#essays" onclick="toggleMobileMenu();" class="font-serif text-2xl" data-i18n="nav-archive">Archivo</a>
-        <button onclick="toggleMobileMenu()" class="absolute top-6 right-6 font-bold uppercase tracking-widest text-xs" data-i18n="close">Cerrar</button>
-    </div>
+    <main class="max-w-6xl mx-auto px-6">
+        
+        <section class="py-24 md:py-32">
+            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
+                Estrategia que escala <br>
+                <span class="text-blue-600">negocios digitales.</span>
+            </h1>
+            <p class="text-xl text-slate-600 max-w-2xl leading-relaxed">
+                Especialista en desarrollo y optimización de e-commerce. 
+                Actualmente liderando la visión técnica en <span class="font-semibold">Self Love Club</span>.
+            </p>
+        </section>
 
-    <main>
-        <section id="home" class="min-h-screen flex flex-col-reverse md:flex-row justify-center items-center px-6 md:px-12 pt-32 pb-20 max-w-6xl mx-auto gap-12 md:gap-20">
-            <div class="flex-1 text-left w-full">
-                <p class="text-xs font-bold tracking-widest uppercase text-accent mb-6" data-i18n="hero-kicker">Autor</p>
-                <h1 class="font-serif text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-8 text-ink" data-i18n="hero-title">Claridad antes que Conexión.</h1>
-                <p class="font-serif italic text-xl md:text-2xl text-subtle leading-relaxed mb-10 border-l-4 border-accent/40 pl-6" data-i18n="hero-subtitle">Porque el costo de amar sin discernir es perderte a ti mismo.</p>
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="#essays" class="px-8 py-3 bg-accent text-white text-lg font-serif italic hover:bg-opacity-90 transition-all text-center rounded-sm" data-i18n="hero-btn-read">Leer mis escritos</a>
-                    <a href="#ai-tools" class="px-8 py-3 bg-transparent text-ink text-lg font-serif italic border border-divider hover:border-ink transition-all text-center rounded-sm" data-i18n="hero-btn-more">Más sobre mí</a>
-                </div>
-            </div>
-            <div class="flex-1 flex justify-center md:justify-end w-full">
-                <div class="w-64 h-64 md:w-80 md:h-80 lg:w-[400px] lg:h-[400px] overflow-hidden rounded-full border border-divider shadow-sm bg-zinc-100">
-                    <img src="/assets/images/andres-ramirez-portrait.jpg" width="400" height="400" 
-                         onerror="this.onerror=null; this.src='https://github.com/aram7891.png';" 
-                         alt="Retrato de Andrés Ramírez - Autor y ensayista" 
-                         loading="eager" fetchpriority="high" class="author-photo w-full h-full">
+        <section id="proyectos" class="py-20 border-t border-slate-200">
+            <h2 class="text-3xl font-bold mb-12">Proyectos Destacados</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="group p-8 bg-white rounded-3xl border border-slate-200 hover:shadow-xl transition-all duration-300">
+                    <div class="mb-4 text-blue-600 font-bold tracking-widest text-xs uppercase">E-commerce</div>
+                    <h3 class="text-2xl font-bold mb-3">Self Love Club</h3>
+                    <p class="text-slate-600 mb-6 leading-relaxed">Tienda enfocada en bienestar personal. Optimización de conversión y arquitectura headless.</p>
+                    <a href="https://selfloveclubstore.com" target="_blank" class="inline-flex items-center font-semibold text-blue-600 group-hover:translate-x-1 transition-transform">
+                        Visitar tienda <span class="ml-2">→</span>
+                    </a>
                 </div>
             </div>
         </section>
 
-        <!-- LABORATORIO -->
-        <section id="ai-tools" class="py-32 px-6 md:px-12 bg-white border-t border-b border-divider">
-            <div class="max-w-5xl mx-auto">
-                <div class="text-center mb-16">
-                    <span class="text-[10px] font-bold tracking-widest uppercase text-subtle mb-2 block" data-i18n="tools-label">Laboratorio de Discernimiento</span>
-                    <h2 class="font-serif text-4xl mb-4" data-i18n="tools-title">Interacción con la Claridad</h2>
-                    <p class="text-subtle text-sm max-w-xl mx-auto" data-i18n="tools-desc">Laboratorio práctico de discernimiento relacional. Convertimos confusión emocional en datos accionables mediante auditorías técnicas de capital emocional y mapeo de patrones.</p>
+        <section id="ensayos" class="py-20 border-t border-slate-200">
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-3xl font-bold">Ensayos</h2>
+                    <p class="text-slate-500 mt-2">Pensamientos sobre tecnología, diseño y e-commerce.</p>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    <article class="p-10 flex flex-col shadow-sm border border-divider">
-                        <h3 class="font-serif text-2xl mb-2" data-i18n="tool1-title">Discernimiento Relacional</h3>
-                        <p class="text-[9px] text-accent mb-4 uppercase tracking-[0.2em] font-bold" data-i18n="tool1-subtitle">Perspectiva Técnica</p>
-                        <p class="text-xs text-subtle mb-6 leading-relaxed" data-i18n="tool1-help">Describe brevemente una dinámica que te genere confusión. El sistema separará los hechos de la narrativa emocional.</p>
-                        <textarea id="situationInput" aria-label="Situación relacional" rows="5" class="w-full p-4 text-sm border border-divider bg-paper focus:outline-none focus:ring-1 focus:ring-ink mb-6" placeholder="..."></textarea>
-                        <button onclick="analyzeClarity()" id="analyzeBtn" class="w-full py-4 bg-ink text-white text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-opacity-90 transition-all flex items-center justify-center">
-                            <span id="analyzeSpinner" class="spinner hidden"></span>
-                            <span data-i18n="btn-analyze">Obtener Perspectiva</span>
-                        </button>
-                        <div id="clarityResult" class="mt-8 text-sm leading-relaxed hidden border-t border-divider pt-8 italic text-ink"></div>
-                    </article>
-                    
-                    <article class="p-10 flex flex-col shadow-sm border border-divider">
-                        <h3 class="font-serif text-2xl mb-2" data-i18n="tool2-title">Auditoría Emocional</h3>
-                        <p class="text-[9px] text-accent mb-4 uppercase tracking-[0.2em] font-bold" data-i18n="tool2-subtitle">Patrones de Activo/Pasivo</p>
-                        <p class="text-xs text-subtle mb-6 leading-relaxed" data-i18n="tool2-help">Introduce un comportamiento o ciclo que repites. Generaremos una nota sobre el costo de este pasivo.</p>
-                        <input id="patternInput" aria-label="Patrón repetitivo" type="text" class="w-full p-4 text-sm border border-divider bg-paper focus:outline-none focus:ring-1 focus:ring-ink mb-6" placeholder="...">
-                        <button onclick="generateFieldNote()" id="noteBtn" class="w-full py-4 border border-ink text-ink text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-ink hover:text-white transition-all flex items-center justify-center">
-                            <span id="noteSpinner" class="spinner hidden"></span>
-                            <span data-i18n="btn-generate">Generar Nota de Campo</span>
-                        </button>
-                        <div id="noteResult" class="mt-8 p-6 bg-paper border border-divider hidden">
-                            <span class="block font-bold mb-3 uppercase tracking-[0.2em] text-subtle text-[10px]" data-i18n="record-label">Registro de Auditoría</span>
-                            <div id="noteContent" class="text-ink text-[10px] leading-relaxed"></div>
-                        </div>
-                    </article>
-                </div>
+                <div class="text-sm font-mono text-slate-400">2026 EDITION</div>
+            </div>
+
+            <div class="space-y-6">
+                <a href="/content/essays/ia-ecommerce.html" class="block group p-6 rounded-2xl hover:bg-white hover:shadow-sm transition-all border border-transparent hover:border-slate-100">
+                    <div class="flex justify-between items-center">
+                        <h4 class="text-xl font-medium group-hover:text-blue-600">El impacto de la IA en el e-commerce</h4>
+                        <span class="text-slate-400 font-mono text-sm">FEB '26</span>
+                    </div>
+                </a>
             </div>
         </section>
 
-        <!-- LIBROS -->
-        <section id="books" class="py-32 px-6 md:px-12 bg-paper">
-            <div class="max-w-6xl mx-auto text-center">
-                <div class="mb-16">
-                    <span class="text-[10px] font-bold tracking-widest uppercase text-subtle mb-3 block" data-i18n="books-label">Obras Publicadas</span>
-                    <h2 class="font-serif text-4xl md:text-5xl text-ink" data-i18n="books-sec-title">Libros</h2>
-                </div>
-                <div id="books-grid-es" class="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
-                    <article class="essay-card flex flex-col sm:flex-row gap-8 items-center sm:items-start group">
-                        <div class="w-32 sm:w-40 shrink-0 aspect-[2/3] bg-ink text-paper flex flex-col justify-between p-5 shadow-lg group-hover:scale-105 transition-transform duration-700">
-                            <div class="text-[8px] uppercase tracking-[0.2em] opacity-70">Obra Principal</div>
-                            <div class="font-serif text-xl leading-tight">Match<br>Consciente</div>
-                            <div class="text-[8px] uppercase tracking-[0.2em] border-t border-white/20 pt-2">Andrés Ramírez</div>
-                        </div>
-                        <div class="flex flex-col flex-1">
-                            <span class="text-[9px] text-accent uppercase tracking-[0.2em] font-bold mb-2">Libro Teórico</span>
-                            <h3 class="font-serif text-2xl mb-3">Match Consciente</h3>
-                            <p class="text-xs text-subtle leading-relaxed mb-6">Una auditoría técnica sobre la selección de pareja. Aborda la disección de los patrones de atracción y el establecimiento de fronteras estructurales.</p>
-                            <a href="https://www.amazon.com/Match-Consciente-Encontrar-Perderse-Spanish-ebook/dp/B0GLB3NJ1F" target="_blank" rel="noopener noreferrer" class="read-btn self-start">Consultar en Amazon</a>
-                        </div>
-                    </article>
-                    <article class="essay-card flex flex-col sm:flex-row gap-8 items-center sm:items-start group">
-                        <div class="w-32 sm:w-40 shrink-0 aspect-[2/3] bg-paper text-ink border border-divider flex flex-col justify-between p-5 shadow-md group-hover:scale-105 transition-transform duration-700">
-                            <div class="text-[8px] uppercase tracking-[0.2em] text-subtle">Workbook</div>
-                            <div class="font-serif text-xl leading-tight">No te<br>abandones</div>
-                            <div class="text-[8px] uppercase tracking-[0.2em] border-t border-divider pt-2 text-subtle">Andrés Ramírez</div>
-                        </div>
-                        <div class="flex flex-col flex-1">
-                            <span class="text-[9px] text-accent uppercase tracking-[0.2em] font-bold mb-2">Workbook Clínico</span>
-                            <h3 class="font-serif text-2xl mb-3">No te abandones al buscar pareja</h3>
-                            <p class="text-xs text-subtle leading-relaxed mb-6">Pragmatismo clínico para la búsqueda de pareja. Proporciona marcos de trabajo estructurados.</p>
-                            <a href="https://www.amazon.com/No-Abandones-Buscar-Pareja-Spanish-ebook/dp/B0GCRCDMQL" target="_blank" rel="noopener noreferrer" class="read-btn self-start">Consultar en Amazon</a>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <!-- SELFLOVECLUB -->
-        <section id="selfloveclub" class="py-32 border-t border-divider bg-white">
-            <div class="max-w-3xl mx-auto px-6 text-center">
-                <h2 class="font-serif text-4xl md:text-5xl text-ink mb-6" data-i18n="slc-title">SelfLoveClub</h2>
-                <p class="text-xl md:text-2xl text-subtle mb-8 font-serif italic" data-i18n="slc-subtitle">Una plataforma conceptual dedicada a la claridad, el respeto propio y las decisiones relacionales conscientes.</p>
-                <p class="text-sm text-subtle max-w-2xl mx-auto mb-12 leading-relaxed" data-i18n="slc-desc">SelfLoveClub funciona como un proyecto de investigación cultural, combinando ensayos y experimentos comunitarios sobre el discernimiento emocional.</p>
-                <a href="https://instagram.com/selfloveclubusa" target="_blank" rel="noopener noreferrer" class="read-btn" data-i18n="slc-link">Explorar SelfLoveClub en Instagram</a>
-            </div>
-        </section>
     </main>
 
-    <footer class="py-32 px-6 border-t border-divider bg-paper text-center">
-        <div class="max-w-4xl mx-auto">
-            <div class="w-16 h-16 mb-8 mx-auto overflow-hidden rounded-full border border-divider">
-                <img src="/assets/images/andres-ramirez-portrait.jpg" width="64" height="64" onerror="this.onerror=null; this.src='https://github.com/aram7891.png';" alt="Andrés Ramírez" class="w-full h-full object-cover grayscale">
+    <footer class="bg-slate-900 text-slate-400 py-16 mt-20">
+        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-8 md:mb-0">
+                <p class="text-white font-bold mb-2">Andrés Ramírez</p>
+                <p class="text-sm">andres@selfloveclubstore.com</p>
             </div>
-            <div class="font-serif text-2xl mb-4 tracking-[0.3em] uppercase font-bold text-ink">ANDRÉS RAMÍREZ</div>
-            <p class="text-[10px] text-subtle uppercase tracking-[0.3em] mb-12 italic">Florida, USA | andres@selfloveclubstore.com</p>
-            <div class="flex justify-center gap-10 text-[10px] font-bold uppercase tracking-[0.3em] text-subtle mb-16">
-                <a href="https://www.threads.net/@selfloveclubusa" target="_blank" rel="noopener noreferrer" class="hover:text-ink">Threads</a>
-                <a href="https://www.instagram.com/selfloveclubusa" target="_blank" rel="noopener noreferrer" class="hover:text-ink">Instagram</a>
-                <a href="https://x.com/selfloveclubusa" target="_blank" rel="noopener noreferrer" class="hover:text-ink">X</a>
+            
+            <div class="flex flex-col items-center md:items-end">
+                <img src="/assets/logo-footer.png" 
+                     alt="Andrés Ramírez Logo" 
+                     class="w-10 h-10 mb-4 grayscale opacity-50 hover:opacity-100 transition" 
+                     loading="lazy"
+                     width="40"
+                     height="40">
+                <p class="text-xs">© 2026 Andrés Ramírez PRO. Todos los derechos reservados.</p>
             </div>
-            <div class="text-[8px] text-gray-400 uppercase tracking-[0.4em]">&copy; 2026 Andrés Ramírez.</div>
         </div>
     </footer>
 
-    <script>
-        const translations = {
-            es: {
-                "nav-home": "Inicio", "nav-tools": "Herramientas", "nav-books": "Libros", "nav-archive": "Archivo",
-                "close": "Cerrar", "hero-kicker": "Autor", "hero-title": "Claridad antes que Conexión.",
-                "hero-subtitle": "Porque el costo de amar sin discernir es perderte a ti mismo.",
-                "hero-btn-read": "Leer mis escritos", "hero-btn-more": "Más sobre mí",
-                "tools-label": "Laboratorio de Discernimiento", "tools-title": "Interacción con la Claridad",
-                "tools-desc": "Laboratorio práctico de discernimiento relacional. Convertimos confusión emocional en datos accionables mediante auditorías técnicas de capital emocional y mapeo de patrones.",
-                "tool1-title": "Discernimiento Relacional", "tool1-help": "Describe brevemente una dinámica que te genere confusión. El sistema separará los hechos de la narrativa emocional.",
-                "tool2-title": "Auditoría Emocional", "tool2-help": "Introduce un comportamiento o ciclo que repites. Generaremos una nota sobre el costo de este pasivo.",
-                "btn-analyze": "Obtener Perspectiva", "btn-generate": "Generar Nota de Campo",
-                "slc-title": "SelfLoveClub", "slc-subtitle": "Una plataforma conceptual dedicada a la claridad y el respeto propio.",
-                "slc-link": "Explorar en Instagram"
-            },
-            en: {
-                "nav-home": "Home", "nav-tools": "Tools", "nav-books": "Books", "nav-archive": "Archive",
-                "close": "Close", "hero-kicker": "Author", "hero-title": "Clarity Before Connection.",
-                "hero-subtitle": "Because attraction without discernment costs you yourself.",
-                "hero-btn-read": "Read my writing", "hero-btn-more": "More about me",
-                "tools-label": "Discernment Lab", "tools-title": "Interaction with Clarity",
-                "tools-desc": "Practical relational discernment lab. We transform emotional confusion into actionable data.",
-                "tool1-title": "Relational Discernment", "tool1-help": "Describe a confusing dynamic. We'll separate facts from emotional narrative.",
-                "tool2-title": "Emotional Audit", "tool2-help": "Enter a recurring pattern. We'll generate a note on its cost.",
-                "btn-analyze": "Get Perspective", "btn-generate": "Generate Field Note",
-                "slc-title": "SelfLoveClub", "slc-subtitle": "A conceptual platform dedicated to clarity and self-respect.",
-                "slc-link": "Explore on Instagram"
-            }
-        };
-
-        let currentLang = 'es';
-
-        function setLanguage(lang) {
-            currentLang = lang;
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (translations[lang][key]) el.innerText = translations[lang][key];
-            });
-            document.getElementById('btn-es').classList.toggle('lang-active', lang === 'es');
-            document.getElementById('btn-en').classList.toggle('lang-active', lang === 'en');
-        }
-
-        function closeBanner() { document.getElementById('announcement-banner').style.display = 'none'; }
-        function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); document.getElementById('mobile-menu').classList.toggle('flex'); }
-
-        // BACKEND PROXY CALL
-        async function callGemini(prompt, systemPrompt) {
-            try {
-                const response = await fetch("/api/gemini", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ prompt, systemPrompt })
-                });
-                const data = await response.json();
-                if (!response.ok) throw new Error(data.error);
-                return data.result;
-            } catch (e) {
-                console.error(e);
-                return "Error procesando la solicitud. Intenta de nuevo más tarde.";
-            }
-        }
-
-        async function analyzeClarity() {
-            const input = document.getElementById('situationInput');
-            const btn = document.getElementById('analyzeBtn');
-            if (!input.value.trim()) return;
-            btn.disabled = true;
-            document.getElementById('analyzeSpinner').classList.remove('hidden');
-            const text = await callGemini(input.value, "Eres Andrés Ramírez. Voz analítica y estoica.");
-            
-            const resultDiv = document.getElementById('clarityResult');
-            resultDiv.textContent = text; // SEGURIDAD XSS
-            resultDiv.innerHTML = resultDiv.textContent.replace(/\n/g, '<br>');
-            resultDiv.classList.remove('hidden');
-            
-            document.getElementById('analyzeSpinner').classList.add('hidden');
-            btn.disabled = false;
-        }
-
-        async function generateFieldNote() {
-            const input = document.getElementById('patternInput');
-            const btn = document.getElementById('noteBtn');
-            if (!input.value.trim()) return;
-            btn.disabled = true;
-            document.getElementById('noteSpinner').classList.remove('hidden');
-            const text = await callGemini(input.value, "Eres un auditor de sistemas psicológicos.");
-            
-            const content = document.getElementById('noteContent');
-            content.textContent = text; // SEGURIDAD XSS
-            content.innerHTML = content.textContent.replace(/\n/g, '<br>');
-            document.getElementById('noteResult').classList.remove('hidden');
-            
-            document.getElementById('noteSpinner').classList.add('hidden');
-            btn.disabled = false;
-        }
-
-        setLanguage('es');
-    </script>
 </body>
 </html>
