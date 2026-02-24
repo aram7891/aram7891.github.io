@@ -14,6 +14,19 @@ Repositorio organizado por tipo de contenido:
 
 ## Dominio caído: `andresramirez.pro` (checklist real)
 
+## Caso de tu captura: **todos** en "No Deployment" (incluye `*.vercel.app`)
+
+Si también aparece en **No Deployment** el dominio interno de Vercel (`aram7891-github-io.vercel.app`), el problema principal **no es DNS**: simplemente no existe un deployment activo.
+
+Haz esto en orden:
+
+1. Ve a **Deployments** en Vercel y pulsa **Redeploy** o **Create Deployment** sobre la rama principal.
+2. Espera estado **Ready** en Production.
+3. Vuelve a **Domains** y pulsa **Refresh** en los 3 dominios.
+4. Recién ahí valida DNS externo (`A @` y `CNAME www`).
+
+> Sin deployment activo, ningún dominio (ni siquiera `*.vercel.app`) va a resolver correctamente.
+
 Si el dominio no abre, en la práctica casi siempre es uno de estos 3 problemas:
 
 1. No hay deployment de **Production** activo en Vercel.
