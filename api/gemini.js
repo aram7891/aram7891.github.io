@@ -1,6 +1,4 @@
 // /api/gemini.js
-import fetch from "node-fetch";
-
 // Rate Limit básico en memoria para Serverless (se resetea en cold starts)
 const ipStore = new Map();
 const RATE_LIMIT_WINDOW = 60 * 1000; 
@@ -23,7 +21,7 @@ function sanitize(text) {
   return text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
   const ip = req.headers["x-forwarded-for"]?.split(",")[0] || "unknown";

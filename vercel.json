@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "https://www.andresramirez.pro/:path*",
+      "destination": "https://andresramirez.pro/:path*",
+      "permanent": true
+    }
+  ]
+}
