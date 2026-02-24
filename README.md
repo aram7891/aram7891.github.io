@@ -12,38 +12,61 @@ Repositorio organizado por tipo de contenido:
 
 > Nota: los enlaces del sitio en `index.html` fueron actualizados para reflejar la nueva estructura.
 
-## Deploy en Vercel (dominio `andresramirez.pro`)
+## Dominio caído: `andresramirez.pro` (checklist real)
 
-Si en Vercel aparece **"No Deployment"**, el dominio está agregado pero no existe un deployment de producción activo asignado.
+Si el dominio no abre, en la práctica casi siempre es uno de estos 3 problemas:
 
-### 1) Vercel (obligatorio)
+1. No hay deployment de **Production** activo en Vercel.
+2. DNS del apex (`@`) apunta a otro proveedor.
+3. `www` apunta fuera de Vercel o Cloudflare está proxyeando durante validación.
 
-1. Importa o reconecta este repo en Vercel.
-2. Ejecuta un deploy de **Production** (rama principal).
-3. En **Project → Settings → Domains**:
-   - `andresramirez.pro` debe quedar como **Primary**,
-   - `www.andresramirez.pro` debe quedar redirigido al dominio primario.
+## Configuración correcta
 
-### 2) DNS correcto (registrador)
+### En Vercel
 
-Configura exactamente estos registros:
+- Proyecto conectado a este repo.
+- Último deployment en estado **Ready** (Production).
+- En **Settings → Domains**:
+  - `andresramirez.pro` como **Primary**.
+  - `www.andresramirez.pro` como alias con redirect al primario.
+
+### En tu registrador DNS
 
 - `A` para `@` → `76.76.21.21`
 - `CNAME` para `www` → `cname.vercel-dns.com`
 
-> Si usas Cloudflare, deja el proxy en **DNS only** (nube gris) mientras validas en Vercel.
+### Si usas Cloudflare
 
-### 3) Qué no debe existir
+- Durante verificación en Vercel, pon `@` y `www` en **DNS only** (nube gris).
+- Cuando Vercel marque **Valid Configuration**, ya puedes decidir si reactivar proxy.
 
-- No dejes un `A` o `AAAA` adicional para `@` apuntando a otro proveedor.
-- No dejes `www` apuntando a GitHub Pages o a otro `CNAME` distinto.
-- No mezcles redirects en DNS; el redirect de `www` se gestiona en Vercel.
+## Registros que debes eliminar (muy importante)
 
-### 4) Verificación rápida
+- Cualquier `A`/`AAAA` viejo para `@` (por ejemplo, GitHub Pages, hosting anterior, etc.).
+- Cualquier `CNAME` de `www` distinto a `cname.vercel-dns.com`.
+- Cualquier redirect en el DNS provider (el redirect canónico se maneja en Vercel).
 
-- En Vercel, ambos dominios deben aparecer **Valid Configuration**.
-- `https://andresramirez.pro` debe responder `200`.
-- `https://www.andresramirez.pro` debe redirigir a raíz.
+## Verificación rápida desde terminal
 
-Este repositorio incluye una redirección canónica por host en `vercel.json` para forzar `www` → raíz.
+```bash
+# Apex
+nslookup andresramirez.pro
 
+# WWW
+nslookup www.andresramirez.pro
+
+# Respuesta HTTP esperada (200 o 3xx válido)
+curl -I https://andresramirez.pro
+curl -I https://www.andresramirez.pro
+```
+
+Esperado:
+
+- `andresramirez.pro` resolviendo a Vercel (o IP/edge equivalente de Vercel).
+- `www.andresramirez.pro` resolviendo por CNAME a `cname.vercel-dns.com`.
+- `www` redirigiendo a `https://andresramirez.pro`.
+
+## Nota de este repo
+
+- `vercel.json` fuerza redirect de host `www.andresramirez.pro` → `andresramirez.pro`.
+- Se eliminó `CNAME` para evitar confusión con flujo de GitHub Pages.
