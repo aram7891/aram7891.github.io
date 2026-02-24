@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "functions": {
+    "api/gemini.js": {
+      "memory": 512,
+      "maxDuration": 10
+    }
+  }
+}
