@@ -104,7 +104,7 @@
         .author-photo:hover { filter: grayscale(30%); }
         .essay-card { background: #ffffff; border: 1px solid #E4E4E7; padding: 2.5rem 2rem; display: flex; flex-direction: column; transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); height: 100%; }
         .essay-card:hover { border-color: #1A1A1A; transform: translateY(-8px); box-shadow: 0 30px 60px -20px rgba(0,0,0,0.08); }
-        .read-btn { display: inline-block; margin-top: auto; padding: 12px 0; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; border-bottom: 1px solid #1A1A1A; color: #1A1A1A; transition: all 0.3s ease; text-decoration: none; }
+        .read-btn { display: inline-block; margin-top: auto; padding: 12px 0; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; border-bottom: 1px solid #1A1A1A; color: #1A1A1A; transition: all 0.3s ease; text-decoration: none; cursor: pointer; }
         .read-btn:hover { opacity: 0.5; letter-spacing: 0.3em; }
         .spinner { border: 2px solid rgba(0, 0, 0, 0.1); width: 18px; height: 18px; border-radius: 50%; border-left-color: #1A1A1A; animation: spin 1s linear infinite; display: inline-block; margin-right: 8px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -173,18 +173,19 @@
             </div>
         </section>
 
+        <!-- LABORATORIO RESTAURADO -->
         <section id="ai-tools" class="py-32 px-6 md:px-12 bg-white border-t border-b border-divider">
             <div class="max-w-5xl mx-auto">
                 <div class="text-center mb-16">
                     <span class="text-[10px] font-bold tracking-widest uppercase text-subtle mb-2 block" data-i18n="tools-label">Laboratorio de Discernimiento</span>
                     <h2 class="font-serif text-4xl mb-4" data-i18n="tools-title">Interacción con la Claridad</h2>
-                    <p class="text-subtle text-sm max-w-xl mx-auto" data-i18n="tools-desc">Laboratorio práctico de discernimiento relacional. Convertimos confusión emocional en datos accionables mediante auditorías técnicas.</p>
+                    <p class="text-subtle text-sm max-w-xl mx-auto" data-i18n="tools-desc">Laboratorio práctico de discernimiento relacional. Convertimos confusión emocional en datos accionables mediante auditorías técnicas de capital emocional y mapeo de patrones.</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                     <article class="p-10 flex flex-col shadow-sm border border-divider">
                         <h3 class="font-serif text-2xl mb-2" data-i18n="tool1-title">Discernimiento Relacional</h3>
                         <p class="text-[9px] text-accent mb-4 uppercase tracking-[0.2em] font-bold" data-i18n="tool1-subtitle">Perspectiva Técnica</p>
-                        <p class="text-xs text-subtle mb-6 leading-relaxed" data-i18n="tool1-help">Describe una dinámica confusa. El sistema separará hechos de narrativa emocional.</p>
+                        <p class="text-xs text-subtle mb-6 leading-relaxed" data-i18n="tool1-help">Describe brevemente una dinámica que te genere confusión (ej. "Me busca constantemente pero evade formalizar"). El sistema separará los hechos de la narrativa emocional.</p>
                         <textarea id="situationInput" rows="5" class="w-full p-4 text-sm border border-divider bg-paper focus:outline-none focus:ring-1 focus:ring-ink mb-6" placeholder="..."></textarea>
                         <button onclick="analyzeClarity()" class="w-full py-4 bg-ink text-white text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-opacity-90 transition-all flex items-center justify-center">
                             <span id="analyzeSpinner" class="spinner hidden"></span>
@@ -196,7 +197,7 @@
                     <article class="p-10 flex flex-col shadow-sm border border-divider">
                         <h3 class="font-serif text-2xl mb-2" data-i18n="tool2-title">Auditoría Emocional</h3>
                         <p class="text-[9px] text-accent mb-4 uppercase tracking-[0.2em] font-bold" data-i18n="tool2-subtitle">Patrones de Activo/Pasivo</p>
-                        <p class="text-xs text-subtle mb-6 leading-relaxed" data-i18n="tool2-help">Introduce un comportamiento repetitivo. Analizaremos el costo de este pasivo emocional.</p>
+                        <p class="text-xs text-subtle mb-6 leading-relaxed" data-i18n="tool2-help">Introduce un comportamiento o ciclo que repites (ej. "Suelo ignorar banderas rojas por el potencial de la persona"). Generaremos una nota sobre el costo de este pasivo.</p>
                         <input id="patternInput" type="text" class="w-full p-4 text-sm border border-divider bg-paper focus:outline-none focus:ring-1 focus:ring-ink mb-6" placeholder="...">
                         <button onclick="generateFieldNote()" class="w-full py-4 border border-ink text-ink text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-ink hover:text-white transition-all flex items-center justify-center">
                             <span id="noteSpinner" class="spinner hidden"></span>
@@ -227,7 +228,7 @@
                         <div class="flex flex-col flex-1">
                             <span class="text-[9px] text-accent uppercase tracking-[0.2em] font-bold mb-2">Libro Teórico</span>
                             <h3 class="font-serif text-2xl mb-3">Match Consciente</h3>
-                            <p class="text-xs text-subtle leading-relaxed mb-6">Auditoría técnica sobre la selección de pareja y patrones de atracción.</p>
+                            <p class="text-xs text-subtle leading-relaxed mb-6">Una auditoría técnica sobre la selección de pareja. Aborda la disección de los patrones de atracción y el establecimiento de fronteras estructurales preventivas.</p>
                             <a href="https://www.amazon.com/Match-Consciente-Encontrar-Perderse-Spanish-ebook/dp/B0GLB3NJ1F" target="_blank" rel="noopener noreferrer" class="read-btn self-start">Consultar en Amazon</a>
                         </div>
                     </article>
@@ -240,7 +241,7 @@
                         <div class="flex flex-col flex-1">
                             <span class="text-[9px] text-accent uppercase tracking-[0.2em] font-bold mb-2">Workbook Clínico</span>
                             <h3 class="font-serif text-2xl mb-3">No te abandones al buscar pareja</h3>
-                            <p class="text-xs text-subtle leading-relaxed mb-6">Pragmatismo para sostener la identidad individual bajo presión relacional.</p>
+                            <p class="text-xs text-subtle leading-relaxed mb-6">Pragmatismo clínico para la búsqueda de pareja. Proporciona marcos de trabajo estructurados para sostener la identidad individual.</p>
                             <a href="https://www.amazon.com/No-Abandones-Buscar-Pareja-Spanish-ebook/dp/B0GCRCDMQL" target="_blank" rel="noopener noreferrer" class="read-btn self-start">Consultar en Amazon</a>
                         </div>
                     </article>
@@ -263,7 +264,6 @@
                 </div>
                 
                 <div id="essays-grid-es" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
-                    <!-- Ensayos Restaurados -->
                     <article class="essay-card">
                         <h3 class="font-serif text-2xl mb-4 italic">El Autoconocimiento como Activo</h3>
                         <p class="text-sm text-subtle leading-relaxed mb-8">Entender tus propios patrones como inversión de apalancamiento.</p>
@@ -315,11 +315,18 @@
                 "hero-subtitle": "Porque el costo de amar sin discernir es perderte a ti mismo.",
                 "hero-btn-read": "Leer mis escritos", "hero-btn-more": "Más sobre mí",
                 "banner-text": "HAZ DE LA LECTURA TU HERRAMIENTA DE CRECIMIENTO PERSONAL ¡DESCUBRE MIS OBRAS!",
-                "banner-link": "EXPLORAR LIBROS", "tools-label": "Laboratorio de Discernimiento",
-                "tools-title": "Interacción con la Claridad", "tools-desc": "Laboratorio práctico de discernimiento relacional. Convertimos confusión emocional en datos accionables.",
-                "tool1-title": "Discernimiento Relacional", "tool1-subtitle": "Perspectiva Técnica",
-                "tool2-title": "Auditoría Emocional", "tool2-subtitle": "Patrones de Activo/Pasivo",
+                "banner-link": "EXPLORAR LIBROS", 
+                "tools-label": "Laboratorio de Discernimiento",
+                "tools-title": "Interacción con la Claridad", 
+                "tools-desc": "Laboratorio práctico de discernimiento relacional. Convertimos confusión emocional en datos accionables mediante auditorías técnicas de capital emocional y mapeo de patrones.",
+                "tool1-title": "Discernimiento Relacional", 
+                "tool1-subtitle": "Perspectiva Técnica",
+                "tool1-help": "Describe brevemente una dinámica que te genere confusión (ej. \"Me busca constantemente pero evade formalizar\"). El sistema separará los hechos de la narrativa emocional.",
+                "tool2-title": "Auditoría Emocional", 
+                "tool2-subtitle": "Patrones de Activo/Pasivo",
+                "tool2-help": "Introduce un comportamiento o ciclo que repites (ej. \"Suelo ignorar banderas rojas por el potencial de la persona\"). Generaremos una nota sobre el costo de este pasivo.",
                 "btn-analyze": "Obtener Perspectiva", "btn-generate": "Generar Nota de Campo",
+                "record-label": "Registro de Auditoría",
                 "archive-label": "Hemeroteca", "archive-title": "Hemeroteca",
                 "tab-es": "Español", "tab-en": "Inglés", "books-label": "Obras Publicadas", "books-sec-title": "Libros"
             },
@@ -329,11 +336,18 @@
                 "hero-subtitle": "Because attraction without discernment costs you yourself.",
                 "hero-btn-read": "Read my writing", "hero-btn-more": "More about me",
                 "banner-text": "MAKE READING YOUR GROWTH TOOL! DISCOVER MY WORKS!",
-                "banner-link": "EXPLORE BOOKS", "tools-label": "Discernment Lab",
-                "tools-title": "Interaction with Clarity", "tools-desc": "Practical relational discernment laboratory.",
-                "tool1-title": "Relational Discernment", "tool1-subtitle": "Technical Perspective",
-                "tool2-title": "Emotional Audit", "tool2-subtitle": "Asset/Liability Patterns",
+                "banner-link": "EXPLORE BOOKS", 
+                "tools-label": "Discernment Lab",
+                "tools-title": "Interaction with Clarity", 
+                "tools-desc": "Practical relational discernment laboratory. We transform emotional confusion into actionable data through technical audits of emotional capital and pattern mapping.",
+                "tool1-title": "Relational Discernment", 
+                "tool1-subtitle": "Technical Perspective",
+                "tool1-help": "Briefly describe a confusing relational dynamic (e.g., \"They text me daily but avoid commitment\"). The system will separate facts from emotional narrative.",
+                "tool2-title": "Emotional Audit", 
+                "tool2-subtitle": "Asset/Liability Patterns",
+                "tool2-help": "Enter a recurring behavior or cycle (e.g., \"I tend to ignore red flags because of someone's potential\"). We'll generate a note on the cost of this liability.",
                 "btn-analyze": "Get Perspective", "btn-generate": "Generate Field Note",
+                "record-label": "Audit Record",
                 "archive-label": "Archive", "archive-title": "Archive",
                 "tab-es": "Spanish", "tab-en": "English", "books-label": "Published Works", "books-sec-title": "Books"
             }
@@ -353,7 +367,9 @@
             currentLang = lang;
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
-                if (translations[lang][key]) el.innerText = translations[lang][key];
+                if (translations[lang][key]) {
+                    el.innerText = translations[lang][key];
+                }
             });
             document.getElementById('btn-es').classList.toggle('lang-active', lang === 'es');
             document.getElementById('btn-en').classList.toggle('lang-active', lang === 'en');
