@@ -24,10 +24,10 @@
     <meta property="og:description" content="Autor y ensayista. Análisis metodológico de dinámicas relacionales y auditoría técnica de capital emocional.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.andresramirez.pro">
-    <meta property="og:image" content="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/assets/images/andres-ramirez-portrait.jpg">
+    <meta property="og:image" content="https://www.andresramirez.pro/apple-touch-icon.png">
     <meta name="twitter:card" content="summary_large_image">
 
-    <!-- Schema.org (Cerebro SEO para Google) -->
+    <!-- Schema.org -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -56,7 +56,7 @@
     }
     </script>
 
-    <!-- MAQUILLAJE INSTANTÁNEO -->
+    <!-- TAILWIND CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -84,7 +84,7 @@
     <style type="text/tailwindcss">
         @layer components {
             .essay-card { @apply bg-white border border-divider p-8 md:p-10 flex flex-col h-full transition-all duration-500 hover:border-ink hover:-translate-y-2; }
-            .read-btn { @apply inline-block mt-auto py-3 text-[10px] font-bold uppercase tracking-[0.2em] border-b border-ink text-ink transition-all duration-300 hover:opacity-50 hover:tracking-[0.3em] no-underline; }
+            .read-btn { @apply inline-block mt-auto py-3 text-[10px] font-bold uppercase tracking-[0.2em] border-b border-ink text-ink transition-all duration-300 hover:opacity-50 hover:tracking-[0.3em] no-underline w-max; }
             .lang-switch { @apply text-[10px] font-bold tracking-widest cursor-pointer px-3 py-1 border border-divider transition-all; }
             .lang-active { @apply bg-ink text-paper border-ink; }
             .spinner { @apply border-2 border-black/10 w-[18px] h-[18px] rounded-full border-l-ink inline-block mr-2 animate-spin; }
@@ -101,7 +101,7 @@
             <div class="text-center px-10 relative">
                 <span data-i18n="banner-text">HAZ DE LA LECTURA TU HERRAMIENTA DE CRECIMIENTO PERSONAL ¡DESCUBRE MIS OBRAS!</span>
                 <a href="javascript:void(0)" onclick="scrollToSection('books')" class="underline ml-2 hover:text-gray-300 transition-colors" data-i18n="banner-link">EXPLORAR LIBROS</a>
-                <button onclick="closeBanner()" class="absolute right-4 top-1/2 -translate-y-1/2">
+                <button onclick="closeBanner()" class="absolute right-4 top-1/2 -translate-y-1/2 opacity-60 hover:opacity-100">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
             </div>
@@ -110,10 +110,10 @@
             <div class="font-serif text-lg tracking-wide font-semibold uppercase">Andrés Ramírez</div>
             <div class="flex items-center space-x-6">
                 <div class="hidden lg:flex space-x-8 text-[10px] font-bold tracking-widest uppercase">
-                    <a href="javascript:void(0)" onclick="scrollToSection('home')" data-i18n="nav-home" class="hover:text-accent">Inicio</a>
-                    <a href="javascript:void(0)" onclick="scrollToSection('ai-tools')" data-i18n="nav-tools" class="hover:text-accent">Herramientas</a>
-                    <a href="javascript:void(0)" onclick="scrollToSection('books')" data-i18n="nav-books" class="hover:text-accent">Libros</a>
-                    <a href="javascript:void(0)" onclick="scrollToSection('essays')" data-i18n="nav-archive" class="hover:text-accent">Archivo</a>
+                    <a href="javascript:void(0)" onclick="scrollToSection('home')" data-i18n="nav-home" class="hover:text-accent transition-colors">Inicio</a>
+                    <a href="javascript:void(0)" onclick="scrollToSection('ai-tools')" data-i18n="nav-tools" class="hover:text-accent transition-colors">Herramientas</a>
+                    <a href="javascript:void(0)" onclick="scrollToSection('books')" data-i18n="nav-books" class="hover:text-accent transition-colors">Libros</a>
+                    <a href="javascript:void(0)" onclick="scrollToSection('essays')" data-i18n="nav-archive" class="hover:text-accent transition-colors">Archivo</a>
                 </div>
                 <div class="flex items-center space-x-0 font-bold text-[9px]">
                     <button onclick="setLanguage('es')" id="btn-es" class="lang-switch lang-active rounded-l">ES</button>
@@ -143,49 +143,48 @@
                 <p class="font-serif italic text-xl md:text-2xl text-subtle leading-relaxed mb-10 border-l-4 border-accent/40 pl-6" data-i18n="hero-subtitle">Porque el costo de amar sin discernir es perderte a ti mismo.</p>
                 <div class="flex flex-col sm:flex-row gap-4">
                     <a href="javascript:void(0)" onclick="scrollToSection('essays')" class="px-8 py-3 bg-accent text-white text-lg font-serif italic hover:bg-opacity-90 transition-all shadow-sm text-center rounded-sm" data-i18n="hero-btn-read">Leer mis escritos</a>
-                    <a href="javascript:void(0)" onclick="scrollToSection('ai-tools')" class="px-8 py-3 bg-white text-ink text-base font-medium border border-divider hover:border-ink transition-all shadow-sm text-center rounded-sm" data-i18n="hero-btn-more">Más sobre mí</a>
+                    <a href="javascript:void(0)" onclick="scrollToSection('ai-tools')" class="px-8 py-3 bg-white text-ink text-lg font-serif italic border border-divider hover:border-ink transition-all shadow-sm text-center rounded-sm" data-i18n="hero-btn-more">Más sobre mí</a>
                 </div>
             </div>
             <div class="flex-1 flex justify-center md:justify-end">
                 <div class="w-64 h-64 md:w-80 md:h-80 lg:w-[400px] lg:h-[400px] overflow-hidden rounded-full border border-divider shadow-sm">
-                    <img src="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/assets/images/andres-ramirez-portrait.jpg" alt="Andrés Ramírez Portrait" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                    <!-- USANDO LA IMAGEN ORIGINAL QUE SÍ FUNCIONA -->
+                    <img src="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/unnamed%20(1).jpg" alt="Andrés Ramírez" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
                 </div>
             </div>
         </section>
 
         <!-- LABORATORIO IA -->
         <section id="ai-tools" class="py-32 px-6 md:px-12 bg-white border-t border-b border-divider">
-            <div class="max-w-5xl mx-auto text-center">
-                <div class="mb-16">
-                    <span class="text-[10px] font-bold tracking-widest uppercase text-subtle mb-2 block" data-i18n="tools-label">Laboratorio de Discernimiento</span>
-                    <h2 class="font-serif text-4xl mb-4" data-i18n="tools-title">Interacción con la Claridad</h2>
-                    <p class="text-subtle text-sm max-w-xl mx-auto" data-i18n="tools-desc">Laboratorio práctico de discernimiento relacional. Convertimos confusión emocional en datos accionables mediante auditorías técnicas de capital emocional.</p>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 text-left">
-                    <article class="p-10 flex flex-col shadow-sm border border-divider bg-white">
-                        <h3 class="font-serif text-2xl mb-2 tracking-tight">Discernimiento Relacional</h3>
-                        <p class="text-[9px] text-accent mb-6 uppercase tracking-[0.2em] font-bold">Perspectiva Técnica</p>
-                        <textarea id="situationInput" rows="5" class="w-full p-4 text-sm border border-divider rounded-none bg-paper focus:outline-none focus:ring-1 focus:ring-ink mb-6" placeholder="Describe la situación..."></textarea>
-                        <button onclick="analyzeClarity()" id="analyzeBtn" class="w-full py-4 bg-ink text-white text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-opacity-90 transition-all flex items-center justify-center">
-                            <span id="analyzeSpinner" class="spinner hidden"></span>
-                            <span id="analyzeBtnText" data-i18n="btn-analyze">Obtener Perspectiva</span>
-                        </button>
-                        <div id="clarityResult" class="mt-8 text-sm leading-relaxed hidden border-t border-divider pt-8 italic text-ink"></div>
-                    </article>
-                    <article class="p-10 flex flex-col shadow-sm border border-divider bg-white">
-                        <h3 class="font-serif text-2xl mb-2 tracking-tight">Auditoría Emocional</h3>
-                        <p class="text-[9px] text-accent mb-6 uppercase tracking-[0.2em] font-bold">Patrones de Activo/Pasivo</p>
-                        <input id="patternInput" type="text" class="w-full p-4 text-sm border border-divider rounded-none bg-paper focus:outline-none focus:ring-1 focus:ring-ink mb-6" placeholder="Ingresa un patrón...">
-                        <button onclick="generateFieldNote()" id="noteBtn" class="w-full py-4 border border-ink text-ink text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-ink hover:text-white transition-all flex items-center justify-center">
-                            <span id="noteSpinner" class="spinner hidden"></span>
-                            <span id="noteBtnText" data-i18n="btn-generate">Generar Nota</span>
-                        </button>
-                        <div id="noteResult" class="mt-8 p-6 bg-paper border border-divider text-[10px] hidden">
-                            <span class="block font-bold mb-3 uppercase tracking-[0.2em] text-subtle">Registro de Auditoría</span>
-                            <div id="noteContent" class="text-ink leading-relaxed"></div>
-                        </div>
-                    </article>
-                </div>
+            <div class="max-w-5xl mx-auto text-center mb-16">
+                <span class="text-[10px] font-bold tracking-widest uppercase text-subtle mb-2 block" data-i18n="tools-label">Laboratorio de Discernimiento</span>
+                <h2 class="font-serif text-4xl mb-4" data-i18n="tools-title">Interacción con la Claridad</h2>
+                <p class="text-subtle text-sm max-w-xl mx-auto" data-i18n="tools-desc">Laboratorio práctico de discernimiento relacional. Convertimos confusión emocional en datos accionables mediante auditorías técnicas de capital emocional.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto text-left">
+                <article class="p-10 flex flex-col shadow-sm border border-divider bg-white">
+                    <h3 class="font-serif text-2xl mb-2 tracking-tight">Discernimiento Relacional</h3>
+                    <p class="text-[9px] text-accent mb-6 uppercase tracking-[0.2em] font-bold">Perspectiva Técnica</p>
+                    <textarea id="situationInput" rows="5" class="w-full p-4 text-sm border border-divider rounded-none bg-paper focus:outline-none focus:ring-1 focus:ring-ink mb-6" placeholder="Describe la situación..."></textarea>
+                    <button onclick="analyzeClarity()" id="analyzeBtn" class="w-full py-4 bg-ink text-white text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-opacity-90 transition-all flex items-center justify-center">
+                        <span id="analyzeSpinner" class="spinner hidden"></span>
+                        <span id="analyzeBtnText" data-i18n="btn-analyze">Obtener Perspectiva</span>
+                    </button>
+                    <div id="clarityResult" class="mt-8 text-sm leading-relaxed hidden border-t border-divider pt-8 italic text-ink"></div>
+                </article>
+                <article class="p-10 flex flex-col shadow-sm border border-divider bg-white">
+                    <h3 class="font-serif text-2xl mb-2 tracking-tight">Auditoría Emocional</h3>
+                    <p class="text-[9px] text-accent mb-6 uppercase tracking-[0.2em] font-bold">Patrones de Activo/Pasivo</p>
+                    <input id="patternInput" type="text" class="w-full p-4 text-sm border border-divider rounded-none bg-paper focus:outline-none focus:ring-1 focus:ring-ink mb-6" placeholder="Ingresa un patrón...">
+                    <button onclick="generateFieldNote()" id="noteBtn" class="w-full py-4 border border-ink text-ink text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-ink hover:text-white transition-all flex items-center justify-center">
+                        <span id="noteSpinner" class="spinner hidden"></span>
+                        <span id="noteBtnText" data-i18n="btn-generate">Generar Nota</span>
+                    </button>
+                    <div id="noteResult" class="mt-8 p-6 bg-paper border border-divider text-[10px] hidden">
+                        <span class="block font-bold mb-3 uppercase tracking-[0.2em] text-subtle" data-i18n="record-label">Registro de Auditoría</span>
+                        <div id="noteContent" class="text-ink leading-relaxed"></div>
+                    </div>
+                </article>
             </div>
         </section>
 
@@ -195,34 +194,84 @@
                 <span class="text-[10px] font-bold tracking-widest uppercase text-subtle mb-3 block" data-i18n="books-label">Obras Publicadas</span>
                 <h2 class="font-serif text-4xl md:text-5xl text-ink" data-i18n="books-sec-title">Libros</h2>
             </div>
-            <div id="books-grid-es" class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            
+            <!-- CONTENEDOR ES -->
+            <div id="books-grid-es" class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
                 <article class="essay-card group">
-                    <div class="flex flex-col sm:flex-row gap-8 items-center sm:items-start">
-                        <div class="flex aspect-[2/3] w-32 shrink-0 flex-col justify-between bg-ink p-4 shadow-lg transition-transform duration-700 group-hover:scale-105 sm:w-40">
+                    <div class="flex flex-col md:flex-row gap-8 items-center md:items-start h-full">
+                        <div class="flex aspect-[2/3] w-40 shrink-0 flex-col justify-between bg-ink p-4 shadow-lg transition-transform duration-700 group-hover:scale-105 select-none">
                             <div class="text-[7px] uppercase tracking-[0.2em] text-paper opacity-70">Obra Principal</div>
-                            <div class="font-serif text-lg leading-tight text-paper">Match<br>Consciente</div>
+                            <div class="font-serif text-xl leading-tight text-paper">Match<br>Consciente</div>
                             <div class="border-t border-white/20 pt-2 text-[7px] uppercase tracking-[0.2em] text-paper">Andrés Ramírez</div>
                         </div>
-                        <div class="flex h-full flex-1 flex-col text-center sm:text-left">
+                        <div class="flex flex-col flex-1 text-center md:text-left h-full">
                             <span class="mb-2 text-[9px] font-bold uppercase tracking-[0.2em] text-accent">Libro Teórico</span>
-                            <h3 class="font-serif text-2xl mb-3">Match Consciente</h3>
-                            <p class="mb-6 flex-grow text-xs leading-relaxed text-subtle">Una auditoría técnica sobre la selección de pareja. Aborda la disección de los patrones de atracción.</p>
-                            <a href="https://www.amazon.com/Match-Consciente-Encontrar-Perderse-Spanish-ebook/dp/B0GLB3NJ1F" target="_blank" class="read-btn">Amazon</a>
+                            <h3 class="font-serif text-2xl mb-4">Match Consciente: Encontrar el Amor sin Perderse</h3>
+                            <div class="space-y-3 text-xs leading-relaxed text-subtle mb-8">
+                                <p>Una guía práctica y reflexiva para navegar el mundo de las citas con claridad e intención. Aprende a identificar patrones repetitivos, fortalecer tu autoestima emocional y construir vínculos sanos sin renunciar a tu esencia.</p>
+                                <p class="font-serif italic text-ink">Una invitación a crear relaciones que sumen a tu vida, en lugar de complicarla.</p>
+                            </div>
+                            <a href="https://www.amazon.com/Match-Consciente-Encontrar-Perderse-Spanish-ebook/dp/B0GLB3NJ1F" target="_blank" class="read-btn mt-auto self-center md:self-start">Comprar en Amazon</a>
                         </div>
                     </div>
                 </article>
+
                 <article class="essay-card group">
-                    <div class="flex flex-col sm:flex-row gap-8 items-center sm:items-start">
-                        <div class="flex aspect-[2/3] w-32 shrink-0 flex-col justify-between border border-divider bg-white p-4 shadow-md transition-transform duration-700 group-hover:scale-105 sm:w-40">
+                    <div class="flex flex-col md:flex-row gap-8 items-center md:items-start h-full">
+                        <div class="flex aspect-[2/3] w-40 shrink-0 flex-col justify-between border border-divider bg-white p-4 shadow-md transition-transform duration-700 group-hover:scale-105 select-none">
                             <div class="text-[7px] uppercase tracking-[0.2em] text-subtle">Workbook</div>
-                            <div class="font-serif text-lg leading-tight text-ink">No te<br>abandones</div>
+                            <div class="font-serif text-xl leading-tight text-ink">No te<br>abandones</div>
                             <div class="border-t border-divider pt-2 text-[7px] uppercase tracking-[0.2em] text-subtle">Andrés Ramírez</div>
                         </div>
-                        <div class="flex h-full flex-1 flex-col text-center sm:text-left">
+                        <div class="flex flex-col flex-1 text-center md:text-left h-full">
                             <span class="mb-2 text-[9px] font-bold uppercase tracking-[0.2em] text-accent">Workbook Clínico</span>
-                            <h3 class="font-serif text-2xl mb-3">No te abandones</h3>
-                            <p class="mb-6 flex-grow text-xs leading-relaxed text-subtle">Pragmatismo clínico para la búsqueda de pareja. Marcos de trabajo estructurados.</p>
-                            <a href="https://www.amazon.com/No-Abandones-Buscar-Pareja-Spanish-ebook/dp/B0GCRCDMQL" target="_blank" class="read-btn">Amazon</a>
+                            <h3 class="font-serif text-2xl mb-4">No te abandones al buscar pareja</h3>
+                            <div class="space-y-3 text-xs leading-relaxed text-subtle mb-8">
+                                <p>Amar no debería significar perderte. Un cuaderno con ejercicios prácticos y preguntas poderosas para aprender a establecer límites y dejar de dar más de lo que recibes en el intento de que "las cosas funcionen".</p>
+                                <p class="font-serif italic text-ink">La persona correcta jamás te pedirá que te abandones. Y tú tampoco deberías hacerlo.</p>
+                            </div>
+                            <a href="https://www.amazon.com/No-Abandones-Buscar-Pareja-Spanish-ebook/dp/B0GCRCDMQL" target="_blank" class="read-btn mt-auto self-center md:self-start">Comprar en Amazon</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- CONTENEDOR EN (Traducción equivalente) -->
+            <div id="books-grid-en" class="hidden grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <article class="essay-card group">
+                    <div class="flex flex-col md:flex-row gap-8 items-center md:items-start h-full">
+                        <div class="flex aspect-[2/3] w-40 shrink-0 flex-col justify-between bg-ink p-4 shadow-lg transition-transform duration-700 group-hover:scale-105 select-none">
+                            <div class="text-[7px] uppercase tracking-[0.2em] text-paper opacity-70">Main Work</div>
+                            <div class="font-serif text-xl leading-tight text-paper">Mindful<br>Match</div>
+                            <div class="border-t border-white/20 pt-2 text-[7px] uppercase tracking-[0.2em] text-paper">Andrés Ramírez</div>
+                        </div>
+                        <div class="flex flex-col flex-1 text-center md:text-left h-full">
+                            <span class="mb-2 text-[9px] font-bold uppercase tracking-[0.2em] text-accent">Theoretical Book</span>
+                            <h3 class="font-serif text-2xl mb-4">Mindful Match: Finding Love Without Losing Yourself</h3>
+                            <div class="space-y-3 text-xs leading-relaxed text-subtle mb-8">
+                                <p>A practical and reflective guide to navigating the dating world with clarity and intention. Learn to identify repetitive patterns, strengthen your emotional self-esteem, and build healthy bonds without compromising your essence.</p>
+                                <p class="font-serif italic text-ink">An invitation to create relationships that add to your life, rather than complicate it.</p>
+                            </div>
+                            <a href="https://www.amazon.com/Mindful-Match-Finding-Without-Yourself-ebook/dp/B0CTHSDWK5" target="_blank" class="read-btn mt-auto self-center md:self-start">Buy on Amazon</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="essay-card group">
+                    <div class="flex flex-col md:flex-row gap-8 items-center md:items-start h-full">
+                        <div class="flex aspect-[2/3] w-40 shrink-0 flex-col justify-between border border-divider bg-white p-4 shadow-md transition-transform duration-700 group-hover:scale-105 select-none">
+                            <div class="text-[7px] uppercase tracking-[0.2em] text-subtle">Workbook</div>
+                            <div class="font-serif text-xl leading-tight text-ink">Don't Lose<br>Yourself</div>
+                            <div class="border-t border-divider pt-2 text-[7px] uppercase tracking-[0.2em] text-subtle">Andrés Ramírez</div>
+                        </div>
+                        <div class="flex flex-col flex-1 text-center md:text-left h-full">
+                            <span class="mb-2 text-[9px] font-bold uppercase tracking-[0.2em] text-accent">Clinical Workbook</span>
+                            <h3 class="font-serif text-2xl mb-4">Don't Lose Yourself While Dating</h3>
+                            <div class="space-y-3 text-xs leading-relaxed text-subtle mb-8">
+                                <p>Loving shouldn't mean losing yourself. A workbook with practical exercises and powerful questions to help you set boundaries and stop over-giving in the attempt to "make things work."</p>
+                                <p class="font-serif italic text-ink">The right person will never ask you to abandon yourself. And neither should you.</p>
+                            </div>
+                            <a href="https://www.amazon.com/Dont-Lose-Yourself-While-Dating-ebook/dp/B0GFPPVHLB" target="_blank" class="read-btn mt-auto self-center md:self-start">Buy on Amazon</a>
                         </div>
                     </div>
                 </article>
@@ -231,50 +280,52 @@
 
         <!-- HEMEROTECA -->
         <section id="essays" class="py-32 px-6 md:px-12 bg-white border-t border-divider text-center">
-            <span class="text-[10px] font-bold tracking-widest uppercase text-subtle mb-3 block" data-i18n="archive-label">Hemeroteca</span>
+            <span class="text-[10px] font-bold tracking-widest uppercase text-subtle mb-3 block" data-i18n="archive-label">Archivo</span>
             <h2 class="font-serif text-4xl md:text-5xl mb-12" data-i18n="archive-title">Hemeroteca</h2>
             <div class="flex justify-center space-x-6 border-b border-divider mb-8" role="tablist">
                 <button onclick="switchContentTabs('es')" id="essay-tab-es" class="essay-tab active" data-i18n="tab-es">Español</button>
                 <button onclick="switchContentTabs('en')" id="essay-tab-en" class="essay-tab" data-i18n="tab-en">English</button>
             </div>
-            <div id="essays-grid-es" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left max-w-6xl mx-auto">
+            <!-- Grid ES -->
+            <div id="essays-grid-es" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left max-w-6xl mx-auto transition-opacity duration-300">
                 <article class="essay-card">
                     <h3 class="font-serif text-2xl mb-4 italic">El Autoconocimiento como Activo</h3>
                     <p class="text-sm text-subtle leading-relaxed mb-8">Por qué entender tus propios patrones es la inversión de mayor apalancamiento.</p>
-                    <a href="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/content/essays/es/1-el-autoconocimiento-como-activo-economico.pdf" target="_blank" class="read-btn">Leer PDF</a>
+                    <a href="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/content/essays/es/1-el-autoconocimiento-como-activo-economico.pdf" target="_blank" class="read-btn">PDF</a>
                 </article>
                 <article class="essay-card">
                     <h3 class="font-serif text-2xl mb-4 italic">Arbitraje Emocional</h3>
                     <p class="text-sm text-subtle leading-relaxed mb-8">Aprovechando la regulación en la toma de decisiones relacionales.</p>
-                    <a href="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/content/essays/es/2-arbitraje-emocional.pdf" target="_blank" class="read-btn">Leer PDF</a>
+                    <a href="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/content/essays/es/2-arbitraje-emocional.pdf" target="_blank" class="read-btn">PDF</a>
                 </article>
                 <article class="essay-card">
                     <h3 class="font-serif text-2xl mb-4 italic">El Costo de Complacer</h3>
                     <p class="text-sm text-subtle leading-relaxed mb-8">Cuantificando la mala asignación del capital emocional.</p>
-                    <a href="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/content/essays/es/3-costo-de-oportunidad-de-complacer.pdf" target="_blank" class="read-btn">Leer PDF</a>
+                    <a href="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/content/essays/es/3-costo-de-oportunidad-de-complacer.pdf" target="_blank" class="read-btn">PDF</a>
                 </article>
                 <article class="essay-card">
                     <h3 class="font-serif text-2xl mb-4 italic">Arquitectura del Silencio</h3>
                     <p class="text-sm text-subtle leading-relaxed mb-8">La importancia de los espacios no negociables.</p>
-                    <a href="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/content/essays/es/4-la-arquitectura-del-silencio.pdf" target="_blank" class="read-btn">Leer PDF</a>
+                    <a href="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/content/essays/es/4-la-arquitectura-del-silencio.pdf" target="_blank" class="read-btn">PDF</a>
                 </article>
                 <article class="essay-card">
                     <h3 class="font-serif text-2xl mb-4 italic">Liquidez Cognitiva</h3>
                     <p class="text-sm text-subtle leading-relaxed mb-8">Separando la identidad de las decisiones emocionales.</p>
-                    <a href="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/content/essays/es/5-liquidez-cognitiva.pdf" target="_blank" class="read-btn">Leer PDF</a>
+                    <a href="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/content/essays/es/5-liquidez-cognitiva.pdf" target="_blank" class="read-btn">PDF</a>
                 </article>
                 <article class="essay-card">
                     <h3 class="font-serif text-2xl mb-4 italic">Señal Vs Ruido</h3>
                     <p class="text-sm text-subtle leading-relaxed mb-8">Distinguir entre la intuición genuina y las respuestas al trauma.</p>
-                    <a href="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/content/essays/es/6-senal-vs-ruido.pdf" target="_blank" class="read-btn">Leer PDF</a>
+                    <a href="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/content/essays/es/6-senal-vs-ruido.pdf" target="_blank" class="read-btn">PDF</a>
                 </article>
                 <article class="essay-card">
                     <h3 class="font-serif text-2xl mb-4 italic">Progreso vs Derrota</h3>
                     <p class="text-sm text-subtle leading-relaxed mb-8">Entendiendo por qué el progreso a veces se siente como pérdida.</p>
-                    <a href="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/content/essays/es/el-progreso-disfrazado-de-derrota.pdf" target="_blank" class="read-btn">Leer PDF</a>
+                    <a href="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/content/essays/es/el-progreso-disfrazado-de-derrota.pdf" target="_blank" class="read-btn">PDF</a>
                 </article>
             </div>
-            <div id="essays-grid-en" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left max-w-6xl mx-auto">
+            <!-- Grid EN -->
+            <div id="essays-grid-en" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left max-w-6xl mx-auto transition-opacity duration-300">
                 <article class="essay-card">
                     <h3 class="font-serif text-2xl mb-4 italic">Self-Awareness as an Asset</h3>
                     <p class="text-sm text-subtle leading-relaxed mb-8">Highest leverage investment.</p>
@@ -288,27 +339,22 @@
             </div>
         </section>
 
-        <!-- SELFLOVECLUB SECTION -->
+        <!-- SELFLOVECLUB -->
         <section id="selfloveclub" class="py-32 border-t border-divider bg-white">
             <div class="max-w-3xl mx-auto px-6 text-center">
                 <h2 class="font-serif text-4xl md:text-5xl text-ink mb-6" data-i18n="slc-title">SelfLoveClub</h2>
-                <p class="text-xl md:text-2xl text-subtle mb-8 font-serif italic" data-i18n="slc-subtitle">
-                    Una plataforma conceptual dedicada a la claridad, el respeto propio y las decisiones relacionales conscientes.
-                </p>
-                <p class="text-sm text-subtle max-w-2xl mx-auto mb-12 leading-relaxed" data-i18n="slc-desc">
-                    SelfLoveClub funciona como un proyecto de investigación cultural, combinando ensayos, artefactos digitales y experimentos comunitarios sobre el discernimiento emocional y la soberanía personal.
-                </p>
-                <a href="https://instagram.com/selfloveclubusa" target="_blank" rel="noopener noreferrer" class="read-btn inline-block" data-i18n="slc-link">
-                    Explorar SelfLoveClub en Instagram
-                </a>
+                <p class="text-xl md:text-2xl text-subtle mb-8 font-serif italic" data-i18n="slc-subtitle">Una plataforma conceptual dedicada a la claridad y el respeto propio.</p>
+                <p class="text-sm text-subtle max-w-2xl mx-auto mb-12 leading-relaxed" data-i18n="slc-desc">Investigación cultural sobre discernimiento emocional y soberanía personal.</p>
+                <a href="https://instagram.com/selfloveclubusa" target="_blank" class="read-btn" data-i18n="slc-link">Explorar Instagram</a>
             </div>
         </section>
     </main>
 
     <footer class="py-32 px-6 border-t border-divider bg-paper text-center">
         <div class="mx-auto flex flex-col items-center">
-            <div class="w-16 h-16 mb-8 overflow-hidden rounded-full border border-divider">
-                <img src="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/unnamed%20(1).jpg" alt="Andrés Ramírez Portrait" class="w-full h-full object-cover grayscale">
+            <div class="w-16 h-16 mb-8 overflow-hidden rounded-full border border-divider shadow-sm">
+                <!-- USANDO LA IMAGEN ORIGINAL QUE SÍ FUNCIONA -->
+                <img src="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/unnamed%20(1).jpg" alt="Andrés Ramírez Portrait" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
             </div>
             <div class="font-serif text-2xl mb-4 tracking-[0.3em] uppercase font-bold">ANDRÉS RAMÍREZ</div>
             <p class="text-[10px] text-subtle uppercase tracking-[0.3em] mb-12 italic">andres@selfloveclubstore.com</p>
@@ -327,25 +373,21 @@
                 "nav-home": "Inicio", "nav-tools": "Herramientas", "nav-books": "Libros", "nav-archive": "Archivo", 
                 "hero-title": "Claridad antes que Conexión.", "hero-subtitle": "Porque el costo de amar sin discernir es perderte a ti mismo.", 
                 "hero-kicker": "Autor", "tools-label": "Laboratorio de Discernimiento", "tools-title": "Interacción con la Claridad", 
-                "tools-desc": "Laboratorio práctico de discernimiento relacional. Convertimos confusión emocional en datos accionables mediante auditorías técnicas de capital emocional.", 
-                "tab-es": "Español", "tab-en": "Inglés", "archive-label": "Archivo", "archive-title": "Hemeroteca", 
-                "btn-analyze": "Obtener Perspectiva", "btn-generate": "Generar Nota", 
-                "banner-text": "HAZ DE LA LECTURA TU HERRAMIENTA DE CRECIMIENTO PERSONAL ¡DESCUBRE MIS OBRAS!", "banner-link": "EXPLORAR LIBROS",
-                "slc-title": "SelfLoveClub",
-                "slc-subtitle": "Una plataforma conceptual dedicada a la claridad, el respeto propio y las decisiones relacionales conscientes.",
+                "tools-desc": "Laboratorio práctico de discernimiento relacional. Convertimos confusión emocional en datos accionables mediante auditorías técnicas de capital emocional.", "tab-es": "Español", "tab-en": "Inglés", 
+                "archive-label": "Archivo", "archive-title": "Hemeroteca", "btn-analyze": "Obtener Perspectiva", "btn-generate": "Generar Nota", 
+                "record-label": "Registro de Auditoría", "banner-text": "HAZ DE LA LECTURA TU HERRAMIENTA DE CRECIMIENTO PERSONAL ¡DESCUBRE MIS OBRAS!", "banner-link": "EXPLORAR LIBROS",
+                "slc-title": "SelfLoveClub", "slc-subtitle": "Una plataforma conceptual dedicada a la claridad, el respeto propio y las decisiones relacionales conscientes.",
                 "slc-desc": "SelfLoveClub funciona como un proyecto de investigación cultural, combinando ensayos, artefactos digitales y experimentos comunitarios sobre el discernimiento emocional y la soberanía personal.",
                 "slc-link": "Explorar SelfLoveClub en Instagram"
             },
             en: { 
                 "nav-home": "Home", "nav-tools": "Tools", "nav-books": "Books", "nav-archive": "Archive", 
                 "hero-title": "Clarity Before Connection.", "hero-subtitle": "Because the cost of loving without discerning is to lose yourself.", 
-                "hero-kicker": "Author", "tools-label": "Discernment Laboratory", "tools-title": "Interaction with Clarity", 
-                "tools-desc": "Practical relational discernment lab. We turn emotional confusion into actionable data through technical emotional capital audits.", 
-                "tab-es": "Spanish", "tab-en": "English", "archive-label": "Archive", "archive-title": "Field Notes Archive", 
-                "btn-analyze": "Get Perspective", "btn-generate": "Generate Note", 
-                "banner-text": "MAKE READING YOUR PERSONAL GROWTH TOOL! DISCOVER MY WORKS!", "banner-link": "EXPLORE BOOKS",
-                "slc-title": "SelfLoveClub",
-                "slc-subtitle": "A conceptual platform dedicated to clarity, self-respect, and conscious relational decisions.",
+                "hero-kicker": "Author", "tools-label": "Discernment Lab", "tools-title": "Interaction with Clarity", 
+                "tools-desc": "Practical relational discernment lab. We turn emotional confusion into actionable data through technical emotional capital audits.", "tab-es": "Spanish", "tab-en": "English", 
+                "archive-label": "Archive", "archive-title": "Field Notes Archive", "btn-analyze": "Get Perspective", "btn-generate": "Generate Note", 
+                "record-label": "Audit Record", "banner-text": "MAKE READING YOUR PERSONAL GROWTH TOOL! DISCOVER MY WORKS!", "banner-link": "EXPLORE BOOKS",
+                "slc-title": "SelfLoveClub", "slc-subtitle": "A conceptual platform dedicated to clarity, self-respect, and conscious relational decisions.",
                 "slc-desc": "SelfLoveClub functions as a cultural research project, combining essays, digital artifacts, and community experiments on emotional discernment and personal sovereignty.",
                 "slc-link": "Explore SelfLoveClub on Instagram"
             }
