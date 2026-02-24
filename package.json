@@ -1,8 +1,13 @@
 {
-  "name": "andres-ramirez-api",
+  "name": "aram7891.github.io",
   "version": "1.0.0",
-  "type": "module",
-  "dependencies": {
-    "node-fetch": "^3.3.2"
+  "description": "Personal website of Andres Ramirez",
+  "main": "index.html",
+  "scripts": {
+    "build": "npx tailwindcss -i ./src/input.css -o ./css/style.css --minify",
+    "watch": "npx tailwindcss -i ./src/input.css -o ./css/style.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0"
   }
 }
