@@ -1,6 +1,6 @@
  (cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF' 
 diff --git a/index.html b/index.html
-index cb584df5b9466db9fe59b38775e61e1a4906a77e..9e7498efa80fc5d98f7755a6f4849ee95019df7a 100644
+index cb584df5b9466db9fe59b38775e61e1a4906a77e..572a53dd423f79871b1509a009d3cf2368bbac8c 100644
 --- a/index.html
 +++ b/index.html
 @@ -1,43 +1,38 @@
@@ -48,7 +48,7 @@ index cb584df5b9466db9fe59b38775e61e1a4906a77e..9e7498efa80fc5d98f7755a6f4849ee9
            "inLanguage": "es"
          },
          {
-@@ -100,51 +95,55 @@ este es, solo no cambies nada del contenido :
+@@ -100,50 +95,55 @@ este es, solo no cambies nada del contenido :
              transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); overflow: hidden; position: relative; z-index: 60;
          }
          .banner-content { flex: 1; text-align: center; padding: 10px 40px; }
@@ -74,12 +74,12 @@ index cb584df5b9466db9fe59b38775e61e1a4906a77e..9e7498efa80fc5d98f7755a6f4849ee9
          }
          .read-btn:hover { opacity: 0.5; letter-spacing: 0.3em; }
  
--        .spinner {
 +        
 +        .step-circle { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
 +        .fade-in { animation: fadeIn 0.5s ease-out forwards; }
 +        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-+.spinner {
++
+         .spinner {
              border: 2px solid rgba(0, 0, 0, 0.1); width: 18px; height: 18px; border-radius: 50%;
              border-left-color: #1A1A1A; animation: spin 1s linear infinite; display: inline-block; margin-right: 8px;
          }
@@ -104,8 +104,7 @@ index cb584df5b9466db9fe59b38775e61e1a4906a77e..9e7498efa80fc5d98f7755a6f4849ee9
  
      <header class="fixed top-0 w-full z-50">
          <div id="announcement-banner" class="bg-ink text-paper text-[9px] md:text-[10px] uppercase tracking-[0.2em] font-bold">
-             <div class="banner-content">
-@@ -195,88 +194,131 @@ este es, solo no cambies nada del contenido :
+@@ -195,88 +195,131 @@ este es, solo no cambies nada del contenido :
              <p class="text-xs font-bold tracking-widest uppercase text-accent mb-6" data-i18n="hero-kicker">
                  Autor
              </p>
@@ -265,7 +264,7 @@ index cb584df5b9466db9fe59b38775e61e1a4906a77e..9e7498efa80fc5d98f7755a6f4849ee9
                      <div class="flex flex-col flex-1 h-full text-center sm:text-left">
                          <span class="text-[9px] text-accent uppercase tracking-[0.2em] font-bold mb-2">Libro Teórico</span>
                          <h3 class="font-serif text-2xl mb-3 text-ink">Match Consciente</h3>
-@@ -410,51 +452,51 @@ este es, solo no cambies nada del contenido :
+@@ -410,51 +453,51 @@ este es, solo no cambies nada del contenido :
                      <a href="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/2%20Emotional%20Arbitrage%20Profiting%20from%20Regulation%20in%20Decision%20Making.pdf" target="_blank" class="read-btn">Read Essay (PDF)</a>
                  </div>
              </div>
@@ -318,7 +317,7 @@ index cb584df5b9466db9fe59b38775e61e1a4906a77e..9e7498efa80fc5d98f7755a6f4849ee9
                  "banner-text": "HAZ DE LA LECTURA TU HERRAMIENTA DE CRECIMIENTO PERSONAL ¡DESCUBRE MIS OBRAS!",
                  "banner-link": "EXPLORAR LIBROS",
                  "tools-label": "Laboratorio de Discernimiento", "tools-title": "Interacción con la Claridad",
-@@ -571,72 +613,97 @@ este es, solo no cambies nada del contenido :
+@@ -571,72 +614,97 @@ este es, solo no cambies nada del contenido :
          async function callGemini(prompt, systemPrompt) {
              let retries = 0;
              const delay = (ms) => new Promise(res => setTimeout(res, ms));
@@ -431,3 +430,4 @@ index cb584df5b9466db9fe59b38775e61e1a4906a77e..9e7498efa80fc5d98f7755a6f4849ee9
  
 EOF
 )
+  
