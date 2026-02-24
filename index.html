@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Andrés Ramírez | Clarity Before Connection</title>
-    
+
     <!-- Optimizaciones SEO -->
     <meta name="description" content="Andrés Ramírez es autor de Mindful Match y Don’t Lose Yourself While Dating. Ensayos clínicos sobre discernimiento, capital emocional y claridad antes que conexión.">
     <meta name="keywords" content="Andrés Ramírez, Clarity Before Connection, capital emocional, dinámicas relacionales, autoconocimiento, ensayos, Mindful Match, Don't Lose Yourself While Dating">
@@ -16,12 +16,12 @@
     <meta property="og:image" content="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/unnamed%20(1).jpg">
     <link rel="canonical" href="https://www.andresramirez.pro">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-    
+
     <script>
         tailwind.config = {
             theme: {
@@ -55,22 +55,43 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .spinner { border: 2px solid rgba(0, 0, 0, 0.1); width: 18px; height: 18px; border-radius: 50%; border-left-color: #1A1A1A; animation: spin 1s linear infinite; display: inline-block; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Estilos de la Hemeroteca */
+        .prose-content { line-height: 1.8; font-size: 1.125rem; color: #2d2d2d; }
+        .prose-content h2 { font-family: 'Playfair Display', serif; font-size: 2.25rem; margin-top: 3.5rem; margin-bottom: 1.5rem; font-weight: 600; color: #1A1A1A; }
+        .prose-content h3 { font-size: 1.4rem; font-weight: 600; margin-top: 2rem; margin-bottom: 1rem; color: #111; }
+        .prose-content p { margin-bottom: 1.6rem; }
+        .prose-content blockquote { border-left: 2px solid #A67C52; padding-left: 1.5rem; font-style: italic; margin: 3rem 0; font-family: 'Playfair Display', serif; font-size: 1.4rem; color: #444; }
+        .essay-collapsed { max-height: 480px; overflow: hidden; position: relative; mask-image: linear-gradient(to bottom, black 70%, transparent 100%); }
+        .essay-expanded { max-height: none !important; mask-image: none !important; }
+        [data-lang] { display: none; }
+        .visible-lang { display: block !important; }
+        .lang-active { color: #1A1A1A !important; border-bottom: 2px solid #1A1A1A; }
+        .btn-action { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; transition: all 0.2s ease; }
     </style>
 </head>
 <body class="font-sans antialiased selection:bg-accent/10">
 
-    <!-- HEADER -->
     <header class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-divider">
         <nav class="max-w-6xl mx-auto flex justify-between items-center px-6 py-4 md:px-12">
-            <div class="font-serif text-lg tracking-wide font-semibold uppercase">Andrés Ramírez</div>
-            <div class="hidden lg:flex space-x-8 text-[10px] font-bold tracking-widest uppercase">
+            <div class="font-serif text-lg tracking-wide font-semibold uppercase flex-1">Andrés Ramírez</div>
+
+            <div class="hidden lg:flex space-x-8 text-[10px] font-bold tracking-widest uppercase justify-center flex-1">
                 <a href="#home" class="hover:text-accent transition-colors">Inicio</a>
                 <a href="#ai-tools" class="hover:text-accent transition-colors">Laboratorio</a>
                 <a href="#books" class="hover:text-accent transition-colors">Libros</a>
                 <a href="#essays" class="hover:text-accent transition-colors">Ensayos</a>
             </div>
-            <div class="lg:hidden">
-                <button onclick="toggleMobileMenu()" class="p-2">
+
+            <div class="hidden lg:flex items-center justify-end space-x-3 flex-1">
+                <button onclick="setLanguage('es')" id="nav-btn-es" class="text-[10px] font-bold tracking-widest uppercase text-ink transition-colors">ES</button>
+                <span class="text-divider text-xs">|</span>
+                <button onclick="setLanguage('en')" id="nav-btn-en" class="text-[10px] font-bold tracking-widest uppercase text-subtle hover:text-ink transition-colors">EN</button>
+            </div>
+
+            <div class="lg:hidden flex items-center space-x-5">
+                <button onclick="setLanguage('en')" class="text-[10px] font-bold tracking-widest uppercase text-subtle hover:text-ink transition-colors">EN</button>
+                <button onclick="toggleMobileMenu()" class="p-2 -mr-2 text-ink">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
                 </button>
             </div>
@@ -82,6 +103,12 @@
         <a href="#ai-tools" onclick="toggleMobileMenu()" class="font-serif text-2xl">Laboratorio</a>
         <a href="#books" onclick="toggleMobileMenu()" class="font-serif text-2xl">Libros</a>
         <a href="#essays" onclick="toggleMobileMenu()" class="font-serif text-2xl">Ensayos</a>
+
+        <div class="flex space-x-6 mt-8 border-t border-divider pt-8">
+            <button onclick="setLanguage('es'); toggleMobileMenu();" id="mob-btn-es" class="text-xs font-bold tracking-widest uppercase text-ink border-b-2 border-ink pb-1">ESPAÑOL</button>
+            <button onclick="setLanguage('en'); toggleMobileMenu();" id="mob-btn-en" class="text-xs font-bold tracking-widest uppercase text-subtle pb-1">ENGLISH</button>
+        </div>
+
         <button onclick="toggleMobileMenu()" class="absolute top-6 right-6 text-xs uppercase font-bold tracking-widest">Cerrar</button>
     </div>
 
@@ -99,15 +126,15 @@
             </div>
             <div class="flex-1 flex justify-center md:justify-end">
                 <div class="w-64 h-64 md:w-80 md:h-80 lg:w-[400px] lg:h-[400px] overflow-hidden rounded-full border border-divider shadow-sm bg-zinc-100">
-                    <img src="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/unnamed%20(1).jpg" 
-                         onerror="this.src='https://via.placeholder.com/400x400?text=Andres+Ramirez';"
-                         alt="Andrés Ramírez" 
+                    <img src="assets/images/andres-ramirez-portrait.jpg"
+                         onerror="this.onerror=null; this.src='https://via.placeholder.com/400x400?text=Andres+Ramirez';"
+                         alt="Andrés Ramírez"
                          class="author-photo w-full h-full">
                 </div>
             </div>
         </section>
 
-        <!-- LABORATORIO IA -->
+        <!-- LABORATORIO IA (Wizard Funcional) -->
         <section id="ai-tools" class="py-24 px-6 md:px-12 bg-white border-y border-divider">
             <div class="max-w-5xl mx-auto">
                 <header class="mb-12 border-b border-divider pb-10">
@@ -136,11 +163,13 @@
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Paso 1 -->
                     <article class="essay-card">
                         <h3 class="font-serif text-xl font-bold mb-6">Paso 1 · El Escenario</h3>
-                        <textarea id="situationInput" rows="10" class="w-full rounded-sm border border-divider p-4 text-sm focus:outline-none focus:ring-1 focus:ring-ink bg-paper resize-none leading-relaxed" placeholder="Describe la situación..."></textarea>
+                        <textarea id="situationInput" rows="10" class="w-full rounded-sm border border-divider p-4 text-sm focus:outline-none focus:ring-1 focus:ring-ink bg-paper resize-none leading-relaxed" placeholder="Describe la situación relacional..."></textarea>
                     </article>
 
+                    <!-- Paso 2 -->
                     <article class="essay-card">
                         <h3 class="font-serif text-xl font-bold mb-6">Paso 2 · Perspectiva</h3>
                         <button onclick="analyzeClarity()" id="analyzeBtn" class="w-full bg-ink text-white py-4 text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-zinc-800 transition shadow-md">
@@ -154,6 +183,7 @@
                         </div>
                     </article>
 
+                    <!-- Paso 3 -->
                     <article class="essay-card">
                         <h3 class="font-serif text-xl font-bold mb-6">Paso 3 · La Nota</h3>
                         <button onclick="generateFieldNote()" id="noteBtn" class="w-full border border-ink text-ink py-4 text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-ink hover:text-white transition shadow-sm">
@@ -181,96 +211,260 @@
                         </div>
                         <div class="flex-1">
                             <h3 class="font-serif text-2xl mb-4">Match Consciente</h3>
-                            <p class="text-xs text-subtle mb-6 leading-relaxed">Una auditoría técnica sobre la selección de pareja.</p>
-                            <a href="https://www.amazon.com/Match-Consciente-Encontrar-Perderse-Spanish-ebook/dp/B0GLB3NJ1F" target="_blank" class="read-btn">Amazon</a>
+                            <p class="text-xs text-subtle mb-6 leading-relaxed">Una auditoría técnica sobre la selección de pareja y patrones de atracción.</p>
+                            <a href="https://www.amazon.com/Match-Consciente-Encontrar-Perderse-Spanish-ebook/dp/B0GLB3NJ1F" target="_blank" class="read-btn">Ver en Amazon</a>
                         </div>
                     </div>
                     <div class="essay-card group flex flex-col md:flex-row gap-8">
                         <div class="w-32 h-48 bg-white border border-divider text-ink p-5 flex flex-col justify-between shadow-xl group-hover:scale-105 transition-transform duration-500">
                             <span class="text-[8px] uppercase tracking-widest opacity-50">Andrés Ramírez</span>
-                            <span class="font-serif text-lg leading-tight">No te abandones</span>
+                            <span class="font-serif text-lg leading-tight text-ink">No te abandones</span>
                         </div>
                         <div class="flex-1">
                             <h3 class="font-serif text-2xl mb-4">No te abandones</h3>
-                            <p class="text-xs text-subtle mb-6 leading-relaxed">Pragmatismo clínico aplicado a la búsqueda de pareja.</p>
-                            <a href="https://www.amazon.com/No-Abandones-Buscar-Pareja-Spanish-ebook/dp/B0GCRCDMQL" target="_blank" class="read-btn">Amazon</a>
+                            <p class="text-xs text-subtle mb-6 leading-relaxed">Pragmatismo clínico aplicado a la búsqueda de pareja sin comprometer la identidad.</p>
+                            <a href="https://www.amazon.com/No-Abandones-Buscar-Pareja-Spanish-ebook/dp/B0GCRCDMQL" target="_blank" class="read-btn">Ver en Amazon</a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ENSAYOS / HEMEROTECA -->
-        <section id="essays" class="py-32 px-6 md:px-12 bg-white border-t border-divider text-center">
-            <div class="max-w-6xl mx-auto">
-                <h2 class="font-serif text-4xl mb-16 italic">Hemeroteca</h2>
-                <div class="grid md:grid-cols-3 gap-8 text-left">
-                    <div class="essay-card">
-                        <h3 class="font-serif text-2xl mb-4 italic">El Autoconocimiento como Activo</h3>
-                        <p class="text-xs text-subtle mb-8 leading-relaxed">Por qué entender tus patrones es la inversión de mayor apalancamiento.</p>
-                        <a href="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/1%20El%20autoconocimiento%20como%20activo%20econo%CC%81mico.pdf" target="_blank" class="read-btn">Descargar PDF</a>
-                    </div>
-                    <div class="essay-card">
-                        <h3 class="font-serif text-2xl mb-4 italic">Arbitraje Emocional</h3>
-                        <p class="text-xs text-subtle mb-8 leading-relaxed">Aprovechando la regulación en la toma de decisiones relacionales.</p>
-                        <a href="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/2%20Arbitraje%20emocional.pdf" target="_blank" class="read-btn">Descargar PDF</a>
-                    </div>
-                    <div class="essay-card">
-                        <h3 class="font-serif text-2xl mb-4 italic">Claridad Antes que Conexión</h3>
-                        <p class="text-xs text-subtle mb-8 leading-relaxed">La auditoría del capital emocional como práctica cotidiana.</p>
-                        <a href="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/3%20Claridad%20antes%20de%20conexio%CC%81n.pdf" target="_blank" class="read-btn">Descargar PDF</a>
-                    </div>
+        <!-- FIELD NOTES / ENSAYOS -->
+        <section id="essays" class="py-32 px-6 md:px-12 bg-paper border-t border-divider">
+            <div class="max-w-5xl mx-auto">
+                <header class="py-16 text-center border-b border-divider mb-16">
+                    <h1 class="font-serif text-6xl md:text-8xl mb-6 font-normal tracking-tight text-ink">Field Notes</h1>
+                    <p class="text-subtle uppercase tracking-[0.5em] text-[10px] font-bold mb-8" id="header-subtitle">Marco de Autoconocimiento Aplicado</p>
+                    <div class="w-12 h-[1px] bg-accent mx-auto"></div>
+                </header>
+
+                <!-- Language switch -->
+                <div class="flex justify-center space-x-6 text-[10px] font-bold tracking-widest uppercase mb-12">
+                    <button onclick="setLanguage('es')" id="btn-es" class="lang-active pb-1 text-ink">Español</button>
+                    <button onclick="setLanguage('en')" id="btn-en" class="pb-1 text-subtle">English</button>
+                </div>
+
+                <!-- ES -->
+                <div data-lang="es" class="visible-lang space-y-32">
+                    <article>
+                        <header class="mb-12">
+                            <span class="text-[10px] uppercase tracking-widest text-subtle font-bold">Vol.01 / Económico</span>
+                            <h2 class="font-serif text-4xl md:text-5xl mt-2 mb-4">El Autoconocimiento como Activo Económico</h2>
+                            <div class="flex gap-4">
+                                <a href="/assets/pdfs/1 El autoconocimiento como activo económico.pdf" target="_blank" class="btn-action border border-ink px-6 py-3 hover:bg-ink hover:text-paper">PDF</a>
+                                <button onclick="toggleEssay(this)" class="btn-action bg-gray-100 px-6 py-3">Expandir</button>
+                            </div>
+                        </header>
+                        <div class="prose-content essay-collapsed">
+                            <blockquote>“El autoconocimiento no es simplemente un rasgo psicológico; es una ventaja competitiva cuantificable.”</blockquote>
+                            <p>Las organizaciones invierten millones en tecnología e investigación mientras ignoran el sistema operativo más crítico: la psicología del tomador de decisiones. Esta omisión es uno de los puntos ciegos más caros en los negocios modernos.</p>
+                            <h3>La Crisis de los Costos Ocultos</h3>
+                            <p>La falta de autoconocimiento genera costos invisibles que se acumulan silenciosamente: sesgo de confirmación que mata inversiones, evaluación de riesgos distorsionada por orgullo o miedo, y erosión del capital humano que multiplica por 1.5-2x los costos de rotación.</p>
+                            <p>En entornos de alta incertidumbre, el líder que se conoce a sí mismo no solo evita errores; convierte las crisis emocionales de otros en oportunidades de arbitraje. Es el verdadero compounding: rentabilidad que crece porque tu mente no se interpone.</p>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- EN -->
+                <div data-lang="en" class="space-y-32">
+                    <article>
+                        <header class="mb-12">
+                            <span class="text-[10px] uppercase tracking-widest text-subtle font-bold">Vol.01 / Economic</span>
+                            <h2 class="font-serif text-4xl md:text-5xl mt-2 mb-4">Self-Awareness as an Economic Asset</h2>
+                            <div class="flex gap-4">
+                                <a href="/assets/pdfs/1 Self-Awareness as an Economic Asset.pdf" target="_blank" class="btn-action border border-ink px-6 py-3 hover:bg-ink hover:text-paper">PDF</a>
+                                <button onclick="toggleEssay(this)" class="btn-action bg-gray-100 px-6 py-3">Expand</button>
+                            </div>
+                        </header>
+                        <div class="prose-content essay-collapsed">
+                            <blockquote>“Self-knowledge is not merely a psychological trait; it is a quantifiable competitive advantage.”</blockquote>
+                            <p>Organizations invest millions in technology and research while ignoring the most critical operating system: the decision-maker's psychology. This omission is one of the most expensive blind spots in modern business.</p>
+                            <h3>The Crisis of Hidden Costs</h3>
+                            <p>The lack of self-awareness generates invisible costs that accumulate silently: confirmation bias that kills investments, risk assessment distorted by pride or fear, and human capital erosion that multiplies turnover costs by 1.5-2x.</p>
+                            <p>In high-uncertainty environments, the leader who knows themselves doesn't just avoid mistakes; they turn the emotional crises of others into arbitrage opportunities. This is true compounding: profitability that grows because your mind doesn't get in the way.</p>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- CTA -->
+                <div class="mt-32 text-center border-t border-divider pt-20">
+                    <h3 class="font-serif text-4xl mb-6">¿Quieres los próximos Field Notes antes que nadie?</h3>
+                    <p class="text-subtle mb-10 max-w-xl mx-auto text-lg">Suscríbete al newsletter de Self Love Club.</p>
+                    <form class="max-w-md mx-auto flex flex-col sm:flex-row gap-4" onsubmit="event.preventDefault(); alert('Gracias por suscribirte.');">
+                        <input type="email" placeholder="tu@email.com" required class="flex-1 px-4 py-4 border border-divider rounded focus:outline-none focus:border-ink transition-all">
+                        <button type="submit" class="bg-ink text-paper px-10 py-4 uppercase tracking-[0.2em] text-xs font-bold hover:bg-zinc-800 transition-colors">Suscribirme</button>
+                    </form>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="bg-paper border-t border-divider py-12 px-6 md:px-12 text-center">
-        <p class="text-sm text-subtle mb-4">&copy; 2026 Andrés Ramírez. Todos los derechos reservados.</p>
-        <p class="text-sm text-subtle">Sígueme en 
-            <a href="https://www.instagram.com/andresramirez/" target="_blank" class="text-accent hover:underline">Instagram</a> · 
-            <a href="https://twitter.com/andresramirez" target="_blank" class="text-accent hover:underline">X</a>
-        </p>
+    <footer class="py-24 border-t border-divider bg-paper text-center">
+        <div class="w-16 h-16 mx-auto mb-8 overflow-hidden rounded-full border border-divider">
+            <img src="assets/images/andres-ramirez-portrait.jpg"
+                 onerror="this.onerror=null; this.src='https://via.placeholder.com/100x100?text=AR';"
+                 class="author-photo w-full h-full grayscale opacity-50">
+        </div>
+        <div class="font-serif text-2xl mb-4 uppercase font-bold text-ink tracking-widest">ANDRÉS RAMÍREZ</div>
+        <p class="text-[10px] text-subtle uppercase tracking-[0.3em] mb-12 italic font-medium">andres@selfloveclubstore.com</p>
+        <div class="flex justify-center gap-10 text-[10px] font-bold uppercase tracking-[0.3em] text-subtle">
+            <a href="https://www.instagram.com/selfloveclubusa" target="_blank" class="hover:text-ink transition">Instagram</a>
+            <a href="https://www.threads.net/@selfloveclubusa" target="_blank" class="hover:text-ink transition">Threads</a>
+            <a href="https://x.com/selfloveclubusa" target="_blank" class="hover:text-ink transition">X / Twitter</a>
+        </div>
+        <p class="text-[8px] text-gray-300 mt-16 uppercase tracking-[0.4em]">&copy; 2026 Andrés Ramírez. Todos los derechos reservados.</p>
     </footer>
 
     <script>
+        const apiKey = ""; // Provisioned by environment at runtime
+
+        function setStepState(activeStep) {
+            const circles = [document.getElementById('stepCircle1'), document.getElementById('stepCircle2'), document.getElementById('stepCircle3')];
+            circles.forEach((circle, idx) => {
+                const step = idx + 1;
+                circle.classList.remove('bg-ink', 'bg-accent', 'text-white', 'shadow-lg');
+                circle.classList.add('bg-white', 'text-subtle', 'border', 'border-divider');
+                if (step === activeStep) {
+                    circle.classList.remove('bg-white', 'text-subtle', 'border', 'border-divider');
+                    circle.classList.add('bg-ink', 'text-white', 'shadow-lg');
+                } else if (step < activeStep) {
+                    circle.classList.remove('bg-white', 'text-subtle', 'border', 'border-divider');
+                    circle.classList.add('bg-accent', 'text-white');
+                }
+            });
+        }
+
+        async function callGemini(prompt, systemPrompt) {
+            let retries = 5;
+            let delay = 1000;
+            while (retries > 0) {
+                try {
+                    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            contents: [{ parts: [{ text: prompt }] }],
+                            systemInstruction: { parts: [{ text: systemPrompt }] }
+                        })
+                    });
+                    if (!response.ok) throw new Error("API Failure");
+                    const result = await response.json();
+                    return result.candidates?.[0]?.content?.parts?.[0]?.text;
+                } catch (e) {
+                    retries--;
+                    await new Promise(r => setTimeout(r, delay));
+                    delay *= 2;
+                }
+            }
+            return "Error de conexión con el laboratorio. Por favor, intenta de nuevo.";
+        }
+
+        async function analyzeClarity() {
+            const input = document.getElementById('situationInput').value;
+            const res = document.getElementById('perspectiveOutput');
+            const btn = document.getElementById('analyzeBtn');
+            const spinner = document.getElementById('analyzeSpinner');
+            if (!input.trim()) return;
+
+            btn.disabled = true;
+            spinner.classList.remove('hidden');
+            res.classList.add('hidden');
+
+            const text = await callGemini(input, "Eres Andrés Ramírez. Voz analítica, clínica y perspicaz. Realiza una cirugía técnica sobre la situación relacional del usuario separando hechos de narrativa emocional. Sé breve y directo.");
+
+            res.innerHTML = `“${(text || "").replace(/\n/g, '<br>')}”`;
+            res.classList.remove('hidden');
+            btn.disabled = false;
+            spinner.classList.add('hidden');
+            setStepState(2);
+        }
+
+        async function generateFieldNote() {
+            const sit = document.getElementById('situationInput').value;
+            const emo = document.getElementById('emotionInput').value;
+            const res = document.getElementById('noteOutput');
+            const btn = document.getElementById('noteBtn');
+            const spinner = document.getElementById('noteSpinner');
+            if (!sit.trim() || !emo.trim()) return;
+
+            btn.disabled = true;
+            spinner.classList.remove('hidden');
+            res.classList.add('hidden');
+
+            const text = await callGemini(`Situación: ${sit}\nEmociones: ${emo}`, "Actúa como un auditor técnico de capital emocional. Estructura la respuesta brevemente como: [REGISTRO], [DIAGNÓSTICO] y [ACCIÓN]. Tono seco, profesional y autoritario.");
+
+            res.innerHTML = (text || "").replace(/\n/g, '<br>');
+            res.classList.remove('hidden');
+            btn.disabled = false;
+            spinner.classList.add('hidden');
+            setStepState(3);
+        }
+
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('hidden');
+            menu.classList.toggle('flex');
         }
 
-        function analyzeClarity() {
-            const btn = document.getElementById('analyzeBtn');
-            const spinner = document.getElementById('analyzeSpinner');
-            const output = document.getElementById('perspectiveOutput');
-
-            spinner.classList.remove('hidden');
-            btn.disabled = true;
-
-            setTimeout(() => {
-                spinner.classList.add('hidden');
-                output.classList.remove('hidden');
-                output.innerText = "Perspectiva generada automáticamente: Considera tu situación con neutralidad y observa tus emociones antes de actuar.";
-                document.getElementById('stepCircle2').classList.add('bg-ink', 'text-white');
-            }, 1200);
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            if (el) window.scrollTo({ top: el.offsetTop - 120, behavior: 'smooth' });
         }
 
-        function generateFieldNote() {
-            const btn = document.getElementById('noteBtn');
-            const spinner = document.getElementById('noteSpinner');
-            const output = document.getElementById('noteOutput');
+        function setLanguage(lang) {
+            // Activar/Desactivar visibilidad de los ensayos
+            document.querySelectorAll('[data-lang]').forEach(el => el.classList.remove('visible-lang'));
+            const target = document.querySelector('[data-lang="'+lang+'"]');
+            if (target) target.classList.add('visible-lang');
 
-            spinner.classList.remove('hidden');
-            btn.disabled = true;
+            // Sincronizar botones de la sección Field Notes
+            const btnEs = document.getElementById('btn-es');
+            const btnEn = document.getElementById('btn-en');
+            if (btnEs && btnEn) {
+                btnEs.classList.toggle('lang-active', lang === 'es');
+                btnEn.classList.toggle('lang-active', lang === 'en');
+                btnEs.classList.toggle('text-subtle', lang !== 'es');
+                btnEn.classList.toggle('text-subtle', lang !== 'en');
+            }
 
-            setTimeout(() => {
-                spinner.classList.add('hidden');
-                output.classList.remove('hidden');
-                output.innerText = "Nota de campo generada: Reflexiona sobre la situación, registra tus hallazgos y observa cómo tus emociones impactan tus decisiones.";
-                document.getElementById('stepCircle3').classList.add('bg-ink', 'text-white');
-            }, 1200);
+            // Sincronizar botones del Header Desktop
+            const navEs = document.getElementById('nav-btn-es');
+            const navEn = document.getElementById('nav-btn-en');
+            if (navEs && navEn) {
+                navEs.className = lang === 'es' ? 'text-[10px] font-bold tracking-widest uppercase text-ink transition-colors' : 'text-[10px] font-bold tracking-widest uppercase text-subtle hover:text-ink transition-colors';
+                navEn.className = lang === 'en' ? 'text-[10px] font-bold tracking-widest uppercase text-ink transition-colors' : 'text-[10px] font-bold tracking-widest uppercase text-subtle hover:text-ink transition-colors';
+            }
+
+            // Sincronizar botones del Menú Móvil
+            const mobEs = document.getElementById('mob-btn-es');
+            const mobEn = document.getElementById('mob-btn-en');
+            if (mobEs && mobEn) {
+                mobEs.className = lang === 'es' ? 'text-xs font-bold tracking-widest uppercase text-ink border-b-2 border-ink pb-1' : 'text-xs font-bold tracking-widest uppercase text-subtle pb-1';
+                mobEn.className = lang === 'en' ? 'text-xs font-bold tracking-widest uppercase text-ink border-b-2 border-ink pb-1' : 'text-xs font-bold tracking-widest uppercase text-subtle pb-1';
+            }
+
+            // Actualizar Subtítulo
+            const subtitle = document.getElementById('header-subtitle');
+            if (subtitle) {
+                subtitle.innerText = lang === 'es' ? 'Marco de Autoconocimiento Aplicado' : 'Applied Self-Knowledge Framework';
+            }
         }
+
+        function toggleEssay(btn) {
+            const container = btn.closest('article').querySelector('.prose-content');
+            const expanded = container.classList.contains('essay-expanded');
+            container.classList.toggle('essay-expanded', !expanded);
+            container.classList.toggle('essay-collapsed', expanded);
+            const lang = document.querySelector('.visible-lang').dataset.lang;
+            btn.textContent = expanded ? (lang === 'es' ? 'Expandir' : 'Expand') : (lang === 'es' ? 'Contraer' : 'Collapse');
+            if (!expanded) btn.classList.add('bg-ink','text-paper'); else btn.classList.remove('bg-ink','text-paper');
+        }
+
+        // Inicializar el idioma al cargar la página
+        window.addEventListener('DOMContentLoaded', () => {
+            setLanguage('es');
+        });
     </script>
-
 </body>
 </html>
