@@ -59,6 +59,30 @@ Si el dominio no abre, en la práctica casi siempre es uno de estos 3 problemas:
 - Cualquier `CNAME` de `www` distinto a `cname.vercel-dns.com`.
 - Cualquier redirect en el DNS provider (el redirect canónico se maneja en Vercel).
 
+
+## ¿Cuáles registros debes eliminar exactamente?
+
+En tu DNS, **el estado final correcto** es solo:
+
+- `A`  `@`  → `76.76.21.21`
+- `CNAME` `www` → `cname.vercel-dns.com`
+
+Todo lo demás que choque con eso, elimínalo. En concreto, elimina:
+
+- Cualquier `A` adicional para `@` que **no** sea `76.76.21.21`.
+- Cualquier `AAAA` para `@` (si no estás configurando IPv6 explícito con Vercel).
+- Cualquier `CNAME` de `www` distinto de `cname.vercel-dns.com`.
+- Cualquier `A` de `www` (si `www` será CNAME, no debe coexistir con A).
+- Cualquier `URL Redirect Record`/`Forwarding` para `@` o `www` en el registrador.
+- Cualquier registro viejo de GitHub Pages (`185.199.108.153/109/110/111`) o de hosting anterior.
+
+Checklist de limpieza rápida:
+
+1. Deja **un solo** `A @`.
+2. Deja **un solo** `CNAME www`.
+3. Borra `AAAA @` y `A www` si existen.
+4. Borra forwards/redirects del proveedor DNS.
+
 ## Verificación rápida desde terminal
 
 ```bash
