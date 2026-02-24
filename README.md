@@ -107,3 +107,36 @@ Esperado:
 
 - `vercel.json` fuerza redirect de host `www.andresramirez.pro` → `andresramirez.pro`.
 - Se eliminó `CNAME` para evitar confusión con flujo de GitHub Pages.
+
+
+## TXT/MX: qué dejar y qué borrar (según tu lista)
+
+Para que el sitio funcione en Vercel, los TXT **no** afectan el enrutamiento web, pero sí conviene limpiar conflictos y duplicados.
+
+### Puedes dejar (si usas ese servicio)
+
+- `apple-domain=...` (Apple/iCloud).
+- `openai-domain-verification=...`.
+- `google-site-verification=...` (uno o varios, si verificaste distintas propiedades).
+- `v=spf1 include:icloud.com ~all` (**solo uno**, sin duplicados).
+
+### Debes borrar
+
+- `_github-pages-challenge-aram7891` (si ya no usas GitHub Pages para este dominio).
+- TXT duplicado de SPF: tienes dos entradas de `v=spf1 include:icloud.com ~all`; deja solo una.
+- TXT aleatorio sin proveedor claro (`4f3fc13803cb36892bad3e4151e213`) **si no sabes qué servicio lo creó**.
+
+### MX (correo)
+
+Si usas iCloud Mail, deja solo:
+
+- `mx01.mail.icloud.com`
+- `mx02.mail.icloud.com`
+
+y elimina `MX mail.andresramirez.pro` si no corresponde a un servidor real de correo administrado por ti.
+
+### CNAME de `www`
+
+Tu valor `5fa7e85f2a2b85c7.vercel-dns-017.com` puede ser válido si es el objetivo que Vercel te asignó.
+No lo cambies si Vercel lo marca como **Valid Configuration**.
+
