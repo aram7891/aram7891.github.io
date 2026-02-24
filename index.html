@@ -200,7 +200,10 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                     <article class="gemini-container p-10 flex flex-col shadow-sm border border-divider">
                         <h3 class="font-serif text-2xl mb-2 tracking-tight" data-i18n="tool1-title">Discernimiento Relacional</h3>
-                        <p class="text-[9px] text-accent mb-6 uppercase tracking-[0.2em] font-bold" data-i18n="tool1-subtitle">Perspectiva Técnica</p>
+                        <p class="text-[9px] text-accent mb-4 uppercase tracking-[0.2em] font-bold" data-i18n="tool1-subtitle">Perspectiva Técnica</p>
+                        <!-- NUEVA EXPLICACIÓN HERRAMIENTA 1 -->
+                        <p class="text-xs text-subtle mb-6 leading-relaxed" data-i18n="tool1-help">Describe brevemente una dinámica que te genere confusión (ej. "Me busca constantemente pero evade formalizar"). El sistema separará los hechos de la narrativa emocional.</p>
+                        
                         <textarea id="situationInput" rows="5" class="w-full p-4 text-sm border border-divider rounded-none bg-paper focus:outline-none focus:ring-1 focus:ring-ink mb-6" placeholder="..."></textarea>
                         <button onclick="analyzeClarity()" id="analyzeBtn" class="w-full py-4 bg-ink text-white text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-opacity-90 transition-all flex items-center justify-center">
                             <span id="analyzeSpinner" class="spinner hidden"></span>
@@ -208,9 +211,13 @@
                         </button>
                         <div id="clarityResult" class="mt-8 text-sm leading-relaxed hidden border-t border-divider pt-8 italic text-ink"></div>
                     </article>
+                    
                     <article class="gemini-container p-10 flex flex-col shadow-sm border border-divider">
                         <h3 class="font-serif text-2xl mb-2 tracking-tight" data-i18n="tool2-title">Auditoría Emocional</h3>
-                        <p class="text-[9px] text-accent mb-6 uppercase tracking-[0.2em] font-bold" data-i18n="tool2-subtitle">Patrones de Activo/Pasivo</p>
+                        <p class="text-[9px] text-accent mb-4 uppercase tracking-[0.2em] font-bold" data-i18n="tool2-subtitle">Patrones de Activo/Pasivo</p>
+                        <!-- NUEVA EXPLICACIÓN HERRAMIENTA 2 -->
+                        <p class="text-xs text-subtle mb-6 leading-relaxed" data-i18n="tool2-help">Introduce un comportamiento o ciclo que repites (ej. "Suelo ignorar banderas rojas por el potencial de la persona"). Generaremos una nota sobre el costo de este pasivo.</p>
+                        
                         <input id="patternInput" type="text" class="w-full p-4 text-sm border border-divider rounded-none bg-paper focus:outline-none focus:ring-1 focus:ring-ink mb-6" placeholder="...">
                         <button onclick="generateFieldNote()" id="noteBtn" class="w-full py-4 border border-ink text-ink text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-ink hover:text-white transition-all flex items-center justify-center">
                             <span id="noteSpinner" class="spinner hidden"></span>
@@ -406,7 +413,9 @@
                 "tools-title": "Interacción con la Claridad",
                 "tools-desc": "Laboratorio práctico de discernimiento relacional. Convertimos confusión emocional en datos accionables mediante auditorías técnicas de capital emocional y mapeo de patrones.",
                 "tool1-title": "Discernimiento Relacional", "tool1-subtitle": "Perspectiva Técnica",
+                "tool1-help": "Describe brevemente una dinámica que te genere confusión (ej. \"Me busca constantemente pero evade formalizar\"). El sistema separará los hechos de la narrativa emocional.",
                 "tool2-title": "Auditoría Emocional", "tool2-subtitle": "Patrones de Activo/Pasivo",
+                "tool2-help": "Introduce un comportamiento o ciclo que repites (ej. \"Suelo ignorar banderas rojas por el potencial de la persona\"). Generaremos una nota sobre el costo de este pasivo.",
                 "btn-analyze": "Obtener Perspectiva", "btn-generate": "Generar Nota de Campo",
                 "record-label": "Registro de Auditoría", 
                 "archive-label": "Hemeroteca", 
@@ -433,7 +442,9 @@
                 "tools-title": "Interaction with Clarity",
                 "tools-desc": "Practical relational discernment laboratory. We transform emotional confusion into actionable data through technical audits of emotional capital and pattern mapping.",
                 "tool1-title": "Relational Discernment", "tool1-subtitle": "Technical Perspective",
+                "tool1-help": "Briefly describe a confusing relational dynamic (e.g., \"They text me daily but avoid commitment\"). The system will separate facts from emotional narrative.",
                 "tool2-title": "Emotional Audit", "tool2-subtitle": "Asset/Liability Patterns",
+                "tool2-help": "Enter a recurring behavior or cycle (e.g., \"I tend to ignore red flags because of someone's potential\"). We'll generate a note on the cost of this liability.",
                 "btn-analyze": "Get Perspective", "btn-generate": "Generate Field Note",
                 "record-label": "Audit Record", 
                 "archive-label": "Archive", 
