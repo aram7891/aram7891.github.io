@@ -158,3 +158,23 @@ Notas:
 - Tener **dos** `google-site-verification` es válido.
 - El `CNAME` de `www` no tiene que ser siempre `cname.vercel-dns.com`; Vercel puede asignar uno específico del proyecto, como el tuyo.
 
+
+
+## ¿Tu llave API de Google está protegida?
+
+Sí, **siempre que** `GEMINI_KEY` esté guardada como Environment Variable en Vercel y no en el frontend.
+
+Este repo ahora aplica estas protecciones en `/api/gemini`:
+
+- La llave se usa solo del lado servidor (`process.env.GEMINI_KEY`).
+- Si falta la variable, responde error de configuración y no expone detalles internos.
+- Bloquea orígenes no permitidos con `ALLOWED_ORIGINS`.
+- Mantiene rate limit por IP y validación básica del payload.
+
+Recomendado en Vercel:
+
+1. Guardar `GEMINI_KEY` solo en **Project → Settings → Environment Variables**.
+2. Definir `ALLOWED_ORIGINS` (CSV), por ejemplo:
+   - `https://andresramirez.pro,https://www.andresramirez.pro`
+3. Rotar la llave si alguna vez la pegaste en frontend o repositorio.
+
