@@ -12,21 +12,38 @@ Repositorio organizado por tipo de contenido:
 
 > Nota: los enlaces del sitio en `index.html` fueron actualizados para reflejar la nueva estructura.
 
-
 ## Deploy en Vercel (dominio `andresramirez.pro`)
 
-Si en Vercel aparece **"No Deployment"** en tus dominios, normalmente significa que todavía no hay un deployment de producción activo para el proyecto.
+Si en Vercel aparece **"No Deployment"**, el dominio está agregado pero no existe un deployment de producción activo asignado.
 
-Pasos rápidos:
+### 1) Vercel (obligatorio)
 
-1. Importa este repo en Vercel (o reconéctalo si se desconectó).
-2. Haz un deployment a **Production** desde la rama principal.
-3. En **Settings → Domains**:
-   - deja `andresramirez.pro` como dominio principal,
-   - agrega `www.andresramirez.pro` como alias (redirección al dominio principal).
-4. En tu proveedor DNS, apunta:
-   - `A` de `@` a `76.76.21.21`,
-   - `CNAME` de `www` a `cname.vercel-dns.com`.
-5. Verifica que el deployment salga en estado **Ready** y luego vuelve a Domains.
+1. Importa o reconecta este repo en Vercel.
+2. Ejecuta un deploy de **Production** (rama principal).
+3. En **Project → Settings → Domains**:
+   - `andresramirez.pro` debe quedar como **Primary**,
+   - `www.andresramirez.pro` debe quedar redirigido al dominio primario.
 
-Este repositorio incluye una redirección permanente de `www` a raíz en `vercel.json`.
+### 2) DNS correcto (registrador)
+
+Configura exactamente estos registros:
+
+- `A` para `@` → `76.76.21.21`
+- `CNAME` para `www` → `cname.vercel-dns.com`
+
+> Si usas Cloudflare, deja el proxy en **DNS only** (nube gris) mientras validas en Vercel.
+
+### 3) Qué no debe existir
+
+- No dejes un `A` o `AAAA` adicional para `@` apuntando a otro proveedor.
+- No dejes `www` apuntando a GitHub Pages o a otro `CNAME` distinto.
+- No mezcles redirects en DNS; el redirect de `www` se gestiona en Vercel.
+
+### 4) Verificación rápida
+
+- En Vercel, ambos dominios deben aparecer **Valid Configuration**.
+- `https://andresramirez.pro` debe responder `200`.
+- `https://www.andresramirez.pro` debe redirigir a raíz.
+
+Este repositorio incluye una redirección canónica por host en `vercel.json` para forzar `www` → raíz.
+
