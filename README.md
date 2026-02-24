@@ -142,3 +142,19 @@ y elimina `MX mail.andresramirez.pro` si no corresponde a un servidor real de co
 Tu valor `5fa7e85f2a2b85c7.vercel-dns-017.com` puede ser válido si es el objetivo que Vercel te asignó.
 No lo cambies si Vercel lo marca como **Valid Configuration**.
 
+
+
+## Estado final (tu caso): configuración correcta ✅
+
+Con los registros que compartiste, tu DNS quedó bien para Vercel:
+
+- `A @ -> 76.76.21.21`
+- `CNAME www -> 5fa7e85f2a2b85c7.vercel-dns-017.com` (objetivo Vercel válido)
+- `MX mx01.mail.icloud.com` y `MX mx02.mail.icloud.com`
+- TXT de verificación (Apple/OpenAI/Google) + un solo SPF
+
+Notas:
+
+- Tener **dos** `google-site-verification` es válido.
+- El `CNAME` de `www` no tiene que ser siempre `cname.vercel-dns.com`; Vercel puede asignar uno específico del proyecto, como el tuyo.
+
