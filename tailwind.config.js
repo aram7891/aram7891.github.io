@@ -1,6 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./*.{html,js}"], // Ajusta si tus archivos están en subcarpetas
+  content: [
+    "./index.html",
+    "./content/essays/**/*.{html,js}",
+    "./src/**/*.{html,js}"
+  ],
   theme: {
     extend: {},
   },
