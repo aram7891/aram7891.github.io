@@ -198,3 +198,21 @@ Solo revisa/borrarías algo si aparece adicionalmente:
 
 Sobre SSL: tus dos certificados (`andresramirez.pro` y `www.andresramirez.pro`) con renovación automática se ven correctos; no hay nada que borrar ahí.
 
+
+
+## ¿Qué puedes hacer con los Deployments? (paso a paso)
+
+Si ves `No Deployment` en Domains, haz esto en Vercel:
+
+1. **Deployments → Create Deployment** (o **Redeploy**) en la rama principal.
+2. Espera a estado **Ready**.
+3. En ese deployment, pulsa **Promote to Production** si quedó como preview.
+4. Vuelve a **Settings → Domains** y pulsa **Refresh** en `andresramirez.pro` y `www`.
+5. Verifica que ambos queden en **Valid Configuration**.
+
+Recomendado para que no vuelva a pasar:
+
+- En **Project Settings → Git**, deja habilitado auto-deploy en push a main.
+- Evita borrar manualmente deployments de producción recientes.
+- Si cambias variables (`GEMINI_KEY`, `ALLOWED_ORIGINS`), haz **Redeploy** para aplicarlas.
+
