@@ -178,3 +178,23 @@ Recomendado en Vercel:
    - `https://andresramirez.pro,https://www.andresramirez.pro`
 3. Rotar la llave si alguna vez la pegaste en frontend o repositorio.
 
+
+
+## Revisión rápida de tu panel actual (qué borrar y qué dejar)
+
+Con lo que compartiste de Vercel, **no borres** estos registros automáticos:
+
+- `ALIAS @ -> cname.vercel-dns-017.com.`
+- `ALIAS * -> cname.vercel-dns-017.com.`
+- `CAA 0 issue "letsencrypt.org"`
+
+Esos 3 son normales en Vercel Nameservers y ayudan a resolución/SSL.
+
+Solo revisa/borrarías algo si aparece adicionalmente:
+
+- Otro `A/ALIAS/CNAME` para `@` apuntando fuera de Vercel.
+- Otro `CNAME` para `www` fuera de Vercel.
+- `URL forwarding` en el registrador.
+
+Sobre SSL: tus dos certificados (`andresramirez.pro` y `www.andresramirez.pro`) con renovación automática se ven correctos; no hay nada que borrar ahí.
+
