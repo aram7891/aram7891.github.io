@@ -6,7 +6,6 @@ Repositorio organizado por tipo de contenido:
 - `content/essays/en/`: ensayos en inglés (PDF).
 - `assets/images/`: imágenes usadas por el sitio.
 - `assets/docs/`: archivos auxiliares (por ejemplo, paquetes zip).
-- `archive/`: archivos legacy/sin uso web directo.
 - `api/`: endpoints serverless.
 - `index.html`: landing principal.
 
