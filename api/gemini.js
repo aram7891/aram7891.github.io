@@ -10,7 +10,11 @@ export default async function handler(req, res) {
     }
 
     try {
-        const { prompt, systemPrompt } = req.body;
+        const { prompt, systemPrompt } = req.body || {};
+
+        if (!prompt || typeof prompt !== 'string') {
+            return res.status(400).json({ error: 'El campo "prompt" es obligatorio.' });
+        }
 
         const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
             method: 'POST',
@@ -19,12 +23,27 @@ export default async function handler(req, res) {
             },
             body: JSON.stringify({
                 contents: [{ parts: [{ text: prompt }] }],
-                systemInstruction: { parts: [{ text: systemPrompt }] }
+                ...(systemPrompt ? { systemInstruction: { parts: [{ text: systemPrompt }] } } : {})
             })
         });
 
         const data = await response.json();
-        res.status(200).json(data);
+        if (!response.ok) {
+            return res.status(response.status).json({
+                error: data?.error?.message || 'Error al llamar a Gemini.'
+            });
+        }
+
+        const result = data?.candidates?.[0]?.content?.parts
+            ?.map((part) => part?.text || '')
+            .join('')
+            .trim();
+
+        if (!result) {
+            return res.status(502).json({ error: 'Gemini no devolvió texto utilizable.' });
+        }
+
+        return res.status(200).json({ result });
 
     } catch (error) {
         console.error("Error conectando con Gemini:", error);

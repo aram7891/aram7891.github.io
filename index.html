@@ -2,384 +2,254 @@
 <html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Andrés Ramírez | Clarity Before Connection</title>
-
-    <!-- ========================================== -->
-    <!-- OPTIMIZACIONES SEO, SCHEMA Y FAVICON       -->
-    <!-- ========================================== -->
-    <meta name="description" content="Andrés Ramírez – Autor y ensayista. Análisis metodológico de dinámicas relacionales y auditoría técnica de capital emocional.">
-    <meta name="keywords" content="Andrés Ramírez, Clarity Before Connection, capital emocional, dinámicas relacionales, autoconocimiento, ensayos, Mindful Match, Don't Lose Yourself While Dating">
-    <meta name="author" content="Andrés Ramírez">
-    <link rel="canonical" href="https://www.andresramirez.pro">
+    <meta name="theme-color" content="#1A1A1A">
+    <meta name="robots" content="index, follow">
     
-    <!-- Favicon pack -->
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="manifest" href="/site.webmanifest">
+    <title>Field Notes | Self Love Club Research & Strategy</title>
+    
+    <!-- SEO & AUTHORITY -->
+    <link rel="canonical" href="https://andresramirez.pro/field-notes">
+    <link rel="alternate" hreflang="x-default" href="https://andresramirez.pro/field-notes">
+    <link rel="alternate" hreflang="es" href="https://andresramirez.pro/field-notes">
+    <link rel="alternate" hreflang="en" href="https://andresramirez.pro/field-notes">
+    <meta name="description" content="Repositorio editorial de Self Love Club. Ensayos clínicos y notas de campo sobre autoconocimiento aplicado, capital emocional y claridad estratégica.">
+    
+    <!-- OPEN GRAPH -->
+    <meta property="og:title" content="Field Notes | Self Love Club">
+    <meta property="og:description" content="Applied Self-Knowledge — Where clarity becomes human performance.">
+    <meta property="og:image" content="https://andresramirez.pro/assets/images/andres-ramirez-portrait.jpg">
+    <meta property="og:type" content="article">
 
-    <!-- Open Graph & Twitter Cards -->
-    <meta property="og:title" content="Andrés Ramírez | Clarity Before Connection">
-    <meta property="og:description" content="Autor y ensayista. Análisis metodológico de dinámicas relacionales y auditoría técnica de capital emocional.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.andresramirez.pro">
-    <meta property="og:image" content="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/unnamed%20(1).jpg">
-    <meta name="twitter:card" content="summary_large_image">
-
-    <!-- Schema.org (Cerebro SEO para Google) -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "Person",
-          "@id": "https://www.andresramirez.pro/#person",
-          "name": "Andrés Ramírez",
-          "url": "https://www.andresramirez.pro",
-          "jobTitle": "Author",
-          "knowsAbout": ["Relational Dynamics", "Emotional Capital", "Self-Awareness", "Cognitive Liquidity"]
-        },
-        {
-          "@type": "Book",
-          "name": "Match Consciente",
-          "author": {"@id": "https://www.andresramirez.pro/#person"},
-          "inLanguage": "es"
-        },
-        {
-          "@type": "Book",
-          "name": "No te abandones al buscar pareja",
-          "author": {"@id": "https://www.andresramirez.pro/#person"},
-          "inLanguage": "es"
-        }
-      ]
-    }
-    </script>
-
-    <!-- MAQUILLAJE INSTANTÁNEO (Arregla el "Look Horrible" YA) -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        paper: '#FAFAFA',
-                        ink: '#1A1A1A',
-                        subtle: '#71717A',
-                        divider: '#E4E4E7',
-                        accent: '#A67C52',
-                    },
-                    fontFamily: {
-                        serif: ['"Playfair Display"', 'serif'],
-                        sans: ['"Inter"', 'sans-serif'],
-                    },
-                }
-            }
+        tailwind.config = { 
+            theme: { 
+                extend: { 
+                    colors: { 
+                        paper: '#FAFAFA', 
+                        ink: '#1A1A1A', 
+                        subtle: '#52525B', 
+                        divider: '#E4E4E7', 
+                        accent: '#96683E' 
+                    }, 
+                    fontFamily: { 
+                        serif: ['"Playfair Display"', 'serif'], 
+                        sans: ['"Inter"', 'sans-serif'] 
+                    } 
+                } 
+            } 
         }
     </script>
+    
+    <style>
+        :root { scroll-padding-top: 100px; }
+        body { background-color: #FAFAFA; color: #1A1A1A; overflow-x: hidden; }
+        
+        .view-content { transition: opacity 0.5s ease-in-out, transform 0.5s ease-out; }
+        .hidden-view { display: none; opacity: 0; transform: translateY(15px); }
+        .visible-view { display: block; opacity: 1; transform: translateY(0); }
 
-    <!-- FUENTES -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+        .prose-content { line-height: 1.8; font-size: 1.15rem; color: #2d2d2d; max-width: 65ch; margin: 0 auto; }
+        .prose-content h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-top: 4rem; margin-bottom: 2rem; font-weight: 600; color: #1A1A1A; line-height: 1.2; }
+        .prose-content h3 { font-size: 1.4rem; font-weight: 700; margin-top: 2.5rem; margin-bottom: 1rem; color: #111; letter-spacing: -0.01em; }
+        .prose-content p { margin-bottom: 1.8rem; }
+        .prose-content blockquote { border-left: 3px solid #96683E; padding-left: 1.5rem; font-style: italic; margin: 3rem 0; font-family: 'Playfair Display', serif; font-size: 1.5rem; color: #444; }
+        
+        .essay-card { border: 1px solid #E4E4E7; transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; background: white; }
+        .essay-card:hover { border-color: #96683E; transform: translateY(-4px) rotate(-0.5deg); box-shadow: 0 20px 40px -15px rgba(0,0,0,0.05); }
+        .essay-card:hover .card-vol { color: #96683E; }
 
-    <style type="text/tailwindcss">
-        @layer components {
-            .essay-card { @apply bg-white border border-divider p-8 md:p-10 flex flex-col h-full transition-all duration-500 hover:border-ink hover:-translate-y-2; }
-            .read-btn { @apply inline-block mt-auto py-3 text-[10px] font-bold uppercase tracking-[0.2em] border-b border-ink text-ink transition-all duration-300 hover:opacity-50 hover:tracking-[0.3em] no-underline; }
-            .lang-switch { @apply text-[10px] font-bold tracking-widest cursor-pointer px-3 py-1 border border-divider transition-all; }
-            .lang-active { @apply bg-ink text-paper border-ink; }
-            .spinner { @apply border-2 border-black/10 w-[18px] h-[18px] rounded-full border-l-ink inline-block mr-2 animate-spin; }
-            .essay-tab { @apply cursor-pointer px-5 py-2 text-[10px] font-bold uppercase tracking-[0.15em] border-b-2 border-transparent transition-all duration-300 text-subtle; }
-            .essay-tab.active { @apply border-ink text-ink; }
+        .btn-action { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; transition: all 0.2s ease; cursor: pointer; }
+        .lang-active { color: #1A1A1A !important; border-bottom: 2px solid #1A1A1A; }
+
+        @media print {
+            nav, .no-print, .btn-action, #essays-grid, #fieldnotes-grid, #essays-header { display: none !important; }
+            body { background: white !important; color: #1A1A1A; font-size: 12pt; line-height: 1.6; }
+            .view-content { display: block !important; opacity: 1 !important; transform: none !important; }
+            h1 { font-size: 24pt; page-break-after: avoid; }
+            h2 { font-size: 20pt; page-break-after: avoid; }
+            h3 { font-size: 16pt; page-break-after: avoid; }
+            p { font-size: 12pt; line-height: 1.6; }
+            #essay-reader { display: block !important; opacity: 1 !important; transform: none !important; }
+            #reader-content { max-width: 100%; font-size: 12pt; line-height: 1.6; }
+            .card-vol, .text-subtle, .extract { font-style: normal; color: #000; }
+            .prose-body { page-break-before: always; }
+            .prose-body:first-child { page-break-before: auto; }
         }
     </style>
 </head>
-<body class="bg-paper font-sans antialiased text-ink">
+<body class="font-sans antialiased selection:bg-accent/10">
 
-    <!-- HEADER -->
-    <header class="fixed top-0 w-full z-50">
-        <div id="announcement-banner" class="bg-ink text-paper text-[9px] md:text-[10px] uppercase tracking-[0.2em] font-bold py-3">
-            <div class="text-center px-10 relative">
-                <span data-i18n="banner-text">HAZ DE LA LECTURA TU HERRAMIENTA DE CRECIMIENTO PERSONAL ¡DESCUBRE MIS OBRAS!</span>
-                <a href="javascript:void(0)" onclick="scrollToSection('books')" class="underline ml-2 hover:text-gray-300 transition-colors" data-i18n="banner-link">EXPLORAR LIBROS</a>
-                <button onclick="closeBanner()" class="absolute right-4 top-1/2 -translate-y-1/2">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                </button>
+    <nav class="fixed top-0 w-full z-50 bg-paper/80 backdrop-blur-md border-b border-divider px-6 py-6 no-print">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="font-serif text-xl tracking-tighter hover:opacity-70 transition-opacity">Andrés Ramírez</a>
+            <span class="text-[9px] font-bold uppercase tracking-[0.5em] text-accent">Self Love Club Repository</span>
+        </div>
+    </nav>
+
+    <main id="view-essays" class="view-content visible-view pt-40 pb-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            
+            <div id="essays-header" class="text-center mb-24 no-print">
+                <button onclick="window.location.href='index.html'" class="text-[10px] font-bold uppercase tracking-[0.6em] text-subtle mb-16 hover:text-ink transition-colors block mx-auto">← Volver al Perfil</button>
+                <span class="text-[10px] font-bold uppercase tracking-[0.8em] text-accent mb-6 block">Editorial Framework</span>
+                <h1 class="font-serif text-7xl md:text-9xl mb-10 tracking-tighter">Field Notes</h1>
+                
+                <div class="flex justify-center space-x-10 text-[10px] font-bold tracking-widest uppercase mb-12">
+                    <button onclick="setLanguage('es')" id="btn-es" class="lang-active pb-2">Español</button>
+                    <button onclick="setLanguage('en')" id="btn-en" class="pb-2 text-subtle hover:text-ink transition-colors">English</button>
+                </div>
+
+                <p class="text-subtle text-sm italic max-w-2xl mx-auto">
+                    Serie I — Ensayos y notas de campo sobre capital emocional y autoconocimiento aplicado.
+                </p>
+            </div>
+
+            <div id="essays-section">
+                <h2 class="font-serif text-4xl mb-10 tracking-tighter text-ink border-b border-divider pb-4">Ensayos</h2>
+                <div id="essays-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-20 no-print"></div>
+            </div>
+
+            <div id="fieldnotes-section">
+                <h2 class="font-serif text-4xl mb-10 tracking-tighter text-subtle border-b border-divider pb-4">Notas de Campo</h2>
+                <div id="fieldnotes-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-20 no-print"></div>
+            </div>
+
+            <div id="essay-reader" class="hidden opacity-0 transform translate-y-10 transition-all duration-700 max-w-4xl mx-auto py-20">
+                <div class="text-right mb-12 no-print">
+                    <button onclick="window.print()" class="btn-action border border-ink px-8 py-3 hover:bg-ink hover:text-paper transition-all">Descargar / Imprimir (PDF)</button>
+                </div>
+
+                <button onclick="closeEssay()" class="text-[10px] font-bold uppercase tracking-[0.5em] text-subtle mb-20 hover:text-ink transition-all block no-print">← Volver al Índice</button>
+                
+                <article id="reader-content" class="prose-content"></article>
+
+                <footer class="mt-40 pt-20 border-t border-divider text-center no-print">
+                    <button onclick="closeEssay()" class="btn-action border border-ink px-12 py-5 hover:bg-ink hover:text-paper transition-all">Regresar a la Biblioteca</button>
+                </footer>
             </div>
         </div>
-        <nav class="w-full flex justify-between items-center px-6 py-4 md:px-12 bg-white/90 backdrop-blur-md border-b border-divider">
-            <div class="font-serif text-lg tracking-wide font-semibold uppercase">Andrés Ramírez</div>
-            <div class="flex items-center space-x-6">
-                <div class="hidden lg:flex space-x-8 text-[10px] font-bold tracking-widest uppercase">
-                    <a href="javascript:void(0)" onclick="scrollToSection('home')" data-i18n="nav-home" class="hover:text-accent">Inicio</a>
-                    <a href="javascript:void(0)" onclick="scrollToSection('ai-tools')" data-i18n="nav-tools" class="hover:text-accent">Herramientas</a>
-                    <a href="javascript:void(0)" onclick="scrollToSection('books')" data-i18n="nav-books" class="hover:text-accent">Libros</a>
-                    <a href="javascript:void(0)" onclick="scrollToSection('essays')" data-i18n="nav-archive" class="hover:text-accent">Archivo</a>
-                </div>
-                <div class="flex items-center space-x-0 font-bold text-[9px]">
-                    <button onclick="setLanguage('es')" id="btn-es" class="lang-switch lang-active rounded-l">ES</button>
-                    <button onclick="setLanguage('en')" id="btn-en" class="lang-switch rounded-r border-l-0">EN</button>
-                </div>
-                <button class="lg:hidden" onclick="toggleMobileMenu()">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-                </button>
-            </div>
-        </nav>
-    </header>
-
-    <div id="mobile-menu" class="fixed inset-0 z-40 hidden flex-col justify-center items-center space-y-8 bg-paper/95 backdrop-blur-lg">
-        <a href="javascript:void(0)" onclick="scrollToSection('home'); toggleMobileMenu();" class="font-serif text-2xl" data-i18n="nav-home">Inicio</a>
-        <a href="javascript:void(0)" onclick="scrollToSection('ai-tools'); toggleMobileMenu();" class="font-serif text-2xl" data-i18n="nav-tools">Herramientas</a>
-        <a href="javascript:void(0)" onclick="scrollToSection('books'); toggleMobileMenu();" class="font-serif text-2xl" data-i18n="nav-books">Libros</a>
-        <a href="javascript:void(0)" onclick="scrollToSection('essays'); toggleMobileMenu();" class="font-serif text-2xl" data-i18n="nav-archive">Archivo</a>
-        <button onclick="toggleMobileMenu()" class="absolute top-6 right-6 font-bold uppercase tracking-widest text-xs">Cerrar</button>
-    </div>
-
-    <main>
-        <!-- HERO -->
-        <section id="home" class="min-h-screen flex flex-col-reverse md:flex-row justify-center items-center px-6 md:px-12 pt-32 pb-20 max-w-6xl mx-auto gap-12 md:gap-20">
-            <div class="flex-1 text-left w-full">
-                <p class="text-xs font-bold tracking-widest uppercase text-accent mb-6" data-i18n="hero-kicker">Autor</p>
-                <h1 class="font-serif text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-8 text-ink" data-i18n="hero-title">Claridad antes que Conexión.</h1>
-                <p class="font-serif italic text-xl md:text-2xl text-subtle leading-relaxed mb-10 border-l-4 border-accent/40 pl-6" data-i18n="hero-subtitle">Porque el costo de amar sin discernir es perderte a ti mismo.</p>
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="javascript:void(0)" onclick="scrollToSection('essays')" class="px-8 py-3 bg-accent text-white text-lg font-serif italic hover:bg-opacity-90 transition-all shadow-sm text-center rounded-sm" data-i18n="hero-btn-read">Leer mis escritos</a>
-                    <a href="javascript:void(0)" onclick="scrollToSection('ai-tools')" class="px-8 py-3 bg-white text-ink text-base font-medium border border-divider hover:border-ink transition-all shadow-sm text-center rounded-sm" data-i18n="hero-btn-more">Más sobre mí</a>
-                </div>
-            </div>
-            <div class="flex-1 flex justify-center md:justify-end">
-                <div class="w-64 h-64 md:w-80 md:h-80 lg:w-[400px] lg:h-[400px] overflow-hidden rounded-full border border-divider shadow-sm">
-                    <img src="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/unnamed%20(1).jpg" alt="Andrés Ramírez Portrait" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
-                </div>
-            </div>
-        </section>
-
-        <!-- LABORATORIO IA -->
-        <section id="ai-tools" class="py-32 px-6 md:px-12 bg-white border-t border-b border-divider">
-            <div class="max-w-5xl mx-auto">
-                <div class="text-center mb-16">
-                    <span class="text-[10px] font-bold tracking-widest uppercase text-subtle mb-2 block" data-i18n="tools-label">Laboratorio de Discernimiento</span>
-                    <h2 class="font-serif text-4xl mb-4" data-i18n="tools-title">Interacción con la Claridad</h2>
-                    <p class="text-subtle text-sm max-w-xl mx-auto" data-i18n="tools-desc">Laboratorio práctico de discernimiento relacional. Convertimos confusión emocional en datos accionables mediante auditorías técnicas de capital emocional.</p>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    <article class="p-10 flex flex-col shadow-sm border border-divider bg-white">
-                        <h3 class="font-serif text-2xl mb-2 tracking-tight">Discernimiento Relacional</h3>
-                        <p class="text-[9px] text-accent mb-6 uppercase tracking-[0.2em] font-bold">Perspectiva Técnica</p>
-                        <textarea id="situationInput" rows="5" class="w-full p-4 text-sm border border-divider rounded-none bg-paper focus:outline-none focus:ring-1 focus:ring-ink mb-6" placeholder="Describe la situación..."></textarea>
-                        <button onclick="analyzeClarity()" id="analyzeBtn" class="w-full py-4 bg-ink text-white text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-opacity-90 transition-all flex items-center justify-center">
-                            <span id="analyzeSpinner" class="spinner hidden"></span>
-                            <span id="analyzeBtnText" data-i18n="btn-analyze">Obtener Perspectiva</span>
-                        </button>
-                        <div id="clarityResult" class="mt-8 text-sm leading-relaxed hidden border-t border-divider pt-8 italic text-ink"></div>
-                    </article>
-                    <article class="p-10 flex flex-col shadow-sm border border-divider bg-white">
-                        <h3 class="font-serif text-2xl mb-2 tracking-tight">Auditoría Emocional</h3>
-                        <p class="text-[9px] text-accent mb-6 uppercase tracking-[0.2em] font-bold">Patrones de Activo/Pasivo</p>
-                        <input id="patternInput" type="text" class="w-full p-4 text-sm border border-divider rounded-none bg-paper focus:outline-none focus:ring-1 focus:ring-ink mb-6" placeholder="Ingresa un patrón...">
-                        <button onclick="generateFieldNote()" id="noteBtn" class="w-full py-4 border border-ink text-ink text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-ink hover:text-white transition-all flex items-center justify-center">
-                            <span id="noteSpinner" class="spinner hidden"></span>
-                            <span id="noteBtnText" data-i18n="btn-generate">Generar Nota</span>
-                        </button>
-                        <div id="noteResult" class="mt-8 p-6 bg-paper border border-divider text-[10px] hidden">
-                            <span class="block font-bold mb-3 uppercase tracking-[0.2em] text-subtle">Registro de Auditoría</span>
-                            <div id="noteContent" class="text-ink leading-relaxed"></div>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <!-- LIBROS -->
-        <section id="books" class="py-32 px-6 md:px-12 bg-paper">
-            <div class="max-w-6xl mx-auto text-center mb-16">
-                <span class="text-[10px] font-bold tracking-widest uppercase text-subtle mb-3 block" data-i18n="books-label">Obras Publicadas</span>
-                <h2 class="font-serif text-4xl md:text-5xl text-ink" data-i18n="books-sec-title">Libros</h2>
-            </div>
-            <div id="books-grid-es" class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-                <article class="essay-card group">
-                    <div class="flex flex-col sm:flex-row gap-8 items-center sm:items-start">
-                        <div class="flex aspect-[2/3] w-32 shrink-0 flex-col justify-between bg-ink p-4 shadow-lg transition-transform duration-700 group-hover:scale-105 sm:w-40">
-                            <div class="text-[7px] uppercase tracking-[0.2em] text-paper opacity-70">Obra Principal</div>
-                            <div class="font-serif text-lg leading-tight text-paper">Match<br>Consciente</div>
-                            <div class="border-t border-white/20 pt-2 text-[7px] uppercase tracking-[0.2em] text-paper">Andrés Ramírez</div>
-                        </div>
-                        <div class="flex h-full flex-1 flex-col text-center sm:text-left">
-                            <span class="mb-2 text-[9px] font-bold uppercase tracking-[0.2em] text-accent">Libro Teórico</span>
-                            <h3 class="font-serif text-2xl mb-3">Match Consciente</h3>
-                            <p class="mb-6 flex-grow text-xs leading-relaxed text-subtle">Una auditoría técnica sobre la selección de pareja. Aborda la disección de los patrones de atracción.</p>
-                            <a href="https://www.amazon.com/Match-Consciente-Encontrar-Perderse-Spanish-ebook/dp/B0GLB3NJ1F" target="_blank" class="read-btn">Amazon</a>
-                        </div>
-                    </div>
-                </article>
-                <article class="essay-card group">
-                    <div class="flex flex-col sm:flex-row gap-8 items-center sm:items-start">
-                        <div class="flex aspect-[2/3] w-32 shrink-0 flex-col justify-between border border-divider bg-white p-4 shadow-md transition-transform duration-700 group-hover:scale-105 sm:w-40">
-                            <div class="text-[7px] uppercase tracking-[0.2em] text-subtle">Workbook</div>
-                            <div class="font-serif text-lg leading-tight text-ink">No te<br>abandones</div>
-                            <div class="border-t border-divider pt-2 text-[7px] uppercase tracking-[0.2em] text-subtle">Andrés Ramírez</div>
-                        </div>
-                        <div class="flex h-full flex-1 flex-col text-center sm:text-left">
-                            <span class="mb-2 text-[9px] font-bold uppercase tracking-[0.2em] text-accent">Workbook Clínico</span>
-                            <h3 class="font-serif text-2xl mb-3">No te abandones</h3>
-                            <p class="mb-6 flex-grow text-xs leading-relaxed text-subtle">Pragmatismo clínico para la búsqueda de pareja. Marcos de trabajo estructurados.</p>
-                            <a href="https://www.amazon.com/No-Abandones-Buscar-Pareja-Spanish-ebook/dp/B0GCRCDMQL" target="_blank" class="read-btn">Amazon</a>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </section>
-
-        <!-- HEMEROTECA -->
-        <section id="essays" class="py-32 px-6 md:px-12 bg-white border-t border-divider text-center">
-            <span class="text-[10px] font-bold tracking-widest uppercase text-subtle mb-3 block" data-i18n="archive-label">Hemeroteca</span>
-            <h2 class="font-serif text-4xl md:text-5xl mb-12" data-i18n="archive-title">Hemeroteca</h2>
-            <div class="flex justify-center space-x-6 border-b border-divider mb-8" role="tablist">
-                <button onclick="switchContentTabs('es')" id="essay-tab-es" class="essay-tab active" data-i18n="tab-es">Español</button>
-                <button onclick="switchContentTabs('en')" id="essay-tab-en" class="essay-tab" data-i18n="tab-en">English</button>
-            </div>
-            <div id="essays-grid-es" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left max-w-6xl mx-auto">
-                <article class="essay-card">
-                    <h3 class="font-serif text-2xl mb-4 italic">El Autoconocimiento como Activo</h3>
-                    <p class="text-sm text-subtle leading-relaxed mb-8">Por qué entender tus propios patrones es la inversión de mayor apalancamiento.</p>
-                    <a href="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/1%20El%20autoconocimiento%20como%20activo%20econo%CC%81mico.pdf" target="_blank" class="read-btn">Leer PDF</a>
-                </article>
-                <article class="essay-card">
-                    <h3 class="font-serif text-2xl mb-4 italic">Arbitraje Emocional</h3>
-                    <p class="text-sm text-subtle leading-relaxed mb-8">Aprovechando la regulación en la toma de decisiones relacionales.</p>
-                    <a href="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/2%20Arbitraje%20Emocional%20-%20Aprovechando%20la%20Regulaci%C3%B3n%20en%20la%20Toma%20de%20Decisiones.pdf" target="_blank" class="read-btn">Leer PDF</a>
-                </article>
-                <article class="essay-card">
-                    <h3 class="font-serif text-2xl mb-4 italic">El Costo de Complacer</h3>
-                    <p class="text-sm text-subtle leading-relaxed mb-8">Cuantificando la mala asignación del capital emocional.</p>
-                    <a href="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/3%20El%20Costo%20de%20Oportunidad%20de%20Complacer%20a%20Otros%20-%20Cuantificando%20la%20Mala%20Asignaci%C3%B3n%20del%20Capital%20Emocional%20y%20Estrat%C3%A9gico.pdf" target="_blank" class="read-btn">Leer PDF</a>
-                </article>
-                <article class="essay-card">
-                    <h3 class="font-serif text-2xl mb-4 italic">Arquitectura del Silencio</h3>
-                    <p class="text-sm text-subtle leading-relaxed mb-8">La importancia de los espacios no negociables.</p>
-                    <a href="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/4%20La%20Arquitectura%20del%20Silencio.pdf" target="_blank" class="read-btn">Leer PDF</a>
-                </article>
-                <article class="essay-card">
-                    <h3 class="font-serif text-2xl mb-4 italic">Liquidez Cognitiva</h3>
-                    <p class="text-sm text-subtle leading-relaxed mb-8">Separando la identidad de las decisiones emocionales.</p>
-                    <a href="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/5%20Liquidez%20Cognitiva%20-%20Separando%20la%20Identidad%20de%20las%20Decisiones%20en%20Entornos%20de%20Alto%20Riesgo.pdf" target="_blank" class="read-btn">Leer PDF</a>
-                </article>
-                <article class="essay-card">
-                    <h3 class="font-serif text-2xl mb-4 italic">Señal Vs Ruido</h3>
-                    <p class="text-sm text-subtle leading-relaxed mb-8">Distinguir entre la intuición genuina y las respuestas al trauma.</p>
-                    <a href="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/6%20Sen%CC%83al%20Vs%20Ruido.pdf" target="_blank" class="read-btn">Leer PDF</a>
-                </article>
-                <article class="essay-card">
-                    <h3 class="font-serif text-2xl mb-4 italic">Progreso vs Derrota</h3>
-                    <p class="text-sm text-subtle leading-relaxed mb-8">Entendiendo por qué el progreso a veces se siente como pérdida.</p>
-                    <a href="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/El%20progreso%20disfrazado%20de%20derrota.pdf" target="_blank" class="read-btn">Leer PDF</a>
-                </article>
-            </div>
-            <div id="essays-grid-en" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left max-w-6xl mx-auto">
-                <article class="essay-card">
-                    <h3 class="font-serif text-2xl mb-4 italic">Self-Awareness as an Asset</h3>
-                    <p class="text-sm text-subtle leading-relaxed mb-8">Highest leverage investment.</p>
-                    <a href="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/1%20Self-Awareness%20as%20an%20Economic%20Asset.pdf" target="_blank" class="read-btn">PDF</a>
-                </article>
-                <article class="essay-card">
-                    <h3 class="font-serif text-2xl mb-4 italic">Emotional Arbitrage</h3>
-                    <p class="text-sm text-subtle leading-relaxed mb-8">Profiting from regulation.</p>
-                    <a href="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/2%20Emotional%20Arbitrage%20Profiting%20from%20Regulation%20in%20Decision%20Making.pdf" target="_blank" class="read-btn">PDF</a>
-                </article>
-            </div>
-        </section>
     </main>
 
-    <footer class="py-32 px-6 border-t border-divider bg-paper text-center">
-        <div class="mx-auto flex flex-col items-center">
-            <div class="font-serif text-2xl mb-4 tracking-[0.3em] uppercase font-bold">ANDRÉS RAMÍREZ</div>
-            <p class="text-[10px] text-subtle uppercase tracking-[0.3em] mb-12 italic">andres@selfloveclubstore.com</p>
-            <div class="flex gap-10 text-[10px] font-bold uppercase tracking-[0.3em] text-subtle">
-                <a href="https://www.instagram.com/selfloveclubusa" target="_blank">Instagram</a>
-                <a href="https://x.com/selfloveclubusa" target="_blank">X / Twitter</a>
+<footer class="py-24 px-6 border-t border-divider bg-paper text-center no-print">
+    <div class="max-w-xl mx-auto">
+        <h2 class="font-serif text-4xl mb-4 tracking-tighter">Andrés Ramírez</h2>
+        <p class="text-subtle text-[10px] uppercase tracking-[0.5em] mb-12 italic">Clarity Before Connection</p>
+        <p id="copyright-text" class="mt-12 text-[9px] text-subtle uppercase tracking-[0.2em]"></p>
+    </div>
+</footer>
+
+<script>
+document.getElementById("copyright-text").innerText = 
+    `© ${new Date().getFullYear()} Andrés Ramírez — Self Love Club Research. Fort Lauderdale | Caracas`;
+
+const essaysData = {
+    es: [
+        { id: 1, type: 'essay', tag: "Vol. 01", title: "El Autoconocimiento como Activo Económico", date: "Oct 2022", extract: "“El autoconocimiento no es simplemente un rasgo psicológico; es una ventaja competitiva cuantificable.”", content: `<h2>La Crisis de los Costos Ocultos</h2><p>Las organizaciones invierten frecuentemente millones en tecnología, infraestructura e investigación de mercado mientras descuidan su sistema operativo más crítico: la psicología humana.</p><blockquote>“El autoconocimiento no es simplemente un rasgo psicológico; es una ventaja competitiva cuantificable.”</blockquote><h3>El Mito de la Racionalidad Pura</h3><p>La cultura empresarial perpetúa la falsa noción de que las decisiones estratégicas se toman en un vacío emocional. Los líderes que carecen de autoconocimiento a menudo confunden reacciones impulsivas con estrategias objetivas.</p>` },
+        { id: 2, type: 'essay', tag: "Vol. 02", title: "Arbitraje Emocional", date: "Ene 2023", extract: "«El arbitraje emocional es la ventaja definitiva: convertir el pánico del mercado en beneficio personal».", content: `<p>En el arbitraje financiero se explotan discrepancias de precios. El arbitraje emocional es la capacidad de mantener claridad mientras el entorno opera bajo ruido emocional impulsado por el miedo.</p>` },
+        { id: 11, type: 'note', tag: "Nota de Campo", title: "El Progreso Disfrazado de Derrota", date: "Feb 2024", extract: "“El progreso real rara vez se siente como victoria.”", content: `<h3>La Incompetencia Consciente</h3><p>El crecimiento no es más fuerza sobre fuerza; es la fractura deliberada de una identidad que ya no sirve. La torpeza no es fracaso; es reconstrucción.</p>` },
+        { id: 12, type: 'note', tag: "Nota de Campo", title: "La Conexión como Artículo de Lujo", date: "May 2024", extract: "La profundidad se ha vuelto tan costosa que hoy es un artículo de lujo.", content: `<p>Lo que estamos viviendo no es un fallo moral colectivo, es un hackeo del entorno que ha encarecido el precio de la vulnerabilidad.</p>` },
+        { id: 13, type: 'note', tag: "Nota de Campo", title: "Medir para entender o esconderse", date: "Ago 2024", extract: "Una mirada conductual a los sistemas de auto-ubicación actuales.", content: `<p>Las personas no se hunden por lo que son. Se hunden por lo que repiten. Medir con honestidad es un acto de claridad.</p>` }
+    ],
+    en: [
+        { id: 1, type: 'essay', tag: "Vol. 01", title: "Self-Knowledge as an Economic Asset", date: "Oct 2022", extract: "“Self-knowledge is not merely a psychological trait; it is a quantifiable competitive advantage.”", content: `<p>Organizations frequently invest millions in technology while neglecting their most critical operating system: human psychology.</p>` },
+        { id: 2, type: 'essay', tag: "Vol. 02", title: "Emotional Arbitrage", date: "Jan 2023", extract: "\"Emotional arbitrage is the ultimate edge: turning market panic into personal profit.\"", content: `<p>Emotional Arbitrage leverages the gap between emotionally-driven and rationally-informed decision-making.</p>` },
+        { id: 13, type: 'note', tag: "Field Note", title: "Measure to Understand", date: "Aug 2024", extract: "A Behavioral Look at Current Self-Location Systems.", content: `<p>A good measurement mechanism doesn’t tell you who you are. It shows you what you’re doing.</p>` }
+    ]
+};
+
+let currentLang = 'es';
+
+function renderGridSection(containerId, items) {
+    const grid = document.getElementById(containerId);
+    grid.innerHTML = '';
+    
+    if (items.length === 0) {
+        grid.innerHTML = '<p class="text-[10px] uppercase tracking-widest text-subtle italic py-10">Próximamente / Coming Soon</p>';
+        return;
+    }
+
+    items.forEach(essay => {
+        const card = document.createElement('div');
+        card.className = 'essay-card p-10 h-80';
+        card.onclick = () => openEssay(essay.id);
+        card.innerHTML = `
+            <div class="flex justify-between items-start mb-6">
+                <span class="card-vol text-[10px] font-bold uppercase tracking-[0.3em] transition-colors">${essay.tag}</span>
+                <span class="text-[9px] uppercase tracking-widest text-subtle font-medium">${essay.date}</span>
             </div>
+            <div class="mb-auto">
+                <h3 class="font-serif text-2xl md:text-3xl leading-tight mb-4">${essay.title}</h3>
+                <p class="text-[11px] leading-relaxed text-subtle italic line-clamp-2">${essay.extract}</p>
+            </div>
+            <div class="pt-6 border-t border-divider flex items-center gap-3">
+                <span class="w-6 h-[1px] bg-accent"></span>
+                <span class="text-[9px] font-bold uppercase tracking-[0.4em]">Read Note</span>
+            </div>
+        `;
+        grid.appendChild(card);
+    });
+}
+
+function renderEssaysGrid() {
+    const essays = essaysData[currentLang].filter(e => e.type === 'essay');
+    const notes = essaysData[currentLang].filter(e => e.type === 'note');
+    renderGridSection('essays-grid', essays);
+    renderGridSection('fieldnotes-grid', notes);
+}
+
+function openEssay(id) {
+    const essay = essaysData[currentLang].find(e => e.id === id);
+    document.getElementById('essays-section').classList.add('hidden');
+    document.getElementById('fieldnotes-section').classList.add('hidden');
+    document.getElementById('essays-header').classList.add('hidden');
+
+    const content = document.getElementById('reader-content');
+    content.innerHTML = `
+        <div class="text-center mb-24">
+            <span class="text-[11px] font-bold uppercase tracking-[0.5em] text-accent mb-6 block">${essay.tag} — ${essay.date}</span>
+            <h1 class="font-serif text-5xl md:text-8xl mb-10 tracking-tighter leading-none">${essay.title}</h1>
+            <p class="text-subtle text-lg italic max-w-2xl mx-auto">${essay.extract}</p>
         </div>
-    </footer>
+        <div class="prose-body">${essay.content}</div>
+    `;
+    
+    const reader = document.getElementById('essay-reader');
+    reader.classList.remove('hidden');
+    setTimeout(() => {
+        reader.classList.add('opacity-100', 'translate-y-0');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 50);
+}
 
-    <script>
-        const translations = {
-            es: { "nav-home": "Inicio", "nav-tools": "Herramientas", "nav-books": "Libros", "nav-archive": "Archivo", "hero-title": "Claridad antes que Conexión.", "hero-subtitle": "Porque el costo de amar sin discernir es perderte a ti mismo.", "hero-kicker": "Autor", "tools-label": "Laboratorio de Discernimiento", "tools-title": "Interacción con la Claridad", "tools-desc": "Laboratorio práctico de discernimiento relacional.", "tab-es": "Español", "tab-en": "Inglés", "archive-label": "Archivo", "archive-title": "Hemeroteca", "btn-analyze": "Obtener Perspectiva", "btn-generate": "Generar Nota", "banner-text": "HAZ DE LA LECTURA TU HERRAMIENTA DE CRECIMIENTO PERSONAL ¡DESCUBRE MIS OBRAS!", "banner-link": "EXPLORAR LIBROS" },
-            en: { "nav-home": "Home", "nav-tools": "Tools", "nav-books": "Books", "nav-archive": "Archive", "hero-title": "Clarity Before Connection.", "hero-subtitle": "Because the cost of loving without discerning is to lose yourself.", "hero-kicker": "Author", "tools-label": "Discernment Laboratory", "tools-title": "Interaction with Clarity", "tools-desc": "Practical relational discernment lab.", "tab-es": "Spanish", "tab-en": "English", "archive-label": "Archive", "archive-title": "Field Notes Archive", "btn-analyze": "Get Perspective", "btn-generate": "Generate Note", "banner-text": "MAKE READING YOUR PERSONAL GROWTH TOOL! DISCOVER MY WORKS!", "banner-link": "EXPLORE BOOKS" }
-        };
+function closeEssay() {
+    const reader = document.getElementById('essay-reader');
+    reader.classList.remove('opacity-100', 'translate-y-0');
+    setTimeout(() => {
+        reader.classList.add('hidden');
+        document.getElementById('essays-section').classList.remove('hidden');
+        document.getElementById('fieldnotes-section').classList.remove('hidden');
+        document.getElementById('essays-header').classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 500);
+}
 
-        const aiPrompts = {
-            es: { clarity: "Eres Andrés Ramírez. Tu voz es analítica, estoica pero empática.", audit: "Actúa como un auditor de sistemas psicológicos." },
-            en: { clarity: "You are Andrés Ramírez. Your voice is analytical.", audit: "Act as an auditor of psychological systems." }
-        };
+function setLanguage(lang) {
+    currentLang = lang;
+    renderEssaysGrid();
+    closeEssay();
+    document.getElementById('btn-es').className = lang === 'es' ? 'lang-active pb-2 transition-all' : 'pb-2 text-subtle hover:text-ink transition-all';
+    document.getElementById('btn-en').className = lang === 'en' ? 'lang-active pb-2 transition-all' : 'pb-2 text-subtle hover:text-ink transition-all';
+}
 
-        let currentLang = 'es';
-        const apiKey = "";
+window.onbeforeprint = () => {};
 
-        function scrollToSection(id) {
-            const element = document.getElementById(id);
-            if (element) window.scrollTo({ top: element.offsetTop - 120, behavior: 'smooth' });
-        }
+renderEssaysGrid();
+</script>
 
-        function setLanguage(lang) {
-            currentLang = lang;
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (translations[lang][key]) el.innerText = translations[lang][key];
-            });
-            document.getElementById('btn-es').classList.toggle('lang-active', lang === 'es');
-            document.getElementById('btn-en').classList.toggle('lang-active', lang === 'en');
-            switchContentTabs(lang);
-        }
-
-        function switchContentTabs(tab) {
-            const esGrid = document.getElementById('essays-grid-es');
-            const enGrid = document.getElementById('essays-grid-en');
-            if (tab === 'es') {
-                esGrid.classList.remove('hidden'); enGrid.classList.add('hidden');
-                document.getElementById('essay-tab-es').classList.add('active');
-                document.getElementById('essay-tab-en').classList.remove('active');
-            } else {
-                enGrid.classList.remove('hidden'); esGrid.classList.add('hidden');
-                document.getElementById('essay-tab-en').classList.add('active');
-                document.getElementById('essay-tab-es').classList.remove('active');
-            }
-        }
-
-        function closeBanner() { document.getElementById('announcement-banner').style.display = 'none'; }
-        function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); document.getElementById('mobile-menu').classList.toggle('flex'); }
-
-        async function callGemini(prompt, systemPrompt) {
-            try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], systemInstruction: { parts: [{ text: systemPrompt }] } })
-                });
-                const result = await response.json();
-                return result.candidates[0].content.parts[0].text;
-            } catch (e) { return "Error."; }
-        }
-
-        async function analyzeClarity() {
-            const input = document.getElementById('situationInput');
-            const resultDiv = document.getElementById('clarityResult');
-            if (!input.value.trim()) return;
-            document.getElementById('analyzeSpinner').classList.remove('hidden');
-            const text = await callGemini(input.value, aiPrompts[currentLang].clarity);
-            resultDiv.innerHTML = text.replace(/\n/g, '<br>');
-            resultDiv.classList.remove('hidden');
-            document.getElementById('analyzeSpinner').classList.add('hidden');
-        }
-
-        async function generateFieldNote() {
-            const input = document.getElementById('patternInput');
-            const resultDiv = document.getElementById('noteResult');
-            if (!input.value.trim()) return;
-            document.getElementById('noteSpinner').classList.remove('hidden');
-            const text = await callGemini(input.value, aiPrompts[currentLang].audit);
-            document.getElementById('noteContent').innerHTML = text.replace(/\n/g, '<br>');
-            resultDiv.classList.remove('hidden');
-            document.getElementById('noteSpinner').classList.add('hidden');
-        }
-    </script>
 </body>
 </html>

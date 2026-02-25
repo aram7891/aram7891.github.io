@@ -4,9 +4,20 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'input.css'
+      - 'index.html'
+      - 'tailwind.config.js'
+      - '.github/workflows/tailwind-build.yml'
+  pull_request:
+    paths:
+      - 'input.css'
+      - 'index.html'
+      - 'tailwind.config.js'
+      - '.github/workflows/tailwind-build.yml'
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   build-tailwind:
@@ -15,8 +26,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -29,14 +38,10 @@ jobs:
       - name: Compile Tailwind CSS
         run: npx tailwindcss -i ./input.css -o ./tailwind.css --minify
 
-      - name: Commit generated tailwind.css
+      - name: Verify generated CSS is committed
         run: |
-          if [[ -z "$(git status --porcelain -- tailwind.css)" ]]; then
-            echo "No changes in tailwind.css"
-            exit 0
+          if [[ -n "$(git status --porcelain -- tailwind.css)" ]]; then
+            echo "tailwind.css is out of date. Run the Tailwind build locally and commit tailwind.css."
+            git --no-pager diff -- tailwind.css
+            exit 1
           fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add tailwind.css
-          git commit -m "chore: update tailwind.css [skip ci]"
-          git push
