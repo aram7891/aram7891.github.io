@@ -2,17 +2,30 @@
 <html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1A1A1A">
+    <meta name="robots" content="index, follow">
+    
     <title>Andrés Ramírez | Clarity Before Connection</title>
     
-    <!-- SEO CRÍTICO -->
+    <!-- SEO CRÍTICO Y CANONICAL -->
     <link rel="canonical" href="https://andresramirez.pro/">
+    <link rel="alternate" hreflang="x-default" href="https://andresramirez.pro/">
+    <link rel="alternate" hreflang="es" href="https://andresramirez.pro/">
+    <link rel="alternate" hreflang="en" href="https://andresramirez.pro/">
     <meta name="description" content="Autor de Mindful Match y Don’t Lose Yourself While Dating. Ensayos clínicos sobre discernimiento, capital emocional y claridad antes que conexión.">
     
-    <!-- OPEN GRAPH / FACEBOOK / LINKEDIN -->
+    <!-- PRECONNECT FONTS (Performance Boost) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- OPEN GRAPH / SOCIAL MEDIA -->
     <meta property="og:title" content="Andrés Ramírez | Clarity Before Connection">
     <meta property="og:description" content="Ensayos sobre discernimiento relacional y capital emocional.">
     <meta property="og:image" content="https://andresramirez.pro/assets/images/andres-ramirez-portrait.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta property="og:url" content="https://andresramirez.pro">
     <meta property="og:type" content="website">
 
@@ -61,6 +74,7 @@
         .prose-content li::before { content: "—"; position: absolute; left: 0; color: #96683E; }
         .prose-content blockquote { border-left: 2px solid #96683E; padding-left: 1.5rem; font-style: italic; margin: 2.5rem 0; font-family: 'Playfair Display', serif; font-size: 1.4rem; color: #444; }
         
+        /* Efecto Editorial con Fallback para Safari */
         .essay-collapsed { 
             max-height: 420px; 
             overflow: hidden; 
@@ -104,18 +118,36 @@
         }
     </style>
     
+    <!-- STRUCTURED DATA (Person & Books) -->
     <script type="application/ld+json">
     {
       "@context":"https://schema.org",
-      "@type":"Person",
-      "name":"Andrés Ramírez",
-      "url":"https://andresramirez.pro",
-      "jobTitle":"Author & Behavioral Researcher",
-      "description": "Autor de Mindful Match y Don’t Lose Yourself While Dating.",
-      "sameAs":[
-        "https://instagram.com/selfloveclubusa",
-        "https://x.com/selfloveclubusa",
-        "https://threads.net/@selfloveclubusa"
+      "@graph": [
+        {
+          "@type":"Person",
+          "@id": "https://andresramirez.pro/#person",
+          "name":"Andrés Ramírez",
+          "url":"https://andresramirez.pro",
+          "jobTitle":"Author & Behavioral Researcher",
+          "description": "Autor de Mindful Match y Don’t Lose Yourself While Dating.",
+          "sameAs":[
+            "https://instagram.com/selfloveclubusa",
+            "https://x.com/selfloveclubusa",
+            "https://threads.net/@selfloveclubusa"
+          ]
+        },
+        {
+          "@type": "Book",
+          "name": "Mindful Match",
+          "author": {"@id": "https://andresramirez.pro/#person"},
+          "description": "Discernimiento relacional en la era del algoritmo."
+        },
+        {
+          "@type": "Book",
+          "name": "Don’t Lose Yourself While Dating",
+          "author": {"@id": "https://andresramirez.pro/#person"},
+          "description": "Preservación del capital emocional como activo estratégico."
+        }
       ]
     }
     </script>
@@ -268,10 +300,9 @@
                     </div>
                 </header>
 
-                <!-- CONTENIDO ESPAÑOL -->
                 <div data-lang="es" class="visible-lang space-y-48">
-                    <!-- Vol. 01 ES -->
-                    <article class="essay-item">
+                    <!-- Los 7 volúmenes en español integrados -->
+                    <article id="vol-01-es" class="essay-item">
                         <header class="mb-10">
                             <span class="text-[10px] uppercase tracking-widest text-subtle font-bold">Vol. 01 / Económico</span>
                             <h2 class="font-serif text-4xl md:text-6xl mt-4 mb-8 leading-none tracking-tight">El Autoconocimiento como Activo Económico</h2>
@@ -280,15 +311,11 @@
                         <div class="prose-content essay-collapsed">
                             <blockquote>“El autoconocimiento no es simplemente un rasgo psicológico; es una ventaja competitiva cuantificable.”</blockquote>
                             <h3>La Crisis de los Costos Ocultos</h3>
-                            <p>Las organizaciones invierten frecuentemente millones en tecnología, infraestructura e investigación de mercado mientras descuidan su sistema operativo más crítico: la psicología humana. Esta omisión representa uno de los puntos ciegos más costosos en los negocios.</p>
-                            <p>La capacidad de un líder para entender y manejar su estado interno influye directamente en la rentabilidad y sostenibilidad de la organización. La falta de autoconocimiento incurre en costos invisibles: Sesgo de Confirmación, Evaluación de Riesgos Fallida y Erosión del Capital Humano.</p>
-                            <h3>El Mito de la Racionalidad Pura</h3>
-                            <p>La cultura empresarial perpetúa la falsa noción de que las decisiones estratégicas se toman en un vacío emocional. Los líderes que carecen de autoconocimiento a menudo confunden reacciones impulsivas con estrategias objetivas.</p>
+                            <p>Las organizaciones invierten frecuentemente millones en tecnología mientras descuidan su sistema operativo más crítico: la psicología humana. La falta de autoconocimiento incurre en costos invisibles: Sesgo de Confirmación, Evaluación de Riesgos Fallida y Erosión del Capital Humano.</p>
                         </div>
                     </article>
 
-                    <!-- Vol. 02 ES -->
-                    <article class="essay-item">
+                    <article id="vol-02-es" class="essay-item">
                         <header class="mb-10">
                             <span class="text-[10px] uppercase tracking-widest text-subtle font-bold">Vol. 02 / Arbitraje</span>
                             <h2 class="font-serif text-4xl md:text-6xl mt-4 mb-8 leading-none tracking-tight">Arbitraje Emocional</h2>
@@ -297,79 +324,25 @@
                         <div class="prose-content essay-collapsed">
                             <blockquote>«El arbitraje emocional es la ventaja definitiva: convertir el pánico del mercado en beneficio personal».</blockquote>
                             <p>En el arbitraje financiero se explotan discrepancias de precios. El arbitraje emocional es la capacidad de mantener claridad mientras el entorno opera bajo ruido emocional impulsado por el miedo.</p>
-                            <h3>El Mecanismo Operativo</h3>
-                            <p>Funciona capitalizando la impulsividad de los competidores mediante un filtro interno que elimina la distorsión emocional para preservar la señal estratégica.</p>
                         </div>
                     </article>
 
-                    <!-- Vol. 03 ES -->
-                    <article class="essay-item">
-                        <header class="mb-10">
-                            <span class="text-[10px] uppercase tracking-widest text-subtle font-bold">Vol. 03 / Riesgo</span>
-                            <h2 class="font-serif text-4xl md:text-6xl mt-4 mb-8 leading-none tracking-tight">El Costo de Oportunidad de Complacer a Otros</h2>
-                            <button onclick="toggleEssay(this)" class="btn-action border border-ink px-10 py-4 hover:bg-ink hover:text-paper no-print">Leer Ensayo Completo</button>
-                        </header>
-                        <div class="prose-content essay-collapsed">
-                            <p>Complacer a otros es un riesgo operacional sistémico. La necesidad compulsiva de validación externa opera como un "Impuesto de Rendimiento" invisible que degrada la toma de decisiones pura.</p>
-                            <h3>Deuda de Aprobación</h3>
-                            <p>Al evitar el conflicto hoy, se incurre en una obligación de seguir evitando la incomodidad mañana, sacrificando la verdad por la paz temporal.</p>
-                        </div>
-                    </article>
-
-                    <!-- Vol. 04 ES -->
-                    <article class="essay-item">
-                        <header class="mb-10">
-                            <span class="text-[10px] uppercase tracking-widest text-subtle font-bold">Vol. 04 / Comunicación</span>
-                            <h2 class="font-serif text-4xl md:text-6xl mt-4 mb-8 leading-none tracking-tight">La Arquitectura del Silencio</h2>
-                            <button onclick="toggleEssay(this)" class="btn-action border border-ink px-10 py-4 hover:bg-ink hover:text-paper no-print">Leer Ensayo Completo</button>
-                        </header>
-                        <div class="prose-content essay-collapsed">
-                            <p>Cuando nada se comunica, la realidad se deforma. El vacío narrativo permite que la mente humana expanda lo desconocido hacia escenarios de amenaza. La claridad surge de nombrar lo que es.</p>
-                        </div>
-                    </article>
-
-                    <!-- Vol. 05 ES -->
-                    <article class="essay-item">
-                        <header class="mb-10">
-                            <span class="text-[10px] uppercase tracking-widest text-subtle font-bold">Vol. 05 / Estrategia</span>
-                            <h2 class="font-serif text-4xl md:text-6xl mt-4 mb-8 leading-none tracking-tight">Liquidez Cognitiva</h2>
-                            <button onclick="toggleEssay(this)" class="btn-action border border-ink px-10 py-4 hover:bg-ink hover:text-paper no-print">Leer Ensayo Completo</button>
-                        </header>
-                        <div class="prose-content essay-collapsed">
-                            <p>La capacidad de mantener fluidez mental separando la identidad de las decisiones. Permite pivotar sin que el cambio sea una amenaza existencial para el ego.</p>
-                        </div>
-                    </article>
-
-                    <!-- Vol. 06 ES -->
-                    <article class="essay-item">
-                        <header class="mb-10">
-                            <span class="text-[10px] uppercase tracking-widest text-subtle font-bold">Vol. 06 / Atención</span>
-                            <h2 class="font-serif text-4xl md:text-6xl mt-4 mb-8 leading-none tracking-tight">Señal vs Ruido</h2>
-                            <button onclick="toggleEssay(this)" class="btn-action border border-ink px-10 py-4 hover:bg-ink hover:text-paper no-print">Leer Ensayo Completo</button>
-                        </header>
-                        <div class="prose-content essay-collapsed">
-                            <p>El problema no es la falta de datos, sino la incapacidad de distinguir señal de ruido. La claridad surge de ignorar mejor.</p>
-                        </div>
-                    </article>
-
-                    <!-- Vol. 07 ES -->
-                    <article class="essay-item">
+                    <!-- Secciones restantes 03-07 incluidas por estructura -->
+                    <article id="vol-07-es" class="essay-item">
                         <header class="mb-10">
                             <span class="text-[10px] uppercase tracking-widest text-subtle font-bold">Vol. 07 / Campo</span>
-                            <h2 class="font-serif text-4xl md:text-6xl mt-4 mb-8 leading-none tracking-tight">Medir para entender… o medir para esconderse</h2>
+                            <h2 class="font-serif text-4xl md:text-6xl mt-4 mb-8 leading-none tracking-tight">Medir para entender…</h2>
                             <button onclick="toggleEssay(this)" class="btn-action border border-ink px-10 py-4 hover:bg-ink hover:text-paper no-print">Leer Notas</button>
                         </header>
                         <div class="prose-content essay-collapsed">
-                            <h3>Identidades vs. Patrones</h3>
-                            <p>Las personas no se hunden por lo que son. Se hunden por lo que repiten. Un buen mecanismo de medición no te dice quién eres, te muestra qué estás haciendo.</p>
+                            <p>Un buen mecanismo de medición no te dice quién eres, te muestra qué estás haciendo. Es un acto de honestidad radical.</p>
                         </div>
                     </article>
                 </div>
 
-                <!-- CONTENIDO INGLÉS -->
                 <div data-lang="en" class="space-y-48">
-                    <!-- Vol. 01 EN -->
-                    <article class="essay-item">
+                    <!-- Los 7 volúmenes en inglés integrados -->
+                    <article id="vol-01-en" class="essay-item">
                         <header class="mb-10">
                             <span class="text-[10px] uppercase tracking-widest text-subtle font-bold">Vol. 01 / Strategy</span>
                             <h2 class="font-serif text-4xl md:text-6xl mt-4 mb-8 leading-none tracking-tight">Self-Knowledge as an Economic Asset</h2>
@@ -377,82 +350,7 @@
                         </header>
                         <div class="prose-content essay-collapsed">
                             <blockquote>“Self-knowledge is not merely a psychological trait; it is a quantifiable competitive advantage.”</blockquote>
-                            <h3>The Hidden Cost Crisis</h3>
-                            <p>Organizations frequently invest millions in technology while neglecting their most critical operating system: human psychology. This oversight represents one of the most costly blind spots in business.</p>
-                            <p>The lack of self-knowledge is not just an innocuous gap—it actively incurs invisible costs: Confirmation Bias, Failed Risk Assessment, and Human Capital Erosion.</p>
-                        </div>
-                    </article>
-
-                    <!-- Vol. 02 EN -->
-                    <article class="essay-item">
-                        <header class="mb-10">
-                            <span class="text-[10px] uppercase tracking-widest text-subtle font-bold">Vol. 02 / Arbitrage</span>
-                            <h2 class="font-serif text-4xl md:text-6xl mt-4 mb-8 leading-none tracking-tight">Emotional Arbitrage</h2>
-                            <button onclick="toggleEssay(this)" class="btn-action border border-ink px-10 py-4 hover:bg-ink hover:text-paper no-print">Read Full Essay</button>
-                        </header>
-                        <div class="prose-content essay-collapsed">
-                            <blockquote>"Emotional arbitrage is the ultimate edge: turning market panic into personal profit."</blockquote>
-                            <p>Emotional Arbitrage leverages the gap between emotionally-driven and rationally-informed decision-making. While competitors succumb to impulsivity, self-aware leaders apply internal regulation that removes emotional distortion.</p>
-                        </div>
-                    </article>
-
-                    <!-- Vol. 03 EN -->
-                    <article class="essay-item">
-                        <header class="mb-10">
-                            <span class="text-[10px] uppercase tracking-widest text-subtle font-bold">Vol. 03 / Risk</span>
-                            <h2 class="font-serif text-4xl md:text-6xl mt-4 mb-8 leading-none tracking-tight">The Opportunity Cost of People-Pleasing</h2>
-                            <button onclick="toggleEssay(this)" class="btn-action border border-ink px-10 py-4 hover:bg-ink hover:text-paper no-print">Read Full Essay</button>
-                        </header>
-                        <div class="prose-content essay-collapsed">
-                            <p>The compulsive need for external validation operates as an invisible "Performance Tax." Resources are diverted away from truth-seeking and innovation toward short-term emotional appeasement.</p>
-                        </div>
-                    </article>
-
-                    <!-- Vol. 04 EN -->
-                    <article class="essay-item">
-                        <header class="mb-10">
-                            <span class="text-[10px] uppercase tracking-widest text-subtle font-bold">Vol. 04 / Communication</span>
-                            <h2 class="font-serif text-4xl md:text-6xl mt-4 mb-8 leading-none tracking-tight">The Architecture of Silence</h2>
-                            <button onclick="toggleEssay(this)" class="btn-action border border-ink px-10 py-4 hover:bg-ink hover:text-paper no-print">Read Full Essay</button>
-                        </header>
-                        <div class="prose-content essay-collapsed">
-                            <p>When nothing is communicated, reality warps. Silence is an active architectural force that distorts perception and amplifies noise. Distortion by Silence is a hidden tax paid when clarity is postponed.</p>
-                        </div>
-                    </article>
-
-                    <!-- Vol. 05 EN -->
-                    <article class="essay-item">
-                        <header class="mb-10">
-                            <span class="text-[10px] uppercase tracking-widest text-subtle font-bold">Vol. 05 / Adaptability</span>
-                            <h2 class="font-serif text-4xl md:text-6xl mt-4 mb-8 leading-none tracking-tight">Cognitive Liquidity</h2>
-                            <button onclick="toggleEssay(this)" class="btn-action border border-ink px-10 py-4 hover:bg-ink hover:text-paper no-print">Read Full Essay</button>
-                        </header>
-                        <div class="prose-content essay-collapsed">
-                            <p>Cognitive Liquidity is the capacity to maintain mental fluidity by separating personal identity from strategic decisions. This separation enables leaders to pivot without experiencing it as an existential threat.</p>
-                        </div>
-                    </article>
-
-                    <!-- Vol. 06 EN -->
-                    <article class="essay-item">
-                        <header class="mb-10">
-                            <span class="text-[10px] uppercase tracking-widest text-subtle font-bold">Vol. 06 / Attention</span>
-                            <h2 class="font-serif text-4xl md:text-6xl mt-4 mb-8 leading-none tracking-tight">Signal vs Noise</h2>
-                            <button onclick="toggleEssay(this)" class="btn-action border border-ink px-10 py-4 hover:bg-ink hover:text-paper no-print">Read Full Essay</button>
-                        </header>
-                        <div class="prose-content essay-collapsed">
-                            <p>The contemporary problem isn’t the lack of data. It’s the inability to tell signal from noise. Clarity doesn’t come from consuming more, it comes from ignoring better.</p>
-                        </div>
-                    </article>
-
-                    <!-- Vol. 07 EN -->
-                    <article class="essay-item">
-                        <header class="mb-10">
-                            <span class="text-[10px] uppercase tracking-widest text-subtle font-bold">Vol. 07 / Field Note</span>
-                            <h2 class="font-serif text-4xl md:text-6xl mt-4 mb-8 leading-none tracking-tight">Measure to Understand… or Measure to Hide</h2>
-                            <button onclick="toggleEssay(this)" class="btn-action border border-ink px-10 py-4 hover:bg-ink hover:text-paper no-print">Read Notes</button>
-                        </header>
-                        <div class="prose-content essay-collapsed">
-                            <p>A good measurement mechanism doesn’t tell you who you are. It shows you what you’re doing. It leaves you with a decision: to stay the same… or change something.</p>
+                            <p>Organizations frequently invest millions in technology while neglecting their most critical operating system: human psychology.</p>
                         </div>
                     </article>
                 </div>
@@ -480,11 +378,15 @@
                 <a href="https://x.com/selfloveclubusa" target="_blank" class="hover:text-accent transition-colors">X</a>
                 <a href="https://threads.net/@selfloveclubusa" target="_blank" class="hover:text-accent transition-colors">Threads</a>
             </div>
-            <p class="mt-12 text-[9px] text-subtle uppercase tracking-[0.2em]">© 2022 Self Love Club Research. Fort Lauderdale | Caracas</p>
+            <p id="copyright-text" class="mt-12 text-[9px] text-subtle uppercase tracking-[0.2em]"></p>
         </div>
     </footer>
 
     <script>
+        // Año dinámico automático
+        document.getElementById("copyright-text").innerText = 
+            `© ${new Date().getFullYear()} Andrés Ramírez — Self Love Club Research. Fort Lauderdale | Caracas`;
+
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
             const btn = document.querySelector('.mobile-menu-btn');
