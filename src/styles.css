@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  scroll-padding-top: 140px;
+}
+
+body {
+  @apply bg-paper text-ink;
+}
+
+.author-photo {
+  @apply grayscale object-cover transition duration-500;
+}
+
+.author-photo:hover {
+  @apply grayscale-0;
+}
+
+.essay-card {
+  @apply bg-white border border-divider p-10 flex flex-col transition duration-500 h-full;
+}
+
+.essay-card:hover {
+  @apply border-ink -translate-y-2 shadow-xl;
+}
+
+.read-btn {
+  @apply inline-block mt-auto py-3 text-[10px] font-bold tracking-[0.2em] uppercase border-b border-ink text-ink transition no-underline cursor-pointer;
+}
+
+.step-circle {
+  @apply transition duration-300;
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.spinner {
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border-left-color: #1a1a1a;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

@@ -17,45 +17,12 @@
     <link rel="canonical" href="https://www.andresramirez.pro">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
     
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/src/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        paper: '#FAFAFA',
-                        ink: '#1A1A1A',
-                        subtle: '#71717A',
-                        divider: '#E4E4E7',
-                        accent: '#A67C52'
-                    },
-                    fontFamily: {
-                        serif: ['"Playfair Display"', 'serif'],
-                        sans: ['"Inter"', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-
-    <style>
-        :root { scroll-padding-top: 140px; }
-        body { background-color: #FAFAFA; color: #1A1A1A; }
-        .author-photo { filter: grayscale(100%); object-fit: cover; transition: filter 0.5s ease; }
-        .author-photo:hover { filter: grayscale(0%); }
-        .essay-card { background: #ffffff; border: 1px solid #E4E4E7; padding: 2.5rem 2rem; display: flex; flex-direction: column; transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); height: 100%; }
-        .essay-card:hover { border-color: #1A1A1A; transform: translateY(-8px); box-shadow: 0 30px 60px -20px rgba(0,0,0,0.08); }
-        .read-btn { display: inline-block; margin-top: auto; padding: 12px 0; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; border-bottom: 1px solid #1A1A1A; color: #1A1A1A; transition: all 0.3s ease; text-decoration: none; cursor: pointer; }
-        .step-circle { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-        .fade-in { animation: fadeIn 0.5s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .spinner { border: 2px solid rgba(0, 0, 0, 0.1); width: 18px; height: 18px; border-radius: 50%; border-left-color: #1A1A1A; animation: spin 1s linear infinite; display: inline-block; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    </style>
+    <script type="module" src="/src/main.js"></script>
 </head>
 <body class="font-sans antialiased selection:bg-accent/10">
 
@@ -70,7 +37,7 @@
                 <a href="#essays" class="hover:text-accent transition-colors">Ensayos</a>
             </div>
             <div class="lg:hidden">
-                <button onclick="toggleMobileMenu()" class="p-2">
+                <button id="mobileMenuToggle" class="p-2">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
                 </button>
             </div>
@@ -78,11 +45,11 @@
     </header>
 
     <div id="mobile-menu" class="fixed inset-0 z-40 hidden flex-col justify-center items-center space-y-8 bg-paper/95 backdrop-blur-lg">
-        <a href="#home" onclick="toggleMobileMenu()" class="font-serif text-2xl">Inicio</a>
-        <a href="#ai-tools" onclick="toggleMobileMenu()" class="font-serif text-2xl">Laboratorio</a>
-        <a href="#books" onclick="toggleMobileMenu()" class="font-serif text-2xl">Libros</a>
-        <a href="#essays" onclick="toggleMobileMenu()" class="font-serif text-2xl">Ensayos</a>
-        <button onclick="toggleMobileMenu()" class="absolute top-6 right-6 text-xs uppercase font-bold tracking-widest">Cerrar</button>
+        <a href="#home" class="font-serif text-2xl mobile-menu-link">Inicio</a>
+        <a href="#ai-tools" class="font-serif text-2xl mobile-menu-link">Laboratorio</a>
+        <a href="#books" class="font-serif text-2xl mobile-menu-link">Libros</a>
+        <a href="#essays" class="font-serif text-2xl mobile-menu-link">Ensayos</a>
+        <button id="mobileMenuClose" class="absolute top-6 right-6 text-xs uppercase font-bold tracking-widest">Cerrar</button>
     </div>
 
     <main>
@@ -143,7 +110,7 @@
 
                     <article class="essay-card">
                         <h3 class="font-serif text-xl font-bold mb-6">Paso 2 · Perspectiva</h3>
-                        <button onclick="analyzeClarity()" id="analyzeBtn" class="w-full bg-ink text-white py-4 text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-zinc-800 transition shadow-md">
+                        <button id="analyzeBtn" class="w-full bg-ink text-white py-4 text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-zinc-800 transition shadow-md">
                             <span id="analyzeSpinner" class="spinner hidden mr-2"></span>
                             Obtener Perspectiva
                         </button>
@@ -156,7 +123,7 @@
 
                     <article class="essay-card">
                         <h3 class="font-serif text-xl font-bold mb-6">Paso 3 · La Nota</h3>
-                        <button onclick="generateFieldNote()" id="noteBtn" class="w-full border border-ink text-ink py-4 text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-ink hover:text-white transition shadow-sm">
+                        <button id="noteBtn" class="w-full border border-ink text-ink py-4 text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-ink hover:text-white transition shadow-sm">
                             <span id="noteSpinner" class="spinner hidden mr-2"></span>
                             Generar Nota de Campo
                         </button>
@@ -232,45 +199,6 @@
             <a href="https://twitter.com/andresramirez" target="_blank" class="text-accent hover:underline">X</a>
         </p>
     </footer>
-
-    <script>
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        }
-
-        function analyzeClarity() {
-            const btn = document.getElementById('analyzeBtn');
-            const spinner = document.getElementById('analyzeSpinner');
-            const output = document.getElementById('perspectiveOutput');
-
-            spinner.classList.remove('hidden');
-            btn.disabled = true;
-
-            setTimeout(() => {
-                spinner.classList.add('hidden');
-                output.classList.remove('hidden');
-                output.innerText = "Perspectiva generada automáticamente: Considera tu situación con neutralidad y observa tus emociones antes de actuar.";
-                document.getElementById('stepCircle2').classList.add('bg-ink', 'text-white');
-            }, 1200);
-        }
-
-        function generateFieldNote() {
-            const btn = document.getElementById('noteBtn');
-            const spinner = document.getElementById('noteSpinner');
-            const output = document.getElementById('noteOutput');
-
-            spinner.classList.remove('hidden');
-            btn.disabled = true;
-
-            setTimeout(() => {
-                spinner.classList.add('hidden');
-                output.classList.remove('hidden');
-                output.innerText = "Nota de campo generada: Reflexiona sobre la situación, registra tus hallazgos y observa cómo tus emociones impactan tus decisiones.";
-                document.getElementById('stepCircle3').classList.add('bg-ink', 'text-white');
-            }, 1200);
-        }
-    </script>
 
 </body>
 </html>
