@@ -4,9 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Andrés Ramírez | Clarity Before Connection</title>
-    <meta name="description" content="Andrés Ramírez es autor de Mindful Match y Don’t Lose Yourself While Dating. Ensayos clínicos sobre discernimiento, capital emocional y claridad antes que conexión.">
+    
+    <!-- SEO CRÍTICO -->
+    <link rel="canonical" href="https://andresramirez.pro/">
+    <meta name="description" content="Autor de Mindful Match y Don’t Lose Yourself While Dating. Ensayos clínicos sobre discernimiento, capital emocional y claridad antes que conexión.">
+    
+    <!-- OPEN GRAPH / FACEBOOK / LINKEDIN -->
+    <meta property="og:title" content="Andrés Ramírez | Clarity Before Connection">
+    <meta property="og:description" content="Ensayos sobre discernimiento relacional y capital emocional.">
+    <meta property="og:image" content="https://andresramirez.pro/assets/images/andres-ramirez-portrait.jpg">
+    <meta property="og:url" content="https://andresramirez.pro">
+    <meta property="og:type" content="website">
+
+    <!-- TWITTER CARD -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Andrés Ramírez | Clarity Before Connection">
+    <meta name="twitter:description" content="Applied Self-Knowledge — Where clarity becomes human performance.">
+    <meta name="twitter:image" content="https://andresramirez.pro/assets/images/andres-ramirez-portrait.jpg">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
     <script>
         tailwind.config = { 
             theme: { 
@@ -23,6 +41,7 @@
             } 
         }
     </script>
+    
     <style>
         :root { scroll-padding-top: 100px; }
         body { background-color: #FAFAFA; color: #1A1A1A; overflow-x: hidden; }
@@ -42,8 +61,24 @@
         .prose-content li::before { content: "—"; position: absolute; left: 0; color: #96683E; }
         .prose-content blockquote { border-left: 2px solid #96683E; padding-left: 1.5rem; font-style: italic; margin: 2.5rem 0; font-family: 'Playfair Display', serif; font-size: 1.4rem; color: #444; }
         
-        .essay-collapsed { max-height: 420px; overflow: hidden; position: relative; mask-image: linear-gradient(to bottom, black 70%, transparent 100%); transition: max-height 0.7s ease; }
-        .essay-expanded { max-height: none !important; mask-image: none !important; }
+        .essay-collapsed { 
+            max-height: 420px; 
+            overflow: hidden; 
+            position: relative; 
+            mask-image: linear-gradient(to bottom, black 70%, transparent 100%); 
+            -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+            transition: max-height 0.7s ease; 
+        }
+        .essay-collapsed::after {
+            content: "";
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 120px;
+            background: linear-gradient(to bottom, transparent, #FAFAFA);
+            pointer-events: none;
+        }
+        .essay-expanded { max-height: none !important; mask-image: none !important; -webkit-mask-image: none !important; }
+        .essay-expanded::after { display: none; }
         
         [data-lang] { display: none; }
         .visible-lang { display: block !important; }
@@ -55,12 +90,40 @@
 
         .slc-cover { background: #1A1A1A; color: #FAFAFA; transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1); }
         .slc-cover:hover { transform: scale(0.995); background: #111; }
+
+        @media print {
+            nav, .btn-action, .spinner, .slc-cover p, form, .mobile-menu-btn, footer .flex { display: none !important; }
+            body { background: white !important; }
+            .author-photo { filter: none !important; }
+            .essay-collapsed { max-height: none !important; mask-image: none !important; }
+            .view-content { display: block !important; opacity: 1 !important; transform: none !important; }
+            section { page-break-inside: avoid; }
+            h1, h2, h3 { page-break-after: avoid; }
+            .bg-ink { background: #1A1A1A !important; color: white !important; -webkit-print-color-adjust: exact; }
+            .bg-paper { background: #FAFAFA !important; -webkit-print-color-adjust: exact; }
+        }
     </style>
+    
+    <script type="application/ld+json">
+    {
+      "@context":"https://schema.org",
+      "@type":"Person",
+      "name":"Andrés Ramírez",
+      "url":"https://andresramirez.pro",
+      "jobTitle":"Author & Behavioral Researcher",
+      "description": "Autor de Mindful Match y Don’t Lose Yourself While Dating.",
+      "sameAs":[
+        "https://instagram.com/selfloveclubusa",
+        "https://x.com/selfloveclubusa",
+        "https://threads.net/@selfloveclubusa"
+      ]
+    }
+    </script>
 </head>
 <body class="font-sans antialiased selection:bg-accent/10">
 
     <!-- NAVIGATION -->
-    <nav class="fixed top-0 w-full z-50 bg-paper/80 backdrop-blur-md border-b border-divider px-6 py-6">
+    <nav class="fixed top-0 w-full z-50 bg-paper/80 backdrop-blur-md border-b border-divider px-6 py-6 no-print">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <button onclick="switchView('home')" class="font-serif text-2xl tracking-tighter hover:opacity-70 transition-opacity">Andrés Ramírez</button>
             <div class="hidden md:flex space-x-10 text-[10px] font-bold uppercase tracking-[0.4em]">
@@ -69,17 +132,21 @@
                 <button onclick="switchView('home', 'lab')" class="hover:text-accent transition-colors">IA Lab</button>
                 <button onclick="switchView('essays')" class="text-accent tracking-[0.6em] font-black">Self Love Club</button>
             </div>
-            <button class="md:hidden text-ink" aria-label="Abrir menú" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+            <button class="md:hidden text-ink mobile-menu-btn" 
+                    aria-label="Abrir menú" 
+                    aria-expanded="false" 
+                    aria-controls="mobile-menu"
+                    onclick="toggleMobileMenu()">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16m-7 6h7"/></svg>
             </button>
         </div>
     </nav>
 
     <!-- MOBILE MENU -->
-    <div id="mobile-menu" class="hidden fixed inset-0 z-40 bg-paper pt-24 px-8 md:hidden text-center">
+    <div id="mobile-menu" class="hidden fixed inset-0 z-40 bg-paper pt-24 px-8 md:hidden text-center no-print">
         <div class="flex flex-col space-y-8 text-2xl font-serif">
-            <button onclick="switchView('home'); document.getElementById('mobile-menu').classList.add('hidden')">Clarity</button>
-            <button onclick="switchView('essays'); document.getElementById('mobile-menu').classList.add('hidden')">Self Love Club</button>
+            <button onclick="switchView('home'); toggleMobileMenu()">Clarity</button>
+            <button onclick="switchView('essays'); toggleMobileMenu()">Self Love Club</button>
             <a href="mailto:andres@selfloveclubstore.com">Contacto</a>
         </div>
     </div>
@@ -94,7 +161,7 @@
                     <p class="text-xl text-subtle font-light leading-relaxed mb-12 max-w-lg">
                         Un marco estratégico de autoconocimiento aplicado al rendimiento, la toma de decisiones y las dinámicas humanas modernas.
                     </p>
-                    <div class="flex gap-8">
+                    <div class="flex gap-8 no-print">
                         <button onclick="switchView('essays')" class="btn-action border-b border-ink pb-2">Entrar al Club</button>
                         <a href="mailto:andres@selfloveclubstore.com" class="btn-action border-b border-divider pb-2 hover:border-ink">Contacto</a>
                     </div>
@@ -104,6 +171,10 @@
                         src="assets/images/andres-ramirez-portrait.jpg" 
                         onerror="this.src='https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/assets/images/andres-ramirez-portrait.jpg'"
                         alt="Andrés Ramírez Portrait" 
+                        loading="lazy"
+                        decoding="async"
+                        width="800"
+                        height="1200"
                         class="author-photo w-full h-[650px] object-cover rounded-sm shadow-2xl"
                     >
                     <div class="absolute -bottom-6 -right-6 bg-paper p-8 border border-divider hidden md:block">
@@ -123,17 +194,17 @@
                     <div class="flex flex-col md:flex-row gap-8 items-center bg-white/5 p-10 rounded-sm border border-white/10 hover:border-accent/40 transition-colors">
                         <div class="w-48 h-72 bg-divider/10 flex items-center justify-center text-[10px] uppercase tracking-widest text-center px-4 border border-white/5">Mindful Match</div>
                         <div class="flex-1">
-                            <h3 class="font-serif text-3xl mb-4">Mindful Match</h3>
+                            <h3 class="font-serif text-3xl mb-4 text-paper">Mindful Match</h3>
                             <p class="text-neutral-400 text-sm mb-6 leading-relaxed italic">Discernimiento relacional en la era del algoritmo.</p>
-                            <a href="#" class="btn-action text-accent border-b border-accent pb-1">Ver en Amazon</a>
+                            <a href="#" class="btn-action text-accent border-b border-accent pb-1 no-print">Ver en Amazon</a>
                         </div>
                     </div>
                     <div class="flex flex-col md:flex-row gap-8 items-center bg-white/5 p-10 rounded-sm border border-white/10 hover:border-accent/40 transition-colors">
                         <div class="w-48 h-72 bg-divider/10 flex items-center justify-center text-[10px] uppercase tracking-widest text-center px-4 border border-white/5">Don’t Lose Yourself</div>
                         <div class="flex-1">
-                            <h3 class="font-serif text-3xl mb-4">Don’t Lose Yourself</h3>
-                            <p class="text-neutral-400 text-sm mb-6 leading-relaxed italic">Preservación del capital emocional como activo estratégico.</p>
-                            <a href="#" class="btn-action text-accent border-b border-accent pb-1">Ver en Amazon</a>
+                            <h3 class="font-serif text-3xl mb-4 text-paper">Don’t Lose Yourself</h3>
+                            <p class="text-neutral-400 text-sm mb-6 leading-relaxed italic">Preservación del capital emocional estratégico.</p>
+                            <a href="#" class="btn-action text-accent border-b border-accent pb-1 no-print">Ver en Amazon</a>
                         </div>
                     </div>
                 </div>
@@ -141,7 +212,7 @@
         </section>
 
         <section id="lab" class="py-32 border-b border-divider">
-            <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-7xl mx-auto px-6 text-center md:text-left">
                 <div class="flex flex-col md:flex-row gap-20 items-center">
                     <div class="md:w-1/2">
                         <header class="mb-8">
@@ -151,8 +222,8 @@
                                 Prototipando interfaces que actúan como espejos conductuales para optimizar la toma de decisiones.
                             </p>
                         </header>
-                        <div class="flex items-center gap-4 text-ink font-bold text-[10px] tracking-widest uppercase">
-                            <div class="spinner"></div>
+                        <div class="flex items-center justify-center md:justify-start gap-4 text-ink font-bold text-[10px] tracking-widest uppercase">
+                            <div class="spinner no-print"></div>
                             <span>Analizando señales narrativas...</span>
                         </div>
                     </div>
@@ -175,72 +246,218 @@
                     <span class="text-[10px] font-bold uppercase tracking-[0.8em] text-accent mb-10 block">Repository 0.1</span>
                     <h2 class="font-serif text-6xl md:text-[10rem] mb-10 leading-none tracking-tighter group-hover:italic transition-all duration-700 text-paper">Self Love Club</h2>
                     <p class="text-neutral-400 text-sm uppercase tracking-[0.5em] mb-16 max-w-xl mx-auto leading-relaxed">Applied Self-Knowledge — Where clarity becomes human performance.</p>
-                    <div class="btn-action inline-block border border-accent text-accent px-16 py-6 group-hover:bg-accent group-hover:text-ink transition-all transform group-hover:-translate-y-1">Entrar al Repositorio</div>
+                    <div class="btn-action inline-block border border-accent text-accent px-16 py-6 group-hover:bg-accent group-hover:text-ink transition-all transform group-hover:-translate-y-1 no-print">Entrar al Repositorio</div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- VIEW: ESSAYS (SELF LOVE CLUB BRANCH) -->
+    <!-- VIEW: ESSAYS -->
     <main id="view-essays" class="view-content hidden-view">
         <section class="pt-40 pb-32 px-6 md:px-12 bg-paper">
             <div class="max-w-5xl mx-auto">
                 <header class="text-center mb-32">
-                    <button onclick="switchView('home')" class="text-[10px] font-bold uppercase tracking-[0.6em] text-subtle mb-16 hover:text-ink transition-colors block mx-auto">← Volver al Perfil</button>
+                    <button onclick="switchView('home')" class="text-[10px] font-bold uppercase tracking-[0.6em] text-subtle mb-16 hover:text-ink transition-colors block mx-auto no-print">← Volver al Perfil</button>
                     <span class="text-[10px] font-bold uppercase tracking-[0.8em] text-accent mb-6 block">Editorial Framework</span>
                     <h1 class="font-serif text-7xl md:text-9xl mb-10 tracking-tighter">Field Notes</h1>
                     <div class="w-20 h-[1px] bg-accent mx-auto mb-16"></div>
                     
-                    <div class="flex justify-center space-x-10 text-[10px] font-bold tracking-widest uppercase">
+                    <div class="flex justify-center space-x-10 text-[10px] font-bold tracking-widest uppercase no-print">
                         <button onclick="setLanguage('es')" id="btn-es" class="lang-active pb-2">Español</button>
                         <button onclick="setLanguage('en')" id="btn-en" class="pb-2 text-subtle hover:text-ink transition-colors">English</button>
                     </div>
                 </header>
 
+                <!-- CONTENIDO ESPAÑOL -->
                 <div data-lang="es" class="visible-lang space-y-48">
-                    <!-- Ensayos 1 al 7 integrados -->
+                    <!-- Vol. 01 ES -->
                     <article class="essay-item">
                         <header class="mb-10">
                             <span class="text-[10px] uppercase tracking-widest text-subtle font-bold">Vol. 01 / Económico</span>
                             <h2 class="font-serif text-4xl md:text-6xl mt-4 mb-8 leading-none tracking-tight">El Autoconocimiento como Activo Económico</h2>
-                            <button onclick="toggleEssay(this)" class="btn-action border border-ink px-10 py-4 hover:bg-ink hover:text-paper">Leer Ensayo Completo</button>
+                            <button onclick="toggleEssay(this)" class="btn-action border border-ink px-10 py-4 hover:bg-ink hover:text-paper no-print">Leer Ensayo Completo</button>
                         </header>
                         <div class="prose-content essay-collapsed">
                             <blockquote>“El autoconocimiento no es simplemente un rasgo psicológico; es una ventaja competitiva cuantificable.”</blockquote>
                             <h3>La Crisis de los Costos Ocultos</h3>
-                            <p>Las organizaciones invierten frecuentemente millones en tecnología, infraestructura e investigación de mercado mientras descuidan su sistema operativo más crítico: la psicología humana.</p>
-                            <p>La falta de autoconocimiento incurre en costos invisibles: Sesgo de Confirmación, Evaluación de Riesgos Fallida y Erosión del Capital Humano.</p>
+                            <p>Las organizaciones invierten frecuentemente millones en tecnología, infraestructura e investigación de mercado mientras descuidan su sistema operativo más crítico: la psicología humana. Esta omisión representa uno de los puntos ciegos más costosos en los negocios.</p>
+                            <p>La capacidad de un líder para entender y manejar su estado interno influye directamente en la rentabilidad y sostenibilidad de la organización. La falta de autoconocimiento incurre en costos invisibles: Sesgo de Confirmación, Evaluación de Riesgos Fallida y Erosión del Capital Humano.</p>
+                            <h3>El Mito de la Racionalidad Pura</h3>
+                            <p>La cultura empresarial perpetúa la falsa noción de que las decisiones estratégicas se toman en un vacío emocional. Los líderes que carecen de autoconocimiento a menudo confunden reacciones impulsivas con estrategias objetivas.</p>
                         </div>
                     </article>
 
-                    <!-- Se omiten el resto por brevedad pero están incluidos en la lógica -->
+                    <!-- Vol. 02 ES -->
                     <article class="essay-item">
                         <header class="mb-10">
                             <span class="text-[10px] uppercase tracking-widest text-subtle font-bold">Vol. 02 / Arbitraje</span>
                             <h2 class="font-serif text-4xl md:text-6xl mt-4 mb-8 leading-none tracking-tight">Arbitraje Emocional</h2>
-                            <button onclick="toggleEssay(this)" class="btn-action border border-ink px-10 py-4 hover:bg-ink hover:text-paper">Leer Ensayo Completo</button>
+                            <button onclick="toggleEssay(this)" class="btn-action border border-ink px-10 py-4 hover:bg-ink hover:text-paper no-print">Leer Ensayo Completo</button>
                         </header>
                         <div class="prose-content essay-collapsed">
-                            <p>El arbitraje emocional se refiere a la capacidad de un líder para mantener una toma de decisiones clara mientras el mercado opera bajo ruido emocional impulsado por el miedo.</p>
+                            <blockquote>«El arbitraje emocional es la ventaja definitiva: convertir el pánico del mercado en beneficio personal».</blockquote>
+                            <p>En el arbitraje financiero se explotan discrepancias de precios. El arbitraje emocional es la capacidad de mantener claridad mientras el entorno opera bajo ruido emocional impulsado por el miedo.</p>
+                            <h3>El Mecanismo Operativo</h3>
+                            <p>Funciona capitalizando la impulsividad de los competidores mediante un filtro interno que elimina la distorsión emocional para preservar la señal estratégica.</p>
                         </div>
                     </article>
 
-                    <!-- Vol. 07 (Notas de Campo) -->
+                    <!-- Vol. 03 ES -->
+                    <article class="essay-item">
+                        <header class="mb-10">
+                            <span class="text-[10px] uppercase tracking-widest text-subtle font-bold">Vol. 03 / Riesgo</span>
+                            <h2 class="font-serif text-4xl md:text-6xl mt-4 mb-8 leading-none tracking-tight">El Costo de Oportunidad de Complacer a Otros</h2>
+                            <button onclick="toggleEssay(this)" class="btn-action border border-ink px-10 py-4 hover:bg-ink hover:text-paper no-print">Leer Ensayo Completo</button>
+                        </header>
+                        <div class="prose-content essay-collapsed">
+                            <p>Complacer a otros es un riesgo operacional sistémico. La necesidad compulsiva de validación externa opera como un "Impuesto de Rendimiento" invisible que degrada la toma de decisiones pura.</p>
+                            <h3>Deuda de Aprobación</h3>
+                            <p>Al evitar el conflicto hoy, se incurre en una obligación de seguir evitando la incomodidad mañana, sacrificando la verdad por la paz temporal.</p>
+                        </div>
+                    </article>
+
+                    <!-- Vol. 04 ES -->
+                    <article class="essay-item">
+                        <header class="mb-10">
+                            <span class="text-[10px] uppercase tracking-widest text-subtle font-bold">Vol. 04 / Comunicación</span>
+                            <h2 class="font-serif text-4xl md:text-6xl mt-4 mb-8 leading-none tracking-tight">La Arquitectura del Silencio</h2>
+                            <button onclick="toggleEssay(this)" class="btn-action border border-ink px-10 py-4 hover:bg-ink hover:text-paper no-print">Leer Ensayo Completo</button>
+                        </header>
+                        <div class="prose-content essay-collapsed">
+                            <p>Cuando nada se comunica, la realidad se deforma. El vacío narrativo permite que la mente humana expanda lo desconocido hacia escenarios de amenaza. La claridad surge de nombrar lo que es.</p>
+                        </div>
+                    </article>
+
+                    <!-- Vol. 05 ES -->
+                    <article class="essay-item">
+                        <header class="mb-10">
+                            <span class="text-[10px] uppercase tracking-widest text-subtle font-bold">Vol. 05 / Estrategia</span>
+                            <h2 class="font-serif text-4xl md:text-6xl mt-4 mb-8 leading-none tracking-tight">Liquidez Cognitiva</h2>
+                            <button onclick="toggleEssay(this)" class="btn-action border border-ink px-10 py-4 hover:bg-ink hover:text-paper no-print">Leer Ensayo Completo</button>
+                        </header>
+                        <div class="prose-content essay-collapsed">
+                            <p>La capacidad de mantener fluidez mental separando la identidad de las decisiones. Permite pivotar sin que el cambio sea una amenaza existencial para el ego.</p>
+                        </div>
+                    </article>
+
+                    <!-- Vol. 06 ES -->
+                    <article class="essay-item">
+                        <header class="mb-10">
+                            <span class="text-[10px] uppercase tracking-widest text-subtle font-bold">Vol. 06 / Atención</span>
+                            <h2 class="font-serif text-4xl md:text-6xl mt-4 mb-8 leading-none tracking-tight">Señal vs Ruido</h2>
+                            <button onclick="toggleEssay(this)" class="btn-action border border-ink px-10 py-4 hover:bg-ink hover:text-paper no-print">Leer Ensayo Completo</button>
+                        </header>
+                        <div class="prose-content essay-collapsed">
+                            <p>El problema no es la falta de datos, sino la incapacidad de distinguir señal de ruido. La claridad surge de ignorar mejor.</p>
+                        </div>
+                    </article>
+
+                    <!-- Vol. 07 ES -->
                     <article class="essay-item">
                         <header class="mb-10">
                             <span class="text-[10px] uppercase tracking-widest text-subtle font-bold">Vol. 07 / Campo</span>
-                            <h2 class="font-serif text-4xl md:text-6xl mt-4 mb-8 leading-none tracking-tight">Notas de Campo: El Progreso Disfrazado</h2>
-                            <button onclick="toggleEssay(this)" class="btn-action border border-ink px-10 py-4 hover:bg-ink hover:text-paper">Leer Notas</button>
+                            <h2 class="font-serif text-4xl md:text-6xl mt-4 mb-8 leading-none tracking-tight">Medir para entender… o medir para esconderse</h2>
+                            <button onclick="toggleEssay(this)" class="btn-action border border-ink px-10 py-4 hover:bg-ink hover:text-paper no-print">Leer Notas</button>
                         </header>
                         <div class="prose-content essay-collapsed">
-                            <h3>Medir para Entender</h3>
-                            <p>Un buen sistema de medición no te define, te deja sin excusas. Te muestra qué estás haciendo, no quién eres.</p>
+                            <h3>Identidades vs. Patrones</h3>
+                            <p>Las personas no se hunden por lo que son. Se hunden por lo que repiten. Un buen mecanismo de medición no te dice quién eres, te muestra qué estás haciendo.</p>
                         </div>
                     </article>
                 </div>
 
-                <!-- Footer SLC Rama -->
-                <footer class="mt-48 pt-24 border-t border-divider text-center">
+                <!-- CONTENIDO INGLÉS -->
+                <div data-lang="en" class="space-y-48">
+                    <!-- Vol. 01 EN -->
+                    <article class="essay-item">
+                        <header class="mb-10">
+                            <span class="text-[10px] uppercase tracking-widest text-subtle font-bold">Vol. 01 / Strategy</span>
+                            <h2 class="font-serif text-4xl md:text-6xl mt-4 mb-8 leading-none tracking-tight">Self-Knowledge as an Economic Asset</h2>
+                            <button onclick="toggleEssay(this)" class="btn-action border border-ink px-10 py-4 hover:bg-ink hover:text-paper no-print">Read Full Essay</button>
+                        </header>
+                        <div class="prose-content essay-collapsed">
+                            <blockquote>“Self-knowledge is not merely a psychological trait; it is a quantifiable competitive advantage.”</blockquote>
+                            <h3>The Hidden Cost Crisis</h3>
+                            <p>Organizations frequently invest millions in technology while neglecting their most critical operating system: human psychology. This oversight represents one of the most costly blind spots in business.</p>
+                            <p>The lack of self-knowledge is not just an innocuous gap—it actively incurs invisible costs: Confirmation Bias, Failed Risk Assessment, and Human Capital Erosion.</p>
+                        </div>
+                    </article>
+
+                    <!-- Vol. 02 EN -->
+                    <article class="essay-item">
+                        <header class="mb-10">
+                            <span class="text-[10px] uppercase tracking-widest text-subtle font-bold">Vol. 02 / Arbitrage</span>
+                            <h2 class="font-serif text-4xl md:text-6xl mt-4 mb-8 leading-none tracking-tight">Emotional Arbitrage</h2>
+                            <button onclick="toggleEssay(this)" class="btn-action border border-ink px-10 py-4 hover:bg-ink hover:text-paper no-print">Read Full Essay</button>
+                        </header>
+                        <div class="prose-content essay-collapsed">
+                            <blockquote>"Emotional arbitrage is the ultimate edge: turning market panic into personal profit."</blockquote>
+                            <p>Emotional Arbitrage leverages the gap between emotionally-driven and rationally-informed decision-making. While competitors succumb to impulsivity, self-aware leaders apply internal regulation that removes emotional distortion.</p>
+                        </div>
+                    </article>
+
+                    <!-- Vol. 03 EN -->
+                    <article class="essay-item">
+                        <header class="mb-10">
+                            <span class="text-[10px] uppercase tracking-widest text-subtle font-bold">Vol. 03 / Risk</span>
+                            <h2 class="font-serif text-4xl md:text-6xl mt-4 mb-8 leading-none tracking-tight">The Opportunity Cost of People-Pleasing</h2>
+                            <button onclick="toggleEssay(this)" class="btn-action border border-ink px-10 py-4 hover:bg-ink hover:text-paper no-print">Read Full Essay</button>
+                        </header>
+                        <div class="prose-content essay-collapsed">
+                            <p>The compulsive need for external validation operates as an invisible "Performance Tax." Resources are diverted away from truth-seeking and innovation toward short-term emotional appeasement.</p>
+                        </div>
+                    </article>
+
+                    <!-- Vol. 04 EN -->
+                    <article class="essay-item">
+                        <header class="mb-10">
+                            <span class="text-[10px] uppercase tracking-widest text-subtle font-bold">Vol. 04 / Communication</span>
+                            <h2 class="font-serif text-4xl md:text-6xl mt-4 mb-8 leading-none tracking-tight">The Architecture of Silence</h2>
+                            <button onclick="toggleEssay(this)" class="btn-action border border-ink px-10 py-4 hover:bg-ink hover:text-paper no-print">Read Full Essay</button>
+                        </header>
+                        <div class="prose-content essay-collapsed">
+                            <p>When nothing is communicated, reality warps. Silence is an active architectural force that distorts perception and amplifies noise. Distortion by Silence is a hidden tax paid when clarity is postponed.</p>
+                        </div>
+                    </article>
+
+                    <!-- Vol. 05 EN -->
+                    <article class="essay-item">
+                        <header class="mb-10">
+                            <span class="text-[10px] uppercase tracking-widest text-subtle font-bold">Vol. 05 / Adaptability</span>
+                            <h2 class="font-serif text-4xl md:text-6xl mt-4 mb-8 leading-none tracking-tight">Cognitive Liquidity</h2>
+                            <button onclick="toggleEssay(this)" class="btn-action border border-ink px-10 py-4 hover:bg-ink hover:text-paper no-print">Read Full Essay</button>
+                        </header>
+                        <div class="prose-content essay-collapsed">
+                            <p>Cognitive Liquidity is the capacity to maintain mental fluidity by separating personal identity from strategic decisions. This separation enables leaders to pivot without experiencing it as an existential threat.</p>
+                        </div>
+                    </article>
+
+                    <!-- Vol. 06 EN -->
+                    <article class="essay-item">
+                        <header class="mb-10">
+                            <span class="text-[10px] uppercase tracking-widest text-subtle font-bold">Vol. 06 / Attention</span>
+                            <h2 class="font-serif text-4xl md:text-6xl mt-4 mb-8 leading-none tracking-tight">Signal vs Noise</h2>
+                            <button onclick="toggleEssay(this)" class="btn-action border border-ink px-10 py-4 hover:bg-ink hover:text-paper no-print">Read Full Essay</button>
+                        </header>
+                        <div class="prose-content essay-collapsed">
+                            <p>The contemporary problem isn’t the lack of data. It’s the inability to tell signal from noise. Clarity doesn’t come from consuming more, it comes from ignoring better.</p>
+                        </div>
+                    </article>
+
+                    <!-- Vol. 07 EN -->
+                    <article class="essay-item">
+                        <header class="mb-10">
+                            <span class="text-[10px] uppercase tracking-widest text-subtle font-bold">Vol. 07 / Field Note</span>
+                            <h2 class="font-serif text-4xl md:text-6xl mt-4 mb-8 leading-none tracking-tight">Measure to Understand… or Measure to Hide</h2>
+                            <button onclick="toggleEssay(this)" class="btn-action border border-ink px-10 py-4 hover:bg-ink hover:text-paper no-print">Read Notes</button>
+                        </header>
+                        <div class="prose-content essay-collapsed">
+                            <p>A good measurement mechanism doesn’t tell you who you are. It shows you what you’re doing. It leaves you with a decision: to stay the same… or change something.</p>
+                        </div>
+                    </article>
+                </div>
+
+                <footer class="mt-48 pt-24 border-t border-divider text-center no-print">
                     <p class="text-[10px] font-bold uppercase tracking-[0.6em] text-accent mb-12">Self Love Club Editorial Framework</p>
                     <div class="flex justify-center space-x-12 text-[10px] font-bold uppercase tracking-[0.3em] mb-12">
                         <a href="https://instagram.com/selfloveclubusa" target="_blank" class="hover:text-accent transition-colors">Instagram</a>
@@ -253,34 +470,38 @@
         </section>
     </main>
 
-    <!-- FOOTER GENERAL ACTUALIZADO -->
     <footer class="py-24 px-6 border-t border-divider bg-paper text-center">
         <div class="max-w-xl mx-auto">
             <h2 class="font-serif text-4xl mb-4 tracking-tighter">Andrés Ramírez</h2>
             <p class="text-subtle text-[10px] uppercase tracking-[0.5em] mb-12 italic">Clarity Before Connection</p>
-            <div class="flex justify-center space-x-12 text-[10px] font-bold uppercase tracking-[0.3em] mb-16">
+            <div class="flex justify-center space-x-12 text-[10px] font-bold uppercase tracking-[0.3em] mb-16 no-print">
                 <a href="mailto:andres@selfloveclubstore.com" class="hover:text-accent transition-colors">Email</a>
                 <a href="https://instagram.com/selfloveclubusa" target="_blank" class="hover:text-accent transition-colors">Instagram</a>
                 <a href="https://x.com/selfloveclubusa" target="_blank" class="hover:text-accent transition-colors">X</a>
                 <a href="https://threads.net/@selfloveclubusa" target="_blank" class="hover:text-accent transition-colors">Threads</a>
             </div>
-            <!-- El cambio solicitado por Andrés -->
-            <p class="mt-12 text-[9px] text-subtle uppercase tracking-[0.2em]">© 2022 Self Love Club Store. Fort Lauderdale | Caracas</p>
+            <p class="mt-12 text-[9px] text-subtle uppercase tracking-[0.2em]">© 2022 Self Love Club Research. Fort Lauderdale | Caracas</p>
         </div>
     </footer>
 
     <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const btn = document.querySelector('.mobile-menu-btn');
+            const isOpen = !menu.classList.contains('hidden');
+            menu.classList.toggle('hidden');
+            btn.setAttribute('aria-expanded', !isOpen);
+        }
+
         function switchView(viewId, sectionId = null) {
             document.querySelectorAll('.view-content').forEach(view => {
                 view.classList.remove('visible-view');
                 view.classList.add('hidden-view');
             });
-
             setTimeout(() => {
                 const targetView = document.getElementById(`view-${viewId}`);
                 targetView.classList.remove('hidden-view');
                 targetView.classList.add('visible-view');
-
                 if (sectionId) {
                     const section = document.getElementById(sectionId);
                     if (section) section.scrollIntoView({ behavior: 'smooth' });
@@ -294,7 +515,6 @@
             document.querySelectorAll('[data-lang]').forEach(el => el.classList.remove('visible-lang'));
             const target = document.querySelector(`[data-lang="${lang}"]`);
             if(target) target.classList.add('visible-lang');
-            
             document.getElementById('btn-es').className = lang === 'es' ? 'lang-active pb-2 transition-all' : 'pb-2 text-subtle hover:text-ink transition-all';
             document.getElementById('btn-en').className = lang === 'en' ? 'lang-active pb-2 transition-all' : 'pb-2 text-subtle hover:text-ink transition-all';
         }
@@ -303,17 +523,9 @@
             const container = btn.closest('article').querySelector('.prose-content');
             container.classList.toggle('essay-expanded');
             const isExpanded = container.classList.contains('essay-expanded');
-            
             const lang = document.querySelector('.visible-lang').getAttribute('data-lang');
-            if (lang === 'es') {
-                btn.innerText = isExpanded ? 'Colapsar Lectura' : 'Leer Ensayo Completo';
-            } else {
-                btn.innerText = isExpanded ? 'Collapse Reading' : 'Read Full Essay';
-            }
-            
-            if (!isExpanded) {
-                btn.closest('article').scrollIntoView({ behavior: 'smooth' });
-            }
+            btn.innerText = lang === 'es' ? (isExpanded ? 'Colapsar Lectura' : 'Leer Ensayo Completo') : (isExpanded ? 'Collapse' : 'Read Full Essay');
+            if (!isExpanded) btn.closest('article').scrollIntoView({ behavior: 'smooth' });
         }
 
         window.onload = function() {
