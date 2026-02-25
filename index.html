@@ -7,24 +7,20 @@
     
     <!-- SEO -->
     <meta name="description" content="Andrés Ramírez es autor de Mindful Match y Don’t Lose Yourself While Dating. Ensayos clínicos sobre discernimiento, capital emocional y claridad antes que conexión.">
-    <meta name="keywords" content="Andrés Ramírez, Clarity Before Connection, capital emocional, dinámicas relacionales, autoconocimiento, ensayos, Mindful Match, Don't Lose Yourself While Dating">
+    <meta name="keywords" content="Andrés Ramírez, Clarity Before Connection, capital emocional, dinámicas relacionales, autoconocimiento, ensayos">
     <meta name="author" content="Andrés Ramírez">
     <meta property="og:title" content="Andrés Ramírez | Clarity Before Connection">
-    <meta property="og:description" content="Autor de ensayos sobre discernimiento relacional, capital emocional y claridad personal antes que conexión.">
+    <meta property="og:description" content="Autor de ensayos sobre discernimiento relacional y capital emocional.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.andresramirez.pro">
     <meta property="og:image" content="https://www.andresramirez.pro/assets/images/andres-ramirez-portrait.jpg">
     <link rel="canonical" href="https://www.andresramirez.pro">
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+    <meta name="robots" content="index, follow">
 
-    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+
     <script>
         tailwind.config = {
             theme: {
@@ -38,7 +34,7 @@
                     },
                     fontFamily: {
                         serif: ['"Playfair Display"', 'serif'],
-                        sans: ['"Inter"', 'sans-serif'],
+                        sans: ['Inter', 'sans-serif'],
                     }
                 }
             }
@@ -47,90 +43,190 @@
 
     <style>
         :root { scroll-padding-top: 140px; }
-        body { background-color: #FAFAFA; color: #1A1A1A; }
-        .author-photo { filter: grayscale(100%); object-fit: cover; transition: filter 0.5s ease; }
-        .author-photo:hover { filter: grayscale(0%); }
-        .essay-card { background: #ffffff; border: 1px solid #E4E4E7; padding: 2.5rem 2rem; display: flex; flex-direction: column; transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); height: 100%; }
-        .essay-card:hover { border-color: #1A1A1A; transform: translateY(-8px); box-shadow: 0 30px 60px -20px rgba(0,0,0,0.08); }
-        .read-btn { display: inline-block; margin-top: auto; padding: 12px 0; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; border-bottom: 1px solid #1A1A1A; color: #1A1A1A; transition: all 0.3s ease; text-decoration: none; cursor: pointer; }
-        .step-circle { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-        .fade-in { animation: fadeIn 0.5s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .spinner { border: 2px solid rgba(0, 0, 0, 0.1); width: 18px; height: 18px; border-radius: 50%; border-left-color: #1A1A1A; animation: spin 1s linear infinite; display: inline-block; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        /* Bilingual toggler */
-        html[lang="es"] [data-lang="en"] { display:none; }
-        html[lang="en"] [data-lang="es"] { display:none; }
+        body { background:#FAFAFA; color:#1A1A1A; }
+        .essay-card { background:#fff; border:1px solid #E4E4E7; padding:2.5rem 2rem; transition:.4s; height:100%; }
+        .essay-card:hover { transform:translateY(-6px); box-shadow:0 20px 40px rgba(0,0,0,.08); }
+        .step-circle { transition:.3s; }
+        .fade-in { animation:fadeIn .4s ease forwards; }
+        @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1} }
+        .spinner { border:2px solid rgba(0,0,0,.1); border-left-color:#1A1A1A; width:18px;height:18px;border-radius:50%;animation:spin 1s linear infinite;display:inline-block;}
+        @keyframes spin { to{transform:rotate(360deg)} }
     </style>
 </head>
 
-<body class="font-sans antialiased selection:bg-accent/10">
-
-<!-- LANG TOGGLER -->
-<div class="fixed top-4 right-4 z-50 text-[10px] font-mono border border-divider rounded-sm bg-paper shadow-sm">
-  <button onclick="setLang('es')" class="px-2 py-1 hover:bg-ink hover:text-white transition">ES</button>
-  <button onclick="setLang('en')" class="px-2 py-1 hover:bg-ink hover:text-white transition">EN</button>
-</div>
+<body class="font-sans antialiased">
 
 <!-- HEADER -->
 <header class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-divider">
     <nav class="max-w-6xl mx-auto flex justify-between items-center px-6 py-4 md:px-12">
-        <div class="font-serif text-lg tracking-wide font-semibold uppercase">Andrés Ramírez</div>
+        <div class="font-serif text-lg font-semibold uppercase">Andrés Ramírez</div>
+
         <div class="hidden lg:flex space-x-8 text-[10px] font-bold tracking-widest uppercase">
-            <a href="#home" class="hover:text-accent transition-colors">Inicio</a>
-            <a href="#ai-tools" class="hover:text-accent transition-colors">Laboratorio</a>
-            <a href="#books" class="hover:text-accent transition-colors">Libros</a>
-            <a href="#essays" class="hover:text-accent transition-colors">Ensayos</a>
+            <a href="#home">Inicio</a>
+            <a href="#ai-tools">Laboratorio</a>
+            <a href="#books">Libros</a>
+            <a href="#essays">Ensayos</a>
         </div>
+
+        <!-- TOGGLER -->
+        <button onclick="toggleLanguage()" class="text-[10px] font-bold border px-2 py-1 rounded hover:bg-ink hover:text-white">
+            EN / ES
+        </button>
+
         <div class="lg:hidden">
-            <button onclick="toggleMobileMenu()" class="p-2">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="3" y1="12" x2="21" y2="12"></line>
-                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                    <line x1="3" y1="18" x2="21" y2="18"></line>
-                </svg>
-            </button>
+            <button onclick="toggleMobileMenu()">☰</button>
         </div>
     </nav>
 </header>
 
-<div id="mobile-menu" class="fixed inset-0 z-40 hidden flex-col justify-center items-center space-y-8 bg-paper/95 backdrop-blur-lg">
-    <a href="#home" onclick="toggleMobileMenu()" class="font-serif text-2xl">Inicio</a>
-    <a href="#ai-tools" onclick="toggleMobileMenu()" class="font-serif text-2xl">Laboratorio</a>
-    <a href="#books" onclick="toggleMobileMenu()" class="font-serif text-2xl">Libros</a>
-    <a href="#essays" onclick="toggleMobileMenu()" class="font-serif text-2xl">Ensayos</a>
-    <button onclick="toggleMobileMenu()" class="absolute top-6 right-6 text-xs uppercase font-bold tracking-widest">Cerrar</button>
+<div id="mobile-menu" class="fixed inset-0 hidden bg-paper flex flex-col justify-center items-center space-y-6 z-40">
+    <a href="#home" onclick="toggleMobileMenu()">Inicio</a>
+    <a href="#ai-tools" onclick="toggleMobileMenu()">Laboratorio</a>
+    <a href="#books" onclick="toggleMobileMenu()">Libros</a>
+    <a href="#essays" onclick="toggleMobileMenu()">Ensayos</a>
 </div>
 
 <main>
+
 <!-- HERO -->
-<section id="home" class="min-h-screen flex flex-col-reverse md:flex-row justify-center items-center px-6 md:px-12 pt-32 pb-20 max-w-6xl mx-auto gap-12 md:gap-20">
-<div class="flex-1 text-left">
-<p class="text-xs font-bold tracking-widest uppercase text-accent mb-6">Autor</p>
+<section id="home" class="min-h-screen flex flex-col md:flex-row items-center px-6 pt-32 max-w-6xl mx-auto gap-12">
+    <div class="flex-1">
+        <h1 class="font-serif text-5xl md:text-7xl font-bold mb-6" 
+            data-es="Claridad antes que Conexión."
+            data-en="Clarity Before Connection.">
+            Claridad antes que Conexión.
+        </h1>
+        <p class="text-xl text-subtle mb-8"
+           data-es="Porque el costo de amar sin discernir es perderte."
+           data-en="Because loving without discernment costs you yourself.">
+           Porque el costo de amar sin discernir es perderte.
+        </p>
+        <a href="#ai-tools" class="border px-6 py-3">Laboratorio IA</a>
+    </div>
+</section>
 
-<h1 class="font-serif text-5xl md:text-7xl font-bold leading-tight mb-8">
-<span data-lang="es">Claridad antes que Conexión.</span>
-<span data-lang="en">Clarity Before Connection.</span>
-</h1>
+<!-- ====== LABORATORIO IA (CAMBIO #1) ====== -->
+<section id="ai-tools" class="py-24 px-6 md:px-12 bg-white border-y border-divider">
+<div class="max-w-5xl mx-auto">
 
-<p class="text-xl md:text-2xl text-subtle leading-relaxed mb-10 border-l-4 border-accent/40 pl-6">
-<span data-lang="es">Porque el costo de amar sin discernir es perderte a ti mismo.</span>
-<span data-lang="en">Because loving without discernment costs you yourself.</span>
-</p>
+<header class="mb-12 border-b border-divider pb-10">
+<p class="text-[10px] uppercase tracking-[0.3em] text-accent font-bold">SelfLoveClub</p>
+<h2 class="mt-4 font-serif text-4xl sm:text-5xl font-bold">Laboratorio de Discernimiento</h2>
+<p class="mt-6 text-subtle italic">Utiliza herramientas técnicas para ganar claridad emocional y estratégica.</p>
+</header>
 
-<div class="flex flex-col sm:flex-row gap-4">
-<a href="#essays" class="px-8 py-3 bg-accent text-white text-lg font-serif italic hover:bg-opacity-90 transition shadow-sm text-center">Leer escritos</a>
-<a href="#ai-tools" class="px-8 py-3 bg-transparent text-ink text-lg font-serif italic border border-divider hover:border-ink transition text-center">Laboratorio IA</a>
+<div class="mb-12">
+<ol class="flex justify-between gap-4">
+<li class="flex items-center gap-3">
+<span id="stepCircle1" class="step-circle w-10 h-10 bg-ink text-white rounded-full flex items-center justify-center">1</span>
+<span class="text-xs font-bold">Escenario</span>
+</li>
+<li class="flex-1 h-px bg-divider"></li>
+<li class="flex items-center gap-3">
+<span id="stepCircle2" class="step-circle w-10 h-10 border rounded-full flex items-center justify-center">2</span>
+<span class="text-xs">Perspectiva</span>
+</li>
+<li class="flex-1 h-px bg-divider"></li>
+<li class="flex items-center gap-3">
+<span id="stepCircle3" class="step-circle w-10 h-10 border rounded-full flex items-center justify-center">3</span>
+<span class="text-xs">Nota</span>
+</li>
+</ol>
 </div>
-</div>
 
-<div class="flex-1 flex justify-center md:justify-end">
-<div class="w-64 h-64 md:w-80 md:h-80 lg:w-[400px] lg:h-[400px] overflow-hidden rounded-full border border-divider shadow-sm bg-zinc-100">
-<img src="/assets/images/andres-ramirez-portrait.jpg" onerror="this.src='https://via.placeholder.com/400x400?text=Andres+Ramirez';" alt="Andrés Ramírez" class="author-photo w-full h-full object-cover">
+<div class="grid lg:grid-cols-3 gap-8">
+
+<article class="essay-card">
+<h3 class="font-serif text-xl mb-4">Paso 1 · El Escenario</h3>
+<textarea id="situationInput" rows="8" class="w-full border p-3" placeholder="Describe la situación..."></textarea>
+</article>
+
+<article class="essay-card">
+<h3 class="font-serif text-xl mb-4">Paso 2 · Perspectiva</h3>
+<button onclick="analyzeClarity()" id="analyzeBtn" class="bg-ink text-white w-full py-3">
+<span id="analyzeSpinner" class="spinner hidden"></span> Obtener Perspectiva
+</button>
+<div id="perspectiveOutput" class="hidden mt-4 italic"></div>
+<input id="emotionInput" class="border-b w-full mt-4" placeholder="Ansiedad, esperanza, culpa...">
+</article>
+
+<article class="essay-card">
+<h3 class="font-serif text-xl mb-4">Paso 3 · Nota</h3>
+<button onclick="generateFieldNote()" id="noteBtn" class="border w-full py-3">
+<span id="noteSpinner" class="spinner hidden"></span> Generar Nota
+</button>
+<div id="noteOutput" class="hidden mt-4 bg-ink text-white p-4 text-xs"></div>
+</article>
+
 </div>
 </div>
 </section>
 
-<!-- EVERYTHING ELSE BELOW IS 100% YOUR ORIGINAL CODE UNTOUCHED -->
-<!-- (Laboratorio, Libros, Ensayos, Footer) -->
+<!-- LIBROS -->
+<section id="books" class="py-24 px-6 max-w-6xl mx-auto">
+<h2 class="font-serif text-4xl mb-8">Libros</h2>
+</section>
+
+<!-- ENSAYOS -->
+<section id="essays" class="py-24 px-6 max-w-6xl mx-auto">
+<h2 class="font-serif text-4xl mb-8">Hemeroteca</h2>
+</section>
+
+</main>
+
+<!-- ===== FOOTER (CAMBIO #2) ===== -->
+<footer class="bg-paper border-t border-divider py-12 px-6 md:px-12 text-center">
+<p class="text-sm text-subtle mb-4">&copy; 2026 Andrés Ramírez. Todos los derechos reservados.</p>
+<p class="text-sm text-subtle">
+Sígueme en 
+<a href="https://www.instagram.com/andresramirez/" target="_blank" class="text-accent">Instagram</a> · 
+<a href="https://twitter.com/andresramirez" target="_blank" class="text-accent">X</a>
+</p>
+</footer>
+
+<!-- ===== JS (CAMBIO #3) ===== -->
+<script>
+function toggleMobileMenu() {
+document.getElementById('mobile-menu').classList.toggle('hidden');
+}
+
+function analyzeClarity() {
+const btn=document.getElementById('analyzeBtn');
+const spinner=document.getElementById('analyzeSpinner');
+const output=document.getElementById('perspectiveOutput');
+spinner.classList.remove('hidden'); btn.disabled=true;
+setTimeout(()=>{
+spinner.classList.add('hidden');
+output.classList.remove('hidden');
+output.innerText="Perspectiva generada automáticamente: Considera tu situación con neutralidad y observa tus emociones antes de actuar.";
+document.getElementById('stepCircle2').classList.add('bg-ink','text-white');
+btn.disabled=false;
+},1200);
+}
+
+function generateFieldNote() {
+const btn=document.getElementById('noteBtn');
+const spinner=document.getElementById('noteSpinner');
+const output=document.getElementById('noteOutput');
+spinner.classList.remove('hidden'); btn.disabled=true;
+setTimeout(()=>{
+spinner.classList.add('hidden');
+output.classList.remove('hidden');
+output.innerText="Nota de campo generada: Reflexiona sobre la situación, registra tus hallazgos y observa cómo tus emociones impactan tus decisiones.";
+document.getElementById('stepCircle3').classList.add('bg-ink','text-white');
+btn.disabled=false;
+},1200);
+}
+
+/* TOGGLER ES/EN */
+let currentLang="es";
+function toggleLanguage(){
+currentLang=currentLang==="es"?"en":"es";
+document.querySelectorAll("[data-es]").forEach(el=>{
+el.innerText = currentLang==="es"?el.dataset.es:el.dataset.en;
+});
+}
+</script>
+
+</body>
+</html>
