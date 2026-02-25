@@ -69,3 +69,19 @@ body {
     transform: rotate(360deg);
   }
 }
+
+.lang-switch-wrap {
+  @apply inline-flex border border-divider rounded-sm overflow-hidden bg-white;
+}
+
+.lang-switch-btn {
+  @apply px-2 py-1 text-[10px] font-bold tracking-widest text-subtle transition;
+}
+
+.lang-switch-btn + .lang-switch-btn {
+  @apply border-l border-divider;
+}
+
+.lang-switch-active {
+  @apply bg-ink text-white;
+}
