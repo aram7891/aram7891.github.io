@@ -2,272 +2,56 @@
 <html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#1A1A1A">
-    <meta name="robots" content="index, follow">
-    
     <title>Andrés Ramírez | Clarity Before Connection</title>
     
-    <link rel="canonical" href="https://andresramirez.pro/">
-    <link rel="alternate" hreflang="x-default" href="https://andresramirez.pro/">
-    <link rel="alternate" hreflang="es" href="https://andresramirez.pro/">
-    <link rel="alternate" hreflang="en" href="https://andresramirez.pro/">
-    <meta name="description" content="Autor de Mindful Match y Don’t Lose Yourself While Dating. Ensayos clínicos sobre discernimiento, capital emocional y claridad antes que conexión.">
-
+    <meta name="description" content="Plataforma de Andrés Ramírez: Claridad antes que conexión. Notas de campo y ensayos sobre autoconocimiento.">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <meta property="og:title" content="Andrés Ramírez | Clarity Before Connection">
-    <meta property="og:description" content="Ensayos sobre discernimiento relacional y capital emocional.">
-    <meta property="og:image" content="https://andresramirez.pro/assets/images/andres-ramirez-portrait.jpg">
-    <meta property="og:url" content="https://andresramirez.pro">
-    <meta property="og:type" content="website">
-
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@0,400;0,600;0,900;1,400&display=swap" rel="stylesheet">
     
     <script>
-        tailwind.config = { 
-            theme: { 
-                extend: { 
-                    colors: { paper: '#FAFAFA', ink: '#1A1A1A', subtle: '#52525B', divider: '#E4E4E7', accent: '#96683E' }, 
-                    fontFamily: { serif: ['"Playfair Display"', 'serif'], sans: ['"Inter"', 'sans-serif'] } 
-                } 
-            } 
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        paper: '#FAFAFA',
+                        ink: '#1A1A1A',
+                        subtle: '#71717A',
+                        divider: '#E4E4E7',
+                        accent: '#2563EB'
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Inter"', 'sans-serif'],
+                    }
+                }
+            }
         }
     </script>
     
     <style>
-        :root { scroll-padding-top: 100px; }
+        :root { scroll-padding-top: 140px; }
         body { background-color: #FAFAFA; color: #1A1A1A; overflow-x: hidden; }
-        .author-photo { filter: grayscale(100%); object-fit: cover; transition: filter 0.8s ease; }
-        .author-photo:hover { filter: grayscale(0%); }
-
-        .view-content { transition: opacity 0.5s ease-in-out, transform 0.5s ease-out; }
-        .hidden-view { display: none; opacity: 0; transform: translateY(10px); }
-        .visible-view { display: block; opacity: 1; transform: translateY(0); }
-
-        .prose-content { line-height: 1.8; font-size: 1.15rem; color: #2d2d2d; max-width: 65ch; margin: 0 auto; }
-        .prose-content h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-top: 4rem; margin-bottom: 2rem; font-weight: 600; color: #1A1A1A; line-height: 1.2; }
-        .prose-content h3 { font-size: 1.4rem; font-weight: 700; margin-top: 2.5rem; margin-bottom: 1rem; color: #111; letter-spacing: -0.01em; }
-        .prose-content p { margin-bottom: 1.8rem; }
-        .prose-content blockquote { border-left: 3px solid #96683E; padding-left: 1.5rem; font-style: italic; margin: 3rem 0; font-family: 'Playfair Display', serif; font-size: 1.5rem; color: #444; }
-
-        .essay-card { border: 1px solid #E4E4E7; transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1); cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; background: white; }
-        .essay-card:hover { border-color: #96683E; transform: translateY(-4px) rotate(-0.5deg); box-shadow: 0 15px 30px -10px rgba(0,0,0,0.05); }
-
-        .lang-active { color: #1A1A1A !important; border-bottom: 2px solid #1A1A1A; }
-        .btn-action { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; transition: all 0.2s ease; cursor: pointer; }
-
-        @media print {
-            nav, .no-print, .btn-action, #essays-header, #essays-grid, #fieldnotes-grid, .section-title { display: none !important; }
-            body { background: white !important; color: black; }
-            .view-content { display: block !important; opacity: 1 !important; transform: none !important; }
-            #essay-reader { display: block !important; padding-top: 0; }
-            .prose-content { max-width: 100%; font-size: 12pt; }
-            .prose-body { page-break-before: auto; }
-        }
     </style>
 </head>
-<body class="font-sans antialiased selection:bg-accent/10">
+<body class="font-sans antialiased">
 
-<!-- NAVIGATION -->
-<nav class="fixed top-0 w-full z-50 bg-paper/80 backdrop-blur-md border-b border-divider px-6 py-6 no-print">
-    <div class="max-w-7xl mx-auto flex justify-between items-center">
-        <button onclick="switchView('home')" class="font-serif text-2xl tracking-tighter hover:opacity-70 transition-opacity">Andrés Ramírez</button>
-        <div class="hidden md:flex space-x-10 text-[10px] font-bold uppercase tracking-[0.4em]">
-            <button onclick="switchView('home', 'about')" class="hover:text-accent transition-colors">Clarity</button>
-            <button onclick="switchView('home', 'books')" class="hover:text-accent transition-colors">Books</button>
-            <button onclick="switchView('essays')" class="text-accent tracking-[0.6em] font-black">Self Love Club</button>
-        </div>
-        <button class="md:hidden text-ink" onclick="toggleMobileMenu()">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16m-7 6h7"/></svg>
-        </button>
+<!-- STABLE BASE VERSION -->
+
+<section class="min-h-screen flex items-center justify-center text-center px-6">
+    <div>
+        <h1 class="font-serif text-6xl font-black uppercase tracking-tight mb-6">
+            Clarity Before Connection.
+        </h1>
+        <p class="text-subtle italic text-xl max-w-2xl mx-auto">
+            Stable base version is active.
+        </p>
     </div>
-</nav>
+</section>
 
-<!-- MOBILE MENU -->
-<div id="mobile-menu" class="hidden fixed inset-0 z-40 bg-paper pt-24 px-8 md:hidden text-center no-print">
-    <div class="flex flex-col space-y-8 text-2xl font-serif">
-        <button onclick="switchView('home'); toggleMobileMenu()">Clarity</button>
-        <button onclick="switchView('essays'); toggleMobileMenu()">Self Love Club</button>
-        <a href="mailto:andres@selfloveclubstore.com">Contacto</a>
-    </div>
-</div>
-
-<!-- VIEW: HOME (Tu Website Original) -->
-<main id="view-home" class="view-content visible-view">
-    <section id="about" class="pt-48 pb-32 px-6">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-20">
-            <div class="md:w-1/2 text-left">
-                <span class="text-[10px] font-bold uppercase tracking-[0.6em] text-subtle mb-6 block">Author & Strategist</span>
-                <h1 class="font-serif text-6xl md:text-8xl mb-8 leading-[0.9] tracking-tighter">Clarity Before Connection</h1>
-                <p class="text-xl text-subtle font-light leading-relaxed mb-12 max-w-lg">
-                    Autor de Mindful Match y Don’t Lose Yourself. Ensayos clínicos sobre discernimiento, capital emocional y claridad antes que conexión.
-                </p>
-                <div class="flex gap-8 no-print">
-                    <button onclick="switchView('essays')" class="btn-action border-b border-ink pb-2">Entrar al Club</button>
-                    <a href="mailto:andres@selfloveclubstore.com" class="btn-action border-b border-divider pb-2 hover:border-ink">Contacto</a>
-                </div>
-            </div>
-            <div class="md:w-1/2 relative">
-                <img src="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/assets/images/andres-ramirez-portrait.jpg" alt="Andrés Ramírez" class="author-photo w-full h-[600px] rounded-sm">
-            </div>
-        </div>
-    </section>
-
-    <section id="books" class="py-32 bg-ink text-paper">
-        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-20">
-            <div class="border border-white/10 p-12 rounded-sm hover:border-accent/50 transition-colors">
-                <h3 class="font-serif text-4xl mb-6">Mindful Match</h3>
-                <p class="text-subtle text-sm mb-8 italic">Discernimiento relacional en la era del algoritmo.</p>
-                <a href="#" class="text-[10px] font-bold uppercase tracking-widest text-accent border-b border-accent pb-1">Amazon Link</a>
-            </div>
-            <div class="border border-white/10 p-12 rounded-sm hover:border-accent/50 transition-colors">
-                <h3 class="font-serif text-4xl mb-6">Don’t Lose Yourself</h3>
-                <p class="text-subtle text-sm mb-8 italic">Preservación del capital emocional estratégico.</p>
-                <a href="#" class="text-[10px] font-bold uppercase tracking-widest text-accent border-b border-accent pb-1">Amazon Link</a>
-            </div>
-        </div>
-    </section>
-</main>
-
-<!-- VIEW: ESSAYS (La versión corregida del Conejito) -->
-<main id="view-essays" class="view-content hidden-view">
-    <section class="pt-40 pb-32 px-6 bg-paper min-h-screen">
-        <div class="max-w-7xl mx-auto">
-            
-            <div id="essays-header" class="text-center mb-24 no-print">
-                <button onclick="switchView('home')" class="text-[10px] font-bold uppercase tracking-[0.6em] text-subtle mb-16 hover:text-ink transition-colors block mx-auto">← Volver al Perfil</button>
-                <span class="text-[10px] font-bold uppercase tracking-[0.8em] text-accent mb-6 block">Editorial Framework</span>
-                <h1 class="font-serif text-7xl md:text-9xl mb-10 tracking-tighter">Field Notes</h1>
-                
-                <div class="flex justify-center space-x-10 text-[10px] font-bold tracking-widest uppercase mb-12">
-                    <button onclick="setLanguage('es')" id="btn-es" class="lang-active pb-2">Español</button>
-                    <button onclick="setLanguage('en')" id="btn-en" class="pb-2 text-subtle hover:text-ink transition-colors">English</button>
-                </div>
-                <p class="text-subtle text-sm italic max-w-2xl mx-auto">Investigaciones sobre capital emocional y autoconocimiento aplicado.</p>
-            </div>
-
-            <div id="essays-grid-container">
-                <h2 class="section-title font-serif text-4xl mb-10 tracking-tighter text-ink border-b border-divider pb-4">Ensayos</h2>
-                <div id="essays-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-24"></div>
-
-                <h2 class="section-title font-serif text-4xl mb-10 tracking-tighter text-subtle border-b border-divider pb-4">Notas de Campo</h2>
-                <div id="fieldnotes-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-20"></div>
-            </div>
-
-            <!-- Lector -->
-            <div id="essay-reader" class="hidden opacity-0 transform translate-y-10 transition-all duration-700 max-w-4xl mx-auto py-20">
-                <div class="flex justify-between items-center mb-12 no-print">
-                    <button onclick="closeEssay()" class="text-[10px] font-bold uppercase tracking-[0.5em] text-subtle">← Volver al Índice</button>
-                    <button onclick="window.print()" class="btn-action border border-ink px-8 py-3 hover:bg-ink hover:text-paper transition-all">Exportar PDF</button>
-                </div>
-                <div id="reader-content" class="prose-content"></div>
-                <footer class="mt-40 pt-20 border-t border-divider text-center no-print">
-                    <button onclick="closeEssay()" class="btn-action border border-ink px-12 py-5 hover:bg-ink hover:text-paper transition-all">Regresar a la Biblioteca</button>
-                </footer>
-            </div>
-        </div>
-    </section>
-</main>
-
-<footer class="py-24 px-6 border-t border-divider bg-paper text-center no-print">
-    <div class="max-w-xl mx-auto">
-        <h2 class="font-serif text-4xl mb-4 tracking-tighter">Andrés Ramírez</h2>
-        <p class="text-subtle text-[10px] uppercase tracking-[0.5em] mb-12 italic">Clarity Before Connection</p>
-        <p id="copyright-text" class="text-[9px] text-subtle uppercase tracking-[0.2em]"></p>
-    </div>
-</footer>
-
-<script>
-document.getElementById("copyright-text").innerText = `© ${new Date().getFullYear()} Andrés Ramírez — Fort Lauderdale | Caracas`;
-
-const essaysData = [
-    { id: 1, type: 'vol', tag: "Vol. 01", date: "2023", title_es: "El Autoconocimiento como Activo Económico", title_en: "Self-Knowledge as an Economic Asset", extract_es: "“El autoconocimiento no es simplemente un rasgo psicológico; es una ventaja competitiva cuantificable.”", extract_en: "“Self-knowledge is not merely a psychological trait; it is a quantifiable competitive advantage.”", content_es: `<h2>La Crisis de los Costos Ocultos</h2><p>Las organizaciones invierten frecuentemente millones en tecnología mientras descuidan su sistema operativo más crítico: la psicología humana.</p>`, content_en: `<h2>The Hidden Cost Crisis</h2><p>Organizations invest millions in tech while neglecting their most critical operating system: human psychology.</p>` },
-    { id: 2, type: 'vol', tag: "Vol. 02", date: "2023", title_es: "Arbitraje Emocional", title_en: "Emotional Arbitrage", extract_es: "«El arbitraje emocional es la ventaja definitiva: convertir el pánico del mercado en beneficio personal».", extract_en: "\"Emotional arbitrage is the ultimate edge: turning market panic into personal profit.\"", content_es: `<p>El arbitraje emocional es la capacidad de mantener claridad mientras el entorno opera bajo ruido emocional impulsado por el miedo.</p>`, content_en: `<p>Emotional Arbitrage leverages the gap between emotionally-driven and rationally-informed decision-making.</p>` },
-    { id: 7, type: 'note', tag: "Nota de Campo", date: "2024", title_es: "El Progreso Disfrazado de Derrota", title_en: "Progress Disguised as Defeat", extract_es: "“El progreso real rara vez se siente como victoria.”", extract_en: "“Real progress rarely feels like victory.”", content_es: `<h3>La Incompetencia Consciente</h3><p>El crecimiento no es más fuerza sobre fuerza; es la fractura deliberada de una identidad que ya no sirve.</p>`, content_en: `<h3>Conscious Incompetence</h3><p>Growth is the deliberate fracture of an identity that no longer serves.</p>` },
-    { id: 9, type: 'note', tag: "Nota de Campo", date: "2025", title_es: "Medir para Entender o Esconderse", title_en: "Measure to Understand", extract_es: "Una mirada conductual a los sistemas de auto-ubicación actuales: tests y tipologías.", extract_en: "A behavioral look at current self-location systems: tests and typologies.", content_es: `<p>Las personas no se hunden por lo que son. Se hunden por lo que repiten. Medir con honestidad es un acto de claridad.</p>`, content_en: `<p>People do not sink because of what they are. They sink because of what they repeat. Measuring honestly is an act of clarity.</p>` }
-];
-
-let currentLang = 'es';
-
-function renderGrids() {
-    const essaysGrid = document.getElementById('essays-grid');
-    const notesGrid = document.getElementById('fieldnotes-grid');
-    essaysGrid.innerHTML = ''; notesGrid.innerHTML = '';
-
-    essaysData.forEach(e => {
-        const card = document.createElement('div');
-        card.className = 'essay-card p-10 h-80 flex flex-col justify-between';
-        card.onclick = () => openEssay(e.id);
-        card.innerHTML = `
-            <div>
-                <div class="flex justify-between items-center mb-6">
-                    <span class="text-[10px] font-bold uppercase tracking-widest text-zinc-400">${e.tag}</span>
-                    <span class="text-[9px] font-medium text-zinc-300 uppercase">${e.date}</span>
-                </div>
-                <h3 class="font-serif text-3xl leading-tight mb-4">${currentLang === 'es' ? e.title_es : e.title_en}</h3>
-                <p class="text-[11px] text-zinc-500 italic line-clamp-2">${currentLang === 'es' ? e.extract_es : e.extract_en}</p>
-            </div>
-            <div class="flex items-center gap-3">
-                <span class="w-6 h-[1px] bg-accent"></span>
-                <span class="text-[9px] font-bold uppercase tracking-[0.4em] text-accent">${currentLang === 'es' ? 'Leer Nota' : 'Read Note'}</span>
-            </div>
-        `;
-        if (e.type === 'vol') essaysGrid.appendChild(card); else notesGrid.appendChild(card);
-    });
-}
-
-function openEssay(id) {
-    const e = essaysData.find(i => i.id === id);
-    document.getElementById('essays-grid-container').classList.add('hidden');
-    document.getElementById('essays-header').classList.add('hidden');
-    const reader = document.getElementById('essay-reader');
-    document.getElementById('reader-content').innerHTML = `
-        <header class="text-center mb-24">
-            <span class="text-[11px] font-bold uppercase tracking-[0.6em] text-accent mb-6 block">${e.tag} — ${e.date}</span>
-            <h1 class="font-serif text-6xl md:text-8xl mb-10 leading-none tracking-tighter">${currentLang === 'es' ? e.title_es : e.title_en}</h1>
-            <p class="text-zinc-500 text-lg italic max-w-2xl mx-auto">${currentLang === 'es' ? e.extract_es : e.extract_en}</p>
-        </header>
-        <div class="prose-body">${currentLang === 'es' ? e.content_es : e.content_en}</div>
-    `;
-    reader.classList.remove('hidden');
-    setTimeout(() => { reader.classList.add('opacity-100', 'translate-y-0'); window.scrollTo(0,0); }, 50);
-}
-
-function closeEssay() {
-    const reader = document.getElementById('essay-reader');
-    reader.classList.remove('opacity-100', 'translate-y-0');
-    setTimeout(() => { 
-        reader.classList.add('hidden'); 
-        document.getElementById('essays-grid-container').classList.remove('hidden'); 
-        document.getElementById('essays-header').classList.remove('hidden'); 
-        window.scrollTo(0,0);
-    }, 500);
-}
-
-function switchView(viewId, sectionId = null) {
-    document.querySelectorAll('.view-content').forEach(v => { v.classList.remove('visible-view'); v.classList.add('hidden-view'); });
-    setTimeout(() => {
-        const target = document.getElementById(`view-${viewId}`);
-        target.classList.remove('hidden-view'); target.classList.add('visible-view');
-        if (sectionId) document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
-        else window.scrollTo(0,0);
-    }, 100);
-}
-
-function setLanguage(l) { 
-    currentLang = l; 
-    document.getElementById('btn-es').className = l === 'es' ? 'lang-active pb-2' : 'pb-2 text-subtle hover:text-ink';
-    document.getElementById('btn-en').className = l === 'en' ? 'lang-active pb-2' : 'pb-2 text-subtle hover:text-ink';
-    renderGrids(); 
-}
-
-function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
-
-renderGrids();
-</script>
 </body>
 </html>
