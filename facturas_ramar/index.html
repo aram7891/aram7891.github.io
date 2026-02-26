@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ramar Solutions | Invoice Generator</title>
+    
+    <!-- External Libraries (CDNs) -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- html2pdf with SRI Hash for security -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" 
+            xintegrity="sha512-Vpx99unL6B7Rrk+s3O09nS0O84nI0V/y91mI9I2m8M8fG5K6l+y6T2hN1P6Kz/U9P60A==" 
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+        .no-print { display: flex; }
+        @media print { .no-print { display: none !important; } }
+        input[type="number"]::-webkit-inner-spin-button, 
+        input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+    </style>
+</head>
+<body class="bg-neutral-50 text-neutral-900">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        const App = () => {
+            const [view, setView] = useState('editor');
+            const [isGenerating, setIsGenerating] = useState(false);
+            const invoiceRef = useRef();
+
+            // Default business data for Florida
+            const [profile, setProfile] = useState({
+                name: 'Andres Ramirez',
+                company: 'Ramar Solutions Corp.',
+                address: '110 NW 135TH WAY UNIT 305. PLANTATION FLORIDA',
+                email: 'contact@ramarsolutions.com',
+                phone: '+1 (000) 000-0000',
+                bankInfo: 'To be deposited at Chase Bank\nAccount Number: 906100701\nRoute Number: 267084131',
+                logoUrl: 'https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/assets/images/logo_Ramar.PNG',
+                clientName: 'Well Done Mitigation LLC.',
+                clientAddress: 'Coral Gables, Florida',
+                dailyRate: 115,
+            });
+
+            const [invoice, setInvoice] = useState({
+                number: `INV-${new Date().getFullYear()}-001`,
+                date: new Date().toISOString().split('T')[0],
+                daysWorked: 1,
+                commissions: 0,
+                description: 'Contract Labor',
+            });
+
+            // Safe Data Loading
+            useEffect(() => {
+                try {
+                    const saved = localStorage.getItem('ramar_app_profile');
+                    if (saved) {
+                        const parsed = JSON.parse(saved);
+                        setProfile(prev => ({ ...prev, ...parsed }));
+                    }
+                } catch (e) {
+                    console.error("Corrupted profile data found.");
+                    localStorage.removeItem('ramar_app_profile');
+                }
+                
+                // Initialize Lucide icons
+                if (window.lucide) window.lucide.createIcons();
+            }, [view]);
+
+            const saveProfile = () => {
+                localStorage.setItem('ramar_app_profile', JSON.stringify(profile));
+                setView('editor');
+            };
+
+            // Safe Numeric Calculations
+            const safeDays = Number(invoice.daysWorked) || 0;
+            const safeRate = Number(profile.dailyRate) || 0;
+            const safeComms = parseFloat(invoice.commissions) || 0;
+            const totalDaysAmount = safeDays * safeRate;
+            const grandTotal = totalDaysAmount + safeComms;
+
+            const handleDownloadPDF = () => {
+                if (typeof html2pdf === 'undefined') return;
+
+                setIsGenerating(true);
+                const element = invoiceRef.current;
+                const opt = {
+                    margin: 10,
+                    filename: `Invoice_${invoice.number}_Ramar_Solutions.pdf`,
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2, useCORS: true },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                };
+
+                html2pdf()
+                    .from(element)
+                    .set(opt)
+                    .save()
+                    .catch(err => console.error("PDF Generation failed:", err))
+                    .finally(() => setIsGenerating(false));
+            };
+
+            return (
+                <div className="min-h-screen pb-24">
+                    {/* APP HEADER */}
+                    <nav className="bg-white border-b border-neutral-200 px-6 py-5 sticky top-0 z-10 flex justify-between items-center no-print shadow-sm">
+                        <div className="flex items-center gap-2">
+                            <div className="bg-black p-1.5 rounded-lg text-white">
+                                <i data-lucide="briefcase" className="w-5 h-5"></i>
+                            </div>
+                            <h1 className="font-black text-lg tracking-tighter">RAMAR SOLUTIONS</h1>
+                        </div>
+                        <button 
+                            onClick={() => setView(view === 'profile' ? 'editor' : 'profile')}
+                            className={`p-2 rounded-lg transition-all ${view === 'profile' ? 'bg-black text-white' : 'text-neutral-400 hover:bg-neutral-100'}`}
+                        >
+                            <i data-lucide="settings" className="w-5 h-5"></i>
+                        </button>
+                    </nav>
+
+                    <div className="max-w-md mx-auto p-4">
+                        {view === 'profile' ? (
+                            <div className="bg-white rounded-2xl p-6 shadow-sm border border-neutral-200 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                                <div className="flex items-center gap-2 mb-6">
+                                    <i data-lucide="user" className="text-neutral-400"></i>
+                                    <h2 className="text-lg font-bold">Business Profile</h2>
+                                </div>
+                                
+                                <div className="space-y-4">
+                                    <div>
+                                        <label className="text-[10px] font-bold uppercase text-neutral-400 block mb-1">Company Name</label>
+                                        <input type="text" value={profile.company} onChange={e => setProfile({...profile, company: e.target.value})} className="w-full bg-neutral-50 border border-neutral-200 rounded-lg px-4 py-3 outline-none focus:ring-1 focus:ring-black" />
+                                    </div>
+                                    <div>
+                                        <label className="text-[10px] font-bold uppercase text-neutral-400 block mb-1">Business Address</label>
+                                        <input type="text" value={profile.address} onChange={e => setProfile({...profile, address: e.target.value})} className="w-full bg-neutral-50 border border-neutral-200 rounded-lg px-4 py-3 outline-none focus:ring-1 focus:ring-black" />
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="text-[10px] font-bold uppercase text-neutral-400 block mb-1">Daily Rate ($)</label>
+                                            <input type="number" value={profile.dailyRate} onChange={e => setProfile({...profile, dailyRate: e.target.value})} className="w-full bg-neutral-50 border border-neutral-200 rounded-lg px-4 py-3 outline-none focus:ring-1 focus:ring-black" />
+                                        </div>
+                                        <div>
+                                            <label className="text-[10px] font-bold uppercase text-neutral-400 block mb-1">Owner Name</label>
+                                            <input type="text" value={profile.name} onChange={e => setProfile({...profile, name: e.target.value})} className="w-full bg-neutral-50 border border-neutral-200 rounded-lg px-4 py-3 outline-none focus:ring-1 focus:ring-black" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label className="text-[10px] font-bold uppercase text-neutral-400 block mb-1">Payment Details</label>
+                                        <textarea value={profile.bankInfo} onChange={e => setProfile({...profile, bankInfo: e.target.value})} className="w-full bg-neutral-50 border border-neutral-200 rounded-lg px-4 py-3 outline-none focus:ring-1 focus:ring-black h-28 text-sm" />
+                                    </div>
+                                    <button onClick={saveProfile} className="w-full bg-black text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 shadow-lg active:scale-95 transition-all">
+                                        <i data-lucide="save" className="w-5 h-5"></i> Update Profile
+                                    </button>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="space-y-6">
+                                <div className="bg-white rounded-2xl p-6 shadow-sm border border-neutral-200">
+                                    <div className="flex items-center gap-2 mb-6">
+                                        <i data-lucide="plus" className="text-neutral-300"></i>
+                                        <h2 className="text-lg font-bold">New Invoice</h2>
+                                    </div>
+                                    
+                                    <div className="space-y-5">
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div>
+                                                <label className="text-[10px] font-bold uppercase text-neutral-400 block mb-1">Invoice #</label>
+                                                <input type="text" value={invoice.number} onChange={e => setInvoice({...invoice, number: e.target.value})} className="w-full bg-neutral-50 border border-neutral-200 rounded-lg px-4 py-3 outline-none font-mono text-sm" />
+                                            </div>
+                                            <div>
+                                                <label className="text-[10px] font-bold uppercase text-neutral-400 block mb-1">Date</label>
+                                                <input type="date" value={invoice.date} onChange={e => setInvoice({...invoice, date: e.target.value})} className="w-full bg-neutral-50 border border-neutral-200 rounded-lg px-4 py-3 outline-none text-sm" />
+                                            </div>
+                                        </div>
+
+                                        <div className="bg-neutral-900 p-5 rounded-2xl space-y-4">
+                                            <div className="flex items-center gap-2 text-neutral-500 uppercase text-[10px] font-black tracking-widest">
+                                                <i data-lucide="calendar" className="w-4 h-4"></i> Billing
+                                            </div>
+                                            <div className="grid grid-cols-2 gap-4">
+                                                <div>
+                                                    <label className="text-[10px] font-bold text-neutral-600 block mb-1 uppercase">Days Worked</label>
+                                                    <input type="number" value={invoice.daysWorked} onChange={e => setInvoice({...invoice, daysWorked: e.target.value})} className="w-full bg-transparent border-b border-neutral-800 text-white text-3xl font-black focus:border-white outline-none py-1 transition-all" />
+                                                </div>
+                                                <div>
+                                                    <label className="text-[10px] font-bold text-neutral-600 block mb-1 uppercase">Subtotal</label>
+                                                    <div className="text-white text-3xl font-black py-1">${totalDaysAmount.toFixed(2)}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <label className="text-[10px] font-bold uppercase text-neutral-400 block mb-1">Extra Commissions ($)</label>
+                                            <input type="number" value={invoice.commissions} onChange={e => setInvoice({...invoice, commissions: e.target.value})} className="w-full bg-neutral-50 border border-neutral-200 rounded-lg px-4 py-3 outline-none text-xl font-bold" />
+                                        </div>
+
+                                        <div className="pt-6 border-t border-neutral-100">
+                                            <div className="flex justify-between items-center mb-8">
+                                                <span className="text-neutral-400 font-bold text-[10px] uppercase tracking-widest">Total Amount</span>
+                                                <span className="text-4xl font-black text-black tracking-tighter">${grandTotal.toFixed(2)}</span>
+                                            </div>
+
+                                            <button onClick={handleDownloadPDF} disabled={isGenerating} className="w-full bg-black text-white font-bold py-5 rounded-xl shadow-xl shadow-neutral-200 flex items-center justify-center gap-3 active:scale-95 transition-all disabled:opacity-50">
+                                                {isGenerating ? (
+                                                    <div className="flex items-center gap-2">
+                                                        <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent" />
+                                                        PROCESING...
+                                                    </div>
+                                                ) : (
+                                                    <React.Fragment>
+                                                        <i data-lucide="download" className="w-5 h-5"></i> GENERATE PDF
+                                                    </React.Fragment>
+                                                )}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+
+                    {/* HIDDEN INVOICE FOR PDF EXPORT */}
+                    <div className="hidden">
+                        <div ref={invoiceRef} className="p-16 bg-white text-black font-sans" style={{ width: '210mm', minHeight: '297mm' }}>
+                            <div className="flex justify-between items-start mb-20">
+                                <div className="max-w-[50%]">
+                                    <img src={profile.logoUrl} alt="Logo" className="h-24 mb-6 object-contain" />
+                                    <h1 className="text-7xl font-black uppercase italic tracking-tighter leading-none mb-4">INVOICE</h1>
+                                    <p className="text-neutral-400 font-mono text-xl uppercase tracking-tighter">REF: {invoice.number}</p>
+                                </div>
+                                <div className="text-right">
+                                    <p className="font-black text-3xl mb-1 uppercase tracking-tight">{profile.company}</p>
+                                    <p className="text-neutral-500 text-sm italic mb-1">{profile.address}</p>
+                                    <p className="text-neutral-500 text-sm">{profile.email}</p>
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-12 mb-16 py-12 border-y-8 border-black">
+                                <div>
+                                    <p className="text-[10px] font-black uppercase text-neutral-300 mb-4 tracking-[0.4em]">BILL TO</p>
+                                    <p className="font-black text-3xl uppercase mb-1 leading-none">{profile.clientName}</p>
+                                    <p className="text-neutral-500 text-lg italic">{profile.clientAddress}</p>
+                                </div>
+                                <div className="text-right">
+                                    <p className="text-[10px] font-black uppercase text-neutral-300 mb-4 tracking-[0.4em]">DATE OF ISSUE</p>
+                                    <p className="font-black text-3xl uppercase">{new Date(invoice.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
+                                </div>
+                            </div>
+
+                            <table className="w-full mb-20 text-left">
+                                <thead>
+                                    <tr className="border-b-4 border-black">
+                                        <th className="py-6 font-black uppercase text-[12px] tracking-widest">DESCRIPTION</th>
+                                        <th className="py-6 text-right font-black uppercase text-[12px] tracking-widest">DAYS</th>
+                                        <th className="py-6 text-right font-black uppercase text-[12px] tracking-widest">RATE</th>
+                                        <th className="py-6 text-right font-black uppercase text-[12px] tracking-widest">TOTAL</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y-2 divide-neutral-100">
+                                    <tr>
+                                        <td className="py-12 text-2xl font-black uppercase tracking-tight leading-tight">{invoice.description}</td>
+                                        <td className="py-12 text-right font-mono text-2xl">{safeDays}</td>
+                                        <td className="py-12 text-right font-mono text-2xl">${safeRate.toFixed(2)}</td>
+                                        <td className="py-12 text-right font-black font-mono text-2xl">${totalDaysAmount.toFixed(2)}</td>
+                                    </tr>
+                                    {safeComms > 0 && (
+                                        <tr className="bg-neutral-50">
+                                            <td className="py-12 text-2xl font-black uppercase tracking-tight italic">COMMISSIONS & BONUSES</td>
+                                            <td className="py-12 text-right font-mono text-2xl">1</td>
+                                            <td className="py-12 text-right font-mono text-2xl">${safeComms.toFixed(2)}</td>
+                                            <td className="py-12 text-right font-black font-mono text-2xl">${safeComms.toFixed(2)}</td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+
+                            <div className="flex justify-end mb-32">
+                                <div className="w-1/2 pt-10 border-t-8 border-black">
+                                    <div className="flex justify-between items-center text-6xl font-black tracking-tighter">
+                                        <span>TOTAL:</span>
+                                        <span>${grandTotal.toFixed(2)}</span>
+                                    </div>
+                                    <p className="text-right text-neutral-400 font-black text-sm mt-2 tracking-[0.2em] uppercase">Currency: USD</p>
+                                </div>
+                            </div>
+
+                            <div className="p-12 bg-neutral-100 rounded-3xl border-l-[24px] border-black">
+                                <p className="text-[10px] font-black uppercase text-neutral-400 mb-6 tracking-[0.5em]">PAYMENT INSTRUCTIONS</p>
+                                <p className="text-neutral-900 font-black text-xl whitespace-pre-wrap leading-relaxed uppercase">{profile.bankInfo}</p>
+                            </div>
+
+                            <div className="mt-32 text-center">
+                                <div className="inline-block border-t-2 border-black pt-6 px-16">
+                                    <p className="font-black text-lg uppercase tracking-widest">{profile.name}</p>
+                                    <p className="text-[10px] text-neutral-400 font-bold uppercase tracking-widest">Authorized Signature</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* BOTTOM MOBILE TABS */}
+                    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-neutral-200 px-12 py-5 flex justify-around shadow-[0_-15px_40px_rgba(0,0,0,0.04)] no-print">
+                        <button onClick={() => setView('editor')} className={`flex flex-col items-center gap-1.5 ${view === 'editor' ? 'text-black' : 'text-neutral-300'}`}>
+                            <i data-lucide="file-text" className={`w-6 h-6 ${view === 'editor' ? 'stroke-[3px]' : 'stroke-[2px]'}`}></i>
+                            <span className="text-[9px] font-black uppercase tracking-[0.2em]">Billing</span>
+                        </button>
+                        <button onClick={() => setView('profile')} className={`flex flex-col items-center gap-1.5 ${view === 'profile' ? 'text-black' : 'text-neutral-300'}`}>
+                            <i data-lucide="user" className={`w-6 h-6 ${view === 'profile' ? 'stroke-[3px]' : 'stroke-[2px]'}`}></i>
+                            <span className="text-[9px] font-black uppercase tracking-[0.2em]">Settings</span>
+                        </button>
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
