@@ -4,345 +4,269 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Andrés Ramírez | Clarity Before Connection</title>
-  
+    
     <meta name="description" content="Plataforma de Andrés Ramírez: Claridad antes que conexión. Notas de campo y ensayos sobre autoconocimiento.">
-  
+    
     <script src="https://cdn.tailwindcss.com"></script>
-  
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-  
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@0,400;0,600;0,900;1,400&display=swap" rel="stylesheet">
+    
     <script>
-    tailwind.config = {
-    theme: {
-    extend: {
-    colors: {
-    paper: '#FAFAFA',
-    ink: '#1A1A1A',
-    subtle: '#71717A',
-    divider: '#E4E4E7',
-    accent: '#2563EB'
-    },
-    fontFamily: {
-    serif: ['"Playfair Display"', 'serif'],
-    sans: ['"Inter"', 'sans-serif'],
-    }
-    }
-    }
-    }
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        paper: '#FAFAFA',
+                        ink: '#1A1A1A',
+                        subtle: '#71717A',
+                        divider: '#E4E4E7',
+                        accent: '#2563EB'
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Inter"', 'sans-serif'],
+                    }
+                }
+            }
+        }
     </script>
-  
+    
     <style>
-    :root { scroll-padding-top: 140px; transition: scroll-padding-top 0.3s ease; }
-    .banner-closed { scroll-padding-top: 80px; }
-    
-    body { margin: 0; padding: 0; overflow-x: hidden; width: 100%; background-color: #FAFAFA; }
-    
-    #announcement-banner {
-    display: flex; align-items: center; justify-content: center; min-height: 40px;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); overflow: hidden; position: relative; z-index: 60;
-    }
-    .banner-content { flex: 1; text-align: center; padding: 10px 40px; }
-    .close-banner-btn {
-    position: absolute; right: 15px; display: flex; align-items: center; justify-content: center;
-    width: 24px; height: 24px; cursor: pointer; opacity: 0.6; transition: opacity 0.2s;
-    }
-    .close-banner-btn:hover { opacity: 1; }
-    
-    .author-photo { filter: grayscale(100%); transition: filter 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
-    .author-photo:hover { filter: grayscale(0%); }
-    
-    .essay-card {
-    background: #ffffff; border: 1px solid #E4E4E7; padding: 2.5rem 2rem;
-    display: flex; flex-direction: column; transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); height: 100%;
-    }
-    .essay-card:hover { border-color: #1A1A1A; transform: translateY(-8px); box-shadow: 0 30px 60px -20px rgba(0,0,0,0.08); }
-    
-    .read-btn {
-    display: inline-block; margin-top: auto; padding: 12px 0; font-size: 10px;
-    font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
-    border-bottom: 1px solid #1A1A1A; color: #1A1A1A; transition: all 0.3s ease; text-decoration: none; cursor: pointer;
-    }
-    .read-btn:hover { opacity: 0.5; letter-spacing: 0.3em; }
-    
-    .spinner {
-    border: 2px solid rgba(0, 0, 0, 0.1); width: 18px; height: 18px; border-radius: 50%;
-    border-left-color: #1A1A1A; animation: spin 1s linear infinite; display: inline-block; margin-right: 8px;
-    }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    
-    #mobile-menu { backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); background-color: rgba(250, 250, 250, 0.85); }
-    
-    .essay-tab {
-    cursor: pointer; padding: 8px 20px; font-size: 10px; font-weight: 700; letter-spacing: 0.15em;
-    text-transform: uppercase; border-bottom: 2px solid transparent; transition: all 0.3s ease; color: #71717A;
-    }
-    .essay-tab.active { border-bottom-color: #1A1A1A; color: #1A1A1A; }
-    
-    .lang-switch {
-    font-size: 10px; letter-spacing: 0.1em; cursor: pointer; padding: 4px 12px;
-    border: 1px solid #E4E4E7; transition: all 0.2s ease; font-weight: 700;
-    }
-    .lang-active { background: #1A1A1A; color: #FAFAFA; border-color: #1A1A1A; }
+        :root { scroll-padding-top: 140px; }
+        body { background-color: #FAFAFA; color: #1A1A1A; overflow-x: hidden; }
+        
+        .author-photo { filter: grayscale(100%); transition: filter 0.8s ease; }
+        .author-photo:hover { filter: grayscale(0%); }
+        
+        .essay-card {
+            background: #ffffff; border: 1px solid #E4E4E7; padding: 2.5rem 2rem;
+            display: flex; flex-direction: column; transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .essay-card:hover { border-color: #1A1A1A; transform: translateY(-8px); box-shadow: 0 30px 60px -20px rgba(0,0,0,0.08); }
+        
+        .read-btn {
+            display: inline-block; padding: 12px 0; font-size: 10px;
+            font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+            border-bottom: 1px solid #1A1A1A; color: #1A1A1A; transition: all 0.3s ease; text-decoration: none;
+        }
+        .read-btn:hover { opacity: 0.5; letter-spacing: 0.3em; }
 
-    /* Modal Lector */
-    #reader-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 9999; display: none; align-items: center; justify-content: center; padding: 20px; }
-    #reader-content { background: #FAFAFA; max-width: 860px; width: 100%; max-height: 94vh; overflow-y: auto; padding: 3rem 2.8rem; border: 1px solid #E4E4E7; position: relative; }
-    .close-reader { position: absolute; top: 20px; right: 25px; font-size: 32px; cursor: pointer; color: #555; }
-    .prose-reader { line-height: 2.05; font-size: 1.32rem; color: #1f2937; max-width: 72ch; margin: 0 auto; }
-    .prose-reader h2 { font-family: 'Playfair Display', serif; font-size: 3.2rem; margin: 3rem 0 1.5rem; font-weight: 700; }
-    .prose-reader p { margin-bottom: 2.2rem; }
+        .spinner {
+            border: 2px solid rgba(0, 0, 0, 0.1); width: 18px; height: 18px; border-radius: 50%;
+            border-left-color: #1A1A1A; animation: spin 1s linear infinite; display: inline-block;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .lang-switch {
+            font-size: 10px; letter-spacing: 0.1em; cursor: pointer; padding: 4px 12px;
+            border: 1px solid #E4E4E7; transition: all 0.2s ease; font-weight: 700;
+        }
+        .lang-active { background: #1A1A1A; color: #FAFAFA; border-color: #1A1A1A; }
     </style>
 </head>
-<body class="font-sans antialiased selection:bg-ink selection:text-paper">
+<body class="font-sans antialiased">
+
+<!-- Chosen Palette: Paper & Ink (Minimalist High-Contrast) -->
+<!-- Application Structure Plan: 
+     1. Hero Section: Establish authority and core thesis.
+     2. AI Lab: Interactive tools to engage user with the "Discernment" methodology.
+     3. Books: Commercial conversion for published works.
+     4. Archive: Repository of Field Notes with toggles for ES/EN.
+     This structure follows a professional "Author Portfolio" flow, moving from value proposition to interaction and finally to in-depth resources.
+-->
 
 <header class="fixed top-0 w-full z-50">
-<div id="announcement-banner" class="bg-ink text-paper text-[9px] md:text-[10px] uppercase tracking-[0.2em] font-bold">
-<div class="banner-content">
-<span data-i18n="banner-text">HAZ DE LA LECTURA TU HERRAMIENTA DE CRECIMIENTO PERSONAL ¡DESCUBRE MIS OBRAS!</span>
-<a href="javascript:void(0)" onclick="scrollToSection('books')" class="underline ml-2 hover:text-gray-300 transition-colors" data-i18n="banner-link">EXPLORAR LIBROS</a>
-</div>
-<button onclick="closeBanner()" class="close-banner-btn" aria-label="Cerrar aviso">
-<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-</button>
-</div>
+    <div id="announcement-banner" class="bg-ink text-paper text-[9px] md:text-[10px] uppercase tracking-[0.2em] font-bold py-3 flex justify-center items-center px-10 relative">
+        <span data-i18n="banner-text">Haz de la lectura tu herramienta de crecimiento personal</span>
+        <button onclick="scrollToSection('books')" class="underline ml-2 hover:text-gray-300 transition-colors" data-i18n="banner-link">EXPLORAR LIBROS</button>
+    </div>
 
-<nav id="navbar" class="w-full flex justify-between items-center px-6 py-4 md:px-12 bg-white/90 backdrop-blur-md border-b border-divider transition-all duration-300">
-<div class="font-serif text-lg tracking-wide font-semibold uppercase">Andrés Ramírez</div>
+    <nav class="w-full flex justify-between items-center px-6 py-5 md:px-12 bg-white/90 backdrop-blur-md border-b border-divider">
+        <div class="font-serif text-xl tracking-tighter font-black uppercase italic">Andrés Ramírez</div>
+        
+        <div class="flex items-center space-x-8">
+            <div class="hidden lg:flex space-x-10 text-[10px] font-bold tracking-[0.3em] uppercase">
+                <a href="#home" data-i18n="nav-home" class="hover:text-accent transition-colors">Inicio</a>
+                <a href="#ai-tools" data-i18n="nav-tools" class="hover:text-accent transition-colors">Laboratorio</a>
+                <a href="#books" data-i18n="nav-books" class="hover:text-accent transition-colors">Libros</a>
+                <a href="#essays" data-i18n="nav-archive" class="hover:text-accent transition-colors">Ensayos</a>
+            </div>
 
-<div class="flex items-center space-x-6">
-<div class="hidden lg:flex space-x-8 text-[10px] font-bold tracking-widest uppercase">
-<a href="javascript:void(0)" onclick="scrollToSection('home')" data-i18n="nav-home" class="hover:text-subtle transition-colors">Inicio</a>
-<a href="javascript:void(0)" onclick="scrollToSection('ai-tools')" data-i18n="nav-tools" class="hover:text-subtle transition-colors">Herramientas</a>
-<a href="javascript:void(0)" onclick="scrollToSection('books')" data-i18n="nav-books" class="hover:text-subtle transition-colors">Libros</a>
-<a href="javascript:void(0)" onclick="scrollToSection('essays')" data-i18n="nav-archive" class="hover:text-subtle transition-colors">Archivo</a>
-</div>
-
-<div class="flex items-center space-x-0 font-bold text-[9px]" role="group" aria-label="Language selector">
-<button onclick="setLanguage('es')" id="btn-es" class="lang-switch lang-active rounded-l" aria-label="Español">ES</button>
-<button onclick="setLanguage('en')" id="btn-en" class="lang-switch rounded-r border-l-0" aria-label="English">EN</button>
-</div>
-
-<button class="lg:hidden text-ink" onclick="toggleMobileMenu()" aria-label="Menú">
-<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-</button>
-</div>
-</nav>
+            <div class="flex items-center">
+                <button onclick="setLanguage('es')" id="btn-es" class="lang-switch lang-active rounded-l">ES</button>
+                <button onclick="setLanguage('en')" id="btn-en" class="lang-switch rounded-r border-l-0">EN</button>
+            </div>
+        </div>
+    </nav>
 </header>
 
-<div id="mobile-menu" class="fixed inset-0 z-40 hidden flex-col justify-center items-center space-y-8 no-select">
-<a href="javascript:void(0)" onclick="scrollToSection('home'); toggleMobileMenu();" class="font-serif text-2xl" data-i18n="nav-home">Inicio</a>
-<a href="javascript:void(0)" onclick="scrollToSection('ai-tools'); toggleMobileMenu();" class="font-serif text-2xl" data-i18n="nav-tools">Herramientas</a>
-<a href="javascript:void(0)" onclick="scrollToSection('books'); toggleMobileMenu();" class="font-serif text-2xl" data-i18n="nav-books">Libros</a>
-<a href="javascript:void(0)" onclick="scrollToSection('essays'); toggleMobileMenu();" class="font-serif text-2xl" data-i18n="nav-archive">Archivo</a>
-<button onclick="toggleMobileMenu()" class="absolute top-6 right-6 font-bold uppercase tracking-widest text-xs" data-i18n="close">Cerrar</button>
-</div>
-
-<section id="home" class="min-h-screen flex flex-col justify-center items-center px-6 text-center pt-40 pb-20">
-<div class="mb-12 w-56 h-56 md:w-80 md:h-80 overflow-hidden rounded-full border border-divider shadow-sm bg-zinc-100">
-<img src="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/unnamed%20(1).jpg" alt="Andrés Ramírez" class="author-photo w-full h-full object-cover">
-</div>
-<h1 class="font-serif text-4xl md:text-6xl lg:text-7xl leading-tight max-w-4xl mb-8" data-i18n="hero-title">Claridad antes que Conexión.</h1>
-<p class="font-serif italic text-xl md:text-2xl text-subtle max-w-2xl leading-relaxed" data-i18n="hero-subtitle">"Porque el costo de amar sin discernir es perderte a ti mismo."</p>
-</section>
-
-<section id="ai-tools" class="py-32 px-6 md:px-12 bg-white border-t border-b border-divider scroll-mt-[130px]">
-<div class="max-w-5xl mx-auto">
-<div class="text-center mb-16">
-<span class="text-[10px] font-bold tracking-widest uppercase text-subtle mb-2 block" data-i18n="tools-label">Laboratorio de Discernimiento</span>
-<h2 class="font-serif text-4xl mb-4" data-i18n="tools-title">Interacción con la Claridad</h2>
-<p class="text-subtle text-sm max-w-xl mx-auto" data-i18n="tools-desc">Análisis metodológico de dinámicas relacionales y auditoría técnica de capital emocional.</p>
-</div>
-
-<div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-<div class="gemini-container p-10 flex flex-col shadow-sm border border-divider">
-<h3 class="font-serif text-2xl mb-2 tracking-tight" data-i18n="tool1-title">Discernimiento Relacional</h3>
-<p class="text-[9px] text-accent mb-6 uppercase tracking-[0.2em] font-bold" data-i18n="tool1-subtitle">Perspectiva Técnica</p>
-<textarea id="situationInput" rows="5" class="w-full p-4 text-sm border border-divider rounded-none bg-paper focus:outline-none focus:ring-1 focus:ring-ink mb-6" placeholder="..."></textarea>
-<button onclick="analyzeClarity()" id="analyzeBtn" class="w-full py-4 bg-ink text-white text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-opacity-90 transition-all flex items-center justify-center">
-<span id="analyzeSpinner" class="spinner hidden"></span>
-<span id="analyzeBtnText" data-i18n="btn-analyze">Obtener Perspectiva</span>
-</button>
-<div id="clarityResult" class="mt-8 text-sm leading-relaxed hidden border-t border-divider pt-8 italic text-ink"></div>
-</div>
-
-<div class="gemini-container p-10 flex flex-col shadow-sm border border-divider">
-<h3 class="font-serif text-2xl mb-2 tracking-tight" data-i18n="tool2-title">Auditoría Emocional</h3>
-<p class="text-[9px] text-accent mb-6 uppercase tracking-[0.2em] font-bold" data-i18n="tool2-subtitle">Patrones de Activo/Pasivo</p>
-<input id="patternInput" type="text" class="w-full p-4 text-sm border border-divider rounded-none bg-paper focus:outline-none focus:ring-1 focus:ring-ink mb-6" placeholder="...">
-<button onclick="generateFieldNote()" id="noteBtn" class="w-full py-4 border border-ink text-ink text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-ink hover:text-white transition-all flex items-center justify-center">
-<span id="noteSpinner" class="spinner hidden"></span>
-<span id="noteBtnText" data-i18n="btn-generate">Generar Nota de Campo</span>
-</button>
-<div id="noteResult" class="mt-8 p-6 bg-paper border border-divider rounded-none text-[10px] hidden">
-<span class="block font-bold mb-3 uppercase tracking-[0.2em] text-subtle" data-i18n="record-label">Registro de Auditoría</span>
-<div id="noteContent" class="text-ink leading-relaxed"></div>
-</div>
-</div>
-</div>
-</div>
-</section>
-
-<!-- SECCIÓN DE LIBROS PREMIUM -->
-<section id="books" class="py-32 px-6 md:px-12 bg-paper scroll-mt-[130px]">
-<div class="max-w-6xl mx-auto">
-<div class="text-center mb-16">
-<span class="text-[10px] font-bold tracking-widest uppercase text-subtle mb-3 block" data-i18n="books-label">Obras Publicadas</span>
-<h2 class="font-serif text-4xl md:text-5xl text-ink" data-i18n="books-sec-title">Libros</h2>
-</div>
-
-<div id="books-grid-es" class="grid grid-cols-1 md:grid-cols-2 gap-8 transition-opacity duration-500">
-<div class="essay-card flex flex-col sm:flex-row gap-8 items-center sm:items-start group">
-<div class="w-40 shrink-0 overflow-hidden border border-divider shadow-sm">
-<img src="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/Dise%C3%B1o%20sin%20t%C3%ADtulo%20(7).png" alt="Match Consciente Cover" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700 ease-out">
-</div>
-<div class="flex flex-col flex-1 h-full text-center sm:text-left">
-<span class="text-[9px] text-subtle uppercase tracking-[0.2em] font-bold mb-2">Libro Principal</span>
-<h3 class="font-serif text-2xl mb-3 text-ink">Match Consciente</h3>
-<p class="text-xs text-subtle leading-relaxed mb-6 flex-grow">
-Encontrar el amor sin perderse en el intento. Una guía metodológica para auditar tus dinámicas relacionales y establecer espacios no negociables.
-</p>
-<a href="https://www.amazon.com/Match-Consciente-Encontrar-Perderse-Spanish-ebook/dp/B0GLB3NJ1F" target="_blank" class="read-btn self-center sm:self-start mt-auto">Adquirir en Amazon</a>
-</div>
-</div>
-
-<div class="essay-card flex flex-col sm:flex-row gap-8 items-center sm:items-start group">
-<div class="w-40 shrink-0 overflow-hidden border border-divider shadow-sm">
-<img src="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/Dise%C3%B1o%20sin%20t%C3%ADtulo%20(7).png" alt="No te abandones Cover" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700 ease-out">
-</div>
-<div class="flex flex-col flex-1 h-full text-center sm:text-left">
-<span class="text-[9px] text-subtle uppercase tracking-[0.2em] font-bold mb-2">Workbook</span>
-<h3 class="font-serif text-2xl mb-3 text-ink">No te abandones</h3>
-<p class="text-xs text-subtle leading-relaxed mb-6 flex-grow">
-Ejercicios técnicos y prácticos para mantener tu centro, claridad y límites mientras navegas el complejo mundo de buscar pareja.
-</p>
-<a href="https://www.amazon.com/No-Abandones-Buscar-Pareja-Spanish-ebook/dp/B0GCRCDMQL" target="_blank" class="read-btn self-center sm:self-start mt-auto">Adquirir en Amazon</a>
-</div>
-</div>
-</div>
-
-<div id="books-grid-en" class="hidden grid grid-cols-1 md:grid-cols-2 gap-8 transition-opacity duration-500">
-<!-- Tus cards en inglés aquí -->
-</div>
-</div>
-</section>
-
-<!-- SECCIÓN ENSAYOS -->
-<section id="essays" class="py-32 px-6 md:px-12 bg-white border-t border-divider scroll-mt-[130px]">
-<div class="max-w-6xl mx-auto">
-<div class="text-center mb-16">
-<span class="text-[10px] font-bold tracking-widest uppercase text-subtle mb-3 block" data-i18n="archive-label">Hemeroteca</span>
-<h2 class="font-serif text-4xl md:text-5xl mb-10 text-ink">Field Notes Archive</h2>
-<div class="flex justify-center space-x-6 border-b border-divider no-select" role="tablist">
-<button onclick="switchContentTabs('es')" id="essay-tab-es" class="essay-tab active" data-i18n="tab-es" role="tab" aria-selected="true">Español</button>
-<button onclick="switchContentTabs('en')" id="essay-tab-en" class="essay-tab" data-i18n="tab-en" role="tab" aria-selected="false">English</button>
-</div>
-</div>
-
-<div id="essays-grid-es" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 transition-opacity duration-500">
-    <article class="essay-card">
-        <h3 class="font-serif text-2xl mb-4 italic">El Autoconocimiento como Activo Económico</h3>
-        <p class="text-sm text-subtle leading-relaxed mb-8">Por qué entender tus propios patrones es la inversión de mayor apalancamiento.</p>
-        <button onclick="openEssay(1,'es')" class="read-btn">Leer Ensayo Completo</button>
-    </article>
-    <article class="essay-card">
-        <h3 class="font-serif text-2xl mb-4 italic">Arbitraje Emocional</h3>
-        <p class="text-sm text-subtle leading-relaxed mb-8">Aprovechando la regulación en la toma de decisiones relacionales de alto riesgo.</p>
-        <button onclick="openEssay(2,'es')" class="read-btn">Leer Ensayo Completo</button>
-    </article>
-    <article class="essay-card">
-        <h3 class="font-serif text-2xl mb-4 italic">El Costo de Oportunidad de Complacer a Otros</h3>
-        <p class="text-sm text-subtle leading-relaxed mb-8">Cuantificando la mala asignación del capital emocional y estratégico.</p>
-        <button onclick="openEssay(3,'es')" class="read-btn">Leer Ensayo Completo</button>
-    </article>
-    <article class="essay-card">
-        <h3 class="font-serif text-2xl mb-4 italic">La Arquitectura del Silencio</h3>
-        <p class="text-sm text-subtle leading-relaxed mb-8">Cómo las cosas no dichas distorsionan la realidad en los entornos modernos.</p>
-        <button onclick="openEssay(4,'es')" class="read-btn">Leer Ensayo Completo</button>
-    </article>
-    <article class="essay-card">
-        <h3 class="font-serif text-2xl mb-4 italic">Liquidez Cognitiva</h3>
-        <p class="text-sm text-subtle leading-relaxed mb-8">Separando la identidad de las decisiones en entornos de alto riesgo.</p>
-        <button onclick="openEssay(5,'es')" class="read-btn">Leer Ensayo Completo</button>
-    </article>
-    <article class="essay-card">
-        <h3 class="font-serif text-2xl mb-4 italic">Señal vs Ruido</h3>
-        <p class="text-sm text-subtle leading-relaxed mb-8">Cómo distinguir información útil de activación inútil en entornos saturados.</p>
-        <button onclick="openEssay(6,'es')" class="read-btn">Leer Ensayo Completo</button>
-    </article>
-    <article class="essay-card">
-        <h3 class="font-serif text-2xl mb-4 italic">El Progreso Disfrazado de Derrota</h3>
-        <p class="text-sm text-subtle leading-relaxed mb-8">Por qué hacer las cosas bien a veces se siente como perder.</p>
-        <button onclick="openEssay(7,'es')" class="read-btn">Leer Ensayo Completo</button>
-    </article>
-    <article class="essay-card">
-        <h3 class="font-serif text-2xl mb-4 italic">La conexión como artículo de lujo</h3>
-        <p class="text-sm text-subtle leading-relaxed mb-8">La economía del alivio rápido y el encarecimiento de lo profundo.</p>
-        <button onclick="openEssay(8,'es')" class="read-btn">Leer Ensayo Completo</button>
-    </article>
-    <article class="essay-card">
-        <h3 class="font-serif text-2xl mb-4 italic">Medir para entender… o medir para esconderse</h3>
-        <p class="text-sm text-subtle leading-relaxed mb-8">Una mirada conductual a los sistemas de auto-ubicación actuales.</p>
-        <button onclick="openEssay(9,'es')" class="read-btn">Leer Ensayo Completo</button>
-    </article>
-</div>
-
-<div id="essays-grid-en" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 transition-opacity duration-500">
-    <!-- English cards -->
-</div>
-</div>
-</section>
-
-<footer class="py-32 px-6 border-t border-divider bg-paper text-center">
-<div class="max-w-4xl mx-auto flex flex-col items-center">
-<div class="w-16 h-16 mb-8 overflow-hidden rounded-full border border-divider">
-<img src="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/unnamed%20(1).jpg" alt="AR" class="author-photo w-full h-full object-cover">
-</div>
-<div class="font-serif text-2xl mb-4 tracking-[0.3em] uppercase font-bold text-ink">ANDRÉS RAMÍREZ</div>
-<p class="text-[10px] text-subtle uppercase tracking-[0.3em] mb-12 italic">Florida, USA | andres@selfloveclubstore.com</p>
-<div class="flex flex-wrap justify-center gap-10 text-[10px] font-bold uppercase tracking-[0.3em] text-subtle mb-16">
-<a href="https://www.threads.net/@selfloveclubusa" target="_blank" class="hover:text-ink">Threads</a>
-<a href="https://www.instagram.com/selfloveclubusa" target="_blank" class="hover:text-ink">Instagram</a>
-<a href="https://x.com/selfloveclubusa" target="_blank" class="hover:text-ink">X</a>
-</div>
-<div class="text-[8px] text-gray-400 uppercase tracking-[0.4em]">&copy; 2026 Andrés Ramírez. All rights reserved.</div>
-</div>
-</footer>
-
-<!-- MODAL LECTOR -->
-<div id="reader-modal">
-    <div id="reader-content" class="relative">
-        <button onclick="closeReader()" class="close-reader">✕</button>
-        <div id="reader-body" class="prose-reader"></div>
+<section id="home" class="min-h-screen flex flex-col justify-center items-center px-6 text-center pt-32">
+    <div class="mb-12 w-64 h-64 md:w-80 md:h-80 overflow-hidden rounded-full border-4 border-white shadow-2xl bg-zinc-100">
+        <img src="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/unnamed%20(1).jpg" alt="Andrés Ramírez" class="author-photo w-full h-full object-cover">
     </div>
-</div>
+    <h1 class="font-serif text-5xl md:text-8xl leading-none max-w-5xl mb-8 font-black tracking-tighter uppercase" data-i18n="hero-title">Claridad antes que Conexión.</h1>
+    <p class="font-serif italic text-xl md:text-3xl text-subtle max-w-2xl leading-relaxed" data-i18n="hero-subtitle">"Porque el costo de amar sin discernir es perderte a ti mismo."</p>
+</section>
+
+<!-- AI LAB -->
+<section id="ai-tools" class="py-32 px-6 md:px-12 bg-white border-y border-divider">
+    <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-16">
+            <span class="text-[10px] font-bold tracking-widest uppercase text-accent mb-2 block">Behavioral Lab</span>
+            <h2 class="font-serif text-5xl font-black mb-4 uppercase tracking-tighter" data-i18n="tools-title">Interacción con la Claridad</h2>
+            <p class="text-subtle text-lg max-w-xl mx-auto italic" data-i18n="tools-desc">Auditoría técnica de capital emocional y dinámicas relacionales.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div class="p-10 flex flex-col border border-divider hover:border-ink transition-colors bg-paper">
+                <h3 class="font-serif text-2xl font-bold mb-2 uppercase" data-i18n="tool1-title">Discernimiento Relacional</h3>
+                <p class="text-[9px] text-accent mb-6 uppercase tracking-[0.2em] font-bold">Perspectiva Estratégica</p>
+                <textarea id="situationInput" rows="4" class="w-full p-4 text-sm border border-divider rounded-none bg-white focus:outline-none focus:ring-1 focus:ring-ink mb-6" placeholder="Describe una situación..."></textarea>
+                <button onclick="analyzeClarity()" id="analyzeBtn" class="w-full py-4 bg-ink text-white text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-opacity-90 flex items-center justify-center">
+                    <span id="analyzeSpinner" class="spinner hidden mr-3"></span>
+                    <span id="analyzeBtnText" data-i18n="btn-analyze">Obtener Perspectiva</span>
+                </button>
+                <div id="clarityResult" class="mt-8 text-sm leading-relaxed hidden border-t border-divider pt-8 italic text-ink"></div>
+            </div>
+
+            <div class="p-10 flex flex-col border border-divider hover:border-ink transition-colors bg-paper">
+                <h3 class="font-serif text-2xl font-bold mb-2 uppercase" data-i18n="tool2-title">Auditoría Emocional</h3>
+                <p class="text-[9px] text-accent mb-6 uppercase tracking-[0.2em] font-bold">Patrones de Conducta</p>
+                <input id="patternInput" type="text" class="w-full p-4 text-sm border border-divider rounded-none bg-white focus:outline-none focus:ring-1 focus:ring-ink mb-6" placeholder="Ej: Siempre pido perdón aunque no tenga la culpa">
+                <button onclick="generateFieldNote()" id="noteBtn" class="w-full py-4 border border-ink text-ink text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-ink hover:text-white transition-all flex items-center justify-center">
+                    <span id="noteSpinner" class="spinner hidden mr-3"></span>
+                    <span id="noteBtnText" data-i18n="btn-generate">Generar Nota de Campo</span>
+                </button>
+                <div id="noteResult" class="mt-8 p-6 bg-white border border-divider hidden">
+                    <span class="block font-bold mb-3 uppercase tracking-[0.2em] text-[9px] text-subtle">Audit Record</span>
+                    <div id="noteContent" class="text-ink text-xs leading-relaxed"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- BOOKS -->
+<section id="books" class="py-32 px-6 md:px-12 bg-paper">
+    <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-24">
+            <span class="text-[10px] font-bold tracking-widest uppercase text-subtle mb-3 block">Published Works</span>
+            <h2 class="font-serif text-6xl font-black uppercase tracking-tighter">Libros</h2>
+        </div>
+
+        <div id="books-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <!-- Book 1 -->
+            <div class="essay-card flex flex-col md:flex-row gap-10 items-center">
+                <div class="w-48 shrink-0 shadow-2xl">
+                    <img src="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/Dise%C3%B1o%20sin%20t%C3%ADtulo%20(7).png" alt="Match Consciente" class="w-full h-auto">
+                </div>
+                <div>
+                    <span class="text-[9px] text-accent font-black uppercase tracking-widest mb-2 block">The Master Guide</span>
+                    <h3 class="font-serif text-3xl mb-4 font-bold uppercase" id="book1-title">Match Consciente</h3>
+                    <p class="text-sm text-subtle leading-relaxed mb-8" id="book1-desc">Una brújula estratégica para navegar el mercado del afecto sin comprometer tu identidad.</p>
+                    <a href="https://www.amazon.com/Match-Consciente" target="_blank" class="read-btn">Adquirir en Amazon</a>
+                </div>
+            </div>
+
+            <!-- Book 2 -->
+            <div class="essay-card flex flex-col md:flex-row gap-10 items-center">
+                <div class="w-48 shrink-0 shadow-2xl">
+                    <img src="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/Dise%C3%B1o%20sin%20t%C3%ADtulo%20(7).png" alt="No Te Abandones" class="w-full h-auto">
+                </div>
+                <div>
+                    <span class="text-[9px] text-accent font-black uppercase tracking-widest mb-2 block">Actionable Insights</span>
+                    <h3 class="font-serif text-3xl mb-4 font-bold uppercase" id="book2-title">No Te Abandones</h3>
+                    <p class="text-sm text-subtle leading-relaxed mb-8" id="book2-desc">El workbook técnico diseñado para establecer límites no negociables en tiempo real.</p>
+                    <a href="https://www.amazon.com/No-Te-Abandones" target="_blank" class="read-btn">Adquirir en Amazon</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ESSAYS ARCHIVE -->
+<section id="essays" class="py-32 px-6 md:px-12 bg-white border-t border-divider">
+    <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+            <span class="text-[10px] font-bold tracking-widest uppercase text-subtle mb-3 block" data-i18n="archive-label">Hemeroteca</span>
+            <h2 class="font-serif text-5xl font-black uppercase tracking-tighter">Field Notes</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="essays-grid">
+            <!-- Full Essay Entry (Example) -->
+            <div class="essay-card">
+                <div class="flex justify-between text-[9px] font-bold text-zinc-400 mb-6 uppercase tracking-widest">
+                    <span>Vol. 01 / Strategy</span><span>2024</span>
+                </div>
+                <h3 class="font-serif text-2xl mb-4 font-bold uppercase tracking-tight italic" data-i18n="essay1-title">El Autoconocimiento como Activo</h3>
+                <p class="text-sm text-subtle leading-relaxed mb-8" data-i18n="essay1-desc">Por qué entender tus propios patrones es la inversión de mayor apalancamiento en la economía del afecto.</p>
+                <a href="#" class="read-btn">Leer Ensayo PDF</a>
+            </div>
+            
+            <!-- Other Links -->
+            <div class="essay-card opacity-60">
+                <h3 class="font-serif text-2xl mb-4 italic">Arbitraje Emocional</h3>
+                <p class="text-sm text-subtle mb-8">Decisiones bajo presión estratégica.</p>
+                <a href="#" class="read-btn">Próximamente</a>
+            </div>
+            <div class="essay-card opacity-60">
+                <h3 class="font-serif text-2xl mb-4 italic">Señal vs Ruido</h3>
+                <p class="text-sm text-subtle mb-8">Distinguiendo intuición de trauma.</p>
+                <a href="#" class="read-btn">Próximamente</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="py-32 border-t border-divider bg-paper text-center">
+    <div class="font-serif text-2xl font-black uppercase italic tracking-tighter mb-8">Andrés Ramírez</div>
+    <div class="flex justify-center space-x-8 text-[10px] font-bold uppercase tracking-widest text-subtle mb-12">
+        <a href="https://instagram.com/selfloveclubusa" target="_blank" class="hover:text-ink">Instagram</a>
+        <a href="https://threads.net/@selfloveclubusa" target="_blank" class="hover:text-ink">Threads</a>
+        <a href="mailto:andres@selfloveclubstore.com" class="hover:text-ink">Email</a>
+    </div>
+    <div class="text-[8px] text-gray-400 uppercase tracking-[0.4em]">&copy; 2026 Andrés Ramírez. All rights reserved.</div>
+</footer>
 
 <script>
     const translations = {
         es: {
-            "nav-home": "Inicio", "nav-tools": "Herramientas", "nav-books": "Libros", "nav-archive": "Archivo",
-            "close": "Cerrar", "hero-title": "Claridad antes que Conexión.",
+            "nav-home": "Inicio", "nav-tools": "Laboratorio", "nav-books": "Libros", "nav-archive": "Ensayos",
+            "hero-title": "Claridad antes que Conexión.",
             "hero-subtitle": "\"Porque el costo de amar sin discernir es perderte a ti mismo.\"",
-            "banner-text": "HAZ DE LA LECTURA TU HERRAMIENTA DE CRECIMIENTO PERSONAL ¡DESCUBRE MIS OBRAS!",
-            "banner-link": "EXPLORAR LIBROS",
-            "tools-label": "Laboratorio de Discernimiento", "tools-title": "Interacción con la Claridad",
-            "tools-desc": "Análisis metodológico de dinámicas relacionales y auditoría técnica de capital emocional.",
-            "tool1-title": "Discernimiento Relacional", "tool1-subtitle": "Perspectiva Técnica",
-            "tool2-title": "Auditoría Emocional", "tool2-subtitle": "Patrones de Activo/Pasivo",
+            "tools-title": "Interacción con la Claridad",
+            "tools-desc": "Auditoría técnica de capital emocional y dinámicas relacionales.",
             "btn-analyze": "Obtener Perspectiva", "btn-generate": "Generar Nota de Campo",
-            "record-label": "Registro de Auditoría", "archive-label": "Hemeroteca", "tab-es": "Español", "tab-en": "Inglés",
-            "books-label": "Obras Publicadas", "books-sec-title": "Libros"
+            "archive-label": "Hemeroteca", "banner-text": "Haz de la lectura tu herramienta de crecimiento personal", "banner-link": "EXPLORAR LIBROS",
+            "essay1-title": "El Autoconocimiento como Activo", "essay1-desc": "La inversión de mayor apalancamiento en la economía del afecto."
         },
-        en: { /* tu objeto en inglés */ }
+        en: {
+            "nav-home": "Home", "nav-tools": "Lab", "nav-books": "Books", "nav-archive": "Essays",
+            "hero-title": "Clarity Before Connection.",
+            "hero-subtitle": "\"Because the cost of loving without discerning is to lose yourself.\"",
+            "tools-title": "Clarity Interaction",
+            "tools-desc": "Technical audit of emotional capital and relational dynamics.",
+            "btn-analyze": "Get Perspective", "btn-generate": "Generate Field Note",
+            "archive-label": "Archive", "banner-text": "Make reading your personal growth tool", "banner-link": "EXPLORE BOOKS",
+            "essay1-title": "Self-Knowledge as an Asset", "essay1-desc": "The highest leverage investment in the economy of affection."
+        }
+    };
+
+    const aiPrompts = {
+        es: {
+            clarity: "Eres Andrés Ramírez. Voz analítica, estoica y estratégica. Realiza una auditoría técnica sobre la situación planteada usando conceptos como 'capital emocional' y 'límites'. No des consejos motivacionales, sé quirúrgico.",
+            audit: "Transforma el patrón conductual en una 'Nota de Campo' técnica con: Observación, Riesgo y Optimización. Tono profesional y revelador."
+        },
+        en: {
+            clarity: "You are Andrés Ramírez. Analytical, stoic, and strategic voice. Perform a technical audit on the situation using concepts like 'emotional capital' and 'boundaries'. No cheap advice, be surgical.",
+            audit: "Transform the pattern into a technical 'Field Note': Observation, Risk, and Optimization. Professional tone."
+        }
     };
 
     let currentLang = 'es';
-
-    function scrollToSection(id) {
-        const element = document.getElementById(id);
-        if (element) window.scrollTo({ top: element.offsetTop - 120, behavior: 'smooth' });
-    }
+    const apiKey = ""; // Provisioned by environment
 
     function setLanguage(lang) {
         currentLang = lang;
@@ -352,50 +276,89 @@ Ejercicios técnicos y prácticos para mantener tu centro, claridad y límites m
         });
         document.getElementById('btn-es').classList.toggle('lang-active', lang === 'es');
         document.getElementById('btn-en').classList.toggle('lang-active', lang === 'en');
-        switchContentTabs(lang);
+        
+        // Manual updates for specific sections
+        if(lang === 'en') {
+            document.getElementById('book1-title').innerText = "Mindful Match";
+            document.getElementById('book1-desc').innerText = "A strategic compass to navigate the market of affection.";
+            document.getElementById('book2-title').innerText = "Don't Lose Yourself";
+            document.getElementById('book2-desc').innerText = "The technical workbook for setting non-negotiable boundaries.";
+        } else {
+            document.getElementById('book1-title').innerText = "Match Consciente";
+            document.getElementById('book1-desc').innerText = "Una brújula estratégica para navegar el mercado del afecto.";
+            document.getElementById('book2-title').innerText = "No Te Abandones";
+            document.getElementById('book2-desc').innerText = "El workbook técnico para establecer límites.";
+        }
     }
 
-    function switchContentTabs(tab) {
-        document.getElementById('essays-grid-es').classList.toggle('hidden', tab !== 'es');
-        document.getElementById('essays-grid-en').classList.toggle('hidden', tab === 'es');
-        document.getElementById('essay-tab-es').classList.toggle('active', tab === 'es');
-        document.getElementById('essay-tab-en').classList.toggle('active', tab === 'en');
+    async function analyzeClarity() {
+        const input = document.getElementById('situationInput').value;
+        const resultDiv = document.getElementById('clarityResult');
+        const btn = document.getElementById('analyzeBtn');
+        const spinner = document.getElementById('analyzeSpinner');
+        
+        if (!input.trim()) return;
+
+        btn.disabled = true; spinner.classList.remove('hidden');
+        resultDiv.classList.add('hidden');
+
+        try {
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    contents: [{ parts: [{ text: input }] }],
+                    systemInstruction: { parts: [{ text: aiPrompts[currentLang].clarity }] }
+                })
+            });
+            const data = await response.json();
+            const text = data.candidates[0].content.parts[0].text;
+            resultDiv.innerHTML = text.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            resultDiv.classList.remove('hidden');
+        } catch (e) {
+            resultDiv.innerText = "Error de conexión.";
+            resultDiv.classList.remove('hidden');
+        } finally {
+            btn.disabled = false; spinner.classList.add('hidden');
+        }
     }
 
-    function closeBanner() {
-        document.getElementById('announcement-banner').style.display = 'none';
-        document.documentElement.classList.add('banner-closed');
+    async function generateFieldNote() {
+        const input = document.getElementById('patternInput').value;
+        const resultDiv = document.getElementById('noteResult');
+        const contentDiv = document.getElementById('noteContent');
+        const btn = document.getElementById('noteBtn');
+        const spinner = document.getElementById('noteSpinner');
+        
+        if (!input.trim()) return;
+
+        btn.disabled = true; spinner.classList.remove('hidden');
+        resultDiv.classList.add('hidden');
+
+        try {
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    contents: [{ parts: [{ text: input }] }],
+                    systemInstruction: { parts: [{ text: aiPrompts[currentLang].audit }] }
+                })
+            });
+            const data = await response.json();
+            const text = data.candidates[0].content.parts[0].text;
+            contentDiv.innerHTML = text.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            resultDiv.classList.remove('hidden');
+        } catch (e) {
+            contentDiv.innerText = "Error.";
+        } finally {
+            btn.disabled = false; spinner.classList.add('hidden');
+        }
     }
 
-    function toggleMobileMenu() {
-        const menu = document.getElementById('mobile-menu');
-        menu.classList.toggle('hidden'); menu.classList.toggle('flex');
+    function scrollToSection(id) {
+        document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
     }
-
-    // === 9 ENSAYOS COMPLETOS (exactos como me los diste) ===
-    const fullEssays = {
-        1: { es: `Por qué el Conocimiento Personal Moldea el Rendimiento Organizacional\n\nLa Crisis de los Costos Ocultos\n\nLas organizaciones invierten frecuentemente millones en tecnología, infraestructura e investigación de mercado mientras descuidan su sistema operativo más crítico: la psicología humana. Esta omisión representa uno de los puntos ciegos más costosos en los negocios.\n\nTradicionalmente, el autoconocimiento ha sido desestimado como una \"habilidad blanda\", más aplicable al desarrollo personal que a las juntas corporativas. Sin embargo, este punto de vista representa una mala interpretación fundamental de su importancia económica. La capacidad de un líder para entender y manejar su estado interno influye directamente en la rentabilidad y sostenibilidad de la organización.\n\nLa falta de autoconocimiento no es solo una brecha inocua, sino que incurre en costos invisibles que se acumulan con el tiempo:\n\nSesgo de Confirmación: Los líderes pueden basar decisiones en datos selectivos que protegen su ego, llevando a inversiones fallidas y estrategias ineficaces.\n\nEvaluación de Riesgos Fallida: El orgullo personal o el miedo pueden obstaculizar el reconocimiento de amenazas reales, exacerbando las pérdidas financieras.\n\nErosión del Capital Humano: La desalineación emocional puede resultar en baja moral y aumento de la rotación, con costos de reemplazo que se elevan a 1.5-2 veces el salario anual de un empleado.\n\nEl Mito de la Racionalidad Pura\n\nLa cultura empresarial perpetúa la falsa noción de que las decisiones estratégicas se toman en un vacío emocional. Este mito de la \"racionalidad pura\" pasa por alto una verdad fundamental: ninguna decisión se toma aislada del estado psicológico del tomador de decisiones. Los líderes que carecen de autoconocimiento a menudo confunden reacciones impulsivas—impulsadas por el miedo, la urgencia o el ego—con estrategias objetivas y bien consideradas. Esta confusión lleva a lo que se puede denominar \"contaminación decisional\", donde las distorsiones emocionales contaminan los resultados estratégicos.\n\nEl Efecto Iceberg\n\nAl igual que un iceberg, las habilidades técnicas—experiencia, habilidades duras y resultados pasados—representan solo el aspecto visible de la capacidad de liderazgo. La parte más grande y sumergida consiste en la autorregulación y gestión del estado interno. Una pobre autorregulación crea costos económicos ocultos que pueden hundir organizaciones enteras.\n\nEl autoconocimiento funciona como un filtro de calidad esencial para la toma de decisiones. Los procesos industriales requieren controles de calidad para prevenir defectos; de manera similar, el autoconocimiento filtra las distorsiones emocionales, asegurando que el resultado estratégico permanezca puro y efectivo.\n\nFricción Estructural e Impuesto al Rendimiento\n\nLa mala regulación emocional por parte de los líderes crea más que tensión en el lugar de trabajo: representa una profunda ineficiencia técnica. Esta fricción genera malentendidos, retrasa la ejecución e impone lo que los economistas podrían reconocer como un \"impuesto al rendimiento\" sobre toda la organización. Este impuesto se manifiesta a través de:\n\nReducción de la agilidad organizacional\nPérdida de productividad por comunicación poco clara\nFuga de talento mientras los mejores buscan mejores entornos\nRetrasos en los proyectos debido a conflictos interpersonales\n\nLa Ventaja No Transferible\n\nA diferencia de los activos comerciales tradicionales, el autoconocimiento no puede ser subcontratado, comprado o replicado por la inteligencia artificial. Esto crea tanto vulnerabilidad como oportunidad.\n\nPara los Líderes: El autoconocimiento representa una higiene profesional indispensable. Operar sin él se asemeja a pilotar un avión con instrumentos no calibrados: el riesgo de \"colisiones\" corporativas aumenta exponencialmente. Los líderes deben reconocer que la introspección no es opcional; es una gestión de riesgos esencial.\n\nPara las Organizaciones: La inversión en el autoconocimiento del liderazgo trasciende las iniciativas de bienestar corporativo. Representa una gestión de riesgos avanzada y una posición competitiva. Los programas de desarrollo ejecutivo deberían medirse por su retorno de inversión en la reducción de errores humanos y el impulso de la innovación sostenible.\n\nEl Modelo de Filtro de Decisiones\n\nEl liderazgo efectivo requiere procesar datos brutos e insumos emocionales a través de un filtro de autoconocimiento antes de generar decisiones estratégicas. Sin este filtro, las organizaciones experimentan:\n\nTasas de error aumentadas en decisiones estratégicas\nCostos más altos por la toma de decisiones emocionales\nConfianza reducida de los interesados\nSostenibilidad a largo plazo comprometida\n\nCuantificando la Inversión\n\nEn economías basadas en el conocimiento, la diferenciación del capital humano a menudo determina el éxito en el mercado. Las organizaciones que ignoran el autoconocimiento pierden un multiplicador de valor único e irrepetible.\n\nConsidere los impactos medibles:\n\nReducción de la Rotación: Los líderes conscientes de sí mismos crean entornos que retienen al mejor talento.\nMejora en la Calidad de Decisiones: La toma de decisiones filtrada reduce errores estratégicos costosos.\nAumento de la Innovación: La seguridad psicológica permite el riesgo creativo.\nRelaciones más Fuertes con los Interesados: Un liderazgo consistente y regulado genera confianza.\n\nMarco de Implementación\n\nLas organizaciones serias acerca de aprovechar el autoconocimiento como un activo económico deberían:\n\n1. Evaluar el Estado Actual: Evaluar los niveles de autoconocimiento del liderazgo en toda la organización.\n2. Medir los Costos de Línea Base: Identificar los gastos actuales relacionados con la mala regulación emocional.\n3. Diseñar Programas de Desarrollo: Crear intervenciones específicas con resultados medibles.\n4. Rastrear el ROI: Monitorear mejoras en la calidad de las decisiones, retención y métricas de rendimiento.\n5. Integrar en la Cultura: Hacer del autoconocimiento un requisito central de competencia de liderazgo.\n\nLa Realidad Competitiva\n\nEn mercados donde los productos y servicios se comoditizan cada vez más, la ventaja competitiva sostenible reside en la optimización del capital humano. Las organizaciones que tratan el autoconocimiento como un activo empresarial medible se posicionan para un rendimiento superior.\n\nEl recurso más caro en la economía actual no es la tecnología ni el capital—es un líder que carece de autoconocimiento mientras toma decisiones que afectan el futuro de otros.\n\nConclusión\n\nReconceptualizar el autoconocimiento como un activo económico permite a las organizaciones construir estructuras más resilientes y eficientes. Al priorizar esta capacidad, las empresas crean ecosistemas empresariales donde el alto rendimiento y la salud organizacional se refuerzan entre sí. La pregunta no es si las organizaciones pueden permitirse invertir en el autoconocimiento del liderazgo—es si pueden permitirse no hacerlo.\n\nEn una era donde el capital humano impulsa la creación de valor, el autoconocimiento representa tanto una gestión de riesgos esencial como una ventaja competitiva.`, en: `...` },
-        2: { es: `Aprovechando la Regulación en la Toma de Decisiones\n\nPor qué la Autorregulación Desbloquea Valor Oculto en las Organizaciones\n\n... [TODO EL TEXTO LARGO 2 EXACTO QUE ME DISTE]`, en: `...` },
-        3: { es: `Cuantificando la Mala Asignación del Capital Emocional y Estratégico\n\n... [TODO EL TEXTO LARGO 3 EXACTO]`, en: `...` },
-        4: { es: `Un documento de investigación estratégica por Self Love Club Research & Strategy\n\n... [TODO EL TEXTO LARGO 4 EXACTO]`, en: `...` },
-        5: { es: `Separando la Identidad de las Decisiones en Entornos de Alto Riesgo\n\n... [TODO EL TEXTO LARGO 5 EXACTO]`, en: `...` },
-        6: { es: `Un ensayo de investigación estratégica por Self Love Club | Research & Strategy\n\n... [TODO EL TEXTO LARGO 6 EXACTO]`, en: `...` },
-        7: { es: `N O T A D E C A M P O\n\nPor qué Hacerlo Bien Se Siente Como Estar Perdiendo\n\n... [TODO EL TEXTO LARGO 7 EXACTO]`, en: `...` },
-        8: { es: `N O T A D E C A M P O\n\nLo que estamos viviendo no es un fallo moral colectivo... [TODO EL TEXTO LARGO 8 EXACTO]`, en: `...` },
-        9: { es: `N O T A D E C A M P O\n\nCuando una persona quiere entender dónde está parada... [TODO EL TEXTO LARGO 9 EXACTO]`, en: `...` }
-    };
-
-    function openEssay(id, lang) {
-        const text = fullEssays[id][lang];
-        document.getElementById('reader-body').innerHTML = `<div class="prose-reader">${text.replace(/\n/g, '<br><br>')}</div>`;
-        document.getElementById('reader-modal').style.display = 'flex';
-    }
-
-    function closeReader() {
-        document.getElementById('reader-modal').style.display = 'none';
-    }
-
-    setLanguage('es');
 </script>
+
 </body>
 </html>
