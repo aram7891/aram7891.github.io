@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Andrés Ramírez | Clarity Before Connection</title>
     
-    <meta name="description" content="Autor de Mindful Match y Don’t Lose Yourself While Dating. Ensayos clínicos sobre discernimiento y capital emocional.">
+    <meta name="description" content="Autor de Mindful Match y Don’t Lose Yourself While Dating. Ensayos estratégicos sobre capital emocional y discernimiento.">
     
-    <!-- Scripts & Frameworks -->
+    <!-- Frameworks -->
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -38,19 +38,31 @@
         .hidden-view { display: none; opacity: 0; transform: translateY(10px); }
         .visible-view { display: block !important; opacity: 1; transform: translateY(0); }
 
-        /* Reading Experience */
-        .prose-reader { line-height: 2; font-size: 1.25rem; color: #2d2d2d; max-width: 68ch; margin: 0 auto; }
-        .prose-reader h2 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin: 6rem 0 3rem; font-weight: 700; color: #1A1A1A; line-height: 1.1; letter-spacing: -0.02em; }
-        .prose-reader h3 { font-size: 1.8rem; font-weight: 700; margin: 4rem 0 1.5rem; color: #111; letter-spacing: -0.01em; border-bottom: 1px solid #E4E4E7; padding-bottom: 0.5rem; }
-        .prose-reader p { margin-bottom: 2.5rem; }
-        .prose-reader blockquote { border-left: 4px solid #96683E; padding-left: 2.5rem; font-style: italic; margin: 5rem 0; font-family: 'Playfair Display', serif; font-size: 2rem; color: #444; line-height: 1.6; }
+        /* Reader System - High Performance Typography */
+        .prose-reader { line-height: 2.2; font-size: 1.35rem; color: #2d2d2d; max-width: 72ch; margin: 0 auto; }
+        .prose-reader h2 { font-family: 'Playfair Display', serif; font-size: 3.8rem; margin: 6rem 0 3rem; font-weight: 700; color: #1A1A1A; line-height: 1.1; letter-spacing: -0.03em; }
+        .prose-reader h3 { font-size: 2rem; font-weight: 700; margin: 4.5rem 0 1.5rem; color: #111; border-bottom: 2px solid #E4E4E7; padding-bottom: 1rem; letter-spacing: -0.02em; }
+        .prose-reader p { margin-bottom: 2.8rem; }
+        .prose-reader blockquote { border-left: 6px solid #96683E; padding-left: 3rem; font-style: italic; margin: 6rem 0; font-family: 'Playfair Display', serif; font-size: 2.4rem; color: #333; line-height: 1.4; background: #F3F4F6; padding-top: 2rem; padding-bottom: 2rem; border-radius: 0 8px 8px 0; }
         .prose-reader ul { margin-bottom: 3rem; list-style: none; padding-left: 0; }
-        .prose-reader li { position: relative; padding-left: 2rem; margin-bottom: 1.5rem; border-left: 1px solid #E4E4E7; margin-left: 0.5rem; }
-        .prose-reader strong { font-weight: 700; color: #000; }
+        .prose-reader li { position: relative; padding-left: 3rem; margin-bottom: 2rem; border-left: 2px solid #E4E4E7; margin-left: 0.5rem; }
+        .prose-reader strong { color: #000; font-weight: 800; }
         
-        #reading-progress { position: fixed; top: 0; left: 0; width: 0%; height: 4px; background: #96683E; z-index: 100; transition: width 0.1s; }
-        .essay-card { border: 1px solid #E4E4E7; transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); cursor: pointer; background: white; display: flex; flex-direction: column; justify-content: space-between; }
-        .essay-card:hover { border-color: #96683E; transform: translateY(-5px); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.05); }
+        #reading-progress { position: fixed; top: 0; left: 0; width: 0%; height: 6px; background: #96683E; z-index: 100; transition: width 0.1s; }
+        
+        .essay-card { border: 1px solid #E4E4E7; transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1); cursor: pointer; background: white; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; }
+        .essay-card::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 0; background: #96683E; transition: height 0.4s ease; opacity: 0.05; pointer-events: none; }
+        .essay-card:hover::after { height: 100%; }
+        .essay-card:hover { border-color: #96683E; transform: translateY(-12px); box-shadow: 0 40px 80px -15px rgba(0, 0, 0, 0.1); }
+        
+        .back-to-top { position: fixed; bottom: 40px; right: 40px; background: white; border: 1px solid #E4E4E7; padding: 16px; border-radius: 50%; cursor: pointer; opacity: 0; visibility: hidden; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); z-index: 60; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .back-to-top.visible { opacity: 1; visibility: visible; }
+        
+        @media (max-width: 768px) {
+            .prose-reader h2 { font-size: 2.8rem; }
+            .prose-reader { font-size: 1.2rem; }
+            .essay-card { height: 32rem; }
+        }
     </style>
 </head>
 <body>
@@ -67,24 +79,20 @@
 
             const ui = {
                 es: {
+                    navHome: "Clarity", navResearch: "Research", navBooks: "Books", navNotes: "Field Notes",
                     homeDesc: "Un marco estratégico aplicado al rendimiento, la toma de decisiones y las dinámicas humanas modernas.",
-                    btnEnter: "Entrar al Repositorio",
-                    quote: "\"La claridad es el único lujo real.\"",
-                    back: "Volver al Índice",
-                    footerBack: "Regresar a la Biblioteca",
-                    readNote: "Leer Nota",
-                    meta: "Editorial Repository",
-                    field: "Field Notes"
+                    btnEnter: "Entrar al Repositorio", quote: "\"La claridad es el único lujo real.\"",
+                    back: "Volver al Índice", footerBack: "Regresar a la Biblioteca", readNote: "Leer Nota",
+                    researchTitle: "Behavioral Research", researchDesc: "Decodificando el capital emocional y la higiene decisional a través de la observación conductual.",
+                    booksTitle: "Bibliografía Seleccionada", booksMeta: "Publicaciones"
                 },
                 en: {
+                    navHome: "Clarity", navResearch: "Research", navBooks: "Books", navNotes: "Field Notes",
                     homeDesc: "A strategic framework applied to performance, decision-making, and modern human dynamics.",
-                    btnEnter: "Enter Repository",
-                    quote: "\"Clarity is the only real luxury.\"",
-                    back: "Back to Index",
-                    footerBack: "Back to Library",
-                    readNote: "Read Essay",
-                    meta: "Editorial Repository",
-                    field: "Field Notes"
+                    btnEnter: "Enter Repository", quote: "\"Clarity is the only real luxury.\"",
+                    back: "Back to Index", footerBack: "Back to Library", readNote: "Read Essay",
+                    researchTitle: "Behavioral Research", researchDesc: "Decoding emotional capital and decisional hygiene through behavioral observation.",
+                    booksTitle: "Selected Bibliography", booksMeta: "Publications"
                 }
             };
 
@@ -98,30 +106,18 @@
                     content_es: `
                         <h2>Por qué el Conocimiento Personal Moldea el Rendimiento Organizacional</h2>
                         <h3>La Crisis de los Costos Ocultos</h3>
-                        <p>Las organizaciones invierten frecuentemente millones en tecnología, infraestructura e investigación de mercado mientras descuidan su sistema operativo más crítico: la psicología humana. Esta omisión representa uno de los puntos ciegos más costosos en los negocios.</p>
-                        <p>Tradicionalmente, el autoconocimiento ha sido desestimado como una "habilidad blanda", más aplicable al desarrollo personal que a las juntas corporativas. Sin embargo, este punto de vista representa una mala interpretación fundamental de su importancia económica. La capacidad de un líder para entender y manejar su estado interno influye directamente en la rentabilidad y sostenibilidad de la organización.</p>
-                        <p>La falta de autoconocimiento no es solo una brecha inocua, sino que incurre en costos invisibles que se acumulan con el tiempo:</p>
-                        <ul>
-                            <li><strong>Sesgo de Confirmación:</strong> Los líderes pueden basar decisiones en datos selectivos que protegen su ego, llevando a inversiones fallidas y estrategias ineficaces.</li>
-                            <li><strong>Evaluación de Riesgos Fallida:</strong> El orgullo personal o el miedo pueden obstaculizar el reconocimiento de amenazas reales, exacerbando las pérdidas financieras.</li>
-                            <li><strong>Erosión del Capital Humano:</strong> La desalineación emocional puede resultar en baja moral y aumento de la rotación, con costos de reemplazo que se elevan a 1.5-2 veces el salario anual de un empleado.</li>
-                        </ul>
-                        <blockquote>"El autoconocimiento funciona como un filtro de calidad esencial para la toma de decisiones. Los procesos industriales requieren controles de calidad para prevenir defectos; de manera similar, el autoconocimiento filtra las distorsiones emocionales."</blockquote>
+                        <p>Las organizaciones invierten frecuentemente millones en tecnología, infraestructura e investigación de mercado mientras descuidan su sistema operativo más crítico: la psicología humana. Esta omisión representa uno de los puntos ciegos más costosos en los negocios modernos. Tradicionalmente, el autoconocimiento ha sido desestimado como una "habilidad blanda", pero este punto de vista representa una mala interpretación fundamental de su importancia económica.</p>
+                        <p>La capacidad de un líder para entender y manejar su estado interno influye directamente en la rentabilidad y sostenibilidad de la organización. La falta de autoconocimiento no es solo una brecha inocua, sino que incurre en costos invisibles que se acumulan con el tiempo como el sesgo de confirmación y la erosión del capital humano.</p>
+                        <blockquote>"El autoconocimiento funciona como un filtro de calidad esencial para la toma de decisiones."</blockquote>
                         <h3>El Mito de la Racionalidad Pura</h3>
-                        <p>La cultura empresarial perpetúa la falsa noción de que las decisiones estratégicas se toman en un vacío emocional. Este mito de la "racionalidad pura" pasa por alto una verdad fundamental: ninguna decisión se toma aislada del estado psicológico del tomador de decisiones. Los líderes que carecen de autoconocimiento a menudo confunden reacciones impulsivas—impulsadas por el miedo, la urgencia o el ego—con estrategias objetivas y bien consideradas. Esta confusión lleva a lo que se puede denominar "contaminación decisional", donde las distorsiones emocionales contaminan los resultados estratégicos.</p>
-                        <h3>Fricción Estructural e Impuesto al Rendimiento</h3>
-                        <p>La mala regulación emocional por parte de los líderes crea más que tensión en el lugar de trabajo: representa una profunda ineficiencia técnica. Esta fricción genera malentendidos, retrasa la ejecución e impone lo que los economistas podrían reconocer como un "impuesto al rendimiento" sobre toda la organización.</p>
-                        <p>Para los Líderes: El autoconocimiento representa una higiene profesional indispensable. Operar sin él se asemeja a pilotar un avión con instrumentos no calibrados: el riesgo de "colisiones" corporativas aumenta exponencialmente. Los líderes deben reconocer que la introspección no es opcional; es una gestión de riesgos esencial.</p>
+                        <p>La cultura empresarial perpetúa la falsa noción de que las decisiones estratégicas se toman en un vacío emocional. Este mito pasa por alto una verdad fundamental: ninguna decisión se toma aislada del estado psicológico del tomador de decisiones. Operar sin autoconciencia se asemeja a pilotar un avión con instrumentos no calibrados: el riesgo de colisiones corporativas aumenta exponencialmente.</p>
                     `,
                     content_en: `
                         <h2>Why Personal Insight Shapes Organizational Performance</h2>
-                        <p>Organizations frequently invest millions in technology, infrastructure, and market research while neglecting their most critical operating system: human psychology. This oversight represents one of the most costly blind spots in business.</p>
-                        <p>Self-knowledge has traditionally been dismissed as a “soft skill,” more applicable to personal development than to corporate boardrooms. However, this viewpoint fundamentally misrepresents its economic significance. A leader's ability to understand and manage their internal state directly influences organizational profitability and sustainability.</p>
+                        <h3>The Hidden Cost Crisis</h3>
+                        <p>Organizations frequently invest millions in technology while neglecting their most critical operating system: human psychology. This oversight represents one of the most costly blind spots in business.</p>
                         <blockquote>“Self-knowledge is not merely a psychological trait; it is a quantifiable competitive advantage.”</blockquote>
-                        <h3>The Myth of Pure Rationality</h3>
-                        <p>Business culture perpetuates the false notion that strategic decisions are made in an emotional vacuum. This “pure rationality” myth overlooks a fundamental truth: no decision is made in isolation from the decision-maker’s psychological state. Leaders lacking self-knowledge often mistake impulsive reactions—driven by fear, urgency, or ego—for objective strategies.</p>
-                        <h3>The Performance Tax</h3>
-                        <p>Poor emotional regulation by leaders creates deep technical inefficiency. This tax manifests through reduced organizational agility, lost productivity from unclear communication, and talent flight as high performers seek better environments.</p>
+                        <p>Lack of self-knowledge incurs invisible costs like Confirmation Bias and Failed Risk Assessment. It is an indispensable professional hygiene for modern leaders who navigate complexity daily.</p>
                     `
                 },
                 {
@@ -133,57 +129,32 @@
                     content_es: `
                         <h2>Aprovechando la Regulación en la Toma de Decisiones</h2>
                         <h3>Por qué la Autorregulación Desbloquea Valor Oculto</h3>
-                        <p>En el panorama empresarial contemporáneo, donde la volatilidad y la incertidumbre definen el entorno competitivo, emerge un concepto revolucionario que redefine la ventaja estratégica: el arbitraje emocional.</p>
-                        <p>En finanzas, el arbitraje explota las discrepancias de precios entre mercados para generar ganancias. Aplicado al liderazgo consciente, el arbitraje emocional se refiere a la capacidad de un líder para mantener una toma de decisiones clara y objetiva mientras el mercado —o la organización— opera bajo ruido emocional como la volatilidad impulsada por el miedo o el conflicto interno.</p>
+                        <p>En el liderazgo consciente, el arbitraje emocional se refiere a la capacidad de un líder para mantener una toma de decisiones clara y objetiva mientras el mercado opera bajo ruido emocional impulsado por el miedo. En finanzas, el arbitraje explota las discrepancias de precios; en la conducta humana, explota la brecha entre la reacción impulsiva y la respuesta estratégica.</p>
                         <blockquote>«El arbitraje emocional es la ventaja definitiva: convertir el pánico del mercado en beneficio personal».</blockquote>
-                        <h3>El Mecanismo Operativo</h3>
-                        <p>El proceso opera a través de cuatro etapas clave:</p>
-                        <ul>
-                            <li><strong>La Ventaja:</strong> Los competidores frecuentemente sucumben a la impulsividad, basando elecciones estratégicas en la urgencia o la ansiedad.</li>
-                            <li><strong>El Filtro:</strong> Los líderes autoconscientes aplican una regulación interna que elimina la distorsión emocional, preservando la claridad de la señal.</li>
-                            <li><strong>La Ejecución:</strong> La información objetiva informa la estrategia, permitiendo capitalizar los errores de otros y las sobrerreacciones del mercado.</li>
-                            <li><strong>El Impacto:</strong> La reducción de las tasas de error se traduce directamente en una disminución de los costos ocultos.</li>
-                        </ul>
-                        <p>Este enfoque transforma la regulación emocional de una "habilidad blanda" en una ventaja competitiva medible con rendimientos cuantificables. En mercados donde los datos y los productos se vuelven commodities, la regulación emocional emerge como una ventaja no replicable.</p>
+                        <p>El líder autoconsciente elimina la distorsión emocional, preservando la claridad de la señal. Mientras los competidores sucumben a la impulsividad basando elecciones en la urgencia o la ansiedad, el estratega con higiene emocional captura el valor que otros dejan sobre la mesa por falta de regulación.</p>
                     `,
                     content_en: `
                         <h2>Profiting from Regulation in Decision Making</h2>
-                        <p>In today's knowledge economy, where human judgment drives competitive differentiation, emotional regulation has emerged as a critical business asset. This paper examines how leaders can execute "Emotional Arbitrage"—maintaining clear, objective decision-making while competitors operate under emotional distortion.</p>
+                        <p>Emotional Arbitrage leverages the gap between emotionally-driven and rationally-informed decision-making. While competitors succumb to urgency or anxiety, the self-aware leader filters noise to capture value.</p>
                         <blockquote>"Emotional arbitrage is the ultimate edge: turning market panic into personal profit."</blockquote>
-                        <p>Just as traditional arbitrage exploits price discrepancies across markets, Emotional Arbitrage leverages the gap between emotionally-driven and rationally-informed decision-making. The relationship follows a predictable pattern:</p>
-                        <ul>
-                            <li><strong>Traditional Path:</strong> Raw Data → Emotional Noise → Impulsive Decision → Value Loss.</li>
-                            <li><strong>Conscious Leadership Path:</strong> Raw Data → Self-Awareness Filter → Objective Strategy → Value Capture.</li>
-                        </ul>
-                        <p>This approach cultivates resilient systems where high performance and organizational health reinforce one another.</p>
                     `
                 },
                 {
                     id: 3, tag: "Vol. 03 / Opportunity", date: "2023",
-                    title_es: "El Costo de Oportunidad de Complacer a Otros",
+                    title_es: "El Costo de Oportunidad de Complacer",
                     title_en: "The Opportunity Cost of People-Pleasing",
                     extract_es: "Complacer a otros es un riesgo operacional sistémico que erosiona silenciosamente el valor estratégico.",
                     extract_en: "Executive Summary: The Invisible Tax on Enterprise Value.",
                     content_es: `
-                        <h2>Cuantificando la Mala Asignación del Capital Emocional y Estratégico</h2>
-                        <p>En el núcleo de complacer a otros yace un falso dilema: la creencia de que la armonía y la verdad son mutuamente excluyentes. En realidad, en sistemas de alto rendimiento, la verdad es la precondición para la armonía.</p>
-                        <p>Cuando se examina a través de la lente de la asignación de capital, la necesidad compulsiva de validación externa opera como un «Impuesto de Rendimiento» invisible. Recursos—tiempo, ancho de banda cognitivo y enfoque estratégico—se desvían de la búsqueda de la verdad y la innovación hacia la preservación de la armonía social y el apaciguamiento emocional a corto plazo.</p>
+                        <h2>Cuantificando la Mala Asignación del Capital Emocional</h2>
+                        <p>En el núcleo de complacer a otros yace un falso dilema: la creencia de que la armonía y la verdad son mutuamente excluyentes. En realidad, en sistemas de alto rendimiento, la verdad es la precondición para la armonía social genuina.</p>
                         <blockquote>"La necesidad compulsiva de validación externa opera como un «Impuesto de Rendimiento» invisible."</blockquote>
-                        <h3>El Sesgo de Aprobación como Contaminación de Señales</h3>
-                        <p>Cuando la búsqueda de aprobación gobierna el comportamiento, las decisiones ya no se optimizan para la coherencia estratégica sino para la aceptabilidad social. Esto es Contaminación de Señales. Las reacciones externas se tratan como datos de entrada primarios en lugar de ruido contextual.</p>
-                        <h3>Colisiones Corporativas y Riesgo Latente</h3>
-                        <p>Los líderes que dependen de la validación externa son desproporcionadamente vulnerables a las «Colisiones Corporativas». Estos son eventos catastróficos causados por verdades conocidas que nunca fueron abordadas porque confrontarlas arriesgaba fricción:</p>
-                        <ul>
-                            <li><strong>El Costo del Silencio:</strong> Un ejecutivo tóxico es retenido para evitar conflictos.</li>
-                            <li><strong>El Retraso en la Innovación:</strong> Un proyecto fallido se extiende para proteger egos internos.</li>
-                        </ul>
-                        <p>En cada caso, el costo no se elimina; se difiere con altos intereses en forma de daño reputacional y deriva estratégica. El líder que reemplaza la búsqueda de validación externa con Coherencia Interna no se vuelve menos humano; se vuelve más efectivo.</p>
+                        <p>Cuando la búsqueda de aprobación gobierna el comportamiento, las decisiones ya no se optimizan para la coherencia estratégica sino para la aceptabilidad social. Esto es Contaminación de Señales. Recursos como tiempo y ancho de banda cognitivo se desvían de la búsqueda de la verdad hacia la preservación de una armonía superficial que eventualmente colapsa.</p>
                     `,
                     content_en: `
-                        <h2>Quantifying the Misallocation of Emotional and Strategic Capital</h2>
-                        <p>In the traditional corporate paradigm, "people-pleasing" has been mischaracterized as a benign interpersonal trait. This paper rejects that premise, proposing instead that people-pleasing is a systemic operational risk that quietly erodes shareholder value.</p>
+                        <h2>The Invisible Tax on Enterprise Value</h2>
+                        <p>People-pleasing is not a personal trait; it is a systemic operational risk. Resources—time, cognitive bandwidth, and focus—are diverted away from truth-seeking toward short-term emotional appeasement.</p>
                         <blockquote>"Self-awareness is not a personal virtue—it is a fiduciary obligation."</blockquote>
-                        <p>Resources—time, cognitive bandwidth, and strategic focus—are diverted away from truth-seeking and innovation, and redeployed toward short-term emotional appeasement. This creates "Approval-Debt" that eventually leads to a "Brain Drain," where A-players exit systems that reward conformity over excellence.</p>
                     `
                 },
                 {
@@ -193,51 +164,32 @@
                     extract_es: "Cuando nada se comunica, la realidad se deforma. El vacío narrativo amplifica el ruido.",
                     extract_en: "How the Unsaid Distorts Reality in Modern Environments.",
                     content_es: `
-                        <h2>Cómo las cosas no dichas distorsionan la realidad en entornos modernos</h2>
-                        <p>El silencio suele confundirse con calma, madurez o eficiencia. Sin embargo, el silencio no está vacío: es una decisión de diseño. Cuando las señales están ausentes, el sistema no se detiene: adivina.</p>
-                        <p>El silencio actúa como una interfaz falsa; oculta la fricción mientras permite que la presión aumente bajo la superficie. Cuando confundimos la falta de conflicto con la presencia de armonía, creamos entornos donde los problemas se pudren sin ser abordados.</p>
-                        <h3>El Efecto de Distorsión</h3>
-                        <p>El verdadero peligro del silencio no es la ignorancia, sino la mala interpretación. Cuando aparece un vacío comunicativo, la mente humana compensa expandiendo lo desconocido hacia un paisaje de amenazas:</p>
-                        <ul>
-                            <li><strong>Pérdida de Proporción:</strong> Sin puntos de referencia claros, la escala de los problemas colapsa. Un correo demorado se vuelve evidencia de rechazo.</li>
-                            <li><strong>Inflación Narrativa:</strong> La psique llena los vacíos con significados del "peor escenario posible". Defaultamos a interpretaciones catastróficas.</li>
-                            <li><strong>Escalada Reactiva:</strong> La energía se gasta gestionando la ansiedad derivada de la duda, no la realidad misma.</li>
-                        </ul>
+                        <h2>Cómo las cosas no dichas distorsionan la realidad</h2>
+                        <p>El silencio no está vacío: es una decisión de diseño. Cuando las señales están ausentes, el sistema no se detiene: adivina. El vacío comunicativo aparece y la mente humana compensa expandiendo lo desconocido hacia paisajes de amenaza y paranoia corporativa.</p>
                         <blockquote>"Nombrar no es agresión; es alineación."</blockquote>
-                        <p>El antídoto al silencio no es el ruido; es el nombramiento. Nombrar es una herramienta de higiene estratégica utilizada para restaurar la fidelidad de la señal. La claridad no crea el caos; lo previene.</p>
+                        <p>El verdadero peligro del silencio no es la ignorancia, sino la mala interpretación. Sin puntos de referencia claros, la escala de los problemas colapsa y la psique llena los vacíos con el peor escenario posible. La claridad no crea el caos; lo previene al anclar la narrativa en hechos objetivos.</p>
                     `,
                     content_en: `
-                        <h2>How the Unsaid Distorts Reality in Modern Environments</h2>
-                        <p>Silence is often mistaken for composure. In modern environments, silence is rewarded as "strategic reserve." This essay challenges that premise, defining silence as an active architectural force that distorts perception.</p>
-                        <blockquote>"Silence is not empty: It is a design choice."</blockquote>
-                        <p>When signals are absent, the human mind defaults to catastrophic interpretations. In low-clarity environments, an estimated 30-40% of cognitive bandwidth is consumed by managing interpretation rather than execution. The antidote is not noise, but naming—strategic hygiene used to restore signal fidelity.</p>
+                        <h2>Silence Is Not Empty: It Is a Design Choice</h2>
+                        <p>Every system functions through signals. When signals are absent, the system does not stop: it guesses. Silence acts as a false interface; it conceals friction while allowing pressure to build beneath the surface.</p>
                     `
                 },
                 {
                     id: 5, tag: "Vol. 05 / Liquidity", date: "2024",
                     title_es: "Liquidez Cognitiva",
                     title_en: "Cognitive Liquidity",
-                    extract_es: "La capacidad de separar la identidad de las decisiones para mantener la fluidez en entornos de riesgo.",
+                    extract_es: "Separando la identidad de las decisiones para mantener la fluidez en entornos volátiles.",
                     extract_en: "Separating identity from decisions in high-stakes environments.",
                     content_es: `
-                        <h2>Separando la Identidad de las Decisiones en Entornos de Alto Riesgo</h2>
-                        <p>En el liderazgo existe una variante peligrosa de los costos hundidos: los <strong>Costos de Identidad Hundidos</strong>. Esto ocurre cuando un líder vincula su sentido del "yo" con una estrategia, producto o dirección organizacional específica.</p>
-                        <p>Cuando la identidad del líder se entrelaza con una decisión, cualquier sugerencia de cambio dispara mecanismos de defensa de la identidad. La evaluación racional de nueva información se vuelve secundaria frente a la protección del ego incrustado en la decisión.</p>
-                        <blockquote>"La liquidez cognitiva no es debilidad; es la máxima expresión de la fuerza interpretativa en entornos volátiles."</blockquote>
-                        <h3>El Impuesto a la Rigidez</h3>
-                        <p>La rigidez cognitiva manifiesta costos medibles:</p>
-                        <ul>
-                            <li><strong>Costo de Oportunidad Estratégica:</strong> Pivotes de mercado perdidos por estrategias ligadas a la identidad.</li>
-                            <li><strong>Fuga de Talentos:</strong> El talento de alto potencial se va cuando la innovación se asfixia.</li>
-                            <li><strong>Erosión del Posicionamiento:</strong> Pérdida gradual de ventaja competitiva mientras el mercado evoluciona.</li>
-                        </ul>
-                        <p>La liquidez cognitiva requiere una <strong>Barrera de Identidad</strong> (Identity Firewall)—una barrera psicológica que evita que el ego contamine la evaluación estratégica. El desarrollo de esta liquidez es una obligación fiduciaria para los líderes que navegan la incertidumbre.</p>
+                        <h2>Separando la Identidad de las Decisiones</h2>
+                        <p>Existe una variante peligrosa de los costos hundidos: los Costos de Identidad Hundidos. Ocurre cuando un líder vincula su sentido del "yo" con una estrategia específica, producto o dirección organizacional. En ese punto, el cambio se experimenta como una derrota personal.</p>
+                        <blockquote>"La liquidez cognitiva no es debilidad; es la máxima expresión de la fuerza interpretativa."</blockquote>
+                        <p>La rigidez cognitiva manifiesta costos medibles: retraso en respuestas a amenazas, falla al capitalizar nuevas tecnologías y fuga de talento que se siente asfixiado por la falta de agilidad mental del decisor. La liquidez cognitiva permite pivotar sin trauma.</p>
                     `,
                     content_en: `
-                        <h2>Separating Identity from Decisions in High-Stakes Environments</h2>
-                        <p>Building upon our established framework, this analysis introduces Cognitive Liquidity as the capacity to maintain mental fluidity by separating personal identity from strategic decisions.</p>
+                        <h2>Separating Identity from Decisions</h2>
+                        <p>Cognitive Liquidity is the capacity to maintain mental fluidity by separating personal identity from strategic decisions. This enables leaders to pivot without experiencing it as an existential threat.</p>
                         <blockquote>"When change is experienced as loss, rigidity becomes the default operating system."</blockquote>
-                        <p>Traditional economic theory recognizes sunk costs. In leadership, we encounter Sunk Identity Costs—irrecoverable emotional investments. Cognitive Liquidity enabled an "Identity Firewall," ensuring that mental capital remains fluid and deployable across changing circumstances.</p>
                     `
                 },
                 {
@@ -247,23 +199,19 @@
                     extract_es: "En un mundo saturado, la claridad no surge de consumir más, sino de ignorar mejor.",
                     extract_en: "How to distinguish useful information from useless activation.",
                     content_es: `
-                        <h2>Distinguiendo Información Útil de Activación Inútil en Entornos Saturados</h2>
-                        <p>El problema contemporáneo no es la falta de datos. Es la incapacidad de distinguir señal de ruido. En un mundo donde cada notificación y opinión reclama atención inmediata, la claridad no surge de consumir más, sino de ignorar mejor.</p>
-                        <p>El ruido no es neutral; es contaminante. Cada exposición innecesaria devora ancho de banda cognitivo. La mente, incapaz de distinguir, asigna proporciones incorrectas: lo trivial se infla, lo esencial se diluye.</p>
+                        <h2>Distinguiendo Información Útil de Activación Inútil</h2>
+                        <p>El problema contemporáneo no es la falta de datos, sino la incapacidad de distinguir señal de ruido. La claridad surge de la capacidad de ignorar lo trivial. Cada notificación o input innecesario devora ancho de banda cognitivo precioso.</p>
                         <blockquote>"La atención mal asignada no es distracción menor. Es mala asignación de capital humano."</blockquote>
                         <h3>El Filtro Implacable: Tres Preguntas</h3>
                         <ol>
-                            <li><strong>¿Este input altera mi mapa objetivo de la realidad, o solo mi estado interno?</strong> (Si solo afecta emociones → ruido).</li>
-                            <li><strong>¿Generará consecuencias reales y medibles en los próximos 7 a 90 días?</strong> (Si no → ruido o archivo diferido).</li>
-                            <li><strong>¿Exige una acción mía que no pueda delegar ni automatizar?</strong> (Si no → ruido).</li>
+                            <li>¿Este input altera mi mapa objetivo de la realidad, o solo mi estado interno?</li>
+                            <li>¿Generará consecuencias reales en los próximos 90 días?</li>
+                            <li>¿Exige una acción mía que no pueda delegar ni automatizar?</li>
                         </ol>
-                        <p>Solo lo que atraviesa las tres merece atención inmediata. El resto se ignora sin culpa. La claridad nace de lo que decides ignorar.</p>
                     `,
                     content_en: `
-                        <h2>Distinguishing Useful Information from Useless Activation</h2>
-                        <p>Noise takes sophisticated forms: manufactured urgency in inboxes, opinions that trigger reactions without solving anything, and metrics that measure movement without direction.</p>
-                        <blockquote>"Clarity doesn’t come from consuming more, it comes from ignoring better."</blockquote>
-                        <p>The relentless protocol asks: Does this input alter my objective reality map? Will it generate measurable consequences in 90 days? Does it demand action I cannot delegate? Only inputs that pass all three deserve attention. The rest is contamination.</p>
+                        <h2>Clarity Is Born from What You Ignore</h2>
+                        <p>In a world where every notification demands immediate attention, clarity doesn’t come from consuming more, it comes from ignoring better. Noise takes sophisticated forms like manufactured urgency and inflated narratives.</p>
                     `
                 },
                 {
@@ -274,18 +222,13 @@
                     extract_en: "“Real progress rarely feels like victory.”",
                     content_es: `
                         <h2>Por qué Hacerlo Bien Se Siente Como Estar Perdiendo</h2>
-                        <p>El éxito estratégico casi siempre se diagnostica como fracaso al principio. No por falta de avance, sino porque la higiene decisional y la gratificación emocional avanzan en direcciones opuestas.</p>
-                        <p>La mediocridad regala dopamina inmediata: aprobación, intensidad, armonía superficial. El progreso real, en cambio, comienza con desorientación y una extraña sensación de vacío.</p>
+                        <p>El éxito estratégico casi siempre se diagnostica como fracaso al principio. No por falta de avance, sino porque la higiene decisional y la gratificación emocional inmediata avanzan en direcciones opuestas.</p>
                         <blockquote>"La mediocridad regala dopamina inmediata. El progreso real comienza con desorientación."</blockquote>
-                        <h3>Incompetencia Consciente</h3>
-                        <p>El crecimiento es la fractura deliberada de una identidad que ya no sirve. Cuando abandonas un patrón viejo —complacer, reaccionar, callar— la nueva conducta no tiene la fluidez del hábito. El sistema nervioso entra en alerta transitoria.</p>
-                        <p>Esa torpeza no es fracaso. Es reconstrucción. Estás dejando de sobrevivir para empezar a decidir. Si se siente incómodo y "lento", probablemente lo estés haciendo bien por primera vez.</p>
+                        <p>Esa torpeza al intentar nuevas conductas de liderazgo no es fracaso, es reconstrucción. Estás dejando de sobrevivir por inercia para empezar a decidir por intención. El temblor es señal de que estás reescribiendo tu código operativo.</p>
                     `,
                     content_en: `
                         <h2>Why Doing it Right Feels Like Losing</h2>
-                        <p>Strategic success is often misdiagnosed as failure at the beginning. This is because decisional hygiene and emotional gratification move in opposite directions.</p>
-                        <blockquote>"Real progress rarely feels like victory. It starts with disorientation and a strange sense of emptiness."</blockquote>
-                        <p>Growth is the deliberate fracture of an identity that no longer serves. Clumsiness isn't failure; it's reconstruction. You're moving from surviving to deciding.</p>
+                        <p>Real progress rarely feels like victory. It starts with disorientation and a strange sense of emptiness. Growth is the deliberate fracture of an identity that no longer serves the current reality.</p>
                     `
                 },
                 {
@@ -295,18 +238,14 @@
                     extract_es: "La inversión conductual requerida hoy para sostener un vínculo hace que la profundidad sea un lujo.",
                     extract_en: "The behavioral investment to sustain a bond is now a luxury.",
                     content_es: `
-                        <h2>La economía del alivio rápido y el encarecimiento de lo profundo</h2>
-                        <p>Lo que estamos viviendo no es un fallo moral colectivo, es un hackeo. La inversión conductual requerida para sostener un vínculo se ha vuelto tan costosa que la profundidad ha pasado de ser un estado natural a un artículo de lujo.</p>
-                        <p>Antes existía una narrativa, un proceso. Hoy, todo entra por el filtro digital donde el ghosting es barato y el rechazo es masivo. Al desaparecer los espacios intermedios, nuestras defensas suben mientras nuestro rendimiento emocional baja.</p>
+                        <h2>La economía del alivio rápido</h2>
+                        <p>Lo que estamos viviendo no es un fallo moral colectivo, es un hackeo ambiental. La inversión conductual requerida hoy para sostener un vínculo profundo se ha vuelto tan costosa que la profundidad ha pasado de ser un estado natural a un artículo de lujo.</p>
                         <blockquote>"No es que hayamos perdido la capacidad de conectar, es que el entorno ha encarecido el precio de la vulnerabilidad."</blockquote>
-                        <h3>El colapso de los espacios intermedios</h3>
-                        <p>¿Estamos eligiendo la comodidad o la trascendencia? No se trata de moralizar la tecnología, sino de observar qué parte de nuestra vida se hunde mientras intentamos flotar en una pantalla. Preferimos el alivio rápido del algoritmo antes que la construcción costosa de un vínculo real.</p>
+                        <p>Preferimos el alivio accesible del algoritmo antes que la construcción costosa de un vínculo real. En espacios digitales, nuestras defensas suben mientras nuestra capacidad de asombro y entrega emocional baja drásticamente.</p>
                     `,
                     content_en: `
                         <h2>Depth as a Modern Luxury</h2>
-                        <p>The behavioral investment required to sustain a bond has become so expensive that depth has transitioned from a natural state to a luxury item.</p>
-                        <blockquote>"We haven't lost the ability to connect; the environment has just made vulnerability too expensive."</blockquote>
-                        <p>We prefer the quick relief of the algorithm over the costly construction of a real bond. In digital spaces, defenses are high and emotional performance is low.</p>
+                        <p>The behavioral investment required to sustain a bond has become so expensive that depth has transitioned from a natural state to a luxury item. We prefer the quick relief of the algorithm over real bonds.</p>
                     `
                 },
                 {
@@ -317,18 +256,132 @@
                     extract_en: "A behavioral look at self-location systems: tests, types, and identities.",
                     content_es: `
                         <h2>Sistemas de auto-ubicación actuales</h2>
-                        <p>Cuando alguien quiere entender dónde está parado, busca medirse. El mercado está lleno de opciones: tests, tipologías, perfiles. Muchos prometen claridad, pero a un costo: te explican sin exponerte.</p>
-                        <p>Si se aborda con una mentalidad de laboratorio conductual, emergen tres familias: Sistemas Tipológicos (INTJ, 4w5), Sistemas Narrativos (heridas originales) y Sistemas de Preferencia (lenguajes de afecto). El problema no es el modelo, es lo que te permiten evitar.</p>
-                        <blockquote>"Un buen mecanismo de medición no te dice quién eres. Te muestra qué estás haciendo."</blockquote>
-                        <h3>Identidades vs. Patrones</h3>
-                        <p>Las personas no se hunden por lo que son. Se hunden por lo que repiten. Tu tipo de personalidad no te sabotea; te sabotea procrastinar cuando hay exposición. Medir con honestidad no es un servicio al cliente, es un acto de claridad.</p>
-                        <p>La pregunta no es quién eres según un test de internet, sino: ¿Qué hiciste hoy con lo que dices que eres? Medir bien no te define: te deja sin excusas.</p>
+                        <p>Muchos sistemas prometen claridad pero te ofrecen explicaciones que te permiten esconderte en una etiqueta. Un buen mecanismo de medición no te dice quién eres para que te relajes; te muestra qué estás haciendo para que te muevas.</p>
+                        <blockquote>"Medir con honestidad no es un servicio al cliente, es un acto de claridad que te deja sin excusas."</blockquote>
+                        <p>Las personas no se hunden por lo que son, sino por lo que repiten compulsivamente. La verdadera medición conductual busca patrones de sabotaje, no descripciones de personalidad estáticas.</p>
                     `,
                     content_en: `
-                        <h2>A Behavioral Look at Current Self-Location Systems</h2>
-                        <p>Measurement shouldn't define you; it should leave you without excuses. People don't sink because of what they are, but because of what they repeat.</p>
-                        <blockquote>"Does it leave you comfortable, or does it leave you thinking?"</blockquote>
-                        <p>The problem isn't the model: it's what they allow you to avoid. True measurement doesn't box you in; it speaks to you directly about your behavior under pressure.</p>
+                        <h2>Measure to Understand… or Measure to Hide</h2>
+                        <p>People do not sink because of what they are; they sink because of what they repeat. True measurement doesn't box you in; it speaks to you directly about your behavior under pressure. It's about removing the mask.</p>
+                    `
+                },
+                {
+                    id: 10, tag: "Vol. 07 / Discipline", date: "2025",
+                    title_es: "La Higiene del Discernimiento",
+                    title_en: "The Hygiene of Discernment",
+                    extract_es: "Filtrando el capital emocional para la toma de decisiones críticas.",
+                    extract_en: "Filtering emotional capital for critical decision-making.",
+                    content_es: `
+                        <h2>La higiene como base del poder decisional</h2>
+                        <p>El discernimiento no es un talento místico reservado para pocos; es un proceso de limpieza constante. Para ver la señal estratégica, primero hay que remover el sedimento emocional del pasado que nubla el presente.</p>
+                        <p>Un decisor higiénico reconoce que su juicio está contaminado por experiencias previas no procesadas. La higiene del discernimiento implica auditar cada impulso para verificar si viene de la intuición experta o de un trauma reactivo.</p>
+                        <blockquote>"La claridad no es algo que se busca activamente; es lo que queda cuando finalmente se remueve la interferencia."</blockquote>
+                    `,
+                    content_en: `
+                        <h2>Hygienic Decision Making</h2>
+                        <p>Discernment is not a mystical talent; it's a process of removal. To see the signal, you must first clear the emotional residue of the past that clouds the present. It's about auditing every impulse at its source.</p>
+                    `
+                },
+                {
+                    id: 11, tag: "Vol. 08 / Dynamics", date: "2025",
+                    title_es: "Dinámicas de Poder Intrapersonal",
+                    title_en: "Intrapersonal Power Dynamics",
+                    extract_es: "Quién manda realmente en el proceso de decisión cuando el riesgo es alto.",
+                    extract_en: "Who truly governs the decision-making process when stakes are high.",
+                    content_es: `
+                        <h2>El parlamento interno y la gobernanza del yo</h2>
+                        <p>Dentro de cada decisor hay una multiplicidad de voces: el ego asustado que busca seguridad, el estratega frío que busca resultados, y el complaciente social que busca aprobación. El conflicto estratégico a menudo es solo un reflejo de una guerra civil intrapersonal.</p>
+                        <p>El autoconocimiento aplicado es el arte de otorgar el mazo de mando al estratega coherente en lugar del niño herido que busca evitar el conflicto a toda costa. Sin gobernanza interna, el líder es rehén de su propia reactividad.</p>
+                        <blockquote>"Si no puedes gobernar tus propios impulsos, cualquier poder externo que poseas es una ilusión peligrosa."</blockquote>
+                    `,
+                    content_en: `
+                        <h2>The Internal Parliament</h2>
+                        <p>Inside every leader lives a multiplicity of voices. Self-knowledge is the art of handing the gavel to the strategist rather than the wounded child. Without internal governance, power is just a dangerous illusion.</p>
+                    `
+                },
+                {
+                    id: 12, tag: "Field Note", date: "2025",
+                    title_es: "El Mito de la Fusión Relacional",
+                    title_en: "The Myth of Fusion",
+                    extract_es: "Por qué la búsqueda de simbiosis destruye el valor relacional en el largo plazo.",
+                    extract_en: "Why the search for symbiosis destroys relational value in the long run.",
+                    content_es: `
+                        <h2>Individuación antes que Conexión</h2>
+                        <p>La cultura popular vende la fusión como el ideal del amor y la lealtad. Sin embargo, la fusión no es intimidad; es la desaparición de las partes. Para que haya una conexión real y nutritiva, primero debe haber dos entidades claras, separadas y diferenciadas.</p>
+                        <p>La simbiosis crea dependencia y resentimiento. La individuación, por el contrario, crea respeto y deseo. Un sistema relacional de alto rendimiento requiere que cada parte sea capaz de sostenerse a sí misma antes de intentar sostener al otro.</p>
+                        <blockquote>"Dos mitades no hacen un uno funcional; hacen un sistema dependiente y frágil."</blockquote>
+                    `,
+                    content_en: `
+                        <h2>Individuation Before Connection</h2>
+                        <p>Fusion is not intimacy; it is the disappearance of the parts. For a real connection to exist, there must first be two clear, separate entities. Symbiosis creates dependency; individuation creates respect.</p>
+                    `
+                },
+                {
+                    id: 13, tag: "Vol. 09 / Value", date: "2025",
+                    title_es: "Capital Emocional como Divisa",
+                    title_en: "Emotional Capital as Currency",
+                    extract_es: "Entendiendo la liquidez de los afectos y la atención en el mercado moderno.",
+                    extract_en: "Understanding emotional liquidity in the modern market of attention.",
+                    content_es: `
+                        <h2>Transacciones del yo en la economía de la atención</h2>
+                        <p>Cada interacción consume o genera capital emocional. Gastarlo en validación barata o en discusiones circulares es una mala gestión financiera del espíritu. El líder consciente entiende que su atención es su recurso más escaso y valioso.</p>
+                        <p>Aprender a invertir capital emocional en relaciones y proyectos que generen un retorno de paz y claridad es la base de la riqueza intrapersonal. Malgastar esta divisa en el ruido del algoritmo es la forma más rápida de caer en bancarrota existencial.</p>
+                        <blockquote>"No es lo que ganas afuera, es lo que dejas de gastar adentro lo que determina tu solvencia emocional."</blockquote>
+                    `,
+                    content_en: `
+                        <h2>Transactions of the Self</h2>
+                        <p>Every interaction consumes or generates emotional capital. Spending it on cheap validation is poor spiritual financial management. Intrapersonal wealth is determined by how you invest your limited attention.</p>
+                    `
+                },
+                {
+                    id: 14, tag: "Field Note", date: "2025",
+                    title_es: "Anatomía de la Inacción",
+                    title_en: "Anatomy of Inaction",
+                    extract_es: "Por qué el análisis se convierte en parálisis en entornos de baja claridad interna.",
+                    extract_en: "Why analysis becomes paralysis in low-clarity environments.",
+                    content_es: `
+                        <h2>El peso muerto de lo no decidido</h2>
+                        <p>La inacción no es un estado neutro de espera; es un consumidor activo de energía a través de la rumiación constante. En el liderazgo, decidir mal es a veces más barato que no decidir, porque la decisión mala genera datos, mientras que la inacción solo genera deuda cognitiva.</p>
+                        <p>El miedo a la pérdida es lo que detiene la acción. Sin embargo, la inacción garantiza la pérdida más grande de todas: la del tiempo y la oportunidad. La anatomía de la parálisis siempre revela una falta de claridad en los valores fundamentales.</p>
+                        <blockquote>"La rumiación es el interés que pagas por decisiones que ya sabes que tienes que tomar."</blockquote>
+                    `,
+                    content_en: `
+                        <h2>The Weight of the Undecided</h2>
+                        <p>Inaction is not a neutral state; it is an active consumer of energy. Deciding poorly is often cheaper than not deciding at all because bad decisions provide data, while inaction provides only debt.</p>
+                    `
+                },
+                {
+                    id: 15, tag: "Vol. 10 / Thesis", date: "2025",
+                    title_es: "Clarity Before Connection: La Tesis",
+                    title_en: "Clarity Before Connection: The Thesis",
+                    extract_es: "El marco estratégico definitivo para el rendimiento y la paz.",
+                    extract_en: "The definitive strategic framework for performance and peace.",
+                    content_es: `
+                        <h2>La Tesis Central: El Orden como Precondición</h2>
+                        <p>El orden interno es la única precondición real para el éxito externo sostenible. Si no hay claridad adentro, cualquier conexión afuera —ya sea un negocio, una pareja o un proyecto— solo servirá para multiplicar el caos preexistente.</p>
+                        <p>Este marco propone que la "conexión" es un lujo que solo pueden permitirse quienes ya han hecho el trabajo de limpieza interna. Buscar claridad a través del otro es una receta para el desastre. La claridad se construye en soledad para luego ser compartida en conexión.</p>
+                        <blockquote>"Primero el mapa impecable, después el viaje compartido. Nunca al revés."</blockquote>
+                    `,
+                    content_en: `
+                        <h2>The Central Thesis</h2>
+                        <p>Internal order is the only precondition for sustainable external success. Connection is a luxury for those who have completed their internal cleaning. Seeking clarity through others is a recipe for disaster.</p>
+                    `
+                },
+                {
+                    id: 16, tag: "Field Note", date: "2025",
+                    title_es: "Observaciones sobre el Impacto",
+                    title_en: "Observations on Impact",
+                    extract_es: "Diferenciando el impacto de la intención en sistemas humanos complejos.",
+                    extract_en: "Differentiating impact from intent in complex human systems.",
+                    content_es: `
+                        <h2>Impacto vs Intención: La Medición Real</h2>
+                        <p>En la dinámica humana, la intención es privada e irrelevante para el sistema; el impacto es público y es lo único que genera consecuencias. Los sistemas no se corrigen con "buenas intenciones", se corrigen con higiene conductual y diseño de incentivos.</p>
+                        <p>Juzgarse por la intención mientras otros nos juzgan por el impacto es la raíz de la mayoría de los conflictos relacionales. La madurez estratégica es aceptar la responsabilidad total por el impacto, independientemente de la pureza de la intención original.</p>
+                        <blockquote>"El mundo no responde a lo que quisiste hacer, sino a lo que efectivamente hiciste."</blockquote>
+                    `,
+                    content_en: `
+                        <h2>Impact vs Intent</h2>
+                        <p>Intent is private and irrelevant to the system; impact is public and generates consequences. Strategic maturity is accepting total responsibility for your impact regardless of your original intent.</p>
                     `
                 }
             ];
@@ -344,13 +397,17 @@
                 return () => window.removeEventListener('scroll', handleScroll);
             }, []);
 
-            const openEssay = (id) => {
-                setSelectedEssayId(id);
-                setView('reader');
-                window.scrollTo(0,0);
+            const switchViewAndScroll = (targetView, sectionId = null) => {
+                setView(targetView);
+                if (sectionId) {
+                    setTimeout(() => {
+                        const el = document.getElementById(sectionId);
+                        if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    }, 100);
+                } else { window.scrollTo({ top: 0, behavior: 'smooth' }); }
             };
 
-            const selectedEssay = essaysData.find(e => e.id === selectedEssayId);
+            const openEssay = (id) => { setSelectedEssayId(id); setView('reader'); window.scrollTo(0,0); };
 
             return (
                 <div className="min-h-screen">
@@ -358,68 +415,111 @@
 
                     {/* Navigation */}
                     <nav className="fixed top-0 w-full z-50 bg-paper/80 backdrop-blur-md border-b border-divider px-6 py-6 no-print">
-                        <div className="max-w-7xl mx-auto flex justify-between items-center">
-                            <button onClick={() => setView('home')} className="font-serif text-2xl tracking-tighter hover:opacity-70 transition-opacity">Andrés Ramírez</button>
-                            <div className="hidden md:flex space-x-10 text-[10px] font-bold uppercase tracking-[0.4em]">
-                                <button onClick={() => setView('home')} className={`hover:text-accent transition-colors ${view === 'home' ? 'text-accent' : ''}`}>Clarity</button>
-                                <button onClick={() => setView('repository')} className={`hover:text-accent transition-colors ${view === 'repository' || view === 'reader' ? 'text-accent' : ''}`}>Field Notes</button>
+                        <div className="max-w-7xl mx-auto flex justify-between items-center text-ink">
+                            <button onClick={() => switchViewAndScroll('home')} className="font-serif text-2xl tracking-tighter hover:opacity-70 uppercase font-black italic">Andrés Ramírez</button>
+                            <div className="hidden md:flex lg:space-x-12 space-x-6 text-[10px] font-bold uppercase tracking-[0.4em]">
+                                <button onClick={() => switchViewAndScroll('home', 'about')} className={view === 'home' ? 'text-accent' : 'hover:text-accent transition-colors'}>{ui[currentLang].navHome}</button>
+                                <button onClick={() => switchViewAndScroll('home', 'research')} className="hover:text-accent transition-colors">{ui[currentLang].navResearch}</button>
+                                <button onClick={() => switchViewAndScroll('home', 'books')} className="hover:text-accent transition-colors">{ui[currentLang].navBooks}</button>
+                                <button onClick={() => switchViewAndScroll('repository')} className={view === 'repository' ? 'text-accent' : 'hover:text-accent transition-colors'}>{ui[currentLang].navNotes}</button>
                             </div>
                             <div className="flex gap-4 text-[10px] font-bold uppercase">
-                                <button onClick={() => setCurrentLang('es')} className={currentLang === 'es' ? 'text-ink border-b border-ink' : 'text-zinc-400'}>ES</button>
-                                <span className="text-zinc-300">/</span>
-                                <button onClick={() => setCurrentLang('en')} className={currentLang === 'en' ? 'text-ink border-b border-ink' : 'text-zinc-400'}>EN</button>
+                                <button onClick={() => setCurrentLang('es')} className={currentLang === 'es' ? 'text-ink border-b-2 border-accent pb-1' : 'text-zinc-400 hover:text-ink'}>ES</button>
+                                <button onClick={() => setCurrentLang('en')} className={currentLang === 'en' ? 'text-ink border-b-2 border-accent pb-1' : 'text-zinc-400 hover:text-ink'}>EN</button>
                             </div>
                         </div>
                     </nav>
 
-                    {/* Home View */}
-                    <main className={`view-content ${view === 'home' ? 'visible-view' : 'hidden-view'} pt-48 pb-32 px-6`}>
-                        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-20">
-                            <div className="md:w-1/2">
-                                <span className="text-[10px] font-bold uppercase tracking-[0.6em] text-subtle mb-6 block uppercase">Applied Self-Knowledge</span>
-                                <h1 className="font-serif text-6xl md:text-8xl mb-8 leading-[0.9] tracking-tighter">Clarity Before Connection</h1>
-                                <p className="text-xl text-subtle font-light leading-relaxed mb-12 max-w-lg">{ui[currentLang].homeDesc}</p>
-                                <div className="flex gap-8">
-                                    <button onClick={() => setView('repository')} className="text-[10px] font-bold uppercase tracking-widest border-b border-ink pb-2">{ui[currentLang].btnEnter}</button>
-                                    <a href="mailto:andres@selfloveclubstore.com" className="text-[10px] font-bold uppercase tracking-widest text-subtle border-b border-divider pb-2 hover:border-ink transition-all">Contacto</a>
+                    {/* Main Home Content */}
+                    <div className={`view-content ${view === 'home' ? 'visible-view' : 'hidden-view'}`}>
+                        {/* Clarity / About */}
+                        <section id="about" className="pt-48 pb-32 px-6">
+                            <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-20">
+                                <div className="md:w-1/2">
+                                    <span className="text-[10px] font-bold uppercase tracking-[0.6em] text-subtle mb-6 block uppercase tracking-widest">Applied Self-Knowledge</span>
+                                    <h1 className="font-serif text-6xl md:text-8xl mb-8 leading-[0.9] tracking-tighter uppercase font-black">Clarity Before Connection</h1>
+                                    <p className="text-xl text-subtle font-light leading-relaxed mb-12 max-w-lg">{ui[currentLang].homeDesc}</p>
+                                    <button onClick={() => setView('repository')} className="text-[10px] font-bold uppercase tracking-widest border-b-2 border-ink pb-2 hover:text-accent hover:border-accent transition-all">
+                                        {ui[currentLang].btnEnter}
+                                    </button>
+                                </div>
+                                <div className="md:w-1/2 relative">
+                                    <img src="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/assets/images/andres-ramirez-portrait.jpg" className="author-photo w-full h-[650px] rounded-sm shadow-2xl border-4 border-white" alt="Andrés Ramírez" />
+                                    <div className="absolute -bottom-6 -right-6 bg-paper p-10 border border-divider hidden md:block font-serif italic text-2xl shadow-xl italic text-accent">{ui[currentLang].quote}</div>
                                 </div>
                             </div>
-                            <div className="md:w-1/2 relative">
-                                <img src="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/assets/images/andres-ramirez-portrait.jpg" className="author-photo w-full h-[650px] rounded-sm shadow-2xl" alt="Andrés Ramírez Portrait" />
-                                <div className="absolute -bottom-6 -right-6 bg-paper p-8 border border-divider hidden md:block font-serif italic text-xl shadow-lg">{ui[currentLang].quote}</div>
+                        </section>
+
+                        {/* Behavioral Research */}
+                        <section id="research" className="py-40 bg-white px-6 border-y border-divider">
+                            <div className="max-w-7xl mx-auto text-center">
+                                <span className="text-[10px] font-bold uppercase tracking-[0.8em] text-accent mb-6 block">The Framework</span>
+                                <h2 className="font-serif text-5xl md:text-7xl mb-12 tracking-tighter uppercase font-black">{ui[currentLang].researchTitle}</h2>
+                                <p className="text-subtle text-2xl max-w-3xl mx-auto mb-24 leading-relaxed italic">{ui[currentLang].researchDesc}</p>
+                                <div className="grid md:grid-cols-3 gap-16 text-left">
+                                    <div className="space-y-6 group">
+                                        <div className="w-12 h-1 bg-ink group-hover:bg-accent transition-colors mb-8"></div>
+                                        <h3 className="font-serif text-2xl font-black uppercase tracking-tight">01 / Decisional Hygiene</h3>
+                                        <p className="text-subtle text-base leading-relaxed">Identificación de puntos ciegos emocionales y sesgos cognitivos que contaminan la toma de decisiones estratégicas en entornos de alta presión.</p>
+                                    </div>
+                                    <div className="space-y-6 group">
+                                        <div className="w-12 h-1 bg-ink group-hover:bg-accent transition-colors mb-8"></div>
+                                        <h3 className="font-serif text-2xl font-black uppercase tracking-tight">02 / Signal Fidelity</h3>
+                                        <p className="text-subtle text-base leading-relaxed">Filtros clínicos para distinguir la señal estratégica (verdad) del ruido reactivo (miedo), preservando la integridad del capital mental.</p>
+                                    </div>
+                                    <div className="space-y-6 group">
+                                        <div className="w-12 h-1 bg-ink group-hover:bg-accent transition-colors mb-8"></div>
+                                        <h3 className="font-serif text-2xl font-black uppercase tracking-tight">03 / Identity Liquidity</h3>
+                                        <p className="text-subtle text-base leading-relaxed">Mecanismos para separar la identidad fija del autor de sus decisiones, permitiendo pivotes estratégicos sin resistencia o fricción emocional.</p>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </main>
+                        </section>
+
+                        {/* Books / Bibliography */}
+                        <section id="books" className="py-48 bg-ink text-paper text-center px-6">
+                            <div className="max-w-7xl mx-auto">
+                                <span className="text-[10px] font-bold uppercase tracking-[0.5em] text-accent mb-8 block uppercase tracking-widest">{ui[currentLang].booksMeta}</span>
+                                <h2 className="font-serif text-6xl md:text-8xl mb-24 tracking-tighter uppercase font-black">{ui[currentLang].booksTitle}</h2>
+                                <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-16 text-left">
+                                    <div className="p-16 border-l border-white/10 hover:border-accent transition-all group bg-white/5 cursor-default">
+                                        <h3 className="font-serif text-4xl mb-6 uppercase font-black tracking-tighter group-hover:text-accent transition-colors">Mindful Match</h3>
+                                        <p className="text-neutral-400 text-lg italic leading-relaxed">Discernimiento relacional en la era del algoritmo. Una investigación profunda sobre la navegación afectiva y la preservación del capital emocional.</p>
+                                    </div>
+                                    <div className="p-16 border-l border-white/10 hover:border-accent transition-all group bg-white/5 cursor-default">
+                                        <h3 className="font-serif text-4xl mb-6 uppercase font-black tracking-tighter group-hover:text-accent transition-colors">Don’t Lose Yourself</h3>
+                                        <p className="text-neutral-400 text-lg italic leading-relaxed">Preservación del capital emocional como activo estratégico. Un marco para evitar la erosión de la identidad en dinámicas de alto riesgo.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
 
                     {/* Repository View */}
                     <main className={`view-content ${view === 'repository' ? 'visible-view' : 'hidden-view'} pt-40 pb-32 px-6`}>
                         <div className="max-w-7xl mx-auto">
                             <header className="text-center mb-32">
-                                <span className="text-[10px] font-bold uppercase tracking-[0.8em] text-accent mb-6 block">{ui[currentLang].meta}</span>
-                                <h1 className="font-serif text-7xl md:text-9xl mb-12 tracking-tighter">{ui[currentLang].field}</h1>
-                                <p className="text-zinc-500 text-sm italic max-w-xl mx-auto leading-relaxed">
-                                    {currentLang === 'es' 
-                                        ? "Investigaciones sobre capital emocional y autoconocimiento aplicado. Serie I: Observaciones sobre la conducta estratégica." 
-                                        : "Strategic research on emotional capital and applied self-knowledge. Series I: Observations on strategic behavior."}
-                                </p>
+                                <span className="text-[10px] font-bold uppercase tracking-[0.8em] text-accent mb-8 block uppercase tracking-widest">{ui[currentLang].meta}</span>
+                                <h1 className="font-serif text-7xl md:text-9xl mb-12 tracking-tighter uppercase font-black">{ui[currentLang].field}</h1>
+                                <div className="w-24 h-1 bg-accent mx-auto"></div>
                             </header>
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                                 {essaysData.map(essay => (
-                                    <div key={essay.id} className="essay-card p-12 h-[28rem] group" onClick={() => openEssay(essay.id)}>
-                                        <div>
-                                            <div className="flex justify-between text-[10px] font-bold uppercase text-zinc-400 mb-8 tracking-widest">
+                                    <div key={essay.id} className="essay-card p-12 h-[32rem] group" onClick={() => openEssay(essay.id)}>
+                                        <div className="relative z-10">
+                                            <div className="flex justify-between text-[10px] font-bold uppercase text-zinc-400 mb-10 tracking-widest">
                                                 <span>{essay.tag}</span><span>{essay.date}</span>
                                             </div>
-                                            <h3 className="font-serif text-3xl mb-6 group-hover:italic transition-all duration-500 leading-tight">
+                                            <h3 className="font-serif text-4xl mb-8 group-hover:italic transition-all duration-700 uppercase font-black leading-none tracking-tighter">
                                                 {currentLang === 'es' ? essay.title_es : essay.title_en}
                                             </h3>
-                                            <p className="text-[11px] text-zinc-500 italic leading-relaxed line-clamp-4">
+                                            <p className="text-sm text-zinc-500 italic leading-relaxed line-clamp-5">
                                                 {currentLang === 'es' ? essay.extract_es : essay.extract_en}
                                             </p>
                                         </div>
-                                        <div className="mt-auto flex items-center gap-4 pt-6">
-                                            <div className="w-8 h-[1px] bg-accent transition-all group-hover:w-12"></div>
-                                            <span className="text-[9px] font-bold uppercase tracking-widest text-accent">{ui[currentLang].readNote}</span>
+                                        <div className="mt-auto flex items-center gap-6 pt-10 relative z-10">
+                                            <div className="w-12 h-[1px] bg-accent transition-all group-hover:w-20"></div>
+                                            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-accent">{ui[currentLang].readNote}</span>
                                         </div>
                                     </div>
                                 ))}
@@ -429,44 +529,47 @@
 
                     {/* Reader View */}
                     <main className={`view-content ${view === 'reader' ? 'visible-view' : 'hidden-view'} pt-40 pb-32 px-6`}>
-                        <div className="max-w-4xl mx-auto relative">
-                            <button onClick={() => setView('repository')} className="text-[10px] font-bold uppercase tracking-[0.5em] text-zinc-400 hover:text-black mb-20 flex items-center gap-3 no-print">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                        <div className="max-w-5xl mx-auto relative">
+                            <button onClick={() => setView('repository')} className="text-[10px] font-bold uppercase tracking-[0.5em] text-zinc-400 hover:text-black mb-24 flex items-center gap-4 no-print transition-all group">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" className="group-hover:-translate-x-2 transition-transform"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
                                 {ui[currentLang].back}
                             </button>
-                            
-                            {selectedEssay && (
-                                <article className="prose-reader">
+                            {selectedEssayId && (
+                                <article className="prose-reader animate-in fade-in slide-in-from-bottom-8 duration-700">
                                     <header className="text-center mb-32">
-                                        <span className="text-[11px] font-bold uppercase tracking-[0.6em] text-accent mb-8 block">{selectedEssay.tag} — {selectedEssay.date}</span>
-                                        <h1 className="font-serif text-6xl md:text-[5rem] mb-12 leading-none tracking-tighter">
-                                            {currentLang === 'es' ? selectedEssay.title_es : selectedEssay.title_en}
+                                        <span className="text-[12px] font-bold uppercase tracking-[0.8em] text-accent mb-10 block tracking-widest italic">
+                                            {essaysData.find(e => e.id === selectedEssayId).tag} — {essaysData.find(e => e.id === selectedEssayId).date}
+                                        </span>
+                                        <h1 className="font-serif text-6xl md:text-[5.5rem] mb-16 leading-[0.9] tracking-tighter uppercase font-black">
+                                            {currentLang === 'es' ? essaysData.find(e => e.id === selectedEssayId).title_es : essaysData.find(e => e.id === selectedEssayId).title_en}
                                         </h1>
-                                        <div className="w-16 h-[1px] bg-divider mx-auto mb-12"></div>
-                                        <p className="text-zinc-500 text-xl italic max-w-2xl mx-auto leading-relaxed">
-                                            {currentLang === 'es' ? selectedEssay.extract_es : selectedEssay.extract_en}
+                                        <div className="w-24 h-1 bg-divider mx-auto mb-16"></div>
+                                        <p className="text-zinc-400 text-2xl italic max-w-2xl mx-auto leading-relaxed font-serif">
+                                            {currentLang === 'es' ? essaysData.find(e => e.id === selectedEssayId).extract_es : essaysData.find(e => e.id === selectedEssayId).extract_en}
                                         </p>
                                     </header>
-                                    <div dangerouslySetInnerHTML={{ __html: currentLang === 'es' ? selectedEssay.content_es : selectedEssay.content_en }} />
+                                    <div dangerouslySetInnerHTML={{ __html: currentLang === 'es' ? essaysData.find(e => e.id === selectedEssayId).content_es : essaysData.find(e => e.id === selectedEssayId).content_en }} />
                                 </article>
                             )}
-
-                            <footer className="mt-40 pt-20 border-t border-divider text-center no-print">
-                                <button onClick={() => setView('repository')} className="text-[10px] font-bold uppercase tracking-[0.4em] border border-black px-16 py-6 hover:bg-black hover:text-white transition-all">
+                            <footer className="mt-48 pt-24 border-t border-divider text-center no-print">
+                                <button onClick={() => setView('repository')} className="text-[12px] font-bold uppercase tracking-[0.5em] border-2 border-black px-20 py-8 hover:bg-black hover:text-white transition-all active:scale-95 font-black">
                                     {ui[currentLang].footerBack}
                                 </button>
                             </footer>
                         </div>
                     </main>
 
-                    <footer className="py-24 border-t border-divider text-center px-6">
-                        <p className="text-[9px] text-zinc-400 uppercase tracking-[0.2em]">
-                            © {new Date().getFullYear()} Andrés Ramírez — Clarity Before Connection. Fort Lauderdale | Caracas
-                        </p>
+                    {/* Final Footer */}
+                    <footer className="py-32 border-t border-divider text-center px-6 text-[10px] text-zinc-400 uppercase tracking-[0.4em] font-black">
+                        © {new Date().getFullYear()} Andrés Ramírez — Clarity Before Connection. Fort Lauderdale | Caracas
                     </footer>
 
-                    <button className={`back-to-top no-print ${scrollProgress > 10 ? 'visible' : ''}`} onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
+                    {/* Scroll to Top */}
+                    <button 
+                        className={`back-to-top no-print flex items-center justify-center ${scrollProgress > 10 ? 'visible' : ''}`} 
+                        onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}
+                    >
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 15l-6-6-6 6"/></svg>
                     </button>
                 </div>
             );
@@ -475,9 +578,8 @@
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<App />);
         
-        // Lucide initialization helper
-        const initIcons = () => { if (window.lucide) window.lucide.createIcons(); };
-        setTimeout(initIcons, 500);
+        // Lucide icons setup
+        setTimeout(() => { if (window.lucide) window.lucide.createIcons(); }, 500);
     </script>
 </body>
 </html>
