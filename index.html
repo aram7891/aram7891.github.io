@@ -2,56 +2,142 @@
 <html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1A1A1A">
+    <meta name="robots" content="index, follow">
+    
     <title>Andrés Ramírez | Clarity Before Connection</title>
     
-    <meta name="description" content="Plataforma de Andrés Ramírez: Claridad antes que conexión. Notas de campo y ensayos sobre autoconocimiento.">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    
+    <link rel="canonical" href="https://andresramirez.pro/">
+    <link rel="alternate" hreflang="x-default" href="https://andresramirez.pro/">
+    <link rel="alternate" hreflang="es" href="https://andresramirez.pro/">
+    <link rel="alternate" hreflang="en" href="https://andresramirez.pro/">
+    <meta name="description" content="Autor de Mindful Match y Don’t Lose Yourself While Dating. Ensayos clínicos sobre discernimiento, capital emocional y claridad antes que conexión.">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@0,400;0,600;0,900;1,400&display=swap" rel="stylesheet">
+
+    <meta property="og:title" content="Andrés Ramírez | Clarity Before Connection">
+    <meta property="og:description" content="Ensayos sobre discernimiento relacional y capital emocional.">
+    <meta property="og:image" content="https://andresramirez.pro/assets/images/andres-ramirez-portrait.jpg">
+    <meta property="og:url" content="https://andresramirez.pro">
+    <meta property="og:type" content="website">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        paper: '#FAFAFA',
-                        ink: '#1A1A1A',
-                        subtle: '#71717A',
-                        divider: '#E4E4E7',
-                        accent: '#2563EB'
-                    },
-                    fontFamily: {
-                        serif: ['"Playfair Display"', 'serif'],
-                        sans: ['"Inter"', 'sans-serif'],
-                    }
-                }
-            }
+        tailwind.config = { 
+            theme: { 
+                extend: { 
+                    colors: { paper: '#FAFAFA', ink: '#1A1A1A', subtle: '#52525B', divider: '#E4E4E7', accent: '#96683E' }, 
+                    fontFamily: { serif: ['"Playfair Display"', 'serif'], sans: ['"Inter"', 'sans-serif'] } 
+                } 
+            } 
         }
     </script>
     
     <style>
-        :root { scroll-padding-top: 140px; }
+        :root { scroll-padding-top: 100px; }
         body { background-color: #FAFAFA; color: #1A1A1A; overflow-x: hidden; }
+        .author-photo { filter: grayscale(100%); object-fit: cover; transition: filter 0.8s ease; }
+        .author-photo:hover { filter: grayscale(0%); }
+
+        .view-content { transition: opacity 0.5s ease-in-out, transform 0.5s ease-out; }
+        .hidden-view { display: none; opacity: 0; transform: translateY(10px); }
+        .visible-view { display: block; opacity: 1; transform: translateY(0); }
+
+        .prose-content { line-height: 1.8; font-size: 1.15rem; color: #2d2d2d; max-width: 65ch; margin: 0 auto; }
+        .prose-content h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-top: 4rem; margin-bottom: 2rem; font-weight: 600; color: #1A1A1A; line-height: 1.2; }
+        .prose-content h3 { font-size: 1.4rem; font-weight: 700; margin-top: 2.5rem; margin-bottom: 1rem; color: #111; letter-spacing: -0.01em; }
+        .prose-content p { margin-bottom: 1.8rem; }
+        .prose-content blockquote { border-left: 3px solid #96683E; padding-left: 1.5rem; font-style: italic; margin: 3rem 0; font-family: 'Playfair Display', serif; font-size: 1.5rem; color: #444; }
+
+        .essay-card { border: 1px solid #E4E4E7; transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1); cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; background: white; }
+        .essay-card:hover { border-color: #96683E; transform: translateY(-4px) rotate(-0.5deg); box-shadow: 0 15px 30px -10px rgba(0,0,0,0.05); }
+
+        .lang-active { color: #1A1A1A !important; border-bottom: 2px solid #1A1A1A; }
+        .btn-action { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; transition: all 0.2s ease; cursor: pointer; }
+
+        /* FIX PARA LINE CLAMP EN CDN */
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        @media print {
+            nav, .no-print, .btn-action, #essays-header, #essays-grid, #fieldnotes-grid, .section-title { display: none !important; }
+            body { background: white !important; color: black; }
+            .view-content { display: block !important; opacity: 1 !important; transform: none !important; }
+            #essay-reader { display: block !important; padding-top: 0; }
+            .prose-content { max-width: 100%; font-size: 12pt; }
+            .prose-body { page-break-before: auto; }
+        }
     </style>
 </head>
-<body class="font-sans antialiased">
+<body class="font-sans antialiased selection:bg-accent/10">
 
-<!-- STABLE BASE VERSION -->
-
-<section class="min-h-screen flex items-center justify-center text-center px-6">
-    <div>
-        <h1 class="font-serif text-6xl font-black uppercase tracking-tight mb-6">
-            Clarity Before Connection.
-        </h1>
-        <p class="text-subtle italic text-xl max-w-2xl mx-auto">
-            Stable base version is active.
-        </p>
+<!-- NAVIGATION -->
+<nav class="fixed top-0 w-full z-50 bg-paper/80 backdrop-blur-md border-b border-divider px-6 py-6 no-print">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <button onclick="switchView('home')" class="font-serif text-2xl tracking-tighter hover:opacity-70 transition-opacity">Andrés Ramírez</button>
+        <div class="hidden md:flex space-x-10 text-[10px] font-bold uppercase tracking-[0.4em]">
+            <button onclick="switchView('home', 'about')" class="hover:text-accent transition-colors">Clarity</button>
+            <button onclick="switchView('home', 'books')" class="hover:text-accent transition-colors">Books</button>
+            <button onclick="switchView('essays')" class="text-accent tracking-[0.6em] font-black">Self Love Club</button>
+        </div>
+        <button class="md:hidden text-ink" onclick="toggleMobileMenu()">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16m-7 6h7"/></svg>
+        </button>
     </div>
-</section>
+</nav>
+
+<!-- MOBILE MENU -->
+<div id="mobile-menu" class="hidden fixed inset-0 z-40 bg-paper pt-24 px-8 md:hidden text-center no-print">
+    <div class="flex flex-col space-y-8 text-2xl font-serif">
+        <button onclick="switchView('home'); toggleMobileMenu()">Clarity</button>
+        <button onclick="switchView('essays'); toggleMobileMenu()">Self Love Club</button>
+        <a href="mailto:andres@selfloveclubstore.com">Contacto</a>
+    </div>
+</div>
+
+<!-- VIEW: HOME -->
+<main id="view-home" class="view-content visible-view">
+    <section id="about" class="pt-48 pb-32 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-20">
+            <div class="md:w-1/2 text-left">
+                <span class="text-[10px] font-bold uppercase tracking-[0.6em] text-subtle mb-6 block">Author & Strategist</span>
+                <h1 class="font-serif text-6xl md:text-8xl mb-8 leading-[0.9] tracking-tighter">Clarity Before Connection</h1>
+                <p class="text-xl text-subtle font-light leading-relaxed mb-12 max-w-lg">
+                    Autor de Mindful Match y Don’t Lose Yourself. Ensayos clínicos sobre discernimiento, capital emocional y claridad antes que conexión.
+                </p>
+                <div class="flex gap-8 no-print">
+                    <button onclick="switchView('essays')" class="btn-action border-b border-ink pb-2">Entrar al Club</button>
+                    <a href="mailto:andres@selfloveclubstore.com" class="btn-action border-b border-divider pb-2 hover:border-ink">Contacto</a>
+                </div>
+            </div>
+            <div class="md:w-1/2 relative">
+                <img src="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/assets/images/andres-ramirez-portrait.jpg" alt="Andrés Ramírez" class="author-photo w-full h-[600px] rounded-sm">
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- FOOTER -->
+<footer class="py-24 px-6 border-t border-divider bg-paper text-center no-print">
+    <div class="max-w-xl mx-auto">
+        <h2 class="font-serif text-4xl mb-4 tracking-tighter">Andrés Ramírez</h2>
+        <p class="text-subtle text-[10px] uppercase tracking-[0.5em] mb-12 italic">Clarity Before Connection</p>
+        <p id="copyright-text" class="text-[9px] text-subtle uppercase tracking-[0.2em]"></p>
+    </div>
+</footer>
+
+<script>
+document.getElementById("copyright-text").innerText = `© ${new Date().getFullYear()} Andrés Ramírez — Fort Lauderdale | Caracas`;
+</script>
 
 </body>
 </html>
