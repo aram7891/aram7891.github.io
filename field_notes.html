@@ -1,1 +1,122 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Field Notes | Self Love Club Research & Strategy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #FAFAFA; color: #1A1A1A; font-family: 'Inter', sans-serif; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .essay-card { border: 1px solid #E4E4E7; transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); cursor: pointer; background: white; }
+        .essay-card:hover { border-color: #96683E; transform: translateY(-6px) rotate(-0.5deg); box-shadow: 0 20px 40px -15px rgba(0,0,0,0.05); }
+        .view-content { transition: opacity 0.5s ease-in-out, transform 0.5s ease-out; }
+        .hidden-view { display: none; opacity: 0; transform: translateY(15px); }
+        .visible-view { display: block; opacity: 1; transform: translateY(0); }
+        .prose-content { line-height: 1.8; font-size: 1.15rem; color: #2d2d2d; max-width: 65ch; margin: 0 auto; }
+        .prose-content h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-top: 4rem; margin-bottom: 2rem; font-weight: 700; color: #1A1A1A; }
+        .prose-content p { margin-bottom: 1.8rem; }
+        .lang-active { color: #1A1A1A !important; border-bottom: 2px solid #1A1A1A; }
+        @media print {
+            nav, .no-print, #essays-header, .essay-card { display: none !important; }
+            body { background: white !important; }
+            .view-content { display: block !important; opacity: 1 !important; transform: none !important; }
+            #view-reader { display: block !important; }
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-amber-100">
 
+    <nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-divider px-6 py-6 no-print">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="font-serif text-xl tracking-tighter">Andrés Ramírez</a>
+            <span class="text-[9px] font-bold uppercase tracking-[0.5em] text-amber-800">Self Love Club Repository</span>
+        </div>
+    </nav>
+
+    <main id="view-index" class="view-content visible-view pt-40 pb-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            <header id="essays-header" class="text-center mb-32 no-print">
+                <span class="text-[10px] font-bold uppercase tracking-[0.8em] text-amber-800 mb-6 block">Editorial Framework</span>
+                <h1 class="font-serif text-7xl md:text-9xl mb-10 tracking-tighter">Field Notes</h1>
+                <div class="flex justify-center space-x-10 text-[10px] font-bold tracking-widest uppercase mb-12">
+                    <button onclick="setLanguage('es')" id="btn-es" class="lang-active pb-2">Español</button>
+                    <button onclick="setLanguage('en')" id="btn-en" class="pb-2 text-zinc-400">English</button>
+                </div>
+            </header>
+            <div id="essays-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+        </div>
+    </main>
+
+    <main id="view-reader" class="view-content hidden-view pt-40 pb-32 px-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex justify-between items-center mb-12 no-print">
+                <button onclick="closeReader()" class="text-[10px] font-bold uppercase tracking-[0.5em] text-zinc-400 hover:text-black">← Volver</button>
+                <button onclick="window.print()" class="text-[10px] font-bold uppercase tracking-[0.3em] border border-black px-8 py-3 hover:bg-black hover:text-white transition-all">Exportar PDF</button>
+            </div>
+            <article id="reader-content" class="prose-content"></article>
+        </div>
+    </main>
+
+    <script>
+        const essays = [
+            { id: 1, tag: "Vol. 01", title_es: "El Autoconocimiento como Activo Económico", title_en: "Self-Knowledge as an Economic Asset", date: "2023", extract_es: "Ventaja competitiva cuantificable.", extract_en: "Quantifiable competitive advantage.", content_es: "<h2>La Crisis de los Costos Ocultos</h2><p>Las organizaciones invierten millones en tecnología mientras descuidan su sistema operativo más crítico: la psicología humana.</p>", content_en: "<h2>The Hidden Cost Crisis</h2><p>Organizations invest millions in tech but neglect their most critical OS.</p>" },
+            { id: 2, tag: "Vol. 02", title_es: "Arbitraje Emocional", title_en: "Emotional Arbitrage", date: "2023", extract_es: "Convertir el pánico en beneficio.", extract_en: "Turning panic into profit.", content_es: "<p>El arbitraje emocional es la capacidad de mantener claridad mientras el entorno opera bajo ruido.</p>", content_en: "<p>Emotional arbitrage is the ability to maintain clarity while the environment operates under noise.</p>" },
+            { id: 3, tag: "Vol. 03", title_es: "El Costo de Complacer a Otros", title_en: "The Opportunity Cost of People-Pleasing", date: "2023", extract_es: "Erosión del valor estratégico.", extract_en: "Strategic value erosion.", content_es: "<p>Complacer a otros es un riesgo operacional sistémico.</p>", content_en: "<p>People-pleasing is a systemic operational risk.</p>" },
+            { id: 4, tag: "Vol. 04", title_es: "La Arquitectura del Silencio", title_en: "The Architecture of Silence", date: "2023", extract_es: "Cuando nada se comunica, la realidad se deforma.", content_es: "<p>El silencio permite que la mente humana expanda lo desconocido.</p>", content_en: "<p>Silence allows the human mind to expand the unknown.</p>" },
+            { id: 5, tag: "Vol. 05", title_es: "Liquidez Cognitiva", title_en: "Cognitive Liquidity", date: "2024", extract_es: "Separar la identidad de las decisiones.", extract_en: "Separating identity from decisions.", content_es: "<p>Mantener la fluidez operativa en entornos volátiles.</p>", content_en: "<p>Maintaining operational fluidity in volatile environments.</p>" },
+            { id: 6, tag: "Vol. 06", title_es: "Señal vs Ruido", title_en: "Signal vs Noise", date: "2024", extract_es: "Claridad es lo que decides ignorar.", extract_en: "Clarity is what you choose to ignore.", content_es: "<p>Incapacidad de distinguir la señal del ruido informativo.</p>", content_en: "<p>Inability to distinguish signal from informational noise.</p>" },
+            { id: 7, tag: "Nota 07", title_es: "El Progreso Disfrazado de Derrota", title_en: "Progress Disguised as Defeat", date: "2024", extract_es: "Hacerlo bien sabe a pérdida.", extract_en: "Doing it right tastes like losing.", content_es: "<p>El progreso real rara vez se siente como victoria inmediata.</p>", content_en: "<p>Real progress rarely feels like immediate victory.</p>" },
+            { id: 8, tag: "Nota 08", title_es: "La Conexión como Artículo de Lujo", title_en: "Connection as a Luxury Item", date: "2024", extract_es: "La profundidad se ha vuelto costosa.", extract_en: "Depth has become costly.", content_es: "<p>La vulnerabilidad es hoy una inversión de alto riesgo.</p>", content_en: "<p>Vulnerability is now a high-risk investment.</p>" },
+            { id: 9, tag: "Nota 09", title_es: "Medir para Entender", title_en: "Measure to Understand", date: "2025", extract_es: "Sistemas de auto-ubicación.", extract_en: "Self-location systems.", content_es: "<p>Las personas no se hunden por lo que son, sino por lo que repiten.</p>", content_en: "<p>People don't sink because of what they are, but because of what they repeat.</p>" },
+            { id: 10, tag: "Vol. 07", title_es: "La Inercia del Miedo", title_en: "The Inertia of Fear", date: "2025", extract_es: "Parálisis decisional clínica.", extract_en: "Clinical decisional paralysis.", content_es: "<p>Próximamente contenido expandido...</p>", content_en: "<p>Coming soon...</p>" },
+            { id: 11, tag: "Vol. 08", title_es: "Higiene Decisional", title_en: "Decisional Hygiene", date: "2025", extract_es: "Protocolos para decisiones puras.", extract_en: "Protocols for pure decisions.", content_es: "<p>Próximamente contenido expandido...</p>", content_en: "<p>Coming soon...</p>" },
+            { id: 12, tag: "Vol. 09", title_es: "Capital Emocional", title_en: "Emotional Capital", date: "2025", extract_es: "Gestión de recursos internos.", extract_en: "Internal resource management.", content_es: "<p>Próximamente contenido expandido...</p>", content_en: "<p>Coming soon...</p>" },
+            { id: 13, tag: "Vol. 10", title_es: "La Paradoja de la Elección", title_en: "Choice Paradox", date: "2025", extract_es: "Dating and choice fatigue.", extract_en: "Dating and choice fatigue.", content_es: "<p>Próximamente contenido expandido...</p>", content_en: "<p>Coming soon...</p>" },
+            { id: 14, tag: "Nota 14", title_es: "Ego vs Estrategia", title_en: "Ego vs Strategy", date: "2025", extract_es: "Identidad secuestra el resultado.", extract_en: "Identity hijacks the outcome.", content_es: "<p>Próximamente contenido expandido...</p>", content_en: "<p>Coming soon...</p>" },
+            { id: 15, tag: "Nota 15", title_es: "Feedback sin Anestesia", title_en: "Raw Feedback", date: "2025", extract_es: "Verdad como optimización.", extract_en: "Truth as optimization.", content_es: "<p>Próximamente contenido expandido...</p>", content_en: "<p>Coming soon...</p>" },
+            { id: 16, tag: "Nota 16", title_es: "Fin de Conexión Transaccional", title_en: "End of Transaction", date: "2025", extract_es: "Nueva economía vincular.", extract_en: "New relational economy.", content_es: "<p>Próximamente contenido expandido...</p>", content_en: "<p>Coming soon...</p>" }
+        ];
+
+        let lang = 'es';
+
+        function renderGrid() {
+            const grid = document.getElementById('essays-grid');
+            grid.innerHTML = '';
+            essays.forEach(e => {
+                const card = document.createElement('div');
+                card.className = 'essay-card p-10 h-80 flex flex-col justify-between';
+                card.onclick = () => openReader(e.id);
+                card.innerHTML = `<div><div class="flex justify-between items-center mb-6"><span class="text-[10px] font-bold uppercase tracking-widest text-zinc-400">${e.tag}</span><span class="text-[9px] font-medium text-zinc-300 uppercase">${e.date}</span></div><h3 class="font-serif text-3xl leading-tight mb-4">${lang === 'es' ? e.title_es : e.title_en}</h3><p class="text-[11px] text-zinc-500 italic line-clamp-2">${lang === 'es' ? e.extract_es : e.extract_en}</p></div><div class="flex items-center gap-3"><span class="w-6 h-[1px] bg-amber-800"></span><span class="text-[9px] font-bold uppercase tracking-[0.4em] text-amber-800">${lang === 'es' ? 'Leer Nota' : 'Read Note'}</span></div>`;
+                grid.appendChild(card);
+            });
+        }
+
+        function openReader(id) {
+            const e = essays.find(i => i.id === id);
+            const index = document.getElementById('view-index');
+            const reader = document.getElementById('view-reader');
+            const content = document.getElementById('reader-content');
+            index.classList.add('hidden-view');
+            setTimeout(() => {
+                index.style.display = 'none';
+                content.innerHTML = `<header class="text-center mb-24"><span class="text-[11px] font-bold uppercase tracking-[0.6em] text-amber-800 mb-6 block">${e.tag} — ${e.date}</span><h1 class="font-serif text-6xl md:text-8xl mb-10 leading-none tracking-tighter">${lang === 'es' ? e.title_es : e.title_en}</h1><p class="text-zinc-500 text-lg italic max-w-2xl mx-auto">${lang === 'es' ? e.extract_es : e.extract_en}</p></header><div class="prose-body">${lang === 'es' ? e.content_es : e.content_en}</div>`;
+                reader.style.display = 'block';
+                setTimeout(() => { reader.classList.remove('hidden-view'); reader.classList.add('visible-view'); window.scrollTo(0,0); }, 50);
+            }, 500);
+        }
+
+        function closeReader() {
+            const index = document.getElementById('view-index');
+            const reader = document.getElementById('view-reader');
+            reader.classList.remove('visible-view'); reader.classList.add('hidden-view');
+            setTimeout(() => { reader.style.display = 'none'; index.style.display = 'block'; setTimeout(() => { index.classList.remove('hidden-view'); index.classList.add('visible-view'); window.scrollTo(0,0); }, 50); }, 500);
+        }
+
+        function setLanguage(l) { lang = l; document.getElementById('btn-es').className = lang === 'es' ? 'lang-active pb-2' : 'pb-2 text-zinc-400'; document.getElementById('btn-en').className = lang === 'en' ? 'lang-active pb-2' : 'pb-2 text-zinc-400'; renderGrid(); }
+
+        renderGrid();
+    </script>
+</body>
+</html>
