@@ -10,7 +10,7 @@
         body { background-color: #FAFAFA; color: #1A1A1A; font-family: 'Inter', sans-serif; }
         .font-serif { font-family: 'Playfair Display', serif; }
         .essay-card { border: 1px solid #E4E4E7; transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); cursor: pointer; background: white; }
-        .essay-card:hover { border-color: #96683E; transform: translateY(-6px) rotate(-0.5deg); box-shadow: 0 20px 40px -15px rgba(0,0,0,0.05); }
+        .essay-card:hover, .essay-card:focus { border-color: #96683E; transform: translateY(-6px) rotate(-0.5deg); box-shadow: 0 20px 40px -15px rgba(0,0,0,0.05); outline: none; }
         .view-content { transition: opacity 0.5s ease-in-out, transform 0.5s ease-out; }
         .hidden-view { display: none; opacity: 0; transform: translateY(15px); }
         .visible-view { display: block; opacity: 1; transform: translateY(0); }
@@ -42,7 +42,7 @@
                 <h1 class="font-serif text-7xl md:text-9xl mb-10 tracking-tighter">Field Notes</h1>
                 <div class="flex justify-center space-x-10 text-[10px] font-bold tracking-widest uppercase mb-12">
                     <button onclick="setLanguage('es')" id="btn-es" class="lang-active pb-2">Español</button>
-                    <button onclick="setLanguage('en')" id="btn-en" class="pb-2 text-zinc-400">English</button>
+                    <button onclick="setLanguage('en')" id="btn-en" class="pb-2 text-zinc-400 hover:text-black">English</button>
                 </div>
             </header>
             <div id="essays-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
@@ -64,7 +64,7 @@
             { id: 1, tag: "Vol. 01", title_es: "El Autoconocimiento como Activo Económico", title_en: "Self-Knowledge as an Economic Asset", date: "2023", extract_es: "Ventaja competitiva cuantificable.", extract_en: "Quantifiable competitive advantage.", content_es: "<h2>La Crisis de los Costos Ocultos</h2><p>Las organizaciones invierten millones en tecnología mientras descuidan su sistema operativo más crítico: la psicología humana.</p>", content_en: "<h2>The Hidden Cost Crisis</h2><p>Organizations invest millions in tech but neglect their most critical OS.</p>" },
             { id: 2, tag: "Vol. 02", title_es: "Arbitraje Emocional", title_en: "Emotional Arbitrage", date: "2023", extract_es: "Convertir el pánico en beneficio.", extract_en: "Turning panic into profit.", content_es: "<p>El arbitraje emocional es la capacidad de mantener claridad mientras el entorno opera bajo ruido.</p>", content_en: "<p>Emotional arbitrage is the ability to maintain clarity while the environment operates under noise.</p>" },
             { id: 3, tag: "Vol. 03", title_es: "El Costo de Complacer a Otros", title_en: "The Opportunity Cost of People-Pleasing", date: "2023", extract_es: "Erosión del valor estratégico.", extract_en: "Strategic value erosion.", content_es: "<p>Complacer a otros es un riesgo operacional sistémico.</p>", content_en: "<p>People-pleasing is a systemic operational risk.</p>" },
-            { id: 4, tag: "Vol. 04", title_es: "La Arquitectura del Silencio", title_en: "The Architecture of Silence", date: "2023", extract_es: "Cuando nada se comunica, la realidad se deforma.", content_es: "<p>El silencio permite que la mente humana expanda lo desconocido.</p>", content_en: "<p>Silence allows the human mind to expand the unknown.</p>" },
+            { id: 4, tag: "Vol. 04", title_es: "La Arquitectura del Silencio", title_en: "The Architecture of Silence", date: "2023", extract_es: "Cuando nada se comunica, la realidad se deforma.", extract_en: "When nothing is communicated, reality becomes distorted.", content_es: "<p>El silencio permite que la mente humana expanda lo desconocido.</p>", content_en: "<p>Silence allows the human mind to expand the unknown.</p>" },
             { id: 5, tag: "Vol. 05", title_es: "Liquidez Cognitiva", title_en: "Cognitive Liquidity", date: "2024", extract_es: "Separar la identidad de las decisiones.", extract_en: "Separating identity from decisions.", content_es: "<p>Mantener la fluidez operativa en entornos volátiles.</p>", content_en: "<p>Maintaining operational fluidity in volatile environments.</p>" },
             { id: 6, tag: "Vol. 06", title_es: "Señal vs Ruido", title_en: "Signal vs Noise", date: "2024", extract_es: "Claridad es lo que decides ignorar.", extract_en: "Clarity is what you choose to ignore.", content_es: "<p>Incapacidad de distinguir la señal del ruido informativo.</p>", content_en: "<p>Inability to distinguish signal from informational noise.</p>" },
             { id: 7, tag: "Nota 07", title_es: "El Progreso Disfrazado de Derrota", title_en: "Progress Disguised as Defeat", date: "2024", extract_es: "Hacerlo bien sabe a pérdida.", extract_en: "Doing it right tastes like losing.", content_es: "<p>El progreso real rara vez se siente como victoria inmediata.</p>", content_en: "<p>Real progress rarely feels like immediate victory.</p>" },
@@ -87,7 +87,20 @@
             essays.forEach(e => {
                 const card = document.createElement('div');
                 card.className = 'essay-card p-10 h-80 flex flex-col justify-between';
+                
+                // MEJORA DE ACCESIBILIDAD (CodeRabbit suggestion)
+                card.tabIndex = 0;
+                card.role = "button";
+                card.setAttribute('aria-label', lang === 'es' ? `Leer nota: ${e.title_es}` : `Read note: ${e.title_en}`);
+                
                 card.onclick = () => openReader(e.id);
+                card.onkeydown = (event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        openReader(e.id);
+                    }
+                };
+
                 card.innerHTML = `<div><div class="flex justify-between items-center mb-6"><span class="text-[10px] font-bold uppercase tracking-widest text-zinc-400">${e.tag}</span><span class="text-[9px] font-medium text-zinc-300 uppercase">${e.date}</span></div><h3 class="font-serif text-3xl leading-tight mb-4">${lang === 'es' ? e.title_es : e.title_en}</h3><p class="text-[11px] text-zinc-500 italic line-clamp-2">${lang === 'es' ? e.extract_es : e.extract_en}</p></div><div class="flex items-center gap-3"><span class="w-6 h-[1px] bg-amber-800"></span><span class="text-[9px] font-bold uppercase tracking-[0.4em] text-amber-800">${lang === 'es' ? 'Leer Nota' : 'Read Note'}</span></div>`;
                 grid.appendChild(card);
             });
@@ -114,7 +127,7 @@
             setTimeout(() => { reader.style.display = 'none'; index.style.display = 'block'; setTimeout(() => { index.classList.remove('hidden-view'); index.classList.add('visible-view'); window.scrollTo(0,0); }, 50); }, 500);
         }
 
-        function setLanguage(l) { lang = l; document.getElementById('btn-es').className = lang === 'es' ? 'lang-active pb-2' : 'pb-2 text-zinc-400'; document.getElementById('btn-en').className = lang === 'en' ? 'lang-active pb-2' : 'pb-2 text-zinc-400'; renderGrid(); }
+        function setLanguage(l) { lang = l; document.getElementById('btn-es').className = lang === 'es' ? 'lang-active pb-2' : 'pb-2 text-zinc-400 hover:text-black'; document.getElementById('btn-en').className = lang === 'en' ? 'lang-active pb-2' : 'pb-2 text-zinc-400 hover:text-black'; renderGrid(); }
 
         renderGrid();
     </script>
