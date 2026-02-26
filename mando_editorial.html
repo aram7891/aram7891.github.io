@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mando Editorial | Self Love Club</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #0A0A0A; color: #FAFAFA; font-family: 'Inter', sans-serif; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .glass { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); }
+        input, textarea { background: rgba(0,0,0,0.3) !important; border: 1px solid rgba(255,255,255,0.1) !important; color: white !important; }
+        input:focus, textarea:focus { border-color: #96683E !important; outline: none; }
+    </style>
+</head>
+<body class="p-4 md:p-12 min-h-screen">
+
+    <div class="max-w-4xl mx-auto">
+        <header class="mb-12 border-b border-white/10 pb-8 flex justify-between items-end">
+            <div>
+                <span class="text-[10px] font-bold uppercase tracking-[0.5em] text-amber-700 mb-2 block">System Automation</span>
+                <h1 class="font-serif text-4xl">Mando Editorial</h1>
+            </div>
+            <div class="text-right">
+                <p class="text-[9px] text-zinc-500 uppercase tracking-widest">Self Love Club</p>
+                <p class="text-xs font-bold text-amber-600">v2.5 FINAL</p>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <aside class="space-y-6">
+                <div class="glass p-6 rounded-2xl">
+                    <h2 class="text-xs font-bold uppercase tracking-widest mb-4">Configuración</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="text-[10px] uppercase text-zinc-500 font-bold mb-1 block">GitHub Token</label>
+                            <input type="password" id="gh-token" class="w-full p-3 rounded-lg text-sm" placeholder="github_pat_...">
+                        </div>
+                        <div>
+                            <label class="text-[10px] uppercase text-zinc-500 font-bold mb-1 block">Repo</label>
+                            <input type="text" id="gh-repo" class="w-full p-3 rounded-lg text-sm" value="aram7891/aram7891.github.io">
+                        </div>
+                        <div>
+                            <label class="text-[10px] uppercase text-zinc-500 font-bold mb-1 block">Archivo Destino</label>
+                            <input type="text" id="gh-path" class="w-full p-3 rounded-lg text-sm" value="field_notes.html">
+                        </div>
+                        <button onclick="saveConfig()" class="w-full py-3 bg-zinc-800 hover:bg-zinc-700 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all">Sincronizar Celular</button>
+                    </div>
+                </div>
+            </aside>
+
+            <section class="lg:col-span-2 space-y-6">
+                <div class="glass p-6 rounded-2xl">
+                    <textarea id="content-editor" rows="18" class="w-full p-6 rounded-xl text-sm leading-relaxed mb-6 font-mono" placeholder="Pega aquí el código HTML completo corregido..."></textarea>
+                    <button id="publish-btn" onclick="publishToGitHub()" class="w-full py-5 bg-amber-700 hover:bg-amber-600 rounded-xl text-xs font-bold uppercase tracking-[0.3em] transition-all">
+                        <span>Publicar Cambios</span>
+                    </button>
+                </div>
+            </section>
+        </div>
+
+        <div id="toast" class="fixed bottom-8 right-8 glass p-6 rounded-xl hidden z-50">
+            <p id="toast-msg" class="text-xs font-bold uppercase tracking-widest"></p>
+        </div>
+    </div>
+
+    <script>
+        window.onload = () => {
+            document.getElementById('gh-token').value = localStorage.getItem('slc_gh_token') || '';
+            const savedRepo = localStorage.getItem('slc_gh_repo');
+            if(savedRepo) document.getElementById('gh-repo').value = savedRepo;
+            const savedPath = localStorage.getItem('slc_gh_path');
+            if(savedPath) document.getElementById('gh-path').value = savedPath;
+        };
+
+        function saveConfig() {
+            localStorage.setItem('slc_gh_token', document.getElementById('gh-token').value);
+            localStorage.setItem('slc_gh_repo', document.getElementById('gh-repo').value);
+            localStorage.setItem('slc_gh_path', document.getElementById('gh-path').value);
+            showToast("Sincronizado", "text-amber-500");
+        }
+
+        async function publishToGitHub() {
+            const token = document.getElementById('gh-token').value;
+            const repo = document.getElementById('gh-repo').value;
+            const path = document.getElementById('gh-path').value;
+            const content = document.getElementById('content-editor').value;
+            const btn = document.getElementById('publish-btn');
+
+            if (!token || !repo || !path || !content) {
+                showToast("Faltan datos", "text-red-500");
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = "<span>Subiendo...</span>";
+
+            try {
+                const getRes = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+                    headers: { 'Authorization': `token ${token}` }
+                });
+                
+                let sha = "";
+                if (getRes.ok) {
+                    const fileData = await getRes.json();
+                    sha = fileData.sha;
+                }
+
+                const utf8Bytes = new TextEncoder().encode(content);
+                const base64Content = btoa(String.fromCharCode(...utf8Bytes));
+
+                const putRes = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: `Update ${path} via SLC Mando`,
+                        content: base64Content,
+                        sha: sha || undefined
+                    })
+                });
+
+                if (putRes.ok) {
+                    showToast("¡Éxito!", "text-green-500");
+                } else {
+                    const err = await putRes.json();
+                    showToast(`Error: ${err.message}`, "text-red-500");
+                }
+            } catch (error) {
+                showToast(`Error de red`, "text-red-500");
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = "<span>Publicar Cambios</span>";
+            }
+        }
+
+        function showToast(msg, colorClass) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-msg');
+            toastMsg.innerText = msg;
+            toastMsg.className = `text-xs font-bold uppercase tracking-widest ${colorClass}`;
+            toast.classList.remove('hidden');
+            setTimeout(() => toast.classList.add('hidden'), 3000);
+        }
+    </script>
+</body>
+</html>
+
