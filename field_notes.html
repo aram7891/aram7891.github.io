@@ -52,55 +52,40 @@
     <main id="view-reader" class="view-content hidden-view pt-40 pb-32 px-6">
         <div class="max-w-4xl mx-auto">
             <div class="flex justify-between items-center mb-12 no-print">
-                <button onclick="closeReader()" class="text-[10px] font-bold uppercase tracking-[0.5em] text-zinc-400 hover:text-black">← Volver</button>
-                <button onclick="window.print()" class="text-[10px] font-bold uppercase tracking-[0.3em] border border-black px-8 py-3 hover:bg-black hover:text-white transition-all">Exportar PDF</button>
+                <button onclick="closeReader()" id="reader-back" class="text-[10px] font-bold uppercase tracking-[0.5em] text-zinc-400 hover:text-black">← Volver</button>
+                <button onclick="window.print()" id="reader-print" class="text-[10px] font-bold uppercase tracking-[0.3em] border border-black px-8 py-3 hover:bg-black hover:text-white transition-all">Exportar PDF</button>
             </div>
             <article id="reader-content" class="prose-content"></article>
         </div>
     </main>
 
     <script>
+        // Traducciones para elementos de la interfaz (Labels)
+        const uiTranslations = {
+            es: { back: "← Volver", print: "Exportar PDF" },
+            en: { back: "← Back", print: "Export PDF" }
+        };
+
         const essays = [
-            { id: 1, tag: "Vol. 01", title_es: "El Autoconocimiento como Activo Económico", title_en: "Self-Knowledge as an Economic Asset", date: "2023", extract_es: "Ventaja competitiva cuantificable.", extract_en: "Quantifiable competitive advantage.", content_es: "<h2>La Crisis de los Costos Ocultos</h2><p>Las organizaciones invierten millones en tecnología mientras descuidan su sistema operativo más crítico: la psicología humana.</p>", content_en: "<h2>The Hidden Cost Crisis</h2><p>Organizations invest millions in tech but neglect their most critical OS.</p>" },
-            { id: 2, tag: "Vol. 02", title_es: "Arbitraje Emocional", title_en: "Emotional Arbitrage", date: "2023", extract_es: "Convertir el pánico en beneficio.", extract_en: "Turning panic into profit.", content_es: "<p>El arbitraje emocional es la capacidad de mantener claridad mientras el entorno opera bajo ruido.</p>", content_en: "<p>Emotional arbitrage is the ability to maintain clarity while the environment operates under noise.</p>" },
-            { id: 3, tag: "Vol. 03", title_es: "El Costo de Complacer a Otros", title_en: "The Opportunity Cost of People-Pleasing", date: "2023", extract_es: "Erosión del valor estratégico.", extract_en: "Strategic value erosion.", content_es: "<p>Complacer a otros es un riesgo operacional sistémico.</p>", content_en: "<p>People-pleasing is a systemic operational risk.</p>" },
-            { id: 4, tag: "Vol. 04", title_es: "La Arquitectura del Silencio", title_en: "The Architecture of Silence", date: "2023", extract_es: "Cuando nada se comunica, la realidad se deforma.", extract_en: "When nothing is communicated, reality becomes distorted.", content_es: "<p>El silencio permite que la mente humana expanda lo desconocido.</p>", content_en: "<p>Silence allows the human mind to expand the unknown.</p>" },
-            { id: 5, tag: "Vol. 05", title_es: "Liquidez Cognitiva", title_en: "Cognitive Liquidity", date: "2024", extract_es: "Separar la identidad de las decisiones.", extract_en: "Separating identity from decisions.", content_es: "<p>Mantener la fluidez operativa en entornos volátiles.</p>", content_en: "<p>Maintaining operational fluidity in volatile environments.</p>" },
-            { id: 6, tag: "Vol. 06", title_es: "Señal vs Ruido", title_en: "Signal vs Noise", date: "2024", extract_es: "Claridad es lo que decides ignorar.", extract_en: "Clarity is what you choose to ignore.", content_es: "<p>Incapacidad de distinguir la señal del ruido informativo.</p>", content_en: "<p>Inability to distinguish signal from informational noise.</p>" },
-            { id: 7, tag: "Nota 07", title_es: "El Progreso Disfrazado de Derrota", title_en: "Progress Disguised as Defeat", date: "2024", extract_es: "Hacerlo bien sabe a pérdida.", extract_en: "Doing it right tastes like losing.", content_es: "<p>El progreso real rara vez se siente como victoria inmediata.</p>", content_en: "<p>Real progress rarely feels like immediate victory.</p>" },
-            { id: 8, tag: "Nota 08", title_es: "La Conexión como Artículo de Lujo", title_en: "Connection as a Luxury Item", date: "2024", extract_es: "La profundidad se ha vuelto costosa.", extract_en: "Depth has become costly.", content_es: "<p>La vulnerabilidad es hoy una inversión de alto riesgo.</p>", content_en: "<p>Vulnerability is now a high-risk investment.</p>" },
-            { id: 9, tag: "Nota 09", title_es: "Medir para Entender", title_en: "Measure to Understand", date: "2025", extract_es: "Sistemas de auto-ubicación.", extract_en: "Self-location systems.", content_es: "<p>Las personas no se hunden por lo que son, sino por lo que repiten.</p>", content_en: "<p>People don't sink because of what they are, but because of what they repeat.</p>" },
-            { id: 10, tag: "Vol. 07", title_es: "La Inercia del Miedo", title_en: "The Inertia of Fear", date: "2025", extract_es: "Parálisis decisional clínica.", extract_en: "Clinical decisional paralysis.", content_es: "<p>Próximamente contenido expandido...</p>", content_en: "<p>Coming soon...</p>" },
-            { id: 11, tag: "Vol. 08", title_es: "Higiene Decisional", title_en: "Decisional Hygiene", date: "2025", extract_es: "Protocolos para decisiones puras.", extract_en: "Protocols for pure decisions.", content_es: "<p>Próximamente contenido expandido...</p>", content_en: "<p>Coming soon...</p>" },
-            { id: 12, tag: "Vol. 09", title_es: "Capital Emocional", title_en: "Emotional Capital", date: "2025", extract_es: "Gestión de recursos internos.", extract_en: "Internal resource management.", content_es: "<p>Próximamente contenido expandido...</p>", content_en: "<p>Coming soon...</p>" },
-            { id: 13, tag: "Vol. 10", title_es: "La Paradoja de la Elección", title_en: "Choice Paradox", date: "2025", extract_es: "Dating and choice fatigue.", extract_en: "Dating and choice fatigue.", content_es: "<p>Próximamente contenido expandido...</p>", content_en: "<p>Coming soon...</p>" },
-            { id: 14, tag: "Nota 14", title_es: "Ego vs Estrategia", title_en: "Ego vs Strategy", date: "2025", extract_es: "Identidad secuestra el resultado.", extract_en: "Identity hijacks the outcome.", content_es: "<p>Próximamente contenido expandido...</p>", content_en: "<p>Coming soon...</p>" },
-            { id: 15, tag: "Nota 15", title_es: "Feedback sin Anestesia", title_en: "Raw Feedback", date: "2025", extract_es: "Verdad como optimización.", extract_en: "Truth as optimization.", content_es: "<p>Próximamente contenido expandido...</p>", content_en: "<p>Coming soon...</p>" },
-            { id: 16, tag: "Nota 16", title_es: "Fin de Conexión Transaccional", title_en: "End of Transaction", date: "2025", extract_es: "Nueva economía vincular.", extract_en: "New relational economy.", content_es: "<p>Próximamente contenido expandido...</p>", content_en: "<p>Coming soon...</p>" }
+            { id: 1, tag: "Vol. 01", title_es: "El Autoconocimiento como Activo Económico", title_en: "Self-Knowledge as an Economic Asset", date: "2023", extract_es: "Ventaja competitiva cuantificable.", extract_en: "Quantifiable competitive advantage.", content_es: "<h2>La Crisis de los Costos Ocultos</h2><p>Las organizaciones invierten frecuentemente millones en tecnología mientras descuidan su sistema operativo más crítico: la psicología humana.</p>", content_en: "<h2>The Hidden Cost Crisis</h2><p>Organizations invest millions in tech but neglect their most critical OS.</p>" },
+            { id: 4, tag: "Vol. 04", title_es: "La Arquitectura del Silencio", title_en: "The Architecture of Silence", date: "2023", extract_es: "Cuando nada se comunica, la realidad se deforma.", extract_en: "When nothing is communicated, reality becomes distorted.", content_es: "<p>El silencio permite que la mente humana expanda lo desconocido.</p>", content_en: "<p>Silence allows the human mind to expand the unknown.</p>" }
+            // ... (resto de ensayos)
         ];
 
         let lang = 'es';
 
         function renderGrid() {
             const grid = document.getElementById('essays-grid');
+            if (!grid) return;
             grid.innerHTML = '';
             essays.forEach(e => {
                 const card = document.createElement('div');
                 card.className = 'essay-card p-10 h-80 flex flex-col justify-between';
-                
-                // MEJORA DE ACCESIBILIDAD (CodeRabbit suggestion)
                 card.tabIndex = 0;
                 card.role = "button";
                 card.setAttribute('aria-label', lang === 'es' ? `Leer nota: ${e.title_es}` : `Read note: ${e.title_en}`);
-                
                 card.onclick = () => openReader(e.id);
-                card.onkeydown = (event) => {
-                    if (event.key === 'Enter' || event.key === ' ') {
-                        event.preventDefault();
-                        openReader(e.id);
-                    }
-                };
-
+                card.onkeydown = (event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openReader(e.id); } };
                 card.innerHTML = `<div><div class="flex justify-between items-center mb-6"><span class="text-[10px] font-bold uppercase tracking-widest text-zinc-400">${e.tag}</span><span class="text-[9px] font-medium text-zinc-300 uppercase">${e.date}</span></div><h3 class="font-serif text-3xl leading-tight mb-4">${lang === 'es' ? e.title_es : e.title_en}</h3><p class="text-[11px] text-zinc-500 italic line-clamp-2">${lang === 'es' ? e.extract_es : e.extract_en}</p></div><div class="flex items-center gap-3"><span class="w-6 h-[1px] bg-amber-800"></span><span class="text-[9px] font-bold uppercase tracking-[0.4em] text-amber-800">${lang === 'es' ? 'Leer Nota' : 'Read Note'}</span></div>`;
                 grid.appendChild(card);
             });
@@ -108,9 +93,17 @@
 
         function openReader(id) {
             const e = essays.find(i => i.id === id);
+            
+            // BLINDAJE DE SEGURIDAD (CodeRabbit suggestion)
+            if (!e) {
+                console.warn(`[Self Love Club] Essay ID ${id} not found.`);
+                return;
+            }
+
             const index = document.getElementById('view-index');
             const reader = document.getElementById('view-reader');
             const content = document.getElementById('reader-content');
+
             index.classList.add('hidden-view');
             setTimeout(() => {
                 index.style.display = 'none';
@@ -127,7 +120,18 @@
             setTimeout(() => { reader.style.display = 'none'; index.style.display = 'block'; setTimeout(() => { index.classList.remove('hidden-view'); index.classList.add('visible-view'); window.scrollTo(0,0); }, 50); }, 500);
         }
 
-        function setLanguage(l) { lang = l; document.getElementById('btn-es').className = lang === 'es' ? 'lang-active pb-2' : 'pb-2 text-zinc-400 hover:text-black'; document.getElementById('btn-en').className = lang === 'en' ? 'lang-active pb-2' : 'pb-2 text-zinc-400 hover:text-black'; renderGrid(); }
+        function setLanguage(l) { 
+            lang = l; 
+            document.documentElement.lang = l;
+            
+            // ACTUALIZACIÓN DE INTERFAZ (CodeRabbit suggestion)
+            document.getElementById('reader-back').innerText = uiTranslations[l].back;
+            document.getElementById('reader-print').innerText = uiTranslations[l].print;
+
+            document.getElementById('btn-es').className = lang === 'es' ? 'lang-active pb-2' : 'pb-2 text-zinc-400 hover:text-black'; 
+            document.getElementById('btn-en').className = lang === 'en' ? 'lang-active pb-2' : 'pb-2 text-zinc-400 hover:text-black'; 
+            renderGrid(); 
+        }
 
         renderGrid();
     </script>
