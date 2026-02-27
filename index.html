@@ -94,6 +94,7 @@
                 <!-- Enlaces Desktop -->
                 <div class="hidden md:flex space-x-8 text-[10px] font-bold tracking-widest uppercase">
                     <a href="javascript:void(0)" onclick="scrollToSection('home')" data-i18n="nav-home" class="hover:text-accent transition-colors">Inicio</a>
+                    <a href="javascript:void(0)" onclick="scrollToSection('about')" data-i18n="nav-about" class="hover:text-accent transition-colors">Autor</a>
                     <a href="javascript:void(0)" onclick="scrollToSection('ai-tools')" data-i18n="nav-tools" class="hover:text-accent transition-colors">Herramientas</a>
                     <a href="javascript:void(0)" onclick="scrollToSection('books')" data-i18n="nav-books" class="hover:text-accent transition-colors">Libros</a>
                     <a href="javascript:void(0)" onclick="scrollToSection('essays')" data-i18n="nav-archive" class="hover:text-accent transition-colors">Archivo</a>
@@ -116,6 +117,7 @@
     <!-- Menú Desplegable Mobile -->
     <div id="mobile-menu" class="fixed inset-0 z-[60] hidden flex-col justify-center items-center space-y-8 no-select bg-paper/95 backdrop-blur-lg">
         <a href="javascript:void(0)" onclick="scrollToSection('home'); toggleMobileMenu();" class="font-serif text-2xl hover:text-accent" data-i18n="nav-home">Inicio</a>
+        <a href="javascript:void(0)" onclick="scrollToSection('about'); toggleMobileMenu();" class="font-serif text-2xl hover:text-accent" data-i18n="nav-about">Autor</a>
         <a href="javascript:void(0)" onclick="scrollToSection('ai-tools'); toggleMobileMenu();" class="font-serif text-2xl hover:text-accent" data-i18n="nav-tools">Herramientas</a>
         <a href="javascript:void(0)" onclick="scrollToSection('books'); toggleMobileMenu();" class="font-serif text-2xl hover:text-accent" data-i18n="nav-books">Libros</a>
         <a href="javascript:void(0)" onclick="scrollToSection('essays'); toggleMobileMenu();" class="font-serif text-2xl hover:text-accent" data-i18n="nav-archive">Archivo</a>
@@ -132,7 +134,7 @@
                 <p class="font-serif italic text-xl md:text-2xl text-subtle leading-relaxed mb-10 border-l-4 border-accent/40 pl-6" data-i18n="hero-subtitle">Porque el costo de amar sin discernir es perderte a ti mismo.</p>
                 <div class="flex flex-col sm:flex-row gap-4 mt-4">
                     <a href="javascript:void(0)" onclick="scrollToSection('essays')" class="px-8 py-3 bg-accent text-white text-lg font-serif italic hover:bg-opacity-90 transition-all shadow-sm text-center rounded-sm" data-i18n="hero-btn-read">Leer mis escritos</a>
-                    <a href="javascript:void(0)" onclick="scrollToSection('ai-tools')" class="px-8 py-3 bg-transparent text-ink text-lg font-serif italic border border-divider hover:border-ink transition-all shadow-sm text-center flex items-center justify-center rounded-sm" data-i18n="hero-btn-more">Más sobre mí</a>
+                    <a href="javascript:void(0)" onclick="scrollToSection('about')" class="px-8 py-3 bg-transparent text-ink text-lg font-serif italic border border-divider hover:border-ink transition-all shadow-sm text-center flex items-center justify-center rounded-sm" data-i18n="hero-btn-more">Más sobre mí</a>
                 </div>
             </div>
             <div class="flex-1 flex justify-center md:justify-end w-full">
@@ -142,8 +144,47 @@
             </div>
         </section>
 
+        <!-- SOBRE EL AUTOR (NUEVA SECCIÓN) -->
+        <section id="about" class="py-32 px-6 md:px-12 bg-white border-t border-divider">
+            <div class="max-w-5xl mx-auto flex flex-col lg:flex-row gap-16">
+                <div class="lg:w-1/3">
+                    <span class="text-[10px] font-bold tracking-widest uppercase text-subtle mb-3 block" data-i18n="about-kicker">Sobre el Autor</span>
+                    <h2 class="font-serif text-4xl text-ink leading-tight" data-i18n="about-title">Andrés Ramírez</h2>
+                </div>
+                <div class="lg:w-2/3 flex flex-col gap-6 text-sm text-subtle leading-relaxed">
+                    <p class="text-lg font-serif italic text-ink mb-2" data-i18n="about-p1">Escribo para personas que buscan claridad —no perfección— en sus relaciones. Mi trabajo explora cómo la presión emocional distorsiona el juicio y cómo mantenerte alineado contigo mismo al elegir a quién y a qué le permites entrar en tu vida.</p>
+                    
+                    <p data-i18n="about-p2">No prometo transformaciones ni soluciones rápidas. Ofrezco presencia, discernimiento y herramientas para tomar decisiones adultas bajo presión emocional. Este trabajo es para personas cansadas de repetir patrones que ya entienden; personas listas para asumir la responsabilidad personal, la madurez emocional y el coraje silencioso que requiere elegir conexiones alineadas con sus valores, no con sus miedos o fantasías.</p>
+                    
+                    <div class="bg-paper p-8 border border-divider my-4">
+                        <h3 class="text-[10px] font-bold tracking-widest uppercase text-ink mb-6" data-i18n="about-approach-title">Mi Enfoque</h3>
+                        <ul class="space-y-4 text-ink">
+                            <li class="flex items-start">
+                                <span class="text-accent mr-3">✦</span>
+                                <span data-i18n="about-li1">Madurez emocional por encima de soluciones rápidas.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-accent mr-3">✦</span>
+                                <span data-i18n="about-li2">Responsabilidad personal en las relaciones.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-accent mr-3">✦</span>
+                                <span data-i18n="about-li3">Alineación constante con tus valores.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-accent mr-3">✦</span>
+                                <span data-i18n="about-li4">Decisiones conscientes bajo presión emocional.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <p data-i18n="about-p3">No me interesa ayudar a las personas a sentirse mejor temporalmente ni replantear todo como crecimiento. Me interesa ayudar a que se mantengan intactas cuando el deseo, la esperanza o la soledad generan presión para comprometer su claridad. Estos libros no tratan de volverse más adorables, más sanados o más atractivos. Tratan de aprender a no abandonarte a ti mismo mientras buscas conexión.</p>
+                </div>
+            </div>
+        </section>
+
         <!-- LABORATORIO -->
-        <section id="ai-tools" aria-labelledby="tools-title" class="py-32 px-6 md:px-12 bg-white border-t border-b border-divider">
+        <section id="ai-tools" aria-labelledby="tools-title" class="py-32 px-6 md:px-12 bg-paper border-t border-b border-divider">
             <div class="max-w-5xl mx-auto">
                 <div class="text-center mb-16">
                     <span class="text-[10px] font-bold tracking-widest uppercase text-subtle mb-2 block" data-i18n="tools-label">Laboratorio de Discernimiento</span>
@@ -153,7 +194,7 @@
                     </p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    <article class="gemini-container p-10 flex flex-col shadow-sm border border-divider">
+                    <article class="gemini-container p-10 flex flex-col shadow-sm border border-divider bg-white">
                         <h3 class="font-serif text-2xl mb-2 tracking-tight" data-i18n="tool1-title">Discernimiento Relacional</h3>
                         <p class="text-[9px] text-accent mb-4 uppercase tracking-[0.2em] font-bold" data-i18n="tool1-subtitle">Perspectiva Técnica</p>
                         <p class="text-xs text-subtle mb-6 leading-relaxed" data-i18n="tool1-help">Describe brevemente una dinámica que te genere confusión (ej. "Me busca constantemente pero evade formalizar"). El sistema separará los hechos de la narrativa emocional.</p>
@@ -164,7 +205,7 @@
                         </button>
                         <div id="clarityResult" class="mt-8 text-sm leading-relaxed hidden border-t border-divider pt-8 italic text-ink"></div>
                     </article>
-                    <article class="gemini-container p-10 flex flex-col shadow-sm border border-divider">
+                    <article class="gemini-container p-10 flex flex-col shadow-sm border border-divider bg-white">
                         <h3 class="font-serif text-2xl mb-2 tracking-tight" data-i18n="tool2-title">Auditoría Emocional</h3>
                         <p class="text-[9px] text-accent mb-4 uppercase tracking-[0.2em] font-bold" data-i18n="tool2-subtitle">Patrones de Activo/Pasivo</p>
                         <p class="text-xs text-subtle mb-6 leading-relaxed" data-i18n="tool2-help">Introduce un comportamiento o ciclo que repites (ej. "Suelo ignorar banderas rojas por el potencial de la persona"). Generaremos una nota sobre el costo de este pasivo.</p>
@@ -183,14 +224,16 @@
         </section>
 
         <!-- LIBROS -->
-        <section id="books" aria-labelledby="books-sec-title" class="py-32 px-6 md:px-12 bg-paper">
+        <section id="books" aria-labelledby="books-sec-title" class="py-32 px-6 md:px-12 bg-white">
             <div class="max-w-6xl mx-auto">
                 <div class="text-center mb-16">
                     <span class="text-[10px] font-bold tracking-widest uppercase text-subtle mb-3 block" data-i18n="books-label">Obras Publicadas</span>
                     <h2 id="books-sec-title" class="font-serif text-4xl md:text-5xl text-ink" data-i18n="books-sec-title">Libros</h2>
                 </div>
+                
+                <!-- Contenedor Español -->
                 <div id="books-grid-es" class="grid grid-cols-1 md:grid-cols-2 gap-8 transition-opacity duration-500">
-                    <article class="essay-card flex flex-col sm:flex-row gap-8 items-center sm:items-start group">
+                    <article class="essay-card flex flex-col sm:flex-row gap-8 items-center sm:items-start group bg-paper">
                         <div class="w-32 sm:w-40 shrink-0 aspect-[2/3] bg-ink text-paper flex flex-col justify-between p-4 md:p-5 shadow-lg group-hover:scale-105 transition-transform duration-700 ease-out select-none">
                             <div class="text-[7px] md:text-[8px] uppercase tracking-[0.2em] opacity-70">Obra Principal</div>
                             <div class="font-serif text-lg md:text-xl leading-tight">Match<br>Consciente</div>
@@ -203,8 +246,8 @@
                             <a href="https://www.amazon.com/Match-Consciente-Encontrar-Perderse-Spanish-ebook/dp/B0GLB3NJ1F" target="_blank" rel="noopener noreferrer" class="read-btn self-center sm:self-start mt-auto">Consultar en Amazon</a>
                         </div>
                     </article>
-                    <article class="essay-card flex flex-col sm:flex-row gap-8 items-center sm:items-start group">
-                        <div class="w-32 sm:w-40 shrink-0 aspect-[2/3] bg-paper text-ink border border-divider flex flex-col justify-between p-4 md:p-5 shadow-md group-hover:scale-105 transition-transform duration-700 ease-out select-none">
+                    <article class="essay-card flex flex-col sm:flex-row gap-8 items-center sm:items-start group bg-paper">
+                        <div class="w-32 sm:w-40 shrink-0 aspect-[2/3] bg-white text-ink border border-divider flex flex-col justify-between p-4 md:p-5 shadow-md group-hover:scale-105 transition-transform duration-700 ease-out select-none">
                             <div class="text-[7px] md:text-[8px] uppercase tracking-[0.2em] text-subtle">Workbook</div>
                             <div class="font-serif text-lg md:text-xl leading-tight">No te<br>abandones</div>
                             <div class="text-[7px] md:text-[8px] uppercase tracking-[0.2em] border-t border-divider pt-2 text-subtle">Andrés Ramírez</div>
@@ -217,8 +260,10 @@
                         </div>
                     </article>
                 </div>
+                
+                <!-- Contenedor Inglés -->
                 <div id="books-grid-en" class="hidden grid grid-cols-1 md:grid-cols-2 gap-8 transition-opacity duration-500">
-                    <article class="essay-card flex flex-col sm:flex-row gap-8 items-center sm:items-start group">
+                    <article class="essay-card flex flex-col sm:flex-row gap-8 items-center sm:items-start group bg-paper">
                         <div class="w-32 sm:w-40 shrink-0 aspect-[2/3] bg-ink text-paper flex flex-col justify-between p-4 md:p-5 shadow-lg group-hover:scale-105 transition-transform duration-700 ease-out select-none">
                             <div class="text-[7px] md:text-[8px] uppercase tracking-[0.2em] opacity-70">Main Work</div>
                             <div class="font-serif text-lg md:text-xl leading-tight">Mindful<br>Match</div>
@@ -231,8 +276,8 @@
                             <a href="https://www.amazon.com/Mindful-Match-Finding-Without-Yourself-ebook/dp/B0CTHSDWK5" target="_blank" rel="noopener noreferrer" class="read-btn self-center sm:self-start mt-auto">View on Amazon</a>
                         </div>
                     </article>
-                    <article class="essay-card flex flex-col sm:flex-row gap-8 items-center sm:items-start group">
-                        <div class="w-32 sm:w-40 shrink-0 aspect-[2/3] bg-paper text-ink border border-divider flex flex-col justify-between p-4 md:p-5 shadow-md group-hover:scale-105 transition-transform duration-700 ease-out select-none">
+                    <article class="essay-card flex flex-col sm:flex-row gap-8 items-center sm:items-start group bg-paper">
+                        <div class="w-32 sm:w-40 shrink-0 aspect-[2/3] bg-white text-ink border border-divider flex flex-col justify-between p-4 md:p-5 shadow-md group-hover:scale-105 transition-transform duration-700 ease-out select-none">
                             <div class="text-[7px] md:text-[8px] uppercase tracking-[0.2em] text-subtle">Workbook</div>
                             <div class="font-serif text-lg md:text-xl leading-tight">Don't Lose<br>Yourself</div>
                             <div class="text-[7px] md:text-[8px] uppercase tracking-[0.2em] border-t border-divider pt-2 text-subtle">Andrés Ramírez</div>
@@ -248,8 +293,8 @@
             </div>
         </section>
 
-        <!-- ARCHIVO -->
-        <section id="essays" aria-labelledby="archive-title" class="py-32 px-6 md:px-12 bg-white border-t border-divider">
+        <!-- ARCHIVO (CON ENSAYOS Y PDFs) -->
+        <section id="essays" aria-labelledby="archive-title" class="py-32 px-6 md:px-12 bg-paper border-t border-divider">
             <div class="max-w-6xl mx-auto">
                 <div class="text-center mb-10">
                     <span class="text-[10px] font-bold tracking-widest uppercase text-subtle mb-3 block" data-i18n="archive-label">Hemeroteca</span>
@@ -262,50 +307,52 @@
                         <input type="text" id="essaySearch" onkeyup="filterEssays()" placeholder="Buscar en el archivo..." class="w-full bg-transparent border-b border-ink/20 focus:border-ink py-2 text-xs uppercase tracking-widest text-center outline-none transition-colors placeholder:text-subtle/50 text-ink" data-i18n-placeholder="search-placeholder">
                     </div>
                 </div>
+                
                 <div id="essays-grid-es" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 transition-opacity duration-500">
-                    <article class="essay-card">
+                    <article class="essay-card bg-white">
                         <h3 class="font-serif text-2xl mb-4 italic">El Autoconocimiento como Activo</h3>
                         <p class="text-sm text-subtle leading-relaxed mb-8">Por qué entender tus propios patrones es la inversión de mayor apalancamiento.</p>
                         <a href="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/content/essays/es/1-el-autoconocimiento-como-activo-economico.pdf" target="_blank" rel="noopener noreferrer" class="read-btn">Leer Ensayo (PDF)</a>
                     </article>
-                    <article class="essay-card">
+                    <article class="essay-card bg-white">
                         <h3 class="font-serif text-2xl mb-4 italic">Arbitraje Emocional</h3>
                         <p class="text-sm text-subtle leading-relaxed mb-8">Aprovechando la regulación en la toma de decisiones relacionales.</p>
                         <a href="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/content/essays/es/2-arbitraje-emocional.pdf" target="_blank" rel="noopener noreferrer" class="read-btn">Leer Ensayo (PDF)</a>
                     </article>
-                    <article class="essay-card">
+                    <article class="essay-card bg-white">
                         <h3 class="font-serif text-2xl mb-4 italic">El Costo de Complacer</h3>
                         <p class="text-sm text-subtle leading-relaxed mb-8">Cuantificando la mala asignación del capital emocional.</p>
                         <a href="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/content/essays/es/3-costo-de-oportunidad-de-complacer.pdf" target="_blank" rel="noopener noreferrer" class="read-btn">Leer Ensayo (PDF)</a>
                     </article>
-                    <article class="essay-card">
+                    <article class="essay-card bg-white">
                         <h3 class="font-serif text-2xl mb-4 italic">Arquitectura del Silencio</h3>
                         <p class="text-sm text-subtle leading-relaxed mb-8">La importancia de los espacios no negociables.</p>
                         <a href="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/content/essays/es/4-la-arquitectura-del-silencio.pdf" target="_blank" rel="noopener noreferrer" class="read-btn">Leer Ensayo (PDF)</a>
                     </article>
-                    <article class="essay-card">
+                    <article class="essay-card bg-white">
                         <h3 class="font-serif text-2xl mb-4 italic">Liquidez Cognitiva</h3>
                         <p class="text-sm text-subtle leading-relaxed mb-8">Separando la identidad de las decisiones emocionales.</p>
                         <a href="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/content/essays/es/5-liquidez-cognitiva.pdf" target="_blank" rel="noopener noreferrer" class="read-btn">Leer Ensayo (PDF)</a>
                     </article>
-                    <article class="essay-card">
+                    <article class="essay-card bg-white">
                         <h3 class="font-serif text-2xl mb-4 italic">Señal Vs Ruido</h3>
                         <p class="text-sm text-subtle leading-relaxed mb-8">Distinguir entre la intuición genuina y las respuestas al trauma.</p>
                         <a href="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/content/essays/es/6-senal-vs-ruido.pdf" target="_blank" rel="noopener noreferrer" class="read-btn">Leer Ensayo (PDF)</a>
                     </article>
-                    <article class="essay-card">
+                    <article class="essay-card bg-white">
                         <h3 class="font-serif text-2xl mb-4 italic">Progreso vs Derrota</h3>
                         <p class="text-sm text-subtle leading-relaxed mb-8">Entendiendo por qué el progreso a veces se siente como pérdida.</p>
                         <a href="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/content/essays/es/el-progreso-disfrazado-de-derrota.pdf" target="_blank" rel="noopener noreferrer" class="read-btn">Leer Ensayo (PDF)</a>
                     </article>
                 </div>
+                
                 <div id="essays-grid-en" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 transition-opacity duration-500">
-                    <article class="essay-card">
+                    <article class="essay-card bg-white">
                         <h3 class="font-serif text-2xl mb-4 italic">Self-Awareness as an Asset</h3>
                         <p class="text-sm text-subtle leading-relaxed mb-8">Highest leverage investment.</p>
                         <a href="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/content/essays/en/1-self-awareness-as-an-economic-asset.pdf" target="_blank" rel="noopener noreferrer" class="read-btn">Read Essay (PDF)</a>
                     </article>
-                    <article class="essay-card">
+                    <article class="essay-card bg-white">
                         <h3 class="font-serif text-2xl mb-4 italic">Emotional Arbitrage</h3>
                         <p class="text-sm text-subtle leading-relaxed mb-8">Profiting from regulation.</p>
                         <a href="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/content/essays/en/2-emotional-arbitrage.pdf" target="_blank" rel="noopener noreferrer" class="read-btn">Read Essay (PDF)</a>
@@ -314,19 +361,26 @@
             </div>
         </section>
 
-        <!-- SELF LOVE CLUB -->
-        <section id="selfloveclub" aria-labelledby="slc-title" class="py-32 border-t border-divider bg-white">
-            <div class="max-w-3xl mx-auto px-6 text-center">
-                <h2 id="slc-title" class="font-serif text-4xl md:text-5xl text-ink mb-6" data-i18n="slc-title">SelfLoveClub</h2>
-                <p class="text-xl md:text-2xl text-subtle mb-8 font-serif italic" data-i18n="slc-subtitle">Una plataforma conceptual dedicada a la claridad, el respeto propio y las decisiones relacionales conscientes.</p>
-                <p class="text-sm text-subtle max-w-2xl mx-auto mb-12 leading-relaxed" data-i18n="slc-desc">SelfLoveClub funciona como un proyecto de investigación cultural, combinando ensayos, artefactos digitales y experimentos comunitarios sobre el discernimiento emocional y la soberanía personal.</p>
-                <a href="https://instagram.com/selfloveclubusa" target="_blank" rel="noopener noreferrer" class="read-btn" data-i18n="slc-link">Explorar SelfLoveClub en Instagram</a>
+        <!-- SELF LOVE CLUB (ACTUALIZADO) -->
+        <section id="selfloveclub" aria-labelledby="slc-title" class="py-32 border-t border-divider bg-ink text-paper">
+            <div class="max-w-4xl mx-auto px-6 text-center flex flex-col items-center">
+                <h2 id="slc-title" class="font-serif text-4xl md:text-5xl mb-12 tracking-wide" data-i18n="slc-title">Self Love Club</h2>
+                
+                <div class="text-sm md:text-base text-gray-300 max-w-2xl mx-auto leading-relaxed space-y-6 text-left md:text-center">
+                    <p data-i18n="slc-p1">Soy el creador de Self Love Club: una plataforma dedicada a la claridad, el respeto propio y la toma de decisiones conscientes en las relaciones. Self Love Club no se trata de afirmaciones ni atajos de autoestima. Es un ecosistema curado de ideas, herramientas y trabajos escritos diseñados para ayudar a las personas a mantenerse arraigadas en su identidad mientras navegan la atracción, el apego y la elección.</p>
+                    
+                    <p data-i18n="slc-p2">Todo dentro del club se construye alrededor del autoconocimiento aplicado: cómo la claridad se convierte en algo que practicas, no solo en algo que entiendes. No se trata de sentirse bien en el momento; se trata de desarrollar la capacidad de tomar decisiones que honren quién eres, incluso cuando las emociones son intensas y la presión externa aumenta.</p>
+                    
+                    <p data-i18n="slc-p3">La plataforma sirve como un recurso integral para aquellos comprometidos a mantener su integridad mientras buscan una conexión significativa. Es para personas que entienden que el amor propio no se trata de aislamiento o perfección, sino de mantenerse conectados consigo mismos mientras permanecen abiertos a los demás.</p>
+                </div>
+                
+                <a href="https://instagram.com/selfloveclubusa" target="_blank" rel="noopener noreferrer" class="mt-12 px-8 py-3 bg-paper text-ink text-xs font-bold uppercase tracking-[0.2em] hover:bg-opacity-90 transition-all rounded-sm shadow-sm" data-i18n="slc-link">Explorar la Comunidad</a>
             </div>
         </section>
     </main>
 
     <!-- FOOTER -->
-    <footer class="py-32 px-6 border-t border-divider bg-paper text-center">
+    <footer class="py-32 px-6 bg-paper text-center">
         <div class="max-w-4xl mx-auto flex flex-col items-center">
             <div class="w-16 h-16 mb-8 overflow-hidden rounded-full border border-divider">
                 <img src="/assets/images/andres-ramirez-portrait.jpg" onerror="this.onerror=null; this.src='https://github.com/aram7891.png';" alt="Andrés Ramírez Portrait" loading="lazy" class="author-photo w-full h-full">
@@ -346,13 +400,25 @@
     <script>
         const translations = {
             es: {
-                "nav-home": "Inicio", "nav-tools": "Herramientas", "nav-books": "Libros", "nav-archive": "Archivo",
+                "nav-home": "Inicio", "nav-about": "Autor", "nav-tools": "Herramientas", "nav-books": "Libros", "nav-archive": "Archivo",
                 "close": "Cerrar",
                 "hero-kicker": "Autor",
                 "hero-title": "Claridad antes que Conexión.",
                 "hero-subtitle": "Porque el costo de amar sin discernir es perderte a ti mismo.",
                 "hero-btn-read": "Leer mis escritos",
                 "hero-btn-more": "Más sobre mí",
+                
+                "about-kicker": "Sobre el Autor",
+                "about-title": "Andrés Ramírez",
+                "about-p1": "Escribo para personas que buscan claridad —no perfección— en sus relaciones. Mi trabajo explora cómo la presión emocional distorsiona el juicio y cómo mantenerte alineado contigo mismo al elegir a quién y a qué le permites entrar en tu vida.",
+                "about-p2": "No prometo transformaciones ni soluciones rápidas. Ofrezco presencia, discernimiento y herramientas para tomar decisiones adultas bajo presión emocional. Este trabajo es para personas cansadas de repetir patrones que ya entienden; personas listas para asumir la responsabilidad personal, la madurez emocional y el coraje silencioso que requiere elegir conexiones alineadas con tus valores, no con tus miedos o fantasías.",
+                "about-approach-title": "Mi Enfoque",
+                "about-li1": "Madurez emocional por encima de soluciones rápidas.",
+                "about-li2": "Responsabilidad personal en las relaciones.",
+                "about-li3": "Alineación constante con tus valores.",
+                "about-li4": "Decisiones conscientes bajo presión emocional.",
+                "about-p3": "No me interesa ayudar a las personas a sentirse mejor temporalmente ni replantear todo como crecimiento. Me interesa ayudar a que se mantengan intactas cuando el deseo, la esperanza o la soledad generan presión para comprometer su claridad. Estos libros no tratan de volverse más adorables, más sanados o más atractivos. Tratan de aprender a no abandonarte a ti mismo mientras buscas conexión.",
+                
                 "banner-text": "HAZ DE LA LECTURA TU HERRAMIENTA DE CRECIMIENTO PERSONAL ¡DESCUBRE MIS OBRAS!",
                 "banner-link": "EXPLORAR LIBROS",
                 "tools-label": "Laboratorio de Discernimiento", 
@@ -369,19 +435,33 @@
                 "tab-es": "Español", "tab-en": "Inglés",
                 "search-placeholder": "Buscar en el archivo...",
                 "books-label": "Obras Publicadas", "books-sec-title": "Libros",
-                "slc-title": "SelfLoveClub",
-                "slc-subtitle": "Una plataforma conceptual dedicada a la claridad, el respeto propio y las decisiones relacionales conscientes.",
-                "slc-desc": "SelfLoveClub funciona como un proyecto de investigación cultural, combinando ensayos, artefactos digitales y experimentos comunitarios sobre el discernimiento emocional y la soberanía personal.",
-                "slc-link": "Explorar SelfLoveClub en Instagram"
+                
+                "slc-title": "Self Love Club",
+                "slc-p1": "Soy el creador de Self Love Club: una plataforma dedicada a la claridad, el respeto propio y la toma de decisiones conscientes en las relaciones. Self Love Club no se trata de afirmaciones ni atajos de autoestima. Es un ecosistema curado de ideas, herramientas y trabajos escritos diseñados para ayudar a las personas a mantenerse arraigadas en su identidad mientras navegan la atracción, el apego y la elección.",
+                "slc-p2": "Todo dentro del club se construye alrededor del autoconocimiento aplicado: cómo la claridad se convierte en algo que practicas, no solo en algo que entiendes. No se trata de sentirse bien en el momento; se trata de desarrollar la capacidad de tomar decisiones que honren quién eres, incluso cuando las emociones son intensas y la presión externa aumenta.",
+                "slc-p3": "La plataforma sirve como un recurso integral para aquellos comprometidos a mantener su integridad mientras buscan una conexión significativa. Es para personas que entienden que el amor propio no se trata de aislamiento o perfección, sino de mantenerse conectados consigo mismos mientras permanecen abiertos a los demás.",
+                "slc-link": "Explorar la Comunidad"
             },
             en: {
-                "nav-home": "Home", "nav-tools": "Tools", "nav-books": "Books", "nav-archive": "Archive",
+                "nav-home": "Home", "nav-about": "Author", "nav-tools": "Tools", "nav-books": "Books", "nav-archive": "Archive",
                 "close": "Close",
                 "hero-kicker": "Author",
                 "hero-title": "Clarity Before Connection.",
                 "hero-subtitle": "Because attraction without discernment costs you yourself.",
                 "hero-btn-read": "Read my writing",
                 "hero-btn-more": "More about me",
+                
+                "about-kicker": "About the Author",
+                "about-title": "Andrés Ramírez",
+                "about-p1": "I write for people who seek clarity—not perfection—in their relationships. My work explores how emotional pressure distorts judgment and how to stay aligned with yourself while choosing who and what you allow into your life.",
+                "about-p2": "I don’t promise transformation or quick fixes. I offer presence, discernment, and tools for making adult decisions under emotional pressure. This work is for people who are tired of repeating patterns they already understand—people ready to embrace personal responsibility, emotional maturity, and the quiet courage required to choose connections aligned with their values, not their fears or fantasies.",
+                "about-approach-title": "My Approach",
+                "about-li1": "Emotional maturity over quick fixes.",
+                "about-li2": "Personal responsibility in relationships.",
+                "about-li3": "Staying aligned with your values.",
+                "about-li4": "Making conscious choices under emotional pressure.",
+                "about-p3": "I’m not interested in helping people feel better temporarily or reframing everything as growth. I’m interested in helping people stay intact when desire, hope, or loneliness create pressure to compromise clarity. These books are not about becoming more lovable, more healed, or more attractive. They are about learning how not to abandon yourself while seeking connection.",
+                
                 "banner-text": "MAKE READING YOUR PERSONAL GROWTH TOOL! DISCOVER MY WORKS!",
                 "banner-link": "EXPLORE BOOKS",
                 "tools-label": "Discernment Laboratory", 
@@ -398,10 +478,12 @@
                 "tab-es": "Spanish", "tab-en": "English",
                 "search-placeholder": "Search archive...",
                 "books-label": "Published Works", "books-sec-title": "Books",
-                "slc-title": "SelfLoveClub",
-                "slc-subtitle": "A conceptual platform dedicated to clarity, self-respect, and conscious relational decisions.",
-                "slc-desc": "SelfLoveClub functions as a cultural research project, combining essays, digital artifacts, and community experiments on emotional discernment and personal sovereignty.",
-                "slc-link": "Explore SelfLoveClub on Instagram"
+                
+                "slc-title": "Self Love Club",
+                "slc-p1": "I am the creator of Self Love Club—a platform dedicated to clarity, self-respect, and conscious decision-making in relationships. Self Love Club is not about affirmations or self-esteem shortcuts. It’s a curated ecosystem of ideas, tools, and written work designed to help people stay grounded in their identity while navigating attraction, attachment, and choice.",
+                "slc-p2": "Everything within the club is built around applied self-knowledge—how clarity becomes something you practice, not just understand. This isn’t about feeling good in the moment; it’s about developing the capacity to make decisions that honor who you are, even when emotions run high and external pressure mounts.",
+                "slc-p3": "The platform serves as a comprehensive resource for those committed to maintaining their integrity while seeking meaningful connection. It’s for people who understand that self-love isn’t about isolation or perfection, but about staying connected to yourself while remaining open to others.",
+                "slc-link": "Explore the Community"
             }
         };
 
