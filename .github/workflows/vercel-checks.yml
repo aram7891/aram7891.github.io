@@ -1,6 +1,10 @@
-name: Vercel Deployment Checks
+name: Vercel - andresramirez: lint
 
-on: [push]
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   lint:
@@ -12,18 +16,11 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '20' # O la versión que uses
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm install
 
-      - name: Run lint check
+      - name: Run Lint
         run: npm run lint
-
-      - name: 'notify vercel'
-        uses: 'vercel/repository-dispatch/actions/status@v1'
-        with:
-          # Se agregaron comillas para evitar errores de parseo por el uso de ":"
-          name: "Vercel - andresramirez: lint"
-          token: ${{ secrets.VERCEL_TOKEN }}
-
