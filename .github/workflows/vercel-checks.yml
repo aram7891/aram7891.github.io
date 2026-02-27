@@ -1,0 +1,38 @@
+# Este es el nombre del flujo que verás en la pestaña "Actions" de GitHub
+name: Vercel Deployment Verification
+
+# Se activa cada vez que haces push a tu código
+on: [push]
+
+jobs:
+  deploy-verification:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Trae tu código al servidor de GitHub
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 2. Configura el entorno de Node.js
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # 3. Instala tus librerías
+      - name: Install dependencies
+        run: npm install
+
+      # 4. Ejecuta tus pruebas o el lint
+      # Asegúrate de que este comando exista en tu package.json
+      - name: Run Lint
+        run: npm run lint
+
+      # 5. EL SNIPPET DE VERCEL (Tal cual me lo pasaste, baby boo)
+      - name: 'notify vercel'
+        uses: 'vercel/repository-dispatch/actions/status@v1'
+        with:
+          # Usamos exactamente el nombre que te dio Vercel para que coincida
+          name: Vercel - andresramirez: Vercel - andresramirez: lint
+          # Este token es el que debes guardar en GitHub Secrets
+          token: ${{ secrets.VERCEL_TOKEN }}
+
