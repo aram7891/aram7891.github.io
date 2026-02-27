@@ -23,6 +23,7 @@ jobs:
       - name: 'notify vercel'
         uses: 'vercel/repository-dispatch/actions/status@v1'
         with:
-          name: Vercel - andresramirez: lint
+          # Se agregaron comillas para evitar errores de parseo por el uso de ":"
+          name: "Vercel - andresramirez: lint"
           token: ${{ secrets.VERCEL_TOKEN }}
 
