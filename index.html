@@ -1,109 +1,330 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Andrés Ramírez — Clarity Before Connection</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andrés Ramírez | Clarity Before Connection</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        paper: '#FAFAFA',
+                        ink: '#1A1A1A',
+                        accent: '#A67C52',
+                        divider: '#E4E4E7'
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Inter"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
 
-  <meta name="description" content="Ensayos, claridad emocional, frameworks de relación y notas editoriales de Andrés Ramírez." />
+    <style>
+        body { background-color: #FAFAFA; color: #1A1A1A; }
+        .author-photo { filter: grayscale(100%); object-fit: cover; transition: all 0.6s ease; }
+        .author-photo:hover { filter: grayscale(0%); transform: scale(1.02); }
+        
+        .essay-content { 
+            max-height: 200px; 
+            overflow: hidden; 
+            position: relative;
+            transition: max-height 0.8s ease;
+        }
+        .essay-content.expanded { max-height: 2000px; }
+        .essay-overlay {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            height: 80px;
+            background: linear-gradient(to top, white, transparent);
+            transition: opacity 0.3s ease;
+        }
+        .essay-content.expanded .essay-overlay { opacity: 0; pointer-events: none; }
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet" />
-
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: Inter, sans-serif;
-      color: #111;
-      background: #fff;
-      line-height: 1.6;
-    }
-
-    header {
-      padding: 60px 20px 40px;
-      text-align: center;
-    }
-
-    h1 {
-      font-family: "Playfair Display", serif;
-      font-size: 42px;
-      margin: 0;
-      font-weight: 500;
-    }
-
-    h2 {
-      font-family: "Playfair Display", serif;
-      font-size: 26px;
-      margin-top: 60px;
-      margin-bottom: 20px;
-      font-weight: 500;
-      text-align: center;
-    }
-
-    .section {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-
-    a {
-      color: #111;
-      text-decoration: none;
-      border-bottom: 1px solid #ddd;
-      padding-bottom: 2px;
-    }
-
-    a:hover {
-      border-color: #111;
-    }
-
-    .essay-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .essay-list li {
-      margin-bottom: 14px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 60px 20px;
-      font-size: 14px;
-      color: #666;
-    }
-  </style>
+        .spinner { border: 2px solid rgba(0, 0, 0, 0.1); width: 14px; height: 14px; border-radius: 50%; border-left-color: white; animation: spin 1s linear infinite; display: inline-block; vertical-align: middle; margin-right: 8px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        /* Estilo mejorado de la respuesta del laboratorio */
+        .lab-response-block { margin-bottom: 1.5rem; }
+        .lab-tag { 
+            font-family: 'JetBrains Mono', monospace; 
+            font-size: 10px; 
+            letter-spacing: 0.15em; 
+            color: #A67C52; 
+            text-transform: uppercase; 
+            border-bottom: 1px solid #E4E4E7;
+            padding-bottom: 4px;
+            margin-bottom: 12px;
+            display: block; 
+            width: fit-content;
+        }
+        .lab-text-content { 
+            font-size: 13px; 
+            line-height: 1.7; 
+            color: #3f3f46; 
+            padding-left: 4px;
+        }
+    </style>
 </head>
+<body class="antialiased selection:bg-accent/10">
 
-<body>
+    <header class="fixed top-0 w-full z-50 bg-paper/80 backdrop-blur-md border-b border-divider">
+        <nav class="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
+            <div class="font-serif text-lg font-bold uppercase tracking-tighter italic">Andrés Ramírez</div>
+            <div class="hidden md:flex space-x-8 text-[10px] font-bold tracking-widest uppercase">
+                <a href="#home" class="hover:text-accent transition">Inicio</a>
+                <a href="#essays" class="hover:text-accent transition">Field Notes</a>
+                <a href="#books" class="hover:text-accent transition">Libros</a>
+                <a href="#ai-lab" class="hover:text-accent transition">Laboratorio</a>
+            </div>
+            <div class="text-[10px] font-bold tracking-widest text-accent uppercase">Andrés Ramírez | 2026</div>
+        </nav>
+    </header>
 
-  <header>
-    <h1>Clarity Before Connection</h1>
-    <p>Ensayos, notas editoriales y frameworks de claridad emocional.</p>
-  </header>
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="min-h-screen flex flex-col-reverse md:flex-row items-center justify-center px-6 md:px-12 pt-20 max-w-6xl mx-auto gap-16">
+            <div class="flex-1 order-2 md:order-1 text-center md:text-left">
+                <p class="text-[10px] font-bold tracking-[0.4em] uppercase text-accent mb-6">Self Love Club Strategy</p>
+                <h1 class="font-serif text-5xl md:text-7xl font-bold leading-tight mb-8">Claridad antes que Conexión.</h1>
+                <p class="text-xl text-subtle leading-relaxed mb-10 border-l-0 md:border-l-2 border-accent md:pl-6 italic">
+                    "La claridad no es un destino, es el único lujo real en un mundo diseñado para el ruido."
+                </p>
+                <div class="flex flex-col sm:flex-row gap-6 justify-center md:justify-start">
+                    <a href="#essays" class="bg-ink text-paper px-8 py-3 text-sm font-semibold hover:bg-zinc-800 transition">Leer Field Notes</a>
+                    <a href="#ai-lab" class="border border-divider px-8 py-3 text-sm font-semibold hover:border-ink transition">Probar Laboratorio</a>
+                </div>
+            </div>
+            <div class="flex-1 order-1 md:order-2 flex justify-center">
+                <div class="relative group">
+                    <div class="absolute inset-0 border border-accent translate-x-4 translate-y-4 -z-10"></div>
+                    <div class="w-64 h-64 md:w-96 md:h-96 overflow-hidden shadow-2xl bg-zinc-200">
+                        <img src="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/assets/images/andres-ramirez-portrait.jpg" 
+                             alt="Andrés Ramírez Portrait" 
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                             class="author-photo w-full h-full">
+                        <div class="hidden w-full h-full items-center justify-center font-serif text-4xl italic text-ink bg-white">AR</div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  <div class="section">
-    <h2>Ensayos</h2>
+        <!-- FIELD NOTES -->
+        <section id="essays" class="py-24 bg-white border-y border-divider">
+            <div class="max-w-4xl mx-auto px-6">
+                <header class="mb-16 text-center">
+                    <h2 class="font-serif text-4xl md:text-6xl mb-4">Field Notes</h2>
+                    <p class="text-[10px] uppercase tracking-[0.5em] text-subtle font-bold italic">Hemeroteca de Discernimiento Estratégico</p>
+                </header>
 
-    <ul class="essay-list">
-      <li><a href="content/essays/es/kinetic_clarity.pdf" target="_blank">Kinetic Clarity</a></li>
-      <li><a href="content/essays/es/self_love_club.pdf" target="_blank">Self Love Club</a></li>
-      <li><a href="content/essays/es/mando_editorial.pdf" target="_blank">Mando Editorial</a></li>
-    </ul>
+                <article class="bg-paper border border-divider p-8 md:p-16 relative overflow-hidden">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 border-b border-divider pb-6 gap-4">
+                        <div>
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-accent">Vol. 01 / Económico</span>
+                            <h3 class="font-serif text-2xl md:text-3xl mt-2 italic">El Autoconocimiento como Activo Económico</h3>
+                        </div>
+                        <span class="text-[9px] font-mono text-subtle">EST. 2026</span>
+                    </div>
 
-    <h2>Notas editoriales</h2>
+                    <div id="essay1-container" class="essay-content">
+                        <div class="prose prose-zinc max-w-none font-sans text-ink leading-relaxed space-y-6">
+                            <p class="text-lg md:text-xl font-serif italic text-accent border-l-4 border-accent pl-6 py-2">
+                                "El autoconocimiento no es simplemente un rasgo psicológico; es una ventaja competitiva cuantificable."
+                            </p>
+                            <p>Las organizaciones invierten frecuentemente millones en tecnología mientras descuidan su sistema operativo más crítico: <strong>la psicología humana</strong>. La falta de autoconocimiento incurre en costos invisibles: Sesgo de Confirmación, Evaluación de Riesgos Fallida y Erosión del Capital Humano.</p>
+                            <h4 class="font-bold uppercase tracking-widest text-xs pt-4 border-t border-divider inline-block">La Crisis de los Costos Ocultos</h4>
+                            <p>En el arbitraje financiero se explotan discrepancias de precios. El arbitraje emocional es la capacidad de mantener claridad mientras el entorno opera bajo ruido emocional impulsado por el miedo. Un buen mecanismo de medición no te dice quién eres, te muestra qué estás haciendo.</p>
+                        </div>
+                        <div class="essay-overlay"></div>
+                    </div>
 
-    <ul class="essay-list">
-      <li><a href="mando_editorial.html">Mando Editorial (versión web)</a></li>
-    </ul>
-  </div>
+                    <div class="mt-10 flex justify-center">
+                        <button onclick="toggleEssay('essay1-container', this)" class="text-[10px] font-bold uppercase tracking-widest border border-ink px-10 py-3 hover:bg-ink hover:text-paper transition w-full md:w-auto">
+                            Leer ensayo completo
+                        </button>
+                    </div>
+                </article>
+            </div>
+        </section>
 
-  <footer>
-    © 2026 Andrés Ramírez — Todos los derechos reservados. 
-  </footer>
+        <!-- LIBROS -->
+        <section id="books" class="py-24 px-6 md:px-12 bg-paper">
+            <div class="max-w-6xl mx-auto">
+                <div class="mb-12">
+                    <span class="text-[10px] font-bold tracking-widest uppercase text-accent mb-2 block">Bibliografía</span>
+                    <h2 class="font-serif text-4xl md:text-5xl">Publicaciones</h2>
+                </div>
 
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div class="group flex flex-col lg:flex-row gap-8 items-center bg-white border border-divider p-8">
+                        <div class="w-32 h-48 bg-ink text-paper p-4 flex flex-col justify-between shadow-xl shrink-0">
+                            <span class="text-[7px] uppercase tracking-widest opacity-40">Andrés Ramírez</span>
+                            <span class="font-serif text-lg leading-tight">Match Consciente</span>
+                        </div>
+                        <div class="flex-1 text-center lg:text-left">
+                            <h3 class="font-serif text-2xl mb-4">Mindful Match</h3>
+                            <p class="text-xs text-subtle mb-6 leading-relaxed">Discernimiento relacional en la era del algoritmo. Auditoría sobre la selección de pareja.</p>
+                            <a href="https://www.amazon.com/Match-Consciente-Encontrar-Perderse-Spanish-ebook/dp/B0GLB3NJ1F" target="_blank" class="text-[10px] font-bold uppercase tracking-widest border-b border-ink pb-1 hover:text-accent transition">Amazon Link</a>
+                        </div>
+                    </div>
+
+                    <div class="group flex flex-col lg:flex-row gap-8 items-center bg-white border border-divider p-8">
+                        <div class="w-32 h-48 bg-white border border-divider text-ink p-4 flex flex-col justify-between shadow-xl shrink-0">
+                            <span class="text-[7px] uppercase tracking-widest opacity-40">Andrés Ramírez</span>
+                            <span class="font-serif text-lg leading-tight text-ink">No te abandones</span>
+                        </div>
+                        <div class="flex-1 text-center lg:text-left">
+                            <h3 class="font-serif text-2xl mb-4">Don't Lose Yourself</h3>
+                            <p class="text-xs text-subtle mb-6 leading-relaxed">Preservación del capital emocional estratégico. Pragmatismo aplicado a la identidad.</p>
+                            <a href="https://www.amazon.com/No-Abandones-Buscar-Pareja-Spanish-ebook/dp/B0GCRCDMQL" target="_blank" class="text-[10px] font-bold uppercase tracking-widest border-b border-ink pb-1 hover:text-accent transition">Amazon Link</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LABORATORIO -->
+        <section id="ai-lab" class="py-24 bg-ink text-paper px-6 md:px-12">
+            <div class="max-w-5xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                    <div>
+                        <span class="text-[10px] font-bold tracking-[0.4em] uppercase text-accent mb-6 block">Behavioral AI Research</span>
+                        <h2 class="font-serif text-4xl md:text-5xl mb-8 leading-tight">Laboratorio de Discernimiento</h2>
+                        <p class="text-lg font-light opacity-70 leading-relaxed mb-10">
+                            Analizamos patrones de comportamiento para ayudarte a ganar claridad en tus vínculos y decisiones.
+                        </p>
+                        <div class="p-6 border-l-2 border-accent bg-white/5 italic text-sm opacity-60">
+                            "Escribe lo que estás viviendo. Vamos a separar los hechos del ruido emocional."
+                        </div>
+                    </div>
+                    
+                    <div class="bg-paper text-ink p-6 md:p-8 shadow-2xl relative overflow-hidden">
+                        <div class="flex justify-between items-center mb-6">
+                            <h4 class="font-bold text-[10px] uppercase tracking-widest">Auditoría de Pensamiento</h4>
+                            <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+                        </div>
+                        
+                        <textarea id="labInput" class="w-full h-32 p-4 text-sm bg-zinc-50 border border-divider focus:outline-none focus:border-accent mb-4 resize-none leading-relaxed" placeholder="Describe una situación, duda o patrón que estés atravesando..."></textarea>
+                        
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <button onclick="runLab()" id="labBtn" class="flex-1 bg-ink text-paper py-4 text-[10px] font-bold uppercase tracking-widest hover:bg-zinc-800 transition shadow-lg">
+                                <span id="labSpinner" class="spinner hidden"></span>
+                                Obtener Claridad
+                            </button>
+                            <button onclick="clearLab()" class="px-6 border border-divider hover:bg-zinc-100 transition py-4 sm:py-0 text-[10px] uppercase font-bold tracking-widest">Limpiar</button>
+                        </div>
+                        
+                        <div id="labOutput" class="hidden mt-10 p-6 md:p-8 bg-zinc-50 border border-divider animate-fade-in relative">
+                            <div class="absolute top-0 right-0 p-2 text-[8px] font-mono text-zinc-300 uppercase">SLC_Audit_2026</div>
+                            <div id="labText" class="font-sans"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-20 border-t border-divider text-center">
+        <div class="font-serif text-xl font-bold uppercase italic mb-4">Andrés Ramírez</div>
+        <p class="text-[10px] opacity-40 mb-10 tracking-widest uppercase">Fort Lauderdale — Caracas</p>
+        <div class="flex flex-col sm:flex-row justify-center gap-6 sm:gap-10 text-[10px] font-bold uppercase tracking-widest text-subtle">
+            <a href="https://instagram.com/selfloveclubusa" target="_blank" class="hover:text-ink transition">Instagram</a>
+            <a href="mailto:andres@selfloveclubstore.com" class="hover:text-ink transition">Contacto</a>
+        </div>
+        <p class="text-[8px] text-zinc-300 mt-16 uppercase tracking-[0.4em] px-6">&copy; 2026 Andrés Ramírez. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        const apiKey = ""; 
+
+        function toggleEssay(id, btn) {
+            const container = document.getElementById(id);
+            const isExpanded = container.classList.toggle('expanded');
+            btn.innerText = isExpanded ? 'Contraer ensayo' : 'Leer ensayo completo';
+            if (!isExpanded) {
+                window.scrollTo({ top: container.parentElement.offsetTop - 100, behavior: 'smooth' });
+            }
+        }
+
+        function clearLab() {
+            document.getElementById('labInput').value = '';
+            document.getElementById('labOutput').classList.add('hidden');
+        }
+
+        async function runLab() {
+            const input = document.getElementById('labInput').value;
+            const output = document.getElementById('labOutput');
+            const outputText = document.getElementById('labText');
+            const btn = document.getElementById('labBtn');
+            const spinner = document.getElementById('labSpinner');
+
+            if (!input.trim()) return;
+
+            btn.disabled = true;
+            spinner.classList.remove('hidden');
+            output.classList.add('hidden');
+
+            const systemPrompt = `Eres Andrés Ramírez. Voz analítica, clínica, pero humana y perspicaz. 
+            Tu objetivo es separar HECHOS de NARRATIVA.
+            REGLAS: NO uses negritas (**), NO uses asteriscos. 
+            ESTRUCTURA OBLIGATORIA (usa exactamente estas palabras seguidas de dos puntos):
+            REGISTRO: resumen
+            HECHOS: lista de hechos
+            NARRATIVA: ruido emocional
+            DIAGNÓSTICO: conclusión clínica`;
+
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: input }] }],
+                        systemInstruction: { parts: [{ text: systemPrompt }] }
+                    })
+                });
+                const data = await response.json();
+                const result = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                
+                if (result) {
+                    // Procesar la respuesta para crear bloques visuales
+                    const sections = result.split(/(?=REGISTRO:|HECHOS:|NARRATIVA:|DIAGNÓSTICO:)/g);
+                    let finalHTML = '';
+                    
+                    sections.forEach(section => {
+                        const parts = section.split(/:(.+)/);
+                        if (parts.length >= 2) {
+                            const title = parts[0].trim();
+                            const content = parts[1].trim();
+                            finalHTML += `
+                                <div class="lab-response-block">
+                                    <span class="lab-tag">${title}</span>
+                                    <div class="lab-text-content">${content.replace(/\n/g, '<br>')}</div>
+                                </div>
+                            `;
+                        }
+                    });
+                    outputText.innerHTML = finalHTML || result;
+                }
+                
+                output.classList.remove('hidden');
+            } catch (e) {
+                outputText.innerText = "Error de conexión.";
+                output.classList.remove('hidden');
+            } finally {
+                btn.disabled = false;
+                spinner.classList.add('hidden');
+            }
+        }
+    </script>
 </body>
 </html>
+
