@@ -97,6 +97,7 @@
                     <a href="javascript:void(0)" onclick="scrollToSection('about')" data-i18n="nav-about" class="hover:text-accent transition-colors">Autor</a>
                     <a href="javascript:void(0)" onclick="scrollToSection('ai-tools')" data-i18n="nav-tools" class="hover:text-accent transition-colors">Herramientas</a>
                     <a href="javascript:void(0)" onclick="scrollToSection('books')" data-i18n="nav-books" class="hover:text-accent transition-colors">Libros</a>
+                    <a href="javascript:void(0)" onclick="scrollToSection('notes')" data-i18n="nav-notes" class="hover:text-accent transition-colors text-accent">Notas</a>
                     <a href="javascript:void(0)" onclick="scrollToSection('essays')" data-i18n="nav-archive" class="hover:text-accent transition-colors">Archivo</a>
                 </div>
                 
@@ -120,6 +121,7 @@
         <a href="javascript:void(0)" onclick="scrollToSection('about'); toggleMobileMenu();" class="font-serif text-2xl hover:text-accent" data-i18n="nav-about">Autor</a>
         <a href="javascript:void(0)" onclick="scrollToSection('ai-tools'); toggleMobileMenu();" class="font-serif text-2xl hover:text-accent" data-i18n="nav-tools">Herramientas</a>
         <a href="javascript:void(0)" onclick="scrollToSection('books'); toggleMobileMenu();" class="font-serif text-2xl hover:text-accent" data-i18n="nav-books">Libros</a>
+        <a href="javascript:void(0)" onclick="scrollToSection('notes'); toggleMobileMenu();" class="font-serif text-2xl hover:text-accent text-accent" data-i18n="nav-notes">Notas</a>
         <a href="javascript:void(0)" onclick="scrollToSection('essays'); toggleMobileMenu();" class="font-serif text-2xl hover:text-accent" data-i18n="nav-archive">Archivo</a>
         <button onclick="toggleMobileMenu()" class="absolute top-6 right-6 font-bold uppercase tracking-widest text-xs p-4 hover:text-accent" data-i18n="close">Cerrar</button>
     </div>
@@ -144,7 +146,7 @@
             </div>
         </section>
 
-        <!-- SOBRE EL AUTOR (NUEVA SECCIÓN) -->
+        <!-- SOBRE EL AUTOR -->
         <section id="about" class="py-32 px-6 md:px-12 bg-white border-t border-divider">
             <div class="max-w-5xl mx-auto flex flex-col lg:flex-row gap-16">
                 <div class="lg:w-1/3">
@@ -293,7 +295,29 @@
             </div>
         </section>
 
-        <!-- ARCHIVO (CON ENSAYOS Y PDFs) -->
+        <!-- FIELD NOTES (CAPTACIÓN PRIVADA) NUEVA SECCIÓN -->
+        <section id="notes" class="py-24 px-6 md:px-12 bg-ink text-paper border-t border-divider">
+            <div class="max-w-5xl mx-auto flex flex-col md:flex-row gap-12 items-center">
+                <div class="flex-1 text-center md:text-left">
+                    <span class="text-[10px] font-bold tracking-widest uppercase text-accent mb-3 block" data-i18n="notes-kicker">Archivo Privado</span>
+                    <h2 class="font-serif text-4xl md:text-5xl mb-6" data-i18n="notes-title">Notas de Campo</h2>
+                    <div class="text-sm text-gray-400 leading-relaxed space-y-4 md:max-w-md mx-auto md:mx-0">
+                        <p data-i18n="notes-p1">Una vez al mes envío una nota estructurada a quienes desean profundizar en el marco de "Claridad antes que Conexión".</p>
+                        <p data-i18n="notes-p2">No son consejos ni afirmaciones. Son observaciones técnicas sobre capital emocional, patrones invisibles y errores costosos que parecen románticos.</p>
+                    </div>
+                </div>
+                <div class="flex-1 w-full max-w-md mx-auto">
+                    <!-- Formulario configurado para Formspree (Crea una cuenta gratis en formspree.io y pon tu link en el 'action') -->
+                    <form action="https://formspree.io/f/TU_CODIGO_AQUI" method="POST" class="flex flex-col gap-5 bg-white/5 p-8 border border-white/10 shadow-xl">
+                        <p class="text-[10px] font-bold tracking-widest uppercase text-center md:text-left text-white" data-i18n="notes-cta">Solicitar Acceso al Archivo</p>
+                        <input type="email" name="email" required placeholder="Tu correo electrónico..." class="w-full bg-transparent border-b border-white/30 focus:border-accent py-3 text-sm outline-none transition-colors text-paper placeholder:text-gray-500" data-i18n-placeholder="notes-input">
+                        <button type="submit" class="w-full mt-4 py-4 bg-paper text-ink text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-opacity-90 transition-all" data-i18n="notes-btn">Recibir Notas Privadas</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- ARCHIVO (INTACTO) -->
         <section id="essays" aria-labelledby="archive-title" class="py-32 px-6 md:px-12 bg-paper border-t border-divider">
             <div class="max-w-6xl mx-auto">
                 <div class="text-center mb-10">
@@ -361,25 +385,26 @@
             </div>
         </section>
 
-        <!-- SELF LOVE CLUB (ACTUALIZADO) -->
-        <section id="selfloveclub" aria-labelledby="slc-title" class="py-32 border-t border-divider bg-ink text-paper">
+        <!-- SELF LOVE CLUB (REDISEÑO: "EL ECOSISTEMA") -->
+        <section id="selfloveclub" aria-labelledby="slc-title" class="py-32 border-t border-divider bg-white text-ink">
             <div class="max-w-4xl mx-auto px-6 text-center flex flex-col items-center">
-                <h2 id="slc-title" class="font-serif text-4xl md:text-5xl mb-12 tracking-wide" data-i18n="slc-title">Self Love Club</h2>
+                <h2 id="slc-title" class="font-serif text-4xl md:text-5xl mb-4 tracking-wide" data-i18n="slc-title">Self Love Club</h2>
+                <p class="text-[10px] font-bold tracking-widest uppercase text-accent mb-12" data-i18n="slc-subtitle">El Ecosistema de Aplicación</p>
                 
-                <div class="text-sm md:text-base text-gray-300 max-w-2xl mx-auto leading-relaxed space-y-6 text-left md:text-center">
-                    <p data-i18n="slc-p1">Soy el creador de Self Love Club: una plataforma dedicada a la claridad, el respeto propio y la toma de decisiones conscientes en las relaciones. Self Love Club no se trata de afirmaciones ni atajos de autoestima. Es un ecosistema curado de ideas, herramientas y trabajos escritos diseñados para ayudar a las personas a mantenerse arraigadas en su identidad mientras navegan la atracción, el apego y la elección.</p>
+                <div class="text-sm md:text-base text-subtle max-w-2xl mx-auto leading-relaxed space-y-6 text-left md:text-center">
+                    <p data-i18n="slc-p1">Clarity Before Connection es el marco conceptual. Self Love Club es donde ese marco se convierte en práctica.</p>
                     
-                    <p data-i18n="slc-p2">Todo dentro del club se construye alrededor del autoconocimiento aplicado: cómo la claridad se convierte en algo que practicas, no solo en algo que entiendes. No se trata de sentirse bien en el momento; se trata de desarrollar la capacidad de tomar decisiones que honren quién eres, incluso cuando las emociones son intensas y la presión externa aumenta.</p>
+                    <p data-i18n="slc-p2">No se trata de afirmaciones ni autoestima superficial. Se trata de mantener tu integridad cuando la presión emocional aumenta. Es el espacio extendido para quienes desean ir más allá de la lectura y aplicar el discernimiento de manera estructurada.</p>
                     
-                    <p data-i18n="slc-p3">La plataforma sirve como un recurso integral para aquellos comprometidos a mantener su integridad mientras buscan una conexión significativa. Es para personas que entienden que el amor propio no se trata de aislamiento o perfección, sino de mantenerse conectados consigo mismos mientras permanecen abiertos a los demás.</p>
+                    <p data-i18n="slc-p3">Dentro del club encontrarás análisis ampliados, ejercicios aplicados y un entorno de práctica para personas comprometidas con su claridad.</p>
                 </div>
                 
-                <a href="https://instagram.com/selfloveclubusa" target="_blank" rel="noopener noreferrer" class="mt-12 px-8 py-3 bg-paper text-ink text-xs font-bold uppercase tracking-[0.2em] hover:bg-opacity-90 transition-all rounded-sm shadow-sm" data-i18n="slc-link">Explorar la Comunidad</a>
+                <a href="https://instagram.com/selfloveclubusa" target="_blank" rel="noopener noreferrer" class="mt-12 px-8 py-3 bg-ink text-paper text-xs font-bold uppercase tracking-[0.2em] hover:bg-opacity-90 transition-all rounded-sm shadow-sm" data-i18n="slc-link">Explorar el Ecosistema</a>
             </div>
         </section>
     </main>
 
-    <!-- FOOTER -->
+    <!-- FOOTER (INTACTO) -->
     <footer class="py-32 px-6 bg-paper text-center">
         <div class="max-w-4xl mx-auto flex flex-col items-center">
             <div class="w-16 h-16 mb-8 overflow-hidden rounded-full border border-divider">
@@ -388,7 +413,7 @@
             <div class="font-serif text-2xl mb-4 tracking-[0.3em] uppercase font-bold text-ink">ANDRÉS RAMÍREZ</div>
             <p class="text-[10px] text-subtle uppercase tracking-[0.3em] mb-12 italic">Florida, USA | andres@selfloveclubstore.com</p>
             <div class="flex flex-wrap justify-center gap-10 text-[10px] font-bold uppercase tracking-[0.3em] text-subtle mb-16">
-                <a href="https://www.threads.net/@selfloveclubusa" target="_blank" rel="noopener noreferrer" class="hover:text-ink">Threads</a>
+                <a href="https://www.threads.net/@aram7891" target="_blank" rel="noopener noreferrer" class="hover:text-ink">Threads</a>
                 <a href="https://www.instagram.com/selfloveclubusa" target="_blank" rel="noopener noreferrer" class="hover:text-ink">Instagram</a>
                 <a href="https://x.com/selfloveclubusa" target="_blank" rel="noopener noreferrer" class="hover:text-ink">X</a>
             </div>
@@ -400,7 +425,7 @@
     <script>
         const translations = {
             es: {
-                "nav-home": "Inicio", "nav-about": "Autor", "nav-tools": "Herramientas", "nav-books": "Libros", "nav-archive": "Archivo",
+                "nav-home": "Inicio", "nav-about": "Autor", "nav-tools": "Herramientas", "nav-books": "Libros", "nav-notes": "Notas", "nav-archive": "Archivo",
                 "close": "Cerrar",
                 "hero-kicker": "Autor",
                 "hero-title": "Claridad antes que Conexión.",
@@ -429,6 +454,14 @@
                 "tool2-title": "Auditoría Emocional", "tool2-subtitle": "Patrones de Activo/Pasivo",
                 "tool2-help": "Introduce un comportamiento o ciclo que repites (ej. \"Suelo ignorar banderas rojas por el potencial de la persona\"). Generaremos una nota sobre el costo de este pasivo.",
                 "btn-analyze": "Obtener Perspectiva", "btn-generate": "Generar Nota de Campo",
+                
+                "notes-kicker": "Archivo Privado",
+                "notes-title": "Notas de Campo",
+                "notes-p1": "Una vez al mes envío una nota estructurada a quienes desean profundizar en el marco de \"Claridad antes que Conexión\".",
+                "notes-p2": "No son consejos ni afirmaciones. Son observaciones técnicas sobre capital emocional, patrones invisibles y errores costosos que parecen románticos.",
+                "notes-cta": "Solicitar Acceso al Archivo",
+                "notes-btn": "Recibir Notas Privadas",
+
                 "record-label": "Registro de Auditoría", 
                 "archive-label": "Hemeroteca", 
                 "archive-title": "Hemeroteca",
@@ -437,13 +470,14 @@
                 "books-label": "Obras Publicadas", "books-sec-title": "Libros",
                 
                 "slc-title": "Self Love Club",
-                "slc-p1": "Soy el creador de Self Love Club: una plataforma dedicada a la claridad, el respeto propio y la toma de decisiones conscientes en las relaciones. Self Love Club no se trata de afirmaciones ni atajos de autoestima. Es un ecosistema curado de ideas, herramientas y trabajos escritos diseñados para ayudar a las personas a mantenerse arraigadas en su identidad mientras navegan la atracción, el apego y la elección.",
-                "slc-p2": "Todo dentro del club se construye alrededor del autoconocimiento aplicado: cómo la claridad se convierte en algo que practicas, no solo en algo que entiendes. No se trata de sentirse bien en el momento; se trata de desarrollar la capacidad de tomar decisiones que honren quién eres, incluso cuando las emociones son intensas y la presión externa aumenta.",
-                "slc-p3": "La plataforma sirve como un recurso integral para aquellos comprometidos a mantener su integridad mientras buscan una conexión significativa. Es para personas que entienden que el amor propio no se trata de aislamiento o perfección, sino de mantenerse conectados consigo mismos mientras permanecen abiertos a los demás.",
-                "slc-link": "Explorar la Comunidad"
+                "slc-subtitle": "El Ecosistema de Aplicación",
+                "slc-p1": "Clarity Before Connection es el marco conceptual. Self Love Club es donde ese marco se convierte en práctica.",
+                "slc-p2": "No se trata de afirmaciones ni autoestima superficial. Se trata de mantener tu integridad cuando la presión emocional aumenta. Es el espacio extendido para quienes desean ir más allá de la lectura y aplicar el discernimiento de manera estructurada.",
+                "slc-p3": "Dentro del club encontrarás análisis ampliados, ejercicios aplicados y un entorno de práctica para personas comprometidas con su claridad.",
+                "slc-link": "Explorar el Ecosistema"
             },
             en: {
-                "nav-home": "Home", "nav-about": "Author", "nav-tools": "Tools", "nav-books": "Books", "nav-archive": "Archive",
+                "nav-home": "Home", "nav-about": "Author", "nav-tools": "Tools", "nav-books": "Books", "nav-notes": "Notes", "nav-archive": "Archive",
                 "close": "Close",
                 "hero-kicker": "Author",
                 "hero-title": "Clarity Before Connection.",
@@ -472,6 +506,14 @@
                 "tool2-title": "Emotional Audit", "tool2-subtitle": "Asset/Liability Patterns",
                 "tool2-help": "Enter a recurring behavior or cycle (e.g., \"I tend to ignore red flags because of someone's potential\"). We'll generate a note on the cost of this liability.",
                 "btn-analyze": "Get Perspective", "btn-generate": "Generate Field Note",
+                
+                "notes-kicker": "Private Archive",
+                "notes-title": "Field Notes",
+                "notes-p1": "Once a month, I send a structured note to those who want to go deeper into the 'Clarity Before Connection' framework.",
+                "notes-p2": "Not advice. Not affirmations. Technical observations on emotional capital, invisible patterns, and expensive romantic mistakes.",
+                "notes-cta": "Request Access to Archive",
+                "notes-btn": "Receive Private Notes",
+
                 "record-label": "Audit Record", 
                 "archive-label": "Archive", 
                 "archive-title": "Field Notes Archive",
@@ -480,10 +522,11 @@
                 "books-label": "Published Works", "books-sec-title": "Books",
                 
                 "slc-title": "Self Love Club",
-                "slc-p1": "I am the creator of Self Love Club—a platform dedicated to clarity, self-respect, and conscious decision-making in relationships. Self Love Club is not about affirmations or self-esteem shortcuts. It’s a curated ecosystem of ideas, tools, and written work designed to help people stay grounded in their identity while navigating attraction, attachment, and choice.",
-                "slc-p2": "Everything within the club is built around applied self-knowledge—how clarity becomes something you practice, not just understand. This isn’t about feeling good in the moment; it’s about developing the capacity to make decisions that honor who you are, even when emotions run high and external pressure mounts.",
-                "slc-p3": "The platform serves as a comprehensive resource for those committed to maintaining their integrity while seeking meaningful connection. It’s for people who understand that self-love isn’t about isolation or perfection, but about staying connected to yourself while remaining open to others.",
-                "slc-link": "Explore the Community"
+                "slc-subtitle": "The Applied Ecosystem",
+                "slc-p1": "Clarity Before Connection is the framework. Self Love Club is where that framework becomes practice.",
+                "slc-p2": "It’s not about affirmations or superficial self-esteem. It’s about maintaining your integrity when emotional pressure rises. It is the extended space for those who want to go beyond reading and apply discernment in a structured way.",
+                "slc-p3": "Inside the club you will find expanded analysis, applied exercises, and a practice environment for people committed to their clarity.",
+                "slc-link": "Explore the Ecosystem"
             }
         };
 
@@ -518,6 +561,10 @@
             const searchInput = document.getElementById('essaySearch');
             if(searchInput) {
                 searchInput.placeholder = translations[lang]['search-placeholder'];
+                const notesInput = document.querySelector('[data-i18n-placeholder="notes-input"]');
+                if(notesInput) {
+                    notesInput.placeholder = lang === 'es' ? "Tu correo electrónico..." : "Your email address...";
+                }
             }
 
             document.getElementById('btn-es').classList.toggle('lang-active', lang === 'es');
