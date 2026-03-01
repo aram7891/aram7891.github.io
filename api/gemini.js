@@ -1,4 +1,4 @@
-// /api/gemini.js
+// /api/index.js
 import fetch from "node-fetch";
 
 // Rate Limit básico en memoria para Serverless (se resetea en cold starts)
