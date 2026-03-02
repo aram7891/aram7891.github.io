@@ -7,7 +7,7 @@
 
 <!-- OPTIMIZACIONES SEO Y FAVICON -->
 <meta name="description" content="Andrés Ramírez – Autor y ensayista. Ensayos clínicos sobre discernimiento, capital emocional y claridad antes que conexión. Porque el costo de amar sin discernir es perderte a ti mismo.">
-<meta name="keywords" content="Andrés Ramírez, Clarity Before Connection, capital emocional, dinámicas de relaciones, autoconocimiento, ensayos, Mindful Match, Don't Lose Yourself While Dating">
+<meta name="keywords" content="Andrés Ramírez, Clarity Before Connection, capital emocional, dinámicas relacionales, autoconocimiento, ensayos, Mindful Match, Don't Lose Yourself While Dating">
 <meta name="author" content="Andrés Ramírez">
 <link rel="canonical" href="https://www.andresramirez.pro">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
@@ -80,10 +80,10 @@ body { margin: 0; padding: 0; overflow-x: hidden; width: 100%; background-color:
 <div class="hidden md:flex space-x-8 text-[10px] font-bold tracking-widest uppercase text-ink">
 <a href="javascript:void(0)" onclick="scrollToSection('home')" data-i18n="nav-home" class="hover:text-accent transition-colors">Inicio</a>
 <a href="javascript:void(0)" onclick="scrollToSection('about')" data-i18n="nav-about" class="hover:text-accent transition-colors">Autor</a>
-<a href="javascript:void(0)" onclick="scrollToSection('ai-tools')" data-i18n="nav-tools" class="hover:text-accent transition-colors">Herramientas</a>
+<a href="javascript:void(0)" onclick="scrollToSection('ai-tools')" data-i18n="nav-tools" class="hover:text-accent transition-colors text-accent font-bold">Herramientas</a>
 <a href="javascript:void(0)" onclick="scrollToSection('books')" data-i18n="nav-books" class="hover:text-accent transition-colors">Libros</a>
 <a href="javascript:void(0)" onclick="scrollToSection('notes')" data-i18n="nav-notes" class="hover:text-accent transition-colors">Notas</a>
-<a href="javascript:void(0)" onclick="scrollToSection('essays')" data-i18n="nav-archive" class="hover:text-accent transition-colors text-accent font-bold">Archivo</a>
+<a href="javascript:void(0)" onclick="scrollToSection('essays')" data-i18n="nav-archive" class="hover:text-accent transition-colors">Archivo</a>
 </div>
 
 <div class="flex items-center space-x-0 font-bold text-[9px]" role="group" aria-label="Language selector">
@@ -101,9 +101,9 @@ body { margin: 0; padding: 0; overflow-x: hidden; width: 100%; background-color:
 <div id="mobile-menu" class="fixed inset-0 z-[60] hidden flex-col justify-center items-center space-y-8 no-select bg-paper/95 backdrop-blur-lg text-ink">
 <a href="javascript:void(0)" onclick="scrollToSection('home'); toggleMobileMenu();" class="font-serif text-2xl hover:text-accent" data-i18n="nav-home">Inicio</a>
 <a href="javascript:void(0)" onclick="scrollToSection('about'); toggleMobileMenu();" class="font-serif text-2xl hover:text-accent" data-i18n="nav-about">Autor</a>
-<a href="javascript:void(0)" onclick="scrollToSection('ai-tools'); toggleMobileMenu();" class="font-serif text-2xl hover:text-accent" data-i18n="nav-tools">Herramientas</a>
+<a href="javascript:void(0)" onclick="scrollToSection('ai-tools'); toggleMobileMenu();" class="font-serif text-2xl hover:text-accent text-accent" data-i18n="nav-tools">Herramientas</a>
 <a href="javascript:void(0)" onclick="scrollToSection('books'); toggleMobileMenu();" class="font-serif text-2xl hover:text-accent" data-i18n="nav-books">Libros</a>
-<a href="javascript:void(0)" onclick="scrollToSection('notes'); toggleMobileMenu();" class="font-serif text-2xl hover:text-accent text-accent" data-i18n="nav-notes">Notas</a>
+<a href="javascript:void(0)" onclick="scrollToSection('notes'); toggleMobileMenu();" class="font-serif text-2xl hover:text-accent" data-i18n="nav-notes">Notas</a>
 <a href="javascript:void(0)" onclick="scrollToSection('essays'); toggleMobileMenu();" class="font-serif text-2xl hover:text-accent" data-i18n="nav-archive">Archivo</a>
 <button onclick="toggleMobileMenu()" class="absolute top-6 right-6 font-bold uppercase tracking-widest text-xs p-4 hover:text-accent" data-i18n="close">Cerrar</button>
 </div>
@@ -127,7 +127,7 @@ body { margin: 0; padding: 0; overflow-x: hidden; width: 100%; background-color:
 </div>
 </section>
 
-<!-- SOBRE EL AUTOR (BIO COMPLETA) -->
+<!-- SOBRE EL AUTOR -->
 <section id="about" class="py-32 px-6 md:px-12 bg-white border-t border-divider text-ink">
 <div class="max-w-5xl mx-auto flex flex-col lg:flex-row gap-16">
 <div class="lg:w-1/3">
@@ -231,28 +231,7 @@ Laboratorio práctico de discernimiento relacional. Convertimos confusión emoci
 </div>
 </section>
 
-<!-- FIELD NOTES -->
-<section id="notes" class="py-24 px-6 md:px-12 bg-ink text-paper border-t border-divider">
-<div class="max-w-5xl mx-auto flex flex-col md:flex-row gap-12 items-center">
-<div class="flex-1 text-center md:text-left">
-<span class="text-[10px] font-bold tracking-widest uppercase text-accent mb-3 block" data-i18n="notes-kicker">Archivo Privado</span>
-<h2 class="font-serif text-4xl md:text-5xl mb-6" data-i18n="notes-title">Notas de Campo</h2>
-<div class="text-sm text-gray-400 leading-relaxed space-y-4 md:max-w-md mx-auto md:mx-0 text-left">
-<p data-i18n="notes-p1">Una vez al mes envío una nota estructurada a quienes desean profundizar en el marco de "Claridad antes que Conexión".</p>
-<p data-i18n="notes-p2">No son consejos ni afirmaciones. Son observaciones técnicas sobre capital emocional, patrones invisibles y errores costosos que parecen románticos.</p>
-</div>
-</div>
-<div class="flex-1 w-full max-w-md mx-auto">
-<form action="https://formspree.io/f/maqdkjpv" method="POST" class="flex flex-col gap-5 bg-white/5 p-8 border border-white/10 shadow-xl">
-<p class="text-[10px] font-bold tracking-widest uppercase text-center md:text-left text-white" data-i18n="notes-cta">Solicitar Acceso al Archivo</p>
-<input type="email" name="email" required placeholder="Tu correo electrónico..." class="w-full bg-transparent border-b border-white/30 focus:border-accent py-3 text-sm outline-none transition-colors text-paper placeholder:text-gray-500">
-<button type="submit" class="w-full mt-4 py-4 bg-paper text-ink text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-opacity-90 transition-all rounded-sm" data-i18n="notes-btn">Recibir Notas Privadas</button>
-</form>
-</div>
-</div>
-</section>
-
-<!-- HEMEROTECA -->
+<!-- HEMEROTECA COMPLETA (16 ENSAYOS) -->
 <section id="essays" aria-labelledby="archive-title" class="py-32 px-6 md:px-12 bg-paper border-t border-divider text-ink">
 <div class="max-w-6xl mx-auto">
 <div class="text-center mb-10">
@@ -267,30 +246,97 @@ Laboratorio práctico de discernimiento relacional. Convertimos confusión emoci
 </div>
 </div>
 
+<!-- GRID ESPAÑOL (9 ENSAYOS) -->
 <div id="essays-grid-es" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 transition-opacity duration-500 text-ink">
 <article class="essay-card bg-white">
 <h3 class="font-serif text-2xl mb-4 italic">El Autoconocimiento como Activo</h3>
 <p class="text-sm text-subtle leading-relaxed mb-8">Entender tus propios patrones es la inversión de mayor apalancamiento.</p>
-<a href="#" class="read-btn">Leer Ensayo (PDF)</a>
+<a href="/content/essays/es/1-el-autoconocimiento-como-activo-economico.pdf" target="_blank" class="read-btn">Leer Ensayo (PDF)</a>
 </article>
 <article class="essay-card bg-white">
 <h3 class="font-serif text-2xl mb-4 italic">Arbitraje Emocional</h3>
 <p class="text-sm text-subtle leading-relaxed mb-8">Aprovechando la regulación en la toma de decisiones relacionales.</p>
-<a href="#" class="read-btn">Leer Ensayo (PDF)</a>
+<a href="/content/essays/es/2-arbitraje-emocional.pdf" target="_blank" class="read-btn">Leer Ensayo (PDF)</a>
+</article>
+<article class="essay-card bg-white">
+<h3 class="font-serif text-2xl mb-4 italic">El Costo de Complacer</h3>
+<p class="text-sm text-subtle leading-relaxed mb-8">Cuantificando la mala asignación del capital emocional.</p>
+<a href="/content/essays/es/3-costo-de-oportunidad-de-complacer.pdf" target="_blank" class="read-btn">Leer Ensayo (PDF)</a>
+</article>
+<article class="essay-card bg-white">
+<h3 class="font-serif text-2xl mb-4 italic">Arquitectura del Silencio</h3>
+<p class="text-sm text-subtle leading-relaxed mb-8">La importancia de los espacios no negociables.</p>
+<a href="/content/essays/es/4-la-arquitectura-del-silencio.pdf" target="_blank" class="read-btn">Leer Ensayo (PDF)</a>
+</article>
+<article class="essay-card bg-white">
+<h3 class="font-serif text-2xl mb-4 italic">Liquidez Cognitiva</h3>
+<p class="text-sm text-subtle leading-relaxed mb-8">Separando la identidad de las decisiones emocionales.</p>
+<a href="/content/essays/es/5-liquidez-cognitiva.pdf" target="_blank" class="read-btn">Leer Ensayo (PDF)</a>
+</article>
+<article class="essay-card bg-white">
+<h3 class="font-serif text-2xl mb-4 italic">Señal Vs Ruido</h3>
+<p class="text-sm text-subtle leading-relaxed mb-8">Distinguir entre la intuición genuina y las respuestas al trauma.</p>
+<a href="/content/essays/es/6-senal-vs-ruido.pdf" target="_blank" class="read-btn">Leer Ensayo (PDF)</a>
+</article>
+<article class="essay-card bg-white">
+<h3 class="font-serif text-2xl mb-4 italic">Progreso vs Derrota</h3>
+<p class="text-sm text-subtle leading-relaxed mb-8">Entendiendo por qué el progreso a veces se siente como pérdida.</p>
+<a href="/content/essays/es/el-progreso-disfrazado-de-derrota.pdf" target="_blank" class="read-btn">Leer Ensayo (PDF)</a>
+</article>
+<article class="essay-card bg-white">
+<h3 class="font-serif text-2xl mb-4 italic">Conexión como Lujo</h3>
+<p class="text-sm text-subtle leading-relaxed mb-8">Análisis sobre la exclusividad del capital emocional.</p>
+<a href="/content/essays/es/la-conexion-como-articulo-de-lujo.pdf" target="_blank" class="read-btn">Leer Ensayo (PDF)</a>
+</article>
+<article class="essay-card bg-white">
+<h3 class="font-serif text-2xl mb-4 italic">Medir para Entender</h3>
+<p class="text-sm text-subtle leading-relaxed mb-8">Auditoría sobre el uso de la métrica en la confusión emocional.</p>
+<a href="/content/essays/es/medir-para-entender-o-esconderse.pdf" target="_blank" class="read-btn">Leer Ensayo (PDF)</a>
 </article>
 </div>
 
+<!-- GRID INGLÉS (7 ENSAYOS) -->
 <div id="essays-grid-en" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 transition-opacity duration-500 text-ink">
 <article class="essay-card bg-white">
 <h3 class="font-serif text-2xl mb-4 italic">Self-Awareness as Asset</h3>
 <p class="text-sm text-subtle leading-relaxed mb-8">Understanding patterns as high leverage investment.</p>
-<a href="#" class="read-btn">Read PDF</a>
+<a href="/content/essays/en/1-self-awareness-as-an-economic-asset.pdf" target="_blank" class="read-btn">Read PDF</a>
+</article>
+<article class="essay-card bg-white">
+<h3 class="font-serif text-2xl mb-4 italic">Emotional Arbitrage</h3>
+<p class="text-sm text-subtle leading-relaxed mb-8">Profiting from regulation in relational decisions.</p>
+<a href="/content/essays/en/2-emotional-arbitrage.pdf" target="_blank" class="read-btn">Read PDF</a>
+</article>
+<article class="essay-card bg-white">
+<h3 class="font-serif text-2xl mb-4 italic">Opportunity Cost</h3>
+<p class="text-sm text-subtle leading-relaxed mb-8">The high price of people-pleasing patterns.</p>
+<a href="/content/essays/en/3-opportunity-cost-of-people-pleasing.pdf" target="_blank" class="read-btn">Read PDF</a>
+</article>
+<article class="essay-card bg-white">
+<h3 class="font-serif text-2xl mb-4 italic">Architecture of Silence</h3>
+<p class="text-sm text-subtle leading-relaxed mb-8">Non-negotiable spaces in a noisy world.</p>
+<a href="/content/essays/en/4-the-architecture-of-silence.pdf" target="_blank" class="read-btn">Read PDF</a>
+</article>
+<article class="essay-card bg-white">
+<h3 class="font-serif text-2xl mb-4 italic">Cognitive Liquidity</h3>
+<p class="text-sm text-subtle leading-relaxed mb-8">Separating identity from emotional decision-making.</p>
+<a href="/content/essays/en/5-cognitive-liquidity.pdf" target="_blank" class="read-btn">Read PDF</a>
+</article>
+<article class="essay-card bg-white">
+<h3 class="font-serif text-2xl mb-4 italic">Signal vs Noise</h3>
+<p class="text-sm text-subtle leading-relaxed mb-8">Distinguishing genuine intuition from trauma responses.</p>
+<a href="/content/essays/en/6-signal-vs-noise.pdf" target="_blank" class="read-btn">Read PDF</a>
+</article>
+<article class="essay-card bg-white">
+<h3 class="font-serif text-2xl mb-4 italic">Measure to Understand</h3>
+<p class="text-sm text-subtle leading-relaxed mb-8">Field notes on understanding or hiding through data.</p>
+<a href="/content/essays/en/fn-measure-to-understand-or-hide.pdf" target="_blank" class="read-btn">Read PDF</a>
 </article>
 </div>
 </div>
 </section>
 
-<!-- SELF LOVE CLUB (RESTAURADO COMPLETO) -->
+<!-- SELF LOVE CLUB (CONTENIDO ÍNTEGRO) -->
 <section id="selfloveclub" aria-labelledby="slc-title" class="py-32 border-t border-divider bg-white text-ink text-center flex flex-col items-center">
 <div class="max-w-4xl mx-auto px-6 text-center flex flex-col items-center">
 <h2 id="slc-title" class="font-serif text-4xl md:text-5xl mb-4 tracking-wide text-ink">Self Love Club</h2>
@@ -334,6 +380,7 @@ es: {
 "btn-analyze": "Obtener Perspectiva", "btn-generate": "Generar Nota de Campo",
 "notes-kicker": "Archivo Privado", "notes-title": "Notas de Campo", "notes-p1": "Una vez al mes envío una nota estructurada a quienes desean profundizar.",
 "notes-cta": "Solicitar Acceso al Archivo", "notes-btn": "Recibir Notas Privadas", "archive-label": "Hemeroteca", "archive-title": "Hemeroteca",
+"tab-es": "Español", "tab-en": "English",
 "slc-p1": "Clarity Before Connection es el marco conceptual. Self Love Club es donde ese marco se convierte en práctica.",
 "slc-p2": "No se trata de afirmaciones ni autoestima superficial. Se trata de mantener tu integridad cuando la presión emocional aumenta. Es el espacio extendido para quienes desean ir más allá de la lectura.",
 "slc-p3": "Dentro del club encontrarás análisis ampliados, ejercicios aplicados y un entorno de práctica para personas comprometidas con su claridad."
@@ -341,7 +388,7 @@ es: {
 en: {
 "nav-home": "Home", "nav-about": "Author", "nav-tools": "Tools", "nav-books": "Books", "nav-notes": "Notes", "nav-archive": "Archive",
 "close": "Close", "hero-title": "Clarity Before Connection.", "hero-subtitle": "Because attraction without discernment costs you yourself.",
-"about-title": "Andrés Ramírez", "tools-title": "Interaction with Clarity",
+"about-title": "Andrés Ramírez", "tools-title": "Interaction with Clarity", "tab-es": "Spanish", "tab-en": "English",
 "btn-analyze": "Get Perspective", "btn-generate": "Generate Field Note"
 }
 };
@@ -375,8 +422,13 @@ switchContentTabs(lang);
 function switchContentTabs(tab) {
 const gridEs = document.getElementById('essays-grid-es');
 const gridEn = document.getElementById('essays-grid-en');
+const tabEs = document.getElementById('essay-tab-es');
+const tabEn = document.getElementById('essay-tab-en');
+
 if(gridEs) gridEs.classList.toggle('hidden', tab !== 'es');
 if(gridEn) gridEn.classList.toggle('hidden', tab !== 'en');
+if(tabEs) tabEs.classList.toggle('active', tab === 'es');
+if(tabEn) tabEn.classList.toggle('active', tab === 'en');
 }
 
 function scrollToSection(id) {
@@ -398,7 +450,7 @@ if(banner) banner.style.display = 'none';
 document.documentElement.classList.add('banner-closed');
 }
 
-// CEREBRO GEMINI 
+// CEREBRO GEMINI
 async function callGemini(prompt, systemPrompt) {
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
     const payload = {
@@ -486,3 +538,4 @@ setLanguage('es');
 </script>
 </body>
 </html>
+
