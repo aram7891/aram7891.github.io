@@ -265,7 +265,7 @@ Laboratorio práctico de discernimiento relacional. Convertimos confusión emoci
     <article class="essay-card bg-white">
         <h3 class="font-serif text-2xl mb-4 italic">Arquitectura del Silencio</h3>
         <p class="text-sm text-subtle leading-relaxed mb-8">La importancia de los espacios no negociables en un mundo ruidoso.</p>
-        <a href="/content/essays/es/4-la-arquitectura-del-silencio.pdf" target="_blank" class="read-btn">Leer Ensayo (PDF)</a>
+        <a href="/content/essays/es/4-la-architecture-del-silencio.pdf" target="_blank" class="read-btn">Leer Ensayo (PDF)</a>
     </article>
     <article class="essay-card bg-white">
         <h3 class="font-serif text-2xl mb-4 italic">Liquidez Cognitiva</h3>
@@ -330,7 +330,6 @@ Laboratorio práctico de discernimiento relacional. Convertimos confusión emoci
 </div>
 
 <div id="essays-grid-en" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 transition-opacity duration-500 text-ink">
-    <!-- Versión Inglesa Completa -->
     <article class="essay-card bg-white">
         <h3 class="font-serif text-2xl mb-4 italic">Self-Awareness as Asset</h3>
         <p class="text-sm text-subtle leading-relaxed mb-8">Understanding your own patterns is the highest leverage investment.</p>
@@ -415,7 +414,7 @@ Laboratorio práctico de discernimiento relacional. Convertimos confusión emoci
 </div>
 </section>
 
-<!-- SELF LOVE CLUB (CONTENIDO EXTENSO) -->
+<!-- SELF LOVE CLUB -->
 <section id="selfloveclub" aria-labelledby="slc-title" class="py-32 border-t border-divider bg-white text-ink text-center flex flex-col items-center">
 <div class="max-w-4xl mx-auto px-6 text-center flex flex-col items-center">
 <h2 id="slc-title" class="font-serif text-4xl md:text-5xl mb-4 tracking-wide text-ink">Self Love Club</h2>
@@ -450,7 +449,7 @@ Laboratorio práctico de discernimiento relacional. Convertimos confusión emoci
 </section>
 </main>
 
-<!-- FOOTER CON THREADS -->
+<!-- FOOTER -->
 <footer class="py-32 px-6 bg-paper text-center border-t border-divider text-ink">
 <div class="max-w-4xl mx-auto flex flex-col items-center">
 <div class="w-16 h-16 mb-8 overflow-hidden rounded-full border border-divider">
@@ -467,7 +466,7 @@ Laboratorio práctico de discernimiento relacional. Convertimos confusión emoci
 </footer>
 
 <script>
-const apiKey = ""; 
+const apiKey = ""; // La clave se inyecta automáticamente en tiempo de ejecución.
 
 const translations = {
 es: {
@@ -492,7 +491,7 @@ en: {
 "btn-analyze": "Get Perspective", "btn-generate": "Generate Field Note",
 "archive-label": "Archive", "archive-title": "Archive", "tab-es": "Spanish", "tab-en": "English",
 "slc-kicker": "Application Ecosystem", "slc-p1": "Clarity Before Connection is the conceptual framework. Self Love Club is where that framework becomes practice.", "slc-p2": "This isn't about superficial affirmations or self-esteem. It's about maintaining your integrity when emotional pressure rises. It is the extended space for those who wish to go beyond reading.", "slc-p3": "Inside the club, you will find expanded analysis, applied exercises, and a practice environment for people committed to their clarity.", "slc-btn": "Explore Ecosystem",
-"banner-text": "MAKE READING YOUR PERSONAL GROWTH TOOL! DISCOVER MY WORK", "banner-link": "EXPLORAR LIBROS"
+"banner-text": "MAKE READING YOUR PERSONAL GROWTH TOOL! DISCOVER MY WORK", "banner-link": "EXPLORE BOOKS"
 }
 };
 
@@ -548,23 +547,38 @@ if(banner) banner.style.display = 'none';
 document.documentElement.classList.add('banner-closed');
 }
 
+// CEREBRO GEMINI REPARADO SEGÚN EL WORKFLOW DEL ENTORNO
 async function callGemini(prompt, systemPrompt) {
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
     const payload = {
         contents: [{ parts: [{ text: prompt }] }],
         systemInstruction: { parts: [{ text: systemPrompt }] }
     };
+
+    // Exponential Backoff Implementation (1s, 2s, 4s, 8s, 16s)
     for (let i = 0; i < 5; i++) {
         try {
-            const response = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-            if (!response.ok) throw new Error('Error');
-            const data = await response.json();
-            return data.candidates?.[0]?.content?.parts?.[0]?.text || "No response.";
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            
+            const result = await response.json();
+            const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+            
+            if (text) return text;
+            throw new Error('Empty response');
+            
         } catch (e) {
-            await new Promise(res => setTimeout(res, Math.pow(2, i) * 1000));
+            if (i === 4) break; // Last attempt failed
+            const delay = Math.pow(2, i) * 1000;
+            await new Promise(res => setTimeout(res, delay));
         }
     }
-    return "Error: Could not connect.";
+    return "Error: No se pudo conectar con el Laboratorio después de varios intentos. Verifica la conexión.";
 }
 
 function formatResponse(text) {
@@ -580,13 +594,21 @@ async function analyzeClarity() {
     const btnText = document.getElementById('analyzeBtnText');
     const spinner = document.getElementById('analyzeSpinner');
     const div = document.getElementById('clarityResult');
+
     spinner.classList.remove('hidden');
     btnText.innerText = "...";
-    const text = await callGemini(input.value, aiPrompts[currentLang].clarity);
-    div.innerHTML = formatResponse(text);
-    div.classList.remove('hidden');
-    spinner.classList.add('hidden');
-    btnText.innerText = translations[currentLang]["btn-analyze"];
+
+    try {
+        const text = await callGemini(input.value, aiPrompts[currentLang].clarity);
+        div.innerHTML = formatResponse(text);
+        div.classList.remove('hidden');
+    } catch (error) {
+        div.innerHTML = "Ocurrió un error técnico al procesar el discernimiento.";
+        div.classList.remove('hidden');
+    } finally {
+        spinner.classList.add('hidden');
+        btnText.innerText = translations[currentLang]["btn-analyze"];
+    }
 }
 
 async function generateFieldNote() {
@@ -596,19 +618,28 @@ async function generateFieldNote() {
     const spinner = document.getElementById('noteSpinner');
     const divResult = document.getElementById('noteResult');
     const content = document.getElementById('noteContent');
+
     spinner.classList.remove('hidden');
     btnText.innerText = "...";
-    const text = await callGemini(input.value, aiPrompts[currentLang].audit);
-    content.innerHTML = formatResponse(text);
-    divResult.classList.remove('hidden');
-    spinner.classList.add('hidden');
-    btnText.innerText = translations[currentLang]["btn-generate"];
+
+    try {
+        const text = await callGemini(input.value, aiPrompts[currentLang].audit);
+        content.innerHTML = formatResponse(text);
+        divResult.classList.remove('hidden');
+    } catch (error) {
+        content.innerHTML = "No se pudo generar la nota de campo.";
+        divResult.classList.remove('hidden');
+    } finally {
+        spinner.classList.add('hidden');
+        btnText.innerText = translations[currentLang]["btn-generate"];
+    }
 }
 
 function filterEssays() {
     const filter = document.getElementById('essaySearch').value.toLowerCase();
     const activeGridId = currentLang === 'es' ? 'essays-grid-es' : 'essays-grid-en';
     const activeGrid = document.getElementById(activeGridId);
+    if (!activeGrid) return;
     const articles = activeGrid.getElementsByTagName('article');
     for (let art of articles) {
         const title = art.querySelector('h3').innerText.toLowerCase();
