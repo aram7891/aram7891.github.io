@@ -11,11 +11,3 @@ jobs:
 
       - name: Skip lint (static project)
         run: echo "No lint step — static project without Node.js root"
-
-      - name: Set commit status
-        uses: actions/create-commit-status@v1
-        with:
-          state: success
-          description: "Vercel - andresramirez: lint"
-          context: "lint"
-          github_token: ${{ secrets.GITHUB_TOKEN }}
