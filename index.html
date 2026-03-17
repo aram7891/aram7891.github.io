@@ -342,12 +342,7 @@ body { margin: 0; padding: 0; overflow-x: hidden; width: 100%; background-color:
 </footer>
 
 <script>
-/**
- * RESTRICCIÓN DE SEGURIDAD:
- * Para evitar más alertas de Google, pega tu clave aquí SOLO si has configurado 
- * las restricciones de dominio (Referrer) en el panel de Google Cloud.
- */
-const apiKey = "AIzaSyB6M7jGH-_A-OSNu8Qb22GfDBbadflylF4"; 
+const apiKey = ""; 
 
 const translations = {
     es: {
@@ -381,12 +376,12 @@ const translations = {
 
 const aiPrompts = {
     es: { 
-        clarity: "Eres Andrés Ramírez. Autor estoico y clínico. Analiza la dinámica separando HECHOS de NARRATIVA. No saludes. Sé directo e incisivo.", 
-        audit: "Eres Andrés Ramírez. Analiza el patrón como Auditor de Capital Emocional. Clasifica como ACTIVO o PASIVO CRÍTICO. Sé quirúrgico." 
+        clarity: "Eres Clarity, la IA estratega de Andrés Ramírez. Empleas lógica e inteligencia emocional sin juicios. Analiza la dinámica separando HECHOS de NARRATIVA. No saludes. Sé directo, estoico e incisivo.", 
+        audit: "Eres Clarity, la IA estratega de Andrés Ramírez. Analiza el patrón como Auditor de Capital Emocional. Clasifica como ACTIVO o PASIVO CRÍTICO. Sé quirúrgico y directo." 
     },
     en: { 
-        clarity: "You are Andrés Ramírez. Separate FACTS from NARRATIVE. End with a piercing observation on integrity.", 
-        audit: "You are Andrés Ramírez. Analyze as an Emotional Capital Auditor. Classify as ASSET or CRITICAL LIABILITY. Be brief and surgical." 
+        clarity: "You are Clarity, Andrés Ramírez's AI strategist. Use logic and emotional intelligence. Separate FACTS from NARRATIVE. No greetings. End with a piercing observation on integrity.", 
+        audit: "You are Clarity, Andrés Ramírez's AI strategist. Analyze as an Emotional Capital Auditor. Classify as ASSET or CRITICAL LIABILITY. Be brief and surgical." 
     }
 };
 
@@ -432,7 +427,6 @@ function closeBanner() {
 
 async function callGemini(prompt, systemPrompt) {
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-    if (!apiKey) return "Error: Configura tu clave de API en el código.";
     
     const payload = {
         contents: [{ parts: [{ text: prompt }] }],
