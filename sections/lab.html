@@ -1,68 +1,97 @@
-<section id="about" class="py-32 px-6 md:px-12 bg-white border-t border-divider">
-  <div class="max-w-5xl mx-auto flex flex-col lg:flex-row gap-16">
+<section id="ai-tools" class="py-32 px-6 md:px-12 bg-paper border-t border-b
+border-divider text-ink">
 
-    <div class="lg:w-1/3">
-      <span class="text-[10px] font-bold tracking-widest uppercase text-subtle mb-3
-      block" data-i18n="about-kicker">Sobre el Autor</span>
+  <div class="max-w-5xl mx-auto">
 
-      <h2 class="font-serif text-4xl text-ink leading-tight" data-i18n="about-title">Andrés
-      Ramírez</h2>
+    <div class="text-center mb-16">
+      <span class="text-[10px] font-bold tracking-widest uppercase text-subtle mb-2
+      block" data-i18n="tools-label">Laboratorio de Discernimiento</span>
+
+      <h2 class="font-serif text-4xl mb-4" data-i18n="tools-title">Interacción con la
+      Claridad</h2>
+
+      <p class="text-subtle text-sm max-w-xl mx-auto"
+      data-i18n="tools-desc">Laboratorio práctico de discernimiento relacional. Convertimos
+      confusión emocional en datos accionables mediante auditorías técnicas .< /p>
     </div>
 
-    <div class="lg:w-2/3 flex flex-col gap-6 text-sm text-subtle leading-relaxed text-ink">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
 
-      <p data-i18n="about-p1">Escribo para personas que buscan claridad -no
-      perfección- en sus relaciones. Mi trabajo explora cómo la presión emocional distorsiona el
-      juicio, y cómo mantenerte alineado contigo mismo al elegir quién y qué permites entrar en tu
-      vida .< /p>
+      <!-- DISCERNIMIENTO RELACIONAL -->
+      <article class="p-10 flex flex-col shadow-sm border border-divider bg-white">
 
-      <p data-i18n="about-p2">No prometo transformaciones ni soluciones rápidas.
-      Ofrezco presencia, discernimiento y herramientas para tomar decisiones adultas bajo
-      presión emocional. Este trabajo es para personas que están cansadas de repetir patrones
-      que ya entienden-aquellos listos para asumir la responsabilidad personal, la madurez
-      emocional y el coraje silencioso requerido para elegir conexiones alineadas con sus
-      valores, no con sus miedos o fantasías .< /p>
+        <h3 class="font-serif text-2xl mb-2 tracking-tight"
+        data-i18n="tool1-title">Discernimiento Relacional</h3>
 
-      <p data-i18n="about-p3">No me interesa ayudar a que las personas se sientan
-      mejor temporalmente o a replantear todo como crecimiento. Me interesa ayudar a que las
-      personas se mantengan intactas cuando el deseo, la esperanza o la soledad generan
-      presión para comprometer su claridad. Estos libros no tratan sobre cómo ser más digno de
-      amor, más sanado o más atractivo. Tratan sobre aprender a no abandonarte a ti mismo
-      mientras buscas conexión .< /p>
+        <p class="text-[9px] text-accent mb-4 uppercase tracking-[0.2em] font-bold"
+        data-i18n="tool1-subtitle">Perspectiva Técnica</p>
+
+        <p class="text-xs text-subtle mb-6 leading-relaxed">
+          <span data-i18n="tool1-help">Describe una dinámica que te genere
+          confusión.</span>
+          <span class="block mt-1 font-bold text-ink italic"
+          data-i18n="tool1-example">Ej: "Me busca constantemente pero evade formalizar".</span>
+        </p>
+
+        <textarea id="situationInput" rows="5" class="w-full p-4 text-sm border
+        border-divider rounded-none bg-paper focus:ring-1 focus:ring-ink outline-none mb-6"
+        data-i18n-placeholder="placeholder-discern"></textarea>
+
+        <button onclick="analyzeClarity()" id="analyzeBtn" class="w-full py-4 bg-ink
+        text-white text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-opacity-90 flex
+        items-center justify-center transition-all">
+          <span id="analyzeSpinner" class="spinner hidden"></span>
+          <span id="analyzeBtnText" data-i18n="btn-analyze">Obtener
+          Perspectiva</span>
+        </button>
+
+        <div id="clarityResult" class="mt-8 p-6 bg-paper border border-divider text-[10px]
+        hidden">
+          <span class="block font-bold mb-3 uppercase tracking-[0.2em] text-subtle"
+          data-i18n="record-label">Registro de Auditoría</span>
+          <div id="clarityContent" class="leading-relaxed"></div>
+        </div>
+
+      </article>
+
+      <!-- AUDITORÍA EMOCIONAL -->
+      <article class="p-10 flex flex-col shadow-sm border border-divider bg-white">
+
+        <h3 class="font-serif text-2xl mb-2 tracking-tight"
+        data-i18n="tool2-title">Auditoría Emocional</h3>
+
+        <p class="text-[9px] text-accent mb-4 uppercase tracking-[0.2em] font-bold"
+        data-i18n="tool2-subtitle">Patrones de Activo/Pasivo</p>
+
+        <p class="text-xs text-subtle mb-6 leading-relaxed">
+          <span data-i18n="tool2-help">Introduce un comportamiento o ciclo que repites.</span>
+          <span class="block mt-1 font-bold text-ink italic"
+          data-i18n="tool2-example">Ej: "Suelo ignorar banderas rojas por el potencial de la persona".</span>
+        </p>
+
+        <textarea id="patternInput" rows="5" class="w-full p-4 text-sm border
+        border-divider rounded-none bg-paper focus:ring-1 focus:ring-ink outline-none mb-6"
+        data-i18n-placeholder="placeholder-audit"></textarea>
+
+        <button onclick="generateFieldNote()" id="noteBtn" class="w-full py-4 border
+        border-ink text-ink text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-ink
+        hover:text-white flex items-center justify-center transition-all">
+          <span id="noteSpinner" class="spinner hidden"></span>
+          <span id="noteBtnText" data-i18n="btn-generate">Generar Nota de
+          Campo</span>
+        </button>
+
+        <div id="noteResult" class="mt-8 p-6 bg-paper border border-divider text-[10px]
+        hidden">
+          <span class="block font-bold mb-3 uppercase tracking-[0.2em] text-subtle"
+          data-i18n="record-label">Registro de Auditoría</span>
+          <div id="noteContent" class="leading-relaxed"></div>
+        </div>
+
+      </article>
 
     </div>
 
   </div>
+
 </section>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-
-  <article class="p-10 flex flex-col shadow-sm border border-divider bg-white">
-
-    <h3 class="font-serif text-2xl mb-2 tracking-tight"
-    data-i18n="tool1-title">Discernimiento Relacional</h3>
-
-    <p class="text-[9px] text-accent mb-4 uppercase tracking-[0.2em] font-bold"
-    data-i18n="tool1-subtitle">Perspectiva Técnica</p>
-
-    <p class="text-xs text-subtle mb-6 leading-relaxed">
-      <span data-i18n="tool1-help">Describe una dinámica que te genere
-      confusión .< /span>
-      <span class="block mt-1 font-bold text-ink italic"
-      data-i18n="tool1-example">Ej: "Me busca constantemente pero evade formalizar" .< /span>
-    </p>
-
-    <textarea id="situationInput" rows="5" class="w-full p-4 text-sm border
-    border-divider rounded-none bg-paper focus:ring-1 focus:ring-ink outline-none mb-6"
-    data-i18n-placeholder="placeholder-discern"></textarea>
-
-    <button onclick="analyzeClarity()" id="analyzeBtn" class="w-full py-4 bg-ink
-    text-white text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-opacity-90 flex
-    items-center justify-center transition-all">
-      <span id="analyzeSpinner" class="spinner hidden"></span>
-      <span id="analyzeBtn Text" data-i18n="btn-analyze">Obtener
-      Perspectiva</span>
-    </button>
-
-    <div id=
-
-
