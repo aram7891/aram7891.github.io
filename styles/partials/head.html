@@ -1,43 +1,64 @@
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+:root {
+  --bg-paper:#fff; --text-main:#1a1a1a; --text-muted:#666; --accent:#000;
+}
+.serif { font-family:'Playfair Display', serif; }
 
-  <!-- SEO -->
-  <meta name="description" content="">
-  <meta property="og:title" content="">
-  <meta property="og:description" content="">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="">
-  <meta name="twitter:card" content="summary_large_image">
+.prose-content {
+  line-height:1.8;
+  font-size:1.125rem;
+  color:#2d2d2d;
+}
+.prose-content h2 {
+  font-family:'Playfair Display', serif;
+  font-size:2rem;
+  margin-top:3rem;
+  margin-bottom:1.25rem;
+  font-weight:600;
+  color:#000;
+}
+.prose-content h3 {
+  font-size:1.35rem;
+  font-weight:600;
+  margin-top:2rem;
+  margin-bottom:1rem;
+}
+.prose-content p { margin-bottom:1.6rem; }
+.prose-content blockquote {
+  border-left:2px solid var(--accent);
+  padding-left:1.5rem;
+  font-style:italic;
+  margin:3rem 0;
+  font-family:'Playfair Display', serif;
+  font-size:1.4rem;
+  color:#4a4a4a;
+}
+.prose-content ul {
+  list-style:disc;
+  margin-left:1.5rem;
+  margin-bottom:1.5rem;
+  display:flex;
+  flex-direction:column;
+  gap:.75rem;
+}
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+.essay-collapsed {
+  max-height:500px;
+  overflow:hidden;
+  mask-image:linear-gradient(to bottom,black 75%,transparent 100%);
+  -webkit-mask-image:linear-gradient(to bottom,black 75%,transparent 100%);
+}
+.essay-expanded { max-height:none!important; mask-image:none!important; }
 
-  <!-- Tailwind -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            paper: '#FAFAFA',
-            ink: '#1A1A1A',
-            subtle: '#71717A',
-            divider: '#E4E4E7',
-            accent: '#A67C52'
-          },
-          fontFamily: {
-            serif: ['"Playfair Display"', 'serif'],
-            sans: ['"Inter"', 'sans-serif']
-          }
-        }
-      }
-    }
-  </script>
+.lang-active { color:black; border-bottom:2px solid black; }
+[data-lang]{ display:none; }
+.visible-lang{ display:block!important; }
 
-  <!-- Global Styles -->
-  <link rel="stylesheet" href="/styles/global.css">
-
-  <!-- Scripts -->
-  <script defer src="/scripts/main.js"></script>
-</head>
+.btn-action {
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  transition:.3s;
+}
+</style>
