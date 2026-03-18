@@ -14,14 +14,17 @@ const translations = {
     "hero-btn-more": "Más sobre mí",
 
     /* ABOUT */
-    "about-title": "Sobre mí",
-    "about-body": "Soy autor y estratega de claridad emocional. Ayudo a personas a tomar decisiones adultas bajo presión emocional.",
+    "about-kicker": "Sobre el Autor",
+    "about-title": "Andrés Ramírez",
+    "about-p1": "Escribo para personas que buscan claridad —no perfección— en sus relaciones. Mi trabajo explora cómo la presión emocional distorsiona el juicio y cómo mantenerte alineado contigo mismo al elegir quién y qué permites entrar en tu vida.",
+    "about-p2": "No prometo transformaciones ni soluciones rápidas. Ofrezco presencia, discernimiento y herramientas para tomar decisiones adultas bajo presión emocional. Este trabajo es para personas que están cansadas de repetir patrones que ya entienden, listas para asumir la responsabilidad personal, la madurez emocional y el coraje silencioso requerido para elegir conexiones alineadas con sus valores, no con sus miedos o fantasías.",
+    "about-p3": "No me interesa ayudar a que las personas se sientan mejor temporalmente o a replantear todo como crecimiento. Me interesa ayudar a que las personas se mantengan intactas cuando el deseo, la esperanza o la soledad generan presión para comprometer su claridad. Estos libros no tratan sobre cómo ser más digno de amor, más sanado o más atractivo. Tratan sobre aprender a no abandonarte a ti mismo mientras buscas conexión.",
 
-    /* ESSAYS */
-    "essays-title": "Escritos",
-    "essays-read-more": "Leer más",
-    "essays-collapse": "Cerrar",
-    "essays-empty": "No hay ensayos disponibles en este idioma.",
+    /* ARCHIVE / ESSAYS */
+    "archive-label": "Hemeroteca",
+    "archive-title": "Archivo de Ensayos",
+    "tab-es": "Español",
+    "tab-en": "Inglés",
 
     /* LAB */
     "lab-title": "Laboratorio",
@@ -34,7 +37,7 @@ const translations = {
     "footer-contact": "Contacto",
     "footer-privacy": "Privacidad",
 
-    /* FORMS / PLACEHOLDERS */
+    /* FORMS */
     "form-name": "Nombre",
     "form-email": "Correo electrónico",
     "form-message": "Mensaje",
@@ -56,30 +59,8 @@ const translations = {
     "hero-btn-more": "More about me",
 
     /* ABOUT */
-    "about-title": "About me",
-    "about-body": "I am an author and emotional clarity strategist. I help people make adult decisions under emotional pressure.",
-
-    /* ESSAYS */
-    "essays-title": "Essays",
-    "essays-read-more": "Read more",
-    "essays-collapse": "Close",
-    "essays-empty": "No essays available in this language.",
-
-    /* LAB */
-    "lab-title": "Laboratory",
-    "lab-subtitle": "A space to explore ideas, frameworks, and applied clarity.",
-    "lab-btn-open": "Open",
-    "lab-btn-close": "Close",
-
-    /* FOOTER */
-    "footer-rights": "All rights reserved.",
-    "footer-contact": "Contact",
-    "footer-privacy": "Privacy",
-
-    /* FORMS / PLACEHOLDERS */
-    "form-name": "Name",
-    "form-email": "Email",
-    "form-message": "Message",
-    "form-send": "Send message"
-  }
-};
+    "about-kicker": "About the Author",
+    "about-title": "Andrés Ramírez",
+    "about-p1": "I write for people who seek clarity—not perfection—in their relationships. My work explores how emotional pressure distorts judgment and how to stay aligned with yourself while choosing who and what you allow into your life.",
+    "about-p2": "I don’t promise transformations or quick fixes. I offer presence, discernment, and tools for making adult decisions under emotional pressure. This work is for people who are tired of repeating patterns they already understand—those ready to embrace personal responsibility, emotional maturity, and the quiet courage required to choose connections aligned with their values, not their fears or fantasies.",
+    "about-p3": "I’m not interested in helping people feel better temporarily or reframing everything as growth. I’m interested in helping people stay intact when desire, hope, or loneliness create pressure to compromise clarity. These books are not about becoming more lovable, more healed, or more attractive. They
