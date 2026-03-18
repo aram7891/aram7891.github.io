@@ -1,118 +1,155 @@
-:root { 
-  scroll-padding-top: 140px; 
-  transition: scroll-padding-top 0.3s ease; 
+/* ===========================
+   VARIABLES GLOBALES
+=========================== */
+:root {
+  --paper: #FAFAFA;
+  --ink: #1A1A1A;
+  --subtle: #71717A;
+  --divider: #E4E4E7;
+  --accent: #A67C52;
+
+  scroll-padding-top: 140px;
+  transition: scroll-padding-top 0.3s ease;
 }
 
-.banner-closed { scroll-padding-top: 80px; }
-
-body { 
-  margin: 0; 
-  padding: 0; 
-  overflow-x: hidden; 
-  width: 100%; 
-  background-color: #FAFAFA; 
-  color: #1A1A1A; 
+.banner-closed {
+  scroll-padding-top: 80px;
 }
 
-#announcement-banner { 
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  min-height: 40px; 
-  transition: all 0.4s ease; 
-  position: relative; 
-  z-index: 60; 
+/* ===========================
+   RESET / BASE
+=========================== */
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  width: 100%;
+  background-color: var(--paper);
+  color: var(--ink);
 }
 
-.author-photo { 
-  filter: grayscale(100%); 
-  object-fit: cover; 
-  transition: filter 0.4s ease; 
+/* ===========================
+   BANNER
+=========================== */
+#announcement-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  transition: all 0.4s ease;
+  position: relative;
+  z-index: 60;
 }
 
-.author-photo:hover { filter: grayscale(30%); }
-
-.essay-card { 
-  background: #ffffff; 
-  border: 1px solid #E4E4E7; 
-  padding: 2.5rem 2rem; 
-  display: flex; 
-  flex-direction: column; 
-  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); 
-  height: 100%; 
+/* ===========================
+   AUTHOR PHOTO
+=========================== */
+.author-photo {
+  filter: grayscale(100%);
+  object-fit: cover;
+  transition: filter 0.4s ease;
 }
 
-.essay-card:hover { 
-  border-color: #1A1A1A; 
-  transform: translateY(-8px); 
-  box-shadow: 0 30px 60px -20px rgba(0,0,0,0.08); 
+.author-photo:hover {
+  filter: grayscale(30%);
 }
 
-.read-btn { 
-  display: inline-block; 
-  margin-top: auto; 
-  padding: 12px 0; 
-  font-size: 10px; 
-  font-weight: 700; 
-  letter-spacing: 0.2em; 
-  text-transform: uppercase; 
-  border-bottom: 1px solid #1A1A1A; 
-  color: #1A1A1A; 
-  transition: all 0.3s ease; 
-  text-decoration: none; 
-  cursor: pointer; 
+/* ===========================
+   ESSAY CARD
+=========================== */
+.essay-card {
+  background: #ffffff;
+  border: 1px solid var(--divider);
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+  height: 100%;
 }
 
-.read-btn:hover { 
-  opacity: 0.5; 
-  letter-spacing: 0.3em; 
+.essay-card:hover {
+  border-color: var(--ink);
+  transform: translateY(-8px);
+  box-shadow: 0 30px 60px -20px rgba(0,0,0,0.08);
 }
 
-.spinner { 
-  border: 2px solid rgba(0, 0, 0, 0.1); 
-  width: 18px; 
-  height: 18px; 
-  border-radius: 50%; 
-  border-left-color: #1A1A1A; 
-  animation: spin 1s linear infinite; 
-  display: inline-block; 
-  margin-right: 8px; 
+/* ===========================
+   READ BUTTON
+=========================== */
+.read-btn {
+  display: inline-block;
+  margin-top: auto;
+  padding: 12px 0;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--ink);
+  color: var(--ink);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  cursor: pointer;
 }
 
-@keyframes spin { 
-  0% { transform: rotate(0deg); } 
-  100% { transform: rotate(360deg); } 
+.read-btn:hover {
+  opacity: 0.5;
+  letter-spacing: 0.3em;
 }
 
-.essay-tab { 
-  cursor: pointer; 
-  padding: 8px 20px; 
-  font-size: 10px; 
-  font-weight: 700; 
-  letter-spacing: 0.15em; 
-  text-transform: uppercase; 
-  border-bottom: 2px solid transparent; 
-  transition: all 0.3s ease; 
-  color: #71717A; 
+/* ===========================
+   SPINNER
+=========================== */
+.spinner {
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border-left-color: var(--ink);
+  animation: spin 1s linear infinite;
+  display: inline-block;
+  margin-right: 8px;
 }
 
-.essay-tab.active { 
-  border-bottom-color: #1A1A1A; 
-  color: #1A1A1A; 
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
-.lang-switch { 
-  font-size: 10px; 
-  letter-spacing: 0.1em; 
-  cursor: pointer; 
-  padding: 4px 12px; 
-  border: 1px solid #E4E4E7; 
-  transition: all 0.2s ease; 
-  font-weight: 700; 
+/* ===========================
+   ESSAY TABS
+=========================== */
+.essay-tab {
+  cursor: pointer;
+  padding: 8px 20px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+  color: var(--subtle);
 }
 
-.lang-active { 
-  background: #1A1A1A; 
-  color: #FAFAFA; 
-  border-color: #1A1A1A; 
+.essay-tab.active {
+  border-bottom-color: var(--ink);
+  color: var(--ink);
+}
+
+/* ===========================
+   LANGUAGE SWITCH
+=========================== */
+.lang-switch {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  padding: 4px 12px;
+  border: 1px solid var(--divider);
+  transition: all 0.2s ease;
+  font-weight: 700;
+}
+
+.lang-active {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
 }
