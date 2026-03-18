@@ -26,6 +26,12 @@ const translations = {
     "tab-es": "Español",
     "tab-en": "Inglés",
 
+    /* BOOKS */
+    "books-label": "Publicaciones",
+    "books-title": "Libros",
+    "books-desc": "Exploraciones profundas sobre claridad emocional, autonomía y discernimiento relacional.",
+    "books-cta": "[Próximamente]",
+
     /* LAB */
     "lab-title": "Laboratorio",
     "lab-subtitle": "Un espacio para explorar ideas, frameworks y claridad aplicada.",
@@ -63,4 +69,35 @@ const translations = {
     "about-title": "Andrés Ramírez",
     "about-p1": "I write for people who seek clarity—not perfection—in their relationships. My work explores how emotional pressure distorts judgment and how to stay aligned with yourself while choosing who and what you allow into your life.",
     "about-p2": "I don’t promise transformations or quick fixes. I offer presence, discernment, and tools for making adult decisions under emotional pressure. This work is for people who are tired of repeating patterns they already understand—those ready to embrace personal responsibility, emotional maturity, and the quiet courage required to choose connections aligned with their values, not their fears or fantasies.",
-    "about-p3": "I’m not interested in helping people feel better temporarily or reframing everything as growth. I’m interested in helping people stay intact when desire, hope, or loneliness create pressure to compromise clarity. These books are not about becoming more lovable, more healed, or more attractive. They
+    "about-p3": "I’m not interested in helping people feel better temporarily or reframing everything as growth. I’m interested in helping people stay intact when desire, hope, or loneliness create pressure to compromise clarity. These books are not about becoming more lovable, more healed, or more attractive. They are about learning how not to abandon yourself while seeking connection.",
+
+    /* ARCHIVE / ESSAYS */
+    "archive-label": "Archive",
+    "archive-title": "Essay Library",
+    "tab-es": "Spanish",
+    "tab-en": "English",
+
+    /* BOOKS */
+    "books-label": "Publications",
+    "books-title": "Books",
+    "books-desc": "Deep explorations on emotional clarity, autonomy, and relational discernment.",
+    "books-cta": "[Coming soon]",
+
+    /* LAB */
+    "lab-title": "Laboratory",
+    "lab-subtitle": "A space to explore ideas, frameworks, and applied clarity.",
+    "lab-btn-open": "Open",
+    "lab-btn-close": "Close",
+
+    /* FOOTER */
+    "footer-rights": "All rights reserved.",
+    "footer-contact": "Contact",
+    "footer-privacy": "Privacy",
+
+    /* FORMS */
+    "form-name": "Name",
+    "form-email": "Email",
+    "form-message": "Message",
+    "form-send": "Send message"
+  }
+};
