@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- HEAD MAESTRO -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO -->
+  <meta name="description" content="">
+  <meta property="og:title" content="">
+  <meta property="og:description" content="">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            paper: '#FAFAFA',
+            ink: '#1A1A1A',
+            subtle: '#71717A',
+            divider: '#E4E4E7',
+            accent: '#A67C52'
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'serif'],
+            sans: ['"Inter"', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Global Styles -->
+  <link rel="stylesheet" href="/styles/global.css">
+
+  <!-- Scripts -->
+  <script defer src="/scripts/main.js"></script>
+</head>
+
+<body class="bg-paper text-ink">
+
+  <!-- BANNER (opcional) -->
+  <div id="announcement-banner" class="w-full text-center text-xs tracking-wider">
+    <!-- contenido dinámico -->
+  </div>
+
+  <!-- HEADER -->
+  <header class="w-full py-6 border-b border-divider">
+    <div class="max-w-4xl mx-auto px-6 flex justify-between items-center">
+      <a href="/" class="font-serif text-xl">Self Love Club</a>
+
+      <nav class="flex items-center gap-6 text-xs tracking-widest uppercase">
+        <a href="/field-notes.html">Field Notes</a>
+        <a href="/publications.html">Publications</a>
+        <a href="/lab.html">Lab</a>
+        <a href="/contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="max-w-4xl mx-auto px-6 py-16">
+    <!-- Aquí va el contenido específico de cada página -->
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="w-full py-12 border-t border-divider text-center text-xs tracking-widest uppercase">
+    © Self Love Club — Editorial Strategy & Clarity
+  </footer>
+
+</body>
+</html>
