@@ -1,5 +1,5 @@
 export default async function handler(req, res) {
-  // 1. Configuración de CORS (Permitir que tu dominio lo use)
+  // 1. Configuración de CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
@@ -10,11 +10,13 @@ export default async function handler(req, res) {
 
   const { prompt, systemPrompt } = req.body;
   
-  // Usamos la variable de entorno. ASEGÚRATE que en Vercel se llame GEMINI_KEY
-  const apiKey = process.env.GEMINI_KEY;
+  // AQUÍ ESTÁ EL CAMBIO: Busca cualquiera de los dos nombres que tienes en Vercel
+  const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_GENERATION_AI_API_KEY;
 
   if (!apiKey) {
-    return res.status(500).json({ error: "Falta la API Key en la configuración de Vercel" });
+    return res.status(500).json({ 
+      error: "No se encontró la API Key en Vercel. Asegúrate de que el nombre coincida." 
+    });
   }
 
   try {
@@ -32,12 +34,11 @@ export default async function handler(req, res) {
 
     const data = await response.json();
 
-    // Si Google responde con error, te lo enviamos para saber qué pasó
     if (data.error) {
       return res.status(400).json({ error: data.error.message });
     }
 
-    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || "Sin respuesta del modelo.";
+    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || "Sin respuesta.";
     return res.status(200).json({ result: text });
 
   } catch (error) {
