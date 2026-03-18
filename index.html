@@ -6,25 +6,41 @@
 
   <title>Andrés Ramírez — Claridad Antes que Conexión</title>
 
-  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
-  <!-- Styles -->
   <link rel="stylesheet" href="/styles.css" />
 
-  <!-- Script de carga modular -->
   <script>
     async function loadSection(id, file) {
-      const container = document.getElementById(id);
-      const response = await fetch(file);
-      const html = await response.text();
-      container.innerHTML = html;
+      try {
+        const container = document.getElementById(id);
+        const response = await fetch(file);
+        if (!response.ok) throw new Error(`Error cargando ${file}`);
+        const html = await response.text();
+        container.innerHTML = html;
+
+        // ESTO ACTIVA EL LABORATORIO Y OTROS SCRIPTS
+        const scripts = container.querySelectorAll("script");
+        scripts.forEach((oldScript) => {
+          const newScript = document.createElement("script");
+          // Copia todos los atributos (src, type, etc.)
+          Array.from(oldScript.attributes).forEach(attr => 
+            newScript.setAttribute(attr.name, attr.value)
+          );
+          // Copia el contenido interno del script
+          newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+          // Reemplaza para forzar la ejecución
+          oldScript.parentNode.replaceChild(newScript, oldScript);
+        });
+      } catch (error) {
+        console.error("Error en la sección:", id, error);
+      }
     }
 
     document.addEventListener("DOMContentLoaded", () => {
+      // Cargamos todas las piezas del rompecabezas
       loadSection("navbar", "/sections/navbar.html");
       loadSection("hero", "/sections/hero.html");
       loadSection("about", "/sections/about.html");
@@ -37,9 +53,8 @@
   </script>
 </head>
 
-<body class="bg-paper text-ink">
+<body class="bg-[#fdfcf8] text-[#1a1a1a]">
 
-  <!-- Contenedores vacíos donde se insertan las secciones -->
   <div id="navbar"></div>
   <div id="hero"></div>
   <div id="about"></div>
