@@ -1,51 +1,78 @@
 <header class="fixed top-0 left-0 w-full z-50">
-  <div id="announcement-banner" class="bg-ink text-paper text-[9px] md:text-[10px]
-  uppercase tracking-[0.2em] font-bold">
-    <div class="banner-content">
-      <span data-i18n="banner-text">HAZ DE LA LECTURA TU HERRAMIENTA DE
-      CRECIMIENTO PERSONAL</span>
-      <a href="javascript:void(0)" onclick="scrollToSection('books')" class="underline ml-2"
-      data-i18n="banner-link">EXPLORAR LIBROS</a>
+
+  <!-- Banner -->
+  <div id="announcement-banner" class="bg-ink text-paper text-[9px] md:text-[10px] uppercase tracking-[0.2em] font-bold relative flex items-center justify-center">
+    <div class="banner-content flex items-center">
+      <span data-i18n="banner-text">
+        HAZ DE LA LECTURA TU HERRAMIENTA DE CRECIMIENTO PERSONAL
+      </span>
+      <a href="javascript:void(0)" onclick="scrollToSection('books')" class="underline ml-2" data-i18n="banner-link">
+        EXPLORAR LIBROS
+      </a>
     </div>
-    <button onclick="closeBanner()" class="absolute right-4" aria-label="Cerrar"><svg
-      width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="3"><line x1="18" y1="6"x2="6" y2="18"></line><line x1="6" y1="6"×2="18"
-      y2="18"></line></svg></button>
+
+    <button onclick="closeBanner()" class="absolute right-4" aria-label="Cerrar">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
   </div>
 
-  <nav id="navbar" class="w-full flex justify-between items-center px-6 py-4 md:px-12
-  bg-white/90 backdrop-blur-md border-b border-divider">
+  <!-- Navbar -->
+  <nav id="navbar" class="w-full flex justify-between items-center px-6 py-4 md:px-12 bg-white/90 backdrop-blur-md border-b border-divider">
 
-    <div class="font-serif text-lg tracking-wide font-semibold uppercase text-ink">Andrés
-    Ramírez</div>
+    <!-- Logo -->
+    <div class="font-serif text-lg tracking-wide font-semibold uppercase text-ink">
+      Andrés Ramírez
+    </div>
 
     <div class="flex items-center space-x-6">
-      <div class="hidden md:flex space-x-8 text-[10px] font-bold tracking-widest uppercase
-      text-ink">
-        <a href="javascript:void(0)" onclick="scrollToSection('home')"
-        data-i18n="nav-home">Inicio</a>
-        <a href="javascript:void(0)" onclick="scrollToSection('about')"
-        data-i18n="nav-about">Autor</a>
-        <a href="javascript:void(0)" onclick="scrollToSection('ai-tools')"
-        data-i18n="nav-tools">Laboratorio</a>
-        <a href="javascript:void(0)" onclick="scrollToSection('books')"
-        data-i18n="nav-books">Libros</a>
-        <a href="javascript:void(0)" onclick="scrollToSection('essays')"
-        data-i18n="nav-archive" class="text-accent font-bold">Archivo</a>
+
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex space-x-8 text-[10px] font-bold tracking-widest uppercase text-ink">
+
+        <a href="javascript:void(0)" onclick="scrollToSection('hero')" data-i18n="nav-home">
+          Inicio
+        </a>
+
+        <a href="javascript:void(0)" onclick="scrollToSection('about')" data-i18n="nav-about">
+          Autor
+        </a>
+
+        <a href="javascript:void(0)" onclick="scrollToSection('lab')" data-i18n="nav-tools">
+          Laboratorio
+        </a>
+
+        <a href="javascript:void(0)" onclick="scrollToSection('books')" data-i18n="nav-books">
+          Libros
+        </a>
+
+        <a href="javascript:void(0)" onclick="scrollToSection('essays')" data-i18n="nav-archive" class="text-accent font-bold">
+          Archivo
+        </a>
       </div>
 
+      <!-- Language Switch -->
       <div class="flex items-center space-x-0 font-bold text-[9px]">
-        <button onclick="setLanguage('es')" id="btn-es" class="lang-switch lang-active
-        rounded-l">ES</button>
-        <button onclick="setLanguage('en')" id="btn-en" class="lang-switch rounded-r
-        border-l-0">EN</button>
+        <button onclick="setLanguage('es')" id="btn-es" class="lang-switch lang-active rounded-l">
+          ES
+        </button>
+        <button onclick="setLanguage('en')" id="btn-en" class="lang-switch rounded-r border-l-0">
+          EN
+        </button>
       </div>
 
-      <button class="md:hidden" onclick="toggleMobileMenu()"><svg width="24"
-        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line
-        x1="3" y1="12"x2="21"y2="12"></line><line x1="3"y1="6"x2="21"y2="6"></line><line
-        x1="3" y1="18"×2="21"y2="18"></line></svg></button>
+      <!-- Mobile Menu Button -->
+      <button class="md:hidden" onclick="toggleMobileMenu()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+
     </div>
   </nav>
-</header>
 
+</header>
