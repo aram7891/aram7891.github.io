@@ -7,20 +7,35 @@
 
   <title>Andrés Ramírez — Claridad Antes que Conexión</title>
 
-  <!-- Tailwind    -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Fuentes  -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            paper: '#FAFAFA', 
+            ink: '#1A1A1A', 
+            subtle: '#71717A', 
+            divider: '#E4E4E7', 
+            accent: '#A67C52'
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'serif'], 
+            sans: ['"Inter"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
-  <!-- Estilos globales -->
   <link rel="stylesheet" href="/styles/global.css" />
 
-  <!-- Scripts globales -->
   <script src="/styles/scripts/translations.js" defer></script>
   <script src="/styles/scripts/main.js" defer></script>
 
-  <!-- Loader de secciones -->
   <script>
     async function loadSection(id, file) {
       try {
@@ -65,11 +80,10 @@
   </script>
 </head>
 
-<body class="bg-[#fdfcf8] text-[#1a1a1a]">
+<body class="bg-paper text-ink font-sans antialiased selection:bg-accent selection:text-paper">
 
   <div id="navbar"></div>
-  <div id="hero"></div>
-  <div id="about"></div>
+  <div id="home"></div> <div id="about"></div>
   <div id="lab"></div>
   <div id="essays"></div>
   <div id="books"></div>
