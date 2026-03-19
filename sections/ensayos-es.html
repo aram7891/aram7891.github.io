@@ -1,117 +1,109 @@
 <style>
-  .hemeroteca-container { padding-top: 5rem; padding-bottom: 4rem; }
+  .hemeroteca-section {
+    padding: 80px 0;
+    text-align: center; /* Centrado como las otras secciones */
+  }
   .hemeroteca-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    border-bottom: 1px solid #E4E4E7;
-    margin-bottom: 3rem;
-    padding-bottom: 1.5rem;
+    margin-bottom: 60px;
   }
   .hemeroteca-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    margin: 0;
-    line-height: 1;
-    color: #1A1A1A;
-    font-family: 'Playfair Display', serif;
-    text-transform: uppercase;
+    font-family: 'Playfair Display', serif; /* Tu fuente editorial */
+    font-size: 42px;
+    font-weight: 400;
+    margin-bottom: 10px;
+    text-transform: capitalize; /* No todo en mayúsculas */
   }
-  .meroteca-subtitle {
+  .hemeroteca-subtitle {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #888;
+  }
+  .lang-selector {
+    margin-top: 20px;
     font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: #71717A;
-    margin: 0.75rem 0 0 0;
+    letter-spacing: 1px;
   }
-  .lang-btn { background: none; border: none; cursor: pointer; color: #A1A1AA; font-weight: 700; font-size: 10px; padding: 0 5px; }
-  .lang-btn.active { color: #1A1A1A; }
-  .essays-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; align-items: start; }
-  .essay-card { background: #ffffff; border: 1px solid #E4E4E7; padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; min-height: 280px; transition: all 0.3s ease; }
-  .essay-card:hover { border-color: #1A1A1A; transform: translateY(-4px); }
-  .essay-number { font-size: 9px; font-weight: 700; color: #A67C52; margin-bottom: 1rem; display: block; }
-  .essay-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 0.75rem; color: #1A1A1A; }
-  .essay-card p { font-size: 12px; line-height: 1.6; color: #52525B; margin-bottom: 1.5rem; }
-  .read-btn { font-size: 9px; font-weight: 700; text-decoration: none; border-bottom: 1px solid #1A1A1A; color: #1A1A1A; align-self: flex-start; padding-bottom: 2px; }
+  .lang-link { cursor: pointer; color: #aaa; text-decoration: none; padding: 0 5px; }
+  .lang-link.active { color: #000; font-weight: bold; }
+
+  /* Grid de Ensayos Corregido */
+  .essays-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    text-align: left;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .essay-card {
+    border: 1px solid #eee;
+    padding: 40px 30px;
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .essay-card h3 { font-size: 18px; margin-bottom: 15px; font-family: 'Playfair Display', serif; }
+  .essay-card p { font-size: 13px; line-height: 1.6; color: #666; }
+  .read-more { font-size: 10px; font-weight: bold; border-bottom: 1px solid #000; text-decoration: none; color: #000; align-self: flex-start; padding-bottom: 3px; }
 </style>
 
-<div class="hemeroteca-container">
+<div class="hemeroteca-section">
   <div class="hemeroteca-header">
-    <div class="title-group">
-      <h1 class="hemeroteca-title">HEMEROTECA</h1>
-      <p class="meroteca-subtitle">ARCHIVO DE ENSAYOS</p>
-    </div>
-    <div class="language-toggler">
-      <button onclick="loadEssays('es')" class="lang-btn active">ES</button>
-      <span style="color:#E4E4E7">/</span>
-      <button onclick="loadEssays('en')" class="lang-btn">EN</button>
+    <h1 class="hemeroteca-title">Hemeroteca</h1>
+    <p class="hemeroteca-subtitle">Archivo de ensayos</p>
+    <div class="lang-selector">
+      <span class="lang-link active" onclick="loadEssays('es')">ES</span> / 
+      <span class="lang-link" onclick="loadEssays('en')">EN</span>
     </div>
   </div>
 
   <div class="essays-grid">
     <article class="essay-card">
-      <span class="essay-number">01</span>
       <h3>El Autoconocimiento como Activo Económico</h3>
       <p>El descuido de nuestra psicología es el costo oculto más alto. No es una habilidad blanda, es el sistema que determina cómo decidimos.</p>
-      <a href="content/essays/es/1-el-autoconocimiento-como-activo-economico.pdf" target="_blank" class="read-btn">LEER MÁS</a>
+      <a href="content/essays/es/1-el-autoconocimiento-como-activo-economico.pdf" target="_blank" class="read-more">LEER MÁS</a>
     </article>
-
     <article class="essay-card">
-      <span class="essay-number">02</span>
       <h3>Arbitraje Emocional</h3>
       <p>Sobre la capacidad de mantener claridad objetiva mientras el entorno opera bajo ruido. El arte de convertir la reactividad en decisión consciente.</p>
-      <a href="content/essays/es/2-arbitraje-emocional.pdf" target="_blank" class="read-btn">LEER MÁS</a>
+      <a href="content/essays/es/2-arbitraje-emocional.pdf" target="_blank" class="read-more">LEER MÁS</a>
     </article>
-
     <article class="essay-card">
-      <span class="essay-number">03</span>
       <h3>Costo de Oportunidad de Complacer a Otros</h3>
       <p>Analizo cómo la búsqueda de aprobación externa es una mala asignación de capital emocional que erosiona la autonomía decisional.</p>
-      <a href="content/essays/es/3-costo-de-oportunidad-de-complacer.pdf" target="_blank" class="read-btn">LEER MÁS</a>
+      <a href="content/essays/es/3-costo-de-oportunidad-de-complacer.pdf" target="_blank" class="read-more">LEER MÁS</a>
     </article>
-
     <article class="essay-card">
-      <span class="essay-number">04</span>
       <h3>La Arquitectura del Silencio</h3>
       <p>Lo que no decimos distorsiona nuestra percepción. Nombrar la realidad es la herramienta necesaria para restaurar la fidelidad de nuestras interacciones.</p>
-      <a href="content/essays/es/4-la-arquitectura-del-silencio.pdf" target="_blank" class="read-btn">LEER MÁS</a>
+      <a href="content/essays/es/4-la-arquitectura-del-silencio.pdf" target="_blank" class="read-more">LEER MÁS</a>
     </article>
-
     <article class="essay-card">
-      <span class="essay-number">05</span>
       <h3>Liquidez Cognitiva</h3>
       <p>La importancia de separar quiénes somos de lo que decidimos. La rigidez mental aparece cuando el cambio se siente como una amenaza a la identidad.</p>
-      <a href="content/essays/es/5-liquidez-cognitiva.pdf" target="_blank" class="read-btn">LEER MÁS</a>
+      <a href="content/essays/es/5-liquidez-cognitiva.pdf" target="_blank" class="read-more">LEER MÁS</a>
     </article>
-
     <article class="essay-card">
-      <span class="essay-number">06</span>
       <h3>Señal vs Ruido</h3>
       <p>En un mundo saturado, la claridad nace de aprender a ignorar lo que solo activa emociones pero no aporta nada al crecimiento real.</p>
-      <a href="content/essays/es/6-senal-vs-ruido.pdf" target="_blank" class="read-btn">LEER MÁS</a>
+      <a href="content/essays/es/6-senal-vs-ruido.pdf" target="_blank" class="read-more">LEER MÁS</a>
     </article>
-
     <article class="essay-card">
-      <span class="essay-number">07</span>
       <h3>El Progreso Disfrazado de Derrota</h3>
       <p>Por qué el crecimiento real suele sentirse como un vacío o una torpeza. Es el proceso de dejar de sobrevivir para empezar a decidir.</p>
-      <a href="content/essays/es/el-progreso-disfrazado-de-derrota.pdf" target="_blank" class="read-btn">LEER MÁS</a>
+      <a href="content/essays/es/el-progreso-disfrazado-de-derrota.pdf" target="_blank" class="read-more">LEER MÁS</a>
     </article>
-
     <article class="essay-card">
-      <span class="essay-number">08</span>
       <h3>La Conexión como Artículo de Lujo</h3>
       <p>Reflexiono sobre cómo el entorno digital ha encarecido el precio de la vulnerabilidad, prefiriendo la anestesia del algoritmo al vínculo real.</p>
-      <a href="content/essays/es/la-conexion-como-articulo-de-lujo.pdf" target="_blank" class="read-btn">LEER MÁS</a>
+      <a href="content/essays/es/la-conexion-como-articulo-de-lujo.pdf" target="_blank" class="read-more">LEER MÁS</a>
     </article>
-
     <article class="essay-card">
-      <span class="essay-number">09</span>
       <h3>Medir para Entender o para Esconderse</h3>
       <p>Una mirada a los sistemas que usamos para ubicarnos. Medir honestamente no te define, simplemente te deja sin excusas frente a lo que repites.</p>
-      <a href="content/essays/es/medir-para-entender-o-esconderse.pdf" target="_blank" class="read-btn">LEER MÁS</a>
+      <a href="content/essays/es/medir-para-entender-o-esconderse.pdf" target="_blank" class="read-more">LEER MÁS</a>
     </article>
   </div>
 </div>
