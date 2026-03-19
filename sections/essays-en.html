@@ -1,79 +1,64 @@
 <style>
-  .hemeroteca-container { padding-top: 5rem; padding-bottom: 4rem; }
-  .hemeroteca-header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid #E4E4E7; margin-bottom: 3rem; padding-bottom: 1.5rem; }
-  .hemeroteca-title { font-size: 2.5rem; font-weight: 700; margin: 0; line-height: 1; color: #1A1A1A; font-family: 'Playfair Display', serif; text-transform: uppercase; }
-  .meroteca-subtitle { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #71717A; margin: 0.75rem 0 0 0; }
-  .lang-btn { background: none; border: none; cursor: pointer; color: #A1A1AA; font-weight: 700; font-size: 10px; padding: 0 5px; }
-  .lang-btn.active { color: #1A1A1A; }
-  .essays-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; align-items: start; }
-  .essay-card { background: #ffffff; border: 1px solid #E4E4E7; padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; min-height: 280px; }
-  .essay-number { font-size: 9px; font-weight: 700; color: #A67C52; margin-bottom: 1rem; display: block; }
-  .essay-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 0.75rem; color: #1A1A1A; }
-  .essay-card p { font-size: 12px; line-height: 1.6; color: #52525B; margin-bottom: 1.5rem; }
-  .read-btn { font-size: 9px; font-weight: 700; text-decoration: none; border-bottom: 1px solid #1A1A1A; color: #1A1A1A; align-self: flex-start; }
+  /* Mismo CSS para mantener la consistencia */
+  .hemeroteca-section { padding: 80px 0; text-align: center; }
+  .hemeroteca-header { margin-bottom: 60px; }
+  .hemeroteca-title { font-family: 'Playfair Display', serif; font-size: 42px; font-weight: 400; margin-bottom: 10px; text-transform: capitalize; }
+  .hemeroteca-subtitle { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #888; }
+  .lang-selector { margin-top: 20px; font-size: 10px; letter-spacing: 1px; }
+  .lang-link { cursor: pointer; color: #aaa; text-decoration: none; padding: 0 5px; }
+  .lang-link.active { color: #000; font-weight: bold; }
+  .essays-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; text-align: left; max-width: 1200px; margin: 0 auto; }
+  .essay-card { border: 1px solid #eee; padding: 40px 30px; min-height: 320px; display: flex; flex-direction: column; justify-content: space-between; }
+  .essay-card h3 { font-size: 18px; margin-bottom: 15px; font-family: 'Playfair Display', serif; }
+  .essay-card p { font-size: 13px; line-height: 1.6; color: #666; }
+  .read-more { font-size: 10px; font-weight: bold; border-bottom: 1px solid #000; text-decoration: none; color: #000; align-self: flex-start; padding-bottom: 3px; }
 </style>
 
-<div class="hemeroteca-container">
+<div class="hemeroteca-section">
   <div class="hemeroteca-header">
-    <div class="title-group">
-      <h1 class="hemeroteca-title">HEMEROTECA</h1>
-      <p class="meroteca-subtitle">ESSAY ARCHIVE</p>
-    </div>
-    <div class="language-toggler">
-      <button onclick="loadEssays('es')" class="lang-btn">ES</button>
-      <span style="color:#E4E4E7">/</span>
-      <button onclick="loadEssays('en')" class="lang-btn active">EN</button>
+    <h1 class="hemeroteca-title">Hemeroteca</h1>
+    <p class="hemeroteca-subtitle">Essay archive</p>
+    <div class="lang-selector">
+      <span class="lang-link" onclick="loadEssays('es')">ES</span> / 
+      <span class="lang-link active" onclick="loadEssays('en')">EN</span>
     </div>
   </div>
 
   <div class="essays-grid">
     <article class="essay-card">
-      <span class="essay-number">01</span>
       <h3>Self-Awareness as an Economic Asset</h3>
       <p>Personal insight isn't just a psychological trait, but a quantifiable competitive advantage that shapes impact and sustainability.</p>
-      <a href="content/essays/en/1-self-awareness-as-an-economic-asset.pdf" target="_blank" class="read-btn">READ MORE</a>
+      <a href="content/essays/en/1-self-awareness-as-an-economic-asset.pdf" target="_blank" class="read-more">READ MORE</a>
     </article>
-
     <article class="essay-card">
-      <span class="essay-number">02</span>
       <h3>Emotional Arbitrage</h3>
       <p>The ability to maintain objective decision-making while the environment operates under emotional noise. Turning reactivity into clarity.</p>
-      <a href="content/essays/en/2-emotional-arbitrage.pdf" target="_blank" class="read-btn">READ MORE</a>
+      <a href="content/essays/en/2-emotional-arbitrage.pdf" target="_blank" class="read-more">READ MORE</a>
     </article>
-
     <article class="essay-card">
-      <span class="essay-number">03</span>
       <h3>The Opportunity Cost of People-Pleasing</h3>
       <p>Analyzing how the compulsive need for external validation operates as an invisible tax, diverting capital away from truth and innovation.</p>
-      <a href="content/essays/en/3-opportunity-cost-of-people-pleasing.pdf" target="_blank" class="read-btn">READ MORE</a>
+      <a href="content/essays/en/3-opportunity-cost-of-people-pleasing.pdf" target="_blank" class="read-more">READ MORE</a>
     </article>
-
     <article class="essay-card">
-      <span class="essay-number">04</span>
       <h3>The Architecture of Silence</h3>
       <p>How the unsaid distorts reality. Naming what matters is the essential tool for maintaining clarity and preventing emotional decay.</p>
-      <a href="content/essays/en/4-the-architecture-of-silence.pdf" target="_blank" class="read-btn">READ MORE</a>
+      <a href="content/essays/en/4-the-architecture-of-silence.pdf" target="_blank" class="read-more">READ MORE</a>
     </article>
-
     <article class="essay-card">
-      <span class="essay-number">05</span>
       <h3>Cognitive Liquidity</h3>
       <p>Separating identity from decisions in high-stakes environments. Why the fear of change as loss destroys adaptability.</p>
-      <a href="content/essays/en/5-cognitive-liquidity.pdf" target="_blank" class="read-btn">READ MORE</a>
+      <a href="content/essays/en/5-cognitive-liquidity.pdf" target="_blank" class="read-more">READ MORE</a>
     </article>
-
     <article class="essay-card">
-      <span class="essay-number">06</span>
       <h3>Signal vs Noise</h3>
       <p>How to tell signal from noise in a saturated world. Clarity doesn’t come from consuming more; it comes from learning to ignore better.</p>
-      <a href="content/essays/en/6-signal-vs-noise.pdf" target="_blank" class="read-btn">READ MORE</a>
+      <a href="content/essays/en/6-signal-vs-noise.pdf" target="_blank" class="read-more">READ MORE</a>
     </article>
-
     <article class="essay-card">
-      <span class="essay-number">07</span>
       <h3>Measure to Understand or Hide</h3>
       <p>A behavioral look at self-location systems. Why codes often fail when pressure increases, and why honesty is the only real measurement.</p>
-      <a href="content/essays/en/fn-measure-to-understand-or-hide.pdf" target="_blank" class="read-btn">READ MORE</a>
+      <a href="content/essays/en/fn-measure-to-understand-or-hide.pdf" target="_blank" class="read-more">READ MORE</a>
     </article>
   </div>
 </div>
