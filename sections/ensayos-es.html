@@ -1,46 +1,68 @@
 <style>
   .essays-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 2.5rem;
-    padding: 2rem 0;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem 0;
     align-items: start;
   }
 
   .essay-card {
     background: #ffffff;
-    border: 1px solid var(--divider, #E4E4E7);
-    padding: 2.5rem 2rem;
+    border: 1px solid #E4E4E7;
+    padding: 1.5rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 420px; /* Tamaño uniforme para todas las cajas */
-    transition: all 0.4s ease;
+    min-height: 280px;
+    transition: all 0.3s ease;
   }
 
   .essay-card:hover {
-    border-color: var(--ink, #1A1A1A);
-    transform: translateY(-5px);
+    border-color: #1A1A1A;
+    transform: translateY(-4px);
   }
 
   .essay-number {
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 700;
-    letter-spacing: 0.2em;
-    color: var(--accent, #A67C52);
+    letter-spacing: 0.15em;
+    color: #A67C52;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .essay-card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+    color: #1A1A1A;
+    font-family: 'Playfair Display', serif;
+  }
+
+  .essay-card p {
+    font-size: 12px;
+    line-height: 1.6;
+    color: #52525B;
     margin-bottom: 1.5rem;
   }
 
   .read-btn {
-    margin-top: auto;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
     text-decoration: none;
     border-bottom: 1px solid #1A1A1A;
     color: #1A1A1A;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    padding: 8px 0;
-    display: inline-block;
+    align-self: flex-start;
+    padding-bottom: 2px;
+    transition: opacity 0.2s;
+  }
+
+  .read-btn:hover {
+    opacity: 0.6;
   }
 </style>
 
@@ -49,7 +71,7 @@
     <span class="essay-number">01</span>
     <div class="prose-content">
       <h3>El Autoconocimiento como Activo Económico</h3>
-      <p>El autoconocimiento no es un rasgo psicológico; es la infraestructura que determina nuestra capacidad de influir sin perder el centro ante la presión externa.</p>
+      <p>El descuido de nuestra psicología es el costo oculto más alto. No es una habilidad blanda, es el sistema que determina cómo decidimos.</p>
     </div>
     <a href="content/essays/es/1-el-autoconocimiento-como-activo-economico.pdf" target="_blank" class="read-btn">LEER MÁS</a>
   </article>
@@ -58,7 +80,7 @@
     <span class="essay-number">02</span>
     <div class="prose-content">
       <h3>Arbitraje Emocional</h3>
-      <p>Sobre mantener la claridad objetiva mientras el entorno opera bajo ruido. El arte de convertir la reactividad en una oportunidad de decisión consciente.</p>
+      <p>Sobre la capacidad de mantener claridad objetiva mientras el entorno opera bajo ruido. El arte de convertir la reactividad en decisión consciente.</p>
     </div>
     <a href="content/essays/es/2-arbitraje-emocional.pdf" target="_blank" class="read-btn">LEER MÁS</a>
   </article>
@@ -67,7 +89,7 @@
     <span class="essay-number">03</span>
     <div class="prose-content">
       <h3>Costo de Oportunidad de Complacer a Otros</h3>
-      <p>Analizo cómo buscar aprobación externa es una mala asignación de capital emocional que erosiona la autonomía y la verdad de nuestras decisiones.</p>
+      <p>Analizo cómo la búsqueda de aprobación externa es una mala asignación de capital emocional que erosiona la autonomía decisional.</p>
     </div>
     <a href="content/essays/es/3-costo-de-oportunidad-de-complacer.pdf" target="_blank" class="read-btn">LEER MÁS</a>
   </article>
@@ -76,7 +98,7 @@
     <span class="essay-number">04</span>
     <div class="prose-content">
       <h3>La Arquitectura del Silencio</h3>
-      <p>Cómo lo no dicho distorsiona nuestra percepción. Nombrar la realidad es la herramienta de higiene necesaria para restaurar la fidelidad de nuestras interacciones.</p>
+      <p>Lo que no decimos distorsiona nuestra percepción. Nombrar la realidad es la herramienta necesaria para restaurar la fidelidad de nuestras interacciones.</p>
     </div>
     <a href="content/essays/es/4-la-arquitectura-del-silencio.pdf" target="_blank" class="read-btn">LEER MÁS</a>
   </article>
@@ -85,7 +107,7 @@
     <span class="essay-number">05</span>
     <div class="prose-content">
       <h3>Liquidez Cognitiva</h3>
-      <p>La importancia de separar quiénes somos de lo que decidimos. La rigidez mental aparece cuando sentimos que cambiar es una amenaza a nuestra identidad.</p>
+      <p>La importancia de separar quiénes somos de lo que decidimos. La rigidez mental aparece cuando el cambio se siente como una amenaza a la identidad.</p>
     </div>
     <a href="content/essays/es/5-liquidez-cognitiva.pdf" target="_blank" class="read-btn">LEER MÁS</a>
   </article>
@@ -94,7 +116,7 @@
     <span class="essay-number">06</span>
     <div class="prose-content">
       <h3>Señal vs Ruido</h3>
-      <p>En un mundo saturado, la claridad nace de aprender a ignorar lo que solo activa nuestras emociones pero no aporta nada a nuestro crecimiento real.</p>
+      <p>En un mundo saturado, la claridad nace de aprender a ignorar lo que solo activa emociones pero no aporta nada al crecimiento real.</p>
     </div>
     <a href="content/essays/es/6-senal-vs-ruido.pdf" target="_blank" class="read-btn">LEER MÁS</a>
   </article>
@@ -103,7 +125,7 @@
     <span class="essay-number">07</span>
     <div class="prose-content">
       <h3>El Progreso Disfrazado de Derrota</h3>
-      <p>Por qué el crecimiento real suele sentirse como un vacío o una torpeza. Es el proceso de dejar de sobrevivir para empezar a decidir por cuenta propia.</p>
+      <p>Por qué el crecimiento real suele sentirse como un vacío o una torpeza. Es el proceso de dejar de sobrevivir para empezar a decidir.</p>
     </div>
     <a href="content/essays/es/el-progreso-disfrazado-de-derrota.pdf" target="_blank" class="read-btn">LEER MÁS</a>
   </article>
@@ -112,7 +134,7 @@
     <span class="essay-number">08</span>
     <div class="prose-content">
       <h3>La Conexión como Artículo de Lujo</h3>
-      <p>Cómo el entorno digital ha encarecido el precio de la vulnerabilidad, prefiriendo la anestesia del algoritmo antes que la construcción de un vínculo real.</p>
+      <p>Reflexiono sobre cómo el entorno digital ha encarecido el precio de la vulnerabilidad, prefiriendo la anestesia del algoritmo al vínculo real.</p>
     </div>
     <a href="content/essays/es/la-conexion-como-articulo-de-lujo.pdf" target="_blank" class="read-btn">LEER MÁS</a>
   </article>
