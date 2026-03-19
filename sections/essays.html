@@ -1,182 +1,133 @@
-<section id="essays" class="py-32 px-6 md:px-12 bg-paper border-t border-divider text-ink">
-
-  <div class="max-w-6xl mx-auto">
-
-    <div class="text-center mb-10">
-      <span class="text-[10px] font-bold tracking-widest uppercase text-subtle mb-3 block" data-i18n="archive-label">
-        Hemeroteca
-      </span>
-
-      <h2 class="font-serif text-4xl md:text-5xl mb-10" data-i18n="archive-title">
-        Archivo de Ensayos
-      </h2>
-
-      <div class="flex justify-center space-x-6 border-b border-divider no-select mb-8">
-        <button onclick="switchContentTabs('es')" id="essay-tab-es" class="essay-tab active" data-i18n="tab-es">
-          Español
-        </button>
-
-        <button onclick="switchContentTabs('en')" id="essay-tab-en" class="essay-tab" data-i18n="tab-en">
-          English
-        </button>
-      </div>
+<div id="essays-grid-es" class="essays-grid">
+  
+  <article class="essay-card">
+    <h3 class="font-serif text-2xl mb-4 italic">El Autoconocimiento como Activo Económico</h3>
+    <div class="prose-content">
+      [span_0](start_span)<p>La capacidad de un líder para entender y manejar su estado interno influye directamente en la rentabilidad y sostenibilidad de la organización[span_0](end_span). [span_1](start_span)La falta de autoconocimiento incurre en costos invisibles como el sesgo de confirmación y la erosión del capital humano[span_1](end_span).</p>
     </div>
+    <a href="#" class="read-btn">LEER MÁS</a>
+  </article>
 
-    <!-- GRID ESPAÑOL -->
-    <div id="essays-grid-es" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-      <article class="essay-card">
-        <h3 class="font-serif text-2xl mb-4 italic">El Autoconocimiento como Activo Económico</h3>
-        <p class="text-xs text-subtle leading-relaxed mb-8">
-          "El autoconocimiento no es simplemente un rasgo psicológico; es una ventaja competitiva cuantificable."
-          Por qué la falta de regulación interna y el ego se convierten en el impuesto oculto más destructivo
-          sobre tus decisiones y tu rendimiento.
-        </p>
-        <a href="/content/essays/es/1-el-autoconocimiento-como-activo-economico.pdf" target="_blank" class="read-btn">[Leer PDF]</a>
-      </article>
-
-      <article class="essay-card">
-        <h3 class="font-serif text-2xl mb-4 italic">Arbitraje Emocional</h3>
-        <p class="text-xs text-subtle leading-relaxed mb-8">
-          «El arbitraje emocional es la ventaja definitiva: convertir el pánico del mercado en beneficio personal».
-          El mecanismo conductual para mantener la claridad estratégica y capturar valor mientras tu entorno
-          reacciona desde el miedo o la impulsividad.
-        </p>
-        <a href="/content/essays/es/2-arbitraje-emocional.pdf" target="_blank" class="read-btn">[Leer PDF]</a>
-      </article>
-
-      <article class="essay-card">
-        <h3 class="font-serif text-2xl mb-4 italic">El Costo de Oportunidad de Complacer a Otros</h3>
-        <p class="text-xs text-subtle leading-relaxed mb-8">
-          Cómo la necesidad compulsiva de validación externa y el miedo al conflicto te hacen acumular una
-          "deuda emocional" de alto interés que erosiona silenciosamente tu autonomía.
-        </p>
-        <a href="/content/essays/es/3-costo-de-oportunidad-de-complacer.pdf" target="_blank" class="read-btn">[Leer PDF]</a>
-      </article>
-
-      <article class="essay-card">
-        <h3 class="font-serif text-2xl mb-4 italic">La Arquitectura del Silencio</h3>
-        <p class="text-xs text-subtle leading-relaxed mb-8">
-          Cómo las cosas no dichas distorsionan la realidad en los entornos modernos. Por qué evitar las
-          conversaciones difíciles no trae paz, sino que crea un vacío donde la mente inventa amenazas y la
-          ansiedad se multiplica.
-        </p>
-        <a href="/content/essays/es/4-la-architecture-del-silencio.pdf" target="_blank" class="read-btn">[Leer PDF]</a>
-      </article>
-
-      <article class="essay-card">
-        <h3 class="font-serif text-2xl mb-4 italic">Liquidez Cognitiva</h3>
-        <p class="text-xs text-subtle leading-relaxed mb-8">
-          "La liquidez cognitiva no es debilidad; es la máxima expresión de la fuerza interpretativa."
-          El peligro de fusionar tu identidad con tus decisiones y por qué la flexibilidad mental para cambiar
-          de rumbo es tu mayor herramienta de supervivencia.
-        </p>
-        <a href="/content/essays/es/5-liquidez-cognitiva.pdf" target="_blank" class="read-btn">[Leer PDF]</a>
-      </article>
-
-      <article class="essay-card">
-        <h3 class="font-serif text-2xl mb-4 italic">Señal vs Ruido</h3>
-        <p class="text-xs text-subtle leading-relaxed mb-8">
-          Cómo distinguir información útil de activación inútil en entornos saturados. La disciplina de filtrar
-          la urgencia fabricada para invertir tu atención y ancho de banda solo en lo que genera progreso real.
-        </p>
-        <a href="/content/essays/es/6-senal-vs-ruido.pdf" target="_blank" class="read-btn">[Leer PDF]</a>
-      </article>
-
-      <article class="essay-card">
-        <h3 class="font-serif text-2xl mb-4 italic">El Progreso Disfrazado de Derrota</h3>
-        <p class="text-xs text-subtle leading-relaxed mb-8">
-          "El progreso real rara vez se siente como victoria." La paradoja de la regulación: por qué abandonar
-          el caos, dejar de complacer a otros y salir del piloto automático se siente, al principio, como si te
-          estuvieras desmoronando.
-        </p>
-        <a href="/content/essays/es/el-progreso-disfrazado-de-derrota.pdf" target="_blank" class="read-btn">[Leer PDF]</a>
-      </article>
-
-      <article class="essay-card">
-        <h3 class="font-serif text-2xl mb-4 italic">La conexión como artículo de lujo</h3>
-        <p class="text-xs text-subtle leading-relaxed mb-8">
-          La economía del alivio rápido y el encarecimiento de lo profundo en el entorno digital. Cómo la
-          búsqueda de dopamina inmediata y el miedo a la vulnerabilidad nos refugian en lo superficial,
-          volviendo la profundidad un acto de alto riesgo.
-        </p>
-        <a href="/content/essays/es/la-conexion-como-articulo-de-lujo.pdf" target="_blank" class="read-btn">[Leer PDF]</a>
-      </article>
-
-      <article class="essay-card">
-        <h3 class="font-serif text-2xl mb-4 italic">Medir para entender ... o medir para esconderse</h3>
-        <p class="text-xs text-subtle leading-relaxed mb-8">
-          Una mirada conductual a los sistemas de auto-ubicación actuales. Por qué usar tests y etiquetas de
-          personalidad como escudo te estanca, y cómo empezar a observar tus patrones de conducta sin
-          complacencias ni anestesia.
-        </p>
-        <a href="/content/essays/es/medir-para-entender-o-esconderse.pdf" target="_blank" class="read-btn">[Leer PDF]</a>
-      </article>
-
+  <article class="essay-card">
+    <h3 class="font-serif text-2xl mb-4 italic">Arbitraje Emocional</h3>
+    <div class="prose-content">
+      [span_2](start_span)<p>El arbitraje emocional es la capacidad de un líder para mantener una toma de decisiones clara mientras el mercado opera bajo ruido emocional[span_2](end_span). [span_3](start_span)Permite capitalizar los errores de otros y reducir el costo oculto del error[span_3](end_span).</p>
     </div>
+    <a href="#" class="read-btn">LEER MÁS</a>
+  </article>
 
-    <!-- GRID INGLÉS -->
-    <div id="essays-grid-en" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-      <article class="essay-card">
-        <h3 class="font-serif text-2xl mb-4 italic">Self-Awareness as an Economic Asset</h3>
-        <p class="text-xs text-subtle leading-relaxed mb-8">
-          "Self-awareness is not just a psychological trait; it is a quantifiable competitive advantage."
-          Why the lack of internal regulation and ego becomes the most destructive hidden tax on your decisions
-          and performance.
-        </p>
-        <a href="/content/essays/en/1-self-awareness-as-an-economic-asset.pdf" target="_blank" class="read-btn">[Read PDF]</a>
-      </article>
-
-      <article class="essay-card">
-        <h3 class="font-serif text-2xl mb-4 italic">Emotional Arbitrage</h3>
-        <p class="text-xs text-subtle leading-relaxed mb-8">
-          "Emotional arbitrage is the ultimate edge: turning market panic into personal profit."
-          The behavioral mechanism to maintain strategic clarity and capture value while your environment reacts
-          from fear or impulsivity.
-        </p>
-        <a href="/content/essays/en/2-emotional-arbitrage.pdf" target="_blank" class="read-btn">[Read PDF]</a>
-      </article>
-
-      <article class="essay-card">
-        <h3 class="font-serif text-2xl mb-4 italic">The Opportunity Cost of People-Pleasing</h3>
-        <p class="text-xs text-subtle leading-relaxed mb-8">
-          How the compulsive need for external validation and fear of conflict make you accumulate high-interest
-          "emotional debt" that silently erodes your decisional autonomy.
-        </p>
-        <a href="/content/essays/en/3-opportunity-cost-of-people-pleasing.pdf" target="_blank" class="read-btn">[Read PDF]</a>
-      </article>
-
-      <article class="essay-card">
-        <h3 class="font-serif text-2xl mb-4 italic">The Architecture of Silence</h3>
-        <p class="text-xs text-subtle leading-relaxed mb-8">
-          How the Unsaid Distorts Reality in Modern Environments. Why avoiding difficult conversations doesn't
-          bring peace, but creates a vacuum where the mind invents threats and anxiety multiplies.
-        </p>
-        <a href="/content/essays/en/4-the-architecture-of-silence.pdf" target="_blank" class="read-btn">[Read PDF]</a>
-      </article>
-
-      <article class="essay-card">
-        <h3 class="font-serif text-2xl mb-4 italic">Cognitive Liquidity</h3>
-        <p class="text-xs text-subtle leading-relaxed mb-8">
-          "Cognitive liquidity is not weakness; it is the ultimate expression of interpretive strength in volatile
-          environments." The danger of fusing your identity with your decisions and why mental flexibility to
-          change course is your greatest survival tool.
-        </p>
-        <a href="/content/essays/en/5-cognitive-liquidity.pdf" target="_blank" class="read-btn">[Read PDF]</a>
-      </article>
-
-      <article class="essay-card">
-        <h3 class="font-serif text-2xl mb-4 italic">Measure to Understand ... or Measure to Hide</h3>
-        <p class="text-xs text-subtle leading-relaxed mb-8">
-          A Behavioral Look at Current Self-Location Systems. Why using tests and personality labels as a shield
-          stalls you, and how to start observing your behavioral patterns without complacency or anesthesia.
-        </p>
-        <a href="/content/essays/en/fn-measure-to-understand-or-hide.pdf" target="_blank" class="read-btn">[Read PDF]</a>
-      </article>
-
+  <article class="essay-card">
+    <h3 class="font-serif text-2xl mb-4 italic">El Costo de Oportunidad de Complacer a Otros</h3>
+    <div class="prose-content">
+      [span_4](start_span)<p>Complacer a otros es un riesgo operacional sistémico que erosiona el valor para los accionistas[span_4](end_span). [span_5](start_span)Los recursos se desvían de la innovación hacia el apaciguamiento emocional a corto plazo[span_5](end_span).</p>
     </div>
+    <a href="#" class="read-btn">LEER MÁS</a>
+  </article>
 
-  </div>
+  <article class="essay-card">
+    <h3 class="font-serif text-2xl mb-4 italic">La Arquitectura del Silencio</h3>
+    <div class="prose-content">
+      [span_6](start_span)<p>El silencio distorsiona la realidad y amplifica el ruido[span_6](end_span). [span_7](start_span)Funciona como una interfaz falsa que oculta la fricción mientras permite que la presión se acumule[span_7](end_span).</p>
+    </div>
+    <a href="#" class="read-btn">LEER MÁS</a>
+  </article>
 
-</section>
+  <article class="essay-card">
+    <h3 class="font-serif text-2xl mb-4 italic">Liquidez Cognitiva</h3>
+    <div class="prose-content">
+      [span_8](start_span)<p>Es la capacidad de separar la identidad personal de las decisiones estratégicas[span_8](end_span). [span_9](start_span)Permite pivotar sin experimentar el cambio como una amenaza existencial[span_9](end_span).</p>
+    </div>
+    <a href="#" class="read-btn">LEER MÁS</a>
+  </article>
+
+  <article class="essay-card">
+    <h3 class="font-serif text-2xl mb-4 italic">Señal vs Ruido</h3>
+    <div class="prose-content">
+      [span_10](start_span)<p>La claridad no surge de consumir más, sino de ignorar mejor[span_10](end_span). [span_11](start_span)La atención es el recurso más escaso que genera ventaja estratégica real[span_11](end_span).</p>
+    </div>
+    <a href="#" class="read-btn">LEER MÁS</a>
+  </article>
+
+  <article class="essay-card">
+    <h3 class="font-serif text-2xl mb-4 italic">El Progreso Disfrazado de Derrota</h3>
+    <div class="prose-content">
+      [span_12](start_span)<p>Hacerlo bien se siente como estar perdiendo porque la higiene decisional y la gratificación emocional van en direcciones opuestas[span_12](end_span). [span_13](start_span)El progreso real comienza con desorientación[span_13](end_span).</p>
+    </div>
+    <a href="#" class="read-btn">LEER MÁS</a>
+  </article>
+
+  <article class="essay-card">
+    <h3 class="font-serif text-2xl mb-4 italic">La conexión como artículo de lujo</h3>
+    <div class="prose-content">
+      [span_14](start_span)<p>El entorno ha encarecido el precio de la vulnerabilidad[span_14](end_span). [span_15](start_span)Preferimos el alivio accesible del algoritmo antes que la construcción costosa de un vínculo[span_15](end_span).</p>
+    </div>
+    <a href="#" class="read-btn">LEER MÁS</a>
+  </article>
+
+  <article class="essay-card">
+    <h3 class="font-serif text-2xl mb-4 italic">Medir para entender… o medir para esconderse</h3>
+    <div class="prose-content">
+      [span_16](start_span)<p>Las personas no se hunden por lo que son, sino por lo que repiten[span_16](end_span). [span_17](start_span)[span_18](start_span)Medir con honestidad es un acto de claridad que te deja sin excusas[span_17](end_span)[span_18](end_span).</p>
+    </div>
+    <a href="#" class="read-btn">LEER MÁS</a>
+  </article>
+</div>
+
+<div id="essays-grid-en" class="essays-grid hidden">
+  
+  <article class="essay-card">
+    <h3 class="font-serif text-2xl mb-4 italic">Signal vs Noise</h3>
+    <div class="prose-content">
+      [span_19](start_span)<p>Clarity comes from ignoring better[span_19](end_span). [span_20](start_span)Attention is the scarcest resource that generates real strategic advantage[span_20](end_span).</p>
+    </div>
+    <a href="#" class="read-btn">READ MORE</a>
+  </article>
+
+  <article class="essay-card">
+    <h3 class="font-serif text-2xl mb-4 italic">Self-Knowledge as an Economic Asset</h3>
+    <div class="prose-content">
+      [span_21](start_span)<p>Self-knowledge is a quantifiable competitive advantage[span_21](end_span). [span_22](start_span)A leader's internal state directly influences organizational profitability[span_22](end_span).</p>
+    </div>
+    <a href="#" class="read-btn">READ MORE</a>
+  </article>
+
+  <article class="essay-card">
+    <h3 class="font-serif text-2xl mb-4 italic">Emotional Arbitrage</h3>
+    <div class="prose-content">
+      [span_23](start_span)<p>Leveraging the gap between emotionally-driven and rationally-informed decision-making[span_23](end_span). [span_24](start_span)It transforms emotional regulation into a measurable competitive advantage[span_24](end_span).</p>
+    </div>
+    <a href="#" class="read-btn">READ MORE</a>
+  </article>
+
+  <article class="essay-card">
+    <h3 class="font-serif text-2xl mb-4 italic">The Opportunity Cost of People-Pleasing</h3>
+    <div class="prose-content">
+      [span_25](start_span)<p>People-pleasing is a systemic operational risk that erodes shareholder value[span_25](end_span). [span_26](start_span)Resources are diverted from innovation toward short-term emotional appeasement[span_26](end_span).</p>
+    </div>
+    <a href="#" class="read-btn">READ MORE</a>
+  </article>
+
+  <article class="essay-card">
+    <h3 class="font-serif text-2xl mb-4 italic">The Architecture of Silence</h3>
+    <div class="prose-content">
+      [span_27](start_span)<p>Silence is an active architectural force that distorts perception[span_27](end_span). [span_28](start_span)It is a hidden tax paid when clarity is postponed[span_28](end_span).</p>
+    </div>
+    <a href="#" class="read-btn">READ MORE</a>
+  </article>
+
+  <article class="essay-card">
+    <h3 class="font-serif text-2xl mb-4 italic">Cognitive Liquidity</h3>
+    <div class="prose-content">
+      [span_29](start_span)<p>The capacity to maintain mental fluidity by separating personal identity from strategic decisions[span_29](end_span). [span_30](start_span)It enables leaders to pivot without an existential threat to the self[span_30](end_span).</p>
+    </div>
+    <a href="#" class="read-btn">READ MORE</a>
+  </article>
+
+  <article class="essay-card">
+    <h3 class="font-serif text-2xl mb-4 italic">Measure to Understand… or Measure to Hide</h3>
+    <div class="prose-content">
+      [span_31](start_span)<p>People do not sink because of what they are, but because of what they repeat[span_31](end_span). [span_32](start_span)Measuring honestly is an act of clarity[span_32](end_span).</p>
+    </div>
+    <a href="#" class="read-btn">READ MORE</a>
+  </article>
+</div>
