@@ -37,6 +37,7 @@
   <script src="/styles/scripts/main.js" defer></script>
 
   <script>
+    // Función general para cargar secciones fijas
     async function loadSection(id, file) {
       try {
         const container = document.getElementById(id);
@@ -45,20 +46,13 @@
         const html = await response.text();
         container.innerHTML = html;
 
-        // Reactivar scripts internos de cada sección
         const scripts = container.querySelectorAll("script");
         scripts.forEach((oldScript) => {
           const newScript = document.createElement("script");
-
-          // Copiar atributos (src, type, etc.)
           Array.from(oldScript.attributes).forEach(attr =>
             newScript.setAttribute(attr.name, attr.value)
           );
-
-          // Copiar contenido interno
           newScript.appendChild(document.createTextNode(oldScript.innerHTML));
-
-          // Reemplazar para forzar ejecución
           oldScript.parentNode.replaceChild(newScript, oldScript);
         });
 
@@ -67,12 +61,35 @@
       }
     }
 
+    // NUEVA FUNCIÓN: Toggler para Ensayos (ES/EN)
+    async function loadEssays(lang) {
+      const file = lang === 'es' ? '/sections/ensayos-es.html' : '/sections/essays-en.html';
+      try {
+        const container = document.getElementById("essays");
+        const response = await fetch(file);
+        if (!response.ok) throw new Error(`Error cargando ${file}`);
+        const html = await response.text();
+        container.innerHTML = html;
+        
+        // Opcional: Actualizar clases de botones de idioma si los tienes en el index
+        document.querySelectorAll('.essay-lang-btn').forEach(btn => btn.classList.remove('font-bold', 'border-b-2'));
+        const activeBtn = document.querySelector(`.essay-lang-btn[onclick*="${lang}"]`);
+        if(activeBtn) activeBtn.classList.add('font-bold', 'border-b-2', 'border-ink');
+
+      } catch (error) {
+        console.error("Error cargando ensayos:", lang, error);
+      }
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
       loadSection("navbar", "/sections/navbar.html");
       loadSection("home", "/sections/hero.html");
       loadSection("about", "/sections/about.html");
       loadSection("lab", "/sections/lab.html");
-      loadSection("essays", "/sections/essays.html");
+      
+      // Carga inicial de ensayos en español
+      loadEssays('es'); 
+
       loadSection("books", "/sections/books.html");
       loadSection("selflove", "/sections/selflove.html");
       loadSection("footer", "/sections/footer.html");
@@ -83,13 +100,21 @@
 <body class="bg-paper text-ink font-sans antialiased selection:bg-accent selection:text-paper">
 
   <div id="navbar"></div>
-  <div id="home"></div> <div id="about"></div>
+  <div id="home"></div> 
+  <div id="about"></div>
   <div id="lab"></div>
-  <div id="essays"></div>
+
+  <section class="max-w-7xl mx-auto px-6 py-20">
+    <div class="flex justify-center space-x-8 mb-12 border-b border-divider pb-4">
+      <button onclick="loadEssays('es')" class="essay-lang-btn text-[10px] tracking-[0.2em] uppercase transition hover:opacity-50">Español</button>
+      <button onclick="loadEssays('en')" class="essay-lang-btn text-[10px] tracking-[0.2em] uppercase transition hover:opacity-50">English</button>
+    </div>
+    <div id="essays"></div>
+  </section>
+
   <div id="books"></div>
   <div id="selflove"></div>
   <div id="footer"></div>
 
 </body>
-
 </html>
