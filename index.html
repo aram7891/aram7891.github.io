@@ -1,17 +1,26 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Andrés Ramírez — Claridad Antes que Conexión</title>
 
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
+  <!-- Fuentes -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="/styles.css" />
+  <!-- Estilos globales -->
+  <link rel="stylesheet" href="/styles/global.css" />
 
+  <!-- Scripts globales -->
+  <script src="/styles/scripts/translations.js" defer></script>
+  <script src="/styles/scripts/main.js" defer></script>
+
+  <!-- Loader de secciones -->
   <script>
     async function loadSection(id, file) {
       try {
@@ -21,26 +30,29 @@
         const html = await response.text();
         container.innerHTML = html;
 
-        // ESTO ACTIVA EL LABORATORIO Y OTROS SCRIPTS
+        // Reactivar scripts internos de cada sección
         const scripts = container.querySelectorAll("script");
         scripts.forEach((oldScript) => {
           const newScript = document.createElement("script");
-          // Copia todos los atributos (src, type, etc.)
-          Array.from(oldScript.attributes).forEach(attr => 
+
+          // Copiar atributos (src, type, etc.)
+          Array.from(oldScript.attributes).forEach(attr =>
             newScript.setAttribute(attr.name, attr.value)
           );
-          // Copia el contenido interno del script
+
+          // Copiar contenido interno
           newScript.appendChild(document.createTextNode(oldScript.innerHTML));
-          // Reemplaza para forzar la ejecución
+
+          // Reemplazar para forzar ejecución
           oldScript.parentNode.replaceChild(newScript, oldScript);
         });
+
       } catch (error) {
         console.error("Error en la sección:", id, error);
       }
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-      // Cargamos todas las piezas del rompecabezas
       loadSection("navbar", "/sections/navbar.html");
       loadSection("hero", "/sections/hero.html");
       loadSection("about", "/sections/about.html");
@@ -65,5 +77,5 @@
   <div id="footer"></div>
 
 </body>
-</html>
+
 </html>
