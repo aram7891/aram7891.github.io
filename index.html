@@ -116,5 +116,74 @@
   <div id="selflove"></div>
   <div id="footer"></div>
 
+<script>
+// Función maestra que conecta tu web con el servidor de Vercel
+async function ejecutarAuditoria(tipo) {
+    console.log("Iniciando auditoría técnica de:", tipo);
+    
+    // 1. Identificamos los elementos de tu HTML según el tipo
+    const esClarity = tipo === 'discern';
+    const inputId = esClarity ? 'situationInput' : 'patternInput';
+    const resultId = esClarity ? 'clarityResult' : 'noteResult';
+    const contentId = esClarity ? 'clarityContent' : 'noteContent';
+    const spinnerId = esClarity ? 'analyzeSpinner' : 'noteSpinner';
+    const btnTextId = esClarity ? 'analyzeBtnText' : 'noteBtnText';
+
+    const textoUsuario = document.getElementById(inputId).value.trim();
+    
+    // Validación mínima para no gastar créditos en textos vacíos
+    if (textoUsuario.length < 20) {
+        alert("Andrés, necesito un poco más de contexto para procesar la auditoría.");
+        return;
+    }
+
+    // 2. Activamos el estado de carga (UI)
+    const spinner = document.getElementById(spinnerId);
+    const btnText = document.getElementById(btnTextId);
+    const resultBox = document.getElementById(resultId);
+    const contentArea = document.getElementById(contentId);
+
+    spinner.classList.remove('hidden');
+    btnText.style.opacity = "0.3";
+
+    try {
+        // 3. Llamada al backend (Vercel procesará index.js en la carpeta /api)
+        const response = await fetch('/api', { 
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                text: textoUsuario, 
+                type: tipo 
+            })
+        });
+
+        const data = await response.json();
+        
+        // 4. Mostramos el resultado con formato de saltos de línea
+        if (data.output) {
+            contentArea.innerHTML = data.output.replace(/\n/g, '<br>');
+            resultBox.classList.remove('hidden');
+            resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        } else {
+            throw new Error("Respuesta vacía");
+        }
+
+    } catch (error) {
+        console.error("Fallo en el Laboratorio:", error);
+        contentArea.innerText = "Error de conexión con el motor de IA. Reintenta en un momento.";
+        resultBox.classList.remove('hidden');
+    } finally {
+        // 5. Restauramos el botón
+        spinner.classList.add('hidden');
+        btnText.style.opacity = "1";
+    }
+}
+
+// Estos son los "puentes" para los botones de tu HTML actual
+function analyzeClarity() { ejecutarAuditoria('discern'); }
+function generateFieldNote() { ejecutarAuditoria('audit'); }
+</script>
+
+
 </body>
 </html>
