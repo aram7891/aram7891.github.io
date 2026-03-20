@@ -30,13 +30,14 @@
                 </p>
 
                 <p class="text-xs text-subtle mb-6 leading-relaxed" data-i18n="tool1-help">
-                    Describe una interacción que te dejó dudas. El sistema separa lo que ocurrió de lo que asumiste.
+                    Ejemplo: “Me escribe todos los días, pero evita concretar planes.”  
+                    El sistema separa lo que ocurrió de lo que asumiste.
                 </p>
 
                 <textarea id="situationInput"
                           rows="5"
                           class="w-full p-4 text-sm border border-divider rounded-none bg-paper focus:outline-none focus:ring-1 focus:ring-ink mb-6"
-                          placeholder="..."></textarea>
+                          placeholder="Escribe aquí..."></textarea>
 
                 <button onclick="analyzeClarity()"
                         id="analyzeBtn"
@@ -62,13 +63,14 @@
                 </p>
 
                 <p class="text-xs text-subtle mb-6 leading-relaxed" data-i18n="tool2-help">
-                    Describe un ciclo que repites. El sistema te muestra la consecuencia de seguir ahí.
+                    Ejemplo: “Siempre justifico señales incómodas porque la persona ‘tiene potencial’.”  
+                    El sistema muestra la consecuencia de seguir ahí.
                 </p>
 
                 <input id="patternInput"
                        type="text"
                        class="w-full p-4 text-sm border border-divider rounded-none bg-paper focus:outline-none focus:ring-1 focus:ring-ink mb-6"
-                       placeholder="...">
+                       placeholder="Escribe aquí...">
 
                 <button onclick="generateFieldNote()"
                         id="noteBtn"
