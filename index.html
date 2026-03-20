@@ -71,7 +71,6 @@
         const html = await response.text();
         container.innerHTML = html;
         
-        // Opcional: Actualizar clases de botones de idioma si los tienes en el index
         document.querySelectorAll('.essay-lang-btn').forEach(btn => btn.classList.remove('font-bold', 'border-b-2'));
         const activeBtn = document.querySelector(`.essay-lang-btn[onclick*="${lang}"]`);
         if(activeBtn) activeBtn.classList.add('font-bold', 'border-b-2', 'border-ink');
@@ -86,8 +85,9 @@
       loadSection("home", "/sections/hero.html");
       loadSection("about", "/sections/about.html");
       loadSection("lab", "/sections/lab.html");
-      
-      // Carga inicial de ensayos en español
+
+      loadSection("field-notes", "/sections/field.html");  <!-- AQUI SE MONTA FIELD.HTML -->
+
       loadEssays('es'); 
 
       loadSection("books", "/sections/books.html");
@@ -103,6 +103,9 @@
   <div id="home"></div> 
   <div id="about"></div>
   <div id="lab"></div>
+
+  <!-- NUEVA SECCIÓN: FIELD NOTES -->
+  <div id="field-notes"></div>
 
   <section class="max-w-7xl mx-auto px-6 py-20">
     <div class="flex justify-center space-x-8 mb-12 border-b border-divider pb-4">
@@ -121,23 +124,20 @@
 async function ejecutarAuditoria(tipo) {
     console.log("Iniciando auditoría técnica de:", tipo);
     
-    // 1. Identificamos los elementos de tu HTML según el tipo
     const esClarity = tipo === 'discern';
     const inputId = esClarity ? 'situationInput' : 'patternInput';
-    const resultId = esClarity ? 'clarityResult' : 'noteResult';
+    const resultId = esClClarity ? 'clarityResult' : 'noteResult';
     const contentId = esClarity ? 'clarityContent' : 'noteContent';
     const spinnerId = esClarity ? 'analyzeSpinner' : 'noteSpinner';
     const btnTextId = esClarity ? 'analyzeBtnText' : 'noteBtnText';
 
     const textoUsuario = document.getElementById(inputId).value.trim();
     
-    // Validación mínima para no gastar créditos en textos vacíos
     if (textoUsuario.length < 20) {
         alert("Andrés, necesito un poco más de contexto para procesar la auditoría.");
         return;
     }
 
-    // 2. Activamos el estado de carga (UI)
     const spinner = document.getElementById(spinnerId);
     const btnText = document.getElementById(btnTextId);
     const resultBox = document.getElementById(resultId);
@@ -147,7 +147,6 @@ async function ejecutarAuditoria(tipo) {
     btnText.style.opacity = "0.3";
 
     try {
-        // 3. Llamada al backend (Vercel procesará index.js en la carpeta /api)
         const response = await fetch('/api', { 
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -159,7 +158,6 @@ async function ejecutarAuditoria(tipo) {
 
         const data = await response.json();
         
-        // 4. Mostramos el resultado con formato de saltos de línea
         if (data.output) {
             contentArea.innerHTML = data.output.replace(/\n/g, '<br>');
             resultBox.classList.remove('hidden');
@@ -173,17 +171,14 @@ async function ejecutarAuditoria(tipo) {
         contentArea.innerText = "Error de conexión con el motor de IA. Reintenta en un momento.";
         resultBox.classList.remove('hidden');
     } finally {
-        // 5. Restauramos el botón
         spinner.classList.add('hidden');
         btnText.style.opacity = "1";
     }
 }
 
-// Estos son los "puentes" para los botones de tu HTML actual
 function analyzeClarity() { ejecutarAuditoria('discern'); }
 function generateFieldNote() { ejecutarAuditoria('audit'); }
 </script>
-
 
 </body>
 </html>
