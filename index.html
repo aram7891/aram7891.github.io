@@ -61,7 +61,7 @@
       }
     }
 
-    // NUEVA FUNCIÓN: Toggler para Ensayos (ES/EN)
+    // Toggler para Ensayos (ES/EN)
     async function loadEssays(lang) {
       const file = lang === 'es' ? '/sections/ensayos-es.html' : '/sections/essays-en.html';
       try {
@@ -70,10 +70,10 @@
         if (!response.ok) throw new Error(`Error cargando ${file}`);
         const html = await response.text();
         container.innerHTML = html;
-
+        
         document.querySelectorAll('.essay-lang-btn').forEach(btn => btn.classList.remove('font-bold', 'border-b-2'));
         const activeBtn = document.querySelector(`.essay-lang-btn[onclick*="${lang}"]`);
-        if (activeBtn) activeBtn.classList.add('font-bold', 'border-b-2', 'border-ink');
+        if(activeBtn) activeBtn.classList.add('font-bold', 'border-b-2', 'border-ink');
 
       } catch (error) {
         console.error("Error cargando ensayos:", lang, error);
@@ -86,12 +86,14 @@
       loadSection("about", "/sections/about.html");
       loadSection("lab", "/sections/lab.html");
 
-      loadSection("field-notes", "/sections/field.html");  <!-- AQUI SE MONTA FIELD.HTML -->
-
-      loadEssays('es');
+      loadEssays('es'); 
 
       loadSection("books", "/sections/books.html");
       loadSection("selflove", "/sections/selflove.html");
+
+      // Field Notes ahora se monta antes del footer
+      loadSection("field-notes", "/sections/field.html");
+
       loadSection("footer", "/sections/footer.html");
     });
   </script>
@@ -100,12 +102,9 @@
 <body class="bg-paper text-ink font-sans antialiased selection:bg-accent selection:text-paper">
 
   <div id="navbar"></div>
-  <div id="home"></div>
+  <div id="home"></div> 
   <div id="about"></div>
   <div id="lab"></div>
-
-  <!-- NUEVA SECCIÓN: FIELD NOTES -->
-  <div id="field-notes"></div>
 
   <section class="max-w-7xl mx-auto px-6 py-20">
     <div class="flex justify-center space-x-8 mb-12 border-b border-divider pb-4">
@@ -117,25 +116,26 @@
 
   <div id="books"></div>
   <div id="selflove"></div>
+
+  <!-- FIELD NOTES AHORA AQUÍ, ANTES DEL FOOTER -->
+  <div id="field-notes"></div>
+
   <div id="footer"></div>
 
 <script>
 // Función maestra que conecta tu web con el servidor de Vercel
 async function ejecutarAuditoria(tipo) {
     console.log("Iniciando auditoría técnica de:", tipo);
-
+    
     const esClarity = tipo === 'discern';
     const inputId = esClarity ? 'situationInput' : 'patternInput';
-
-    // ✔ CORRECCIÓN AQUÍ (antes decía esClClarity)
     const resultId = esClarity ? 'clarityResult' : 'noteResult';
-
     const contentId = esClarity ? 'clarityContent' : 'noteContent';
     const spinnerId = esClarity ? 'analyzeSpinner' : 'noteSpinner';
     const btnTextId = esClarity ? 'analyzeBtnText' : 'noteBtnText';
 
     const textoUsuario = document.getElementById(inputId).value.trim();
-
+    
     if (textoUsuario.length < 20) {
         alert("Andrés, necesito un poco más de contexto para procesar la auditoría.");
         return;
@@ -150,17 +150,17 @@ async function ejecutarAuditoria(tipo) {
     btnText.style.opacity = "0.3";
 
     try {
-        const response = await fetch('/api', {
+        const response = await fetch('/api', { 
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                text: textoUsuario,
-                type: tipo
+            body: JSON.stringify({ 
+                text: textoUsuario, 
+                type: tipo 
             })
         });
 
         const data = await response.json();
-
+        
         if (data.output) {
             contentArea.innerHTML = data.output.replace(/\n/g, '<br>');
             resultBox.classList.remove('hidden');
