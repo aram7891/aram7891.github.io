@@ -1,37 +1,72 @@
-<section id="books" class="py-32 px-6 md:px-12 bg-white border-t border-divider text-ink">
-  <div class="max-w-5xl mx-auto">
-    <div class="text-center mb-16">
-      <span class="text-[10px] font-bold tracking-widest uppercase text-subtle mb-3 block" data-i18n="books-label">Publicaciones</span>
-      <h2 class="font-serif text-4xl md:text-5xl mb-6" data-i18n="books-title">Libros</h2>
-      <p class="text-subtle text-sm max-w-xl mx-auto" data-i18n="books-desc">
-        Exploraciones profundas sobre claridad emocional...
-      </p>
+<!-- LIBROS -->
+<section id="books" aria-labelledby="books-sec-title" class="py-32 px-6 md:px-12 bg-white text-ink">
+    <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+            <span class="text-[10px] font-bold tracking-widest uppercase text-subtle mb-3 block" data-i18n="books-label">Obras Publicadas</span>
+            <h2 id="books-sec-title" class="font-serif text-4xl md:text-5xl text-ink" data-i18n="books-sec-title">Libros</h2>
+        </div>
+
+        <!-- Contenedor Español -->
+        <div id="books-grid-es" class="grid grid-cols-1 md:grid-cols-2 gap-8 transition-opacity duration-500">
+            <!-- Libro 1: Match Consciente -->
+            <article class="essay-card flex flex-col sm:flex-row gap-8 items-center sm:items-start group bg-paper">
+                <div class="w-32 sm:w-40 shrink-0 aspect-[2/3] bg-ink text-paper flex flex-col justify-between p-4 md:p-5 shadow-lg group-hover:scale-105 transition-transform duration-700 ease-out select-none">
+                    <div class="text-[7px] md:text-[8px] uppercase tracking-[0.2em] opacity-70">Obra Principal</div>
+                    <div class="font-serif text-lg md:text-xl leading-tight">Match<br>Consciente</div>
+                    <div class="text-[7px] md:text-[8px] uppercase tracking-[0.2em] border-t border-white/20 pt-2 text-paper">Andrés Ramírez</div>
+                </div>
+                <div class="flex flex-col flex-1 h-full text-center sm:text-left">
+                    <span class="text-[9px] text-accent uppercase tracking-[0.2em] font-bold mb-2">Libro Teórico</span>
+                    <h3 class="font-serif text-2xl mb-3 text-ink">Match Consciente</h3>
+                    <p class="text-xs text-subtle leading-relaxed mb-6 flex-grow">Una auditoría técnica sobre la selección de pareja. Aborda la disección de los patrones de atracción y el establecimiento de fronteras estructurales preventivas antes de comprometer capital emocional.</p>
+                    <a href="https://www.amazon.com/Match-Consciente-Encontrar-Perderse-Spanish-ebook/dp/B0GLB3NJ1F" target="_blank" rel="noopener noreferrer" class="read-btn self-center sm:self-start mt-auto">Consultar en Amazon</a>
+                </div>
+            </article>
+
+            <!-- Libro 2: No te abandones -->
+            <article class="essay-card flex flex-col sm:flex-row gap-8 items-center sm:items-start group bg-paper text-ink">
+                <div class="w-32 sm:w-40 shrink-0 aspect-[2/3] bg-white text-ink border border-divider flex flex-col justify-between p-4 md:p-5 shadow-md group-hover:scale-105 transition-transform duration-700 ease-out select-none">
+                    <div class="text-[7px] md:text-[8px] uppercase tracking-[0.2em] text-subtle">Workbook</div>
+                    <div class="font-serif text-lg md:text-xl leading-tight">No te<br>abandones</div>
+                    <div class="text-[7px] md:text-[8px] uppercase tracking-[0.2em] border-t border-divider pt-2 text-subtle">Andrés Ramírez</div>
+                </div>
+                <div class="flex flex-col flex-1 h-full text-center sm:text-left">
+                    <span class="text-[9px] text-accent uppercase tracking-[0.2em] font-bold mb-2">Workbook Clínico</span>
+                    <h3 class="font-serif text-2xl mb-3 text-ink">No te abandones al buscar pareja</h3>
+                    <p class="text-xs text-subtle leading-relaxed mb-6 flex-grow">Pragmatismo clínico para la búsqueda de pareja. Proporciona marcos de trabajo estructurados para sostener la identidad individual y la liquidez cognitiva bajo presión relacional.</p>
+                    <a href="https://www.amazon.com/No-Abandones-Buscar-Pareja-Spanish-ebook/dp/B0GCRCDMQL" target="_blank" rel="noopener noreferrer" class="read-btn self-center sm:self-start mt-auto">Consultar en Amazon</a>
+                </div>
+            </article>
+        </div>
+
+        <!-- Contenedor Inglés (Opcional, oculto por defecto) -->
+        <div id="books-grid-en" class="hidden grid grid-cols-1 md:grid-cols-2 gap-8 transition-opacity duration-500">
+            <article class="essay-card flex flex-col sm:flex-row gap-8 items-center sm:items-start group bg-paper">
+                <div class="w-32 sm:w-40 shrink-0 aspect-[2/3] bg-ink text-paper flex flex-col justify-between p-4 md:p-5 shadow-lg group-hover:scale-105 transition-transform duration-700 ease-out select-none">
+                    <div class="text-[7px] md:text-[8px] uppercase tracking-[0.2em] opacity-70">Main Work</div>
+                    <div class="font-serif text-lg md:text-xl leading-tight">Mindful<br>Match</div>
+                    <div class="text-[7px] md:text-[8px] uppercase tracking-[0.2em] border-t border-white/20 pt-2 text-paper">Andrés Ramírez</div>
+                </div>
+                <div class="flex flex-col flex-1 h-full text-center sm:text-left">
+                    <span class="text-[9px] text-accent uppercase tracking-[0.2em] font-bold mb-2">Theoretical Book</span>
+                    <h3 class="font-serif text-2xl mb-3 text-ink">Mindful Match</h3>
+                    <p class="text-xs text-subtle leading-relaxed mb-6 flex-grow">A technical audit of partner selection. Addresses the dissection of attraction patterns and the establishment of preventive structural boundaries.</p>
+                    <a href="https://www.amazon.com/Mindful-Match-Finding-Without-Yourself-ebook/dp/B0CTHSDWK5" target="_blank" rel="noopener noreferrer" class="read-btn self-center sm:self-start mt-auto">View on Amazon</a>
+                </div>
+            </article>
+            <article class="essay-card flex flex-col sm:flex-row gap-8 items-center sm:items-start group bg-paper">
+                <div class="w-32 sm:w-40 shrink-0 aspect-[2/3] bg-white text-ink border border-divider flex flex-col justify-between p-4 md:p-5 shadow-md group-hover:scale-105 transition-transform duration-700 ease-out select-none">
+                    <div class="text-[7px] md:text-[8px] uppercase tracking-[0.2em] text-subtle">Workbook</div>
+                    <div class="font-serif text-lg md:text-xl leading-tight">Don't Lose<br>Yourself</div>
+                    <div class="text-[7px] md:text-[8px] uppercase tracking-[0.2em] border-t border-divider pt-2 text-subtle">Andrés Ramírez</div>
+                </div>
+                <div class="flex flex-col flex-1 h-full text-center sm:text-left">
+                    <span class="text-[9px] text-accent uppercase tracking-[0.2em] font-bold mb-2">Clinical Workbook</span>
+                    <h3 class="font-serif text-2xl mb-3 text-ink">Don't Lose Yourself While Dating</h3>
+                    <p class="text-xs text-subtle leading-relaxed mb-6 flex-grow">Clinical pragmatism for dating. Provides structured frameworks to sustain individual identity and cognitive liquidity.</p>
+                    <a href="https://www.amazon.com/Dont-Lose-Yourself-While-Dating-ebook/dp/B0GFPPVHLB" target="_blank" rel="noopener noreferrer" class="read-btn self-center sm:self-start mt-auto">View on Amazon</a>
+                </div>
+            </article>
+        </div>
     </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-20">
-      <article class="book-card">
-        <h3 class="font-serif text-2xl mb-4 italic">Mindful Match</h3>
-        <p class="text-xs text-subtle leading-relaxed mb-8" data-i18n="book1-desc">A transformative path...</p>
-        <a href="https://a.co/d/04tRvXMO" target="_blank" class="read-btn">AMAZON (EN)</a>
-      </article>
-
-      <article class="book-card">
-        <h3 class="font-serif text-2xl mb-4 italic">Match Consciente</h3>
-        <p class="text-xs text-subtle leading-relaxed mb-8" data-i18n="book2-desc">Una guía práctica...</p>
-        <a href="https://a.co/d/0dv76cGy" target="_blank" class="read-btn">AMAZON (ES)</a>
-      </article>
-
-      <article class="book-card">
-        <h3 class="font-serif text-2xl mb-4 italic">Don’t Lose Yourself While dating</h3>
-        <p class="text-xs text-subtle leading-relaxed mb-8" data-i18n="book3-desc">A practical workbook...</p>
-        <a href="https://a.co/d/0559Jxg9" target="_blank" class="read-btn">WORKBOOK (EN)</a>
-      </article>
-
-      <article class="book-card">
-        <h3 class="font-serif text-2xl mb-4 italic">No te abandones al buscar pareja</h3>
-        <p class="text-xs text-subtle leading-relaxed mb-8" data-i18n="book4-desc">Este cuaderno de trabajo...</p>
-        <a href="https://a.co/d/01YzVHPm" target="_blank" class="read-btn">WORKBOOK (ES)</a>
-      </article>
-    </div>
-  </div>
 </section>
