@@ -1,60 +1,45 @@
-<script>
-// Función maestra que conecta tu web con el servidor de Vercel
-async function ejecutarAuditoria(tipo) {
-    console.log("Iniciando auditoría técnica de:", tipo);
-    
-    const esClarity = tipo === 'discern';
-    const inputId = esClarity ? 'situationInput' : 'patternInput';
-    const resultId = esClarity ? 'clarityResult' : 'noteResult';
-    const contentId = esClarity ? 'clarityContent' : 'noteContent';
-    const spinnerId = esClarity ? 'analyzeSpinner' : 'noteSpinner';
-    const btnTextId = esClarity ? 'analyzeBtnText' : 'noteBtnText';
+<section class="max-w-5xl mx-auto px-6 py-20">
 
-    const textoUsuario = document.getElementById(inputId).value.trim();
-    
-    if (textoUsuario.length < 20) {
-        alert("Andrés, necesito un poco más de contexto para procesar la auditoría.");
-        return;
-    }
+  <h2 class="text-3xl font-serif mb-10">Laboratorio de Discernimiento</h2>
 
-    const spinner = document.getElementById(spinnerId);
-    const btnText = document.getElementById(btnTextId);
-    const resultBox = document.getElementById(resultId);
-    const contentArea = document.getElementById(contentId);
+  <!-- DISCERNIMIENTO RELACIONAL -->
+  <div class="mb-16">
+    <h3 class="text-xl font-serif mb-4">Discernimiento Relacional</h3>
 
-    spinner.classList.remove('hidden');
-    btnText.style.opacity = "0.3";
+    <textarea id="situationInput"
+              class="w-full border border-divider p-4 rounded-md mb-4"
+              rows="6"
+              placeholder="Describe la situación con la mayor claridad posible..."></textarea>
 
-    try {
-        const response = await fetch('/api', { 
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-                text: textoUsuario, 
-                type: tipo 
-            })
-        });
+    <button onclick="analyzeClarity()"
+            class="px-6 py-3 bg-ink text-paper rounded-md flex items-center space-x-2">
+      <span id="analyzeBtnText">Analizar</span>
+      <span id="analyzeSpinner" class="hidden animate-spin">⏳</span>
+    </button>
 
-        const data = await response.json();
-        
-        if (data.output) {
-            contentArea.innerHTML = data.output.replace(/\n/g, '<br>');
-            resultBox.classList.remove('hidden');
-            resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        } else {
-            throw new Error("Respuesta vacía");
-        }
+    <div id="clarityResult" class="hidden mt-6 border border-divider p-6 rounded-md">
+      <div id="clarityContent"></div>
+    </div>
+  </div>
 
-    } catch (error) {
-        console.error("Fallo en el Laboratorio:", error);
-        contentArea.innerText = "Error de conexión con el motor de IA. Reintenta en un momento.";
-        resultBox.classList.remove('hidden');
-    } finally {
-        spinner.classList.add('hidden');
-        btnText.style.opacity = "1";
-    }
-}
+  <!-- NOTAS DE CAMPO -->
+  <div>
+    <h3 class="text-xl font-serif mb-4">Notas de Campo</h3>
 
-function analyzeClarity() { ejecutarAuditoria('discern'); }
-function generateFieldNote() { ejecutarAuditoria('audit'); }
-</script>
+    <textarea id="patternInput"
+              class="w-full border border-divider p-4 rounded-md mb-4"
+              rows="6"
+              placeholder="Describe el patrón, comportamiento o dinámica que quieres auditar..."></textarea>
+
+    <button onclick="generateFieldNote()"
+            class="px-6 py-3 bg-ink text-paper rounded-md flex items-center space-x-2">
+      <span id="noteBtnText">Generar Nota</span>
+      <span id="noteSpinner" class="hidden animate-spin">⏳</span>
+    </button>
+
+    <div id="noteResult" class="hidden mt-6 border border-divider p-6 rounded-md">
+      <div id="noteContent"></div>
+    </div>
+  </div>
+
+</section>
