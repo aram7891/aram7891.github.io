@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   const { text, type } = req.body;
 
   try {
-    // Llamamos al motor en gemini.js
+    // Llamamos al motor en Gemini.js
     const resultado = await obtenerAuditoria(text, type);
     
     // Devolvemos la respuesta a la web
