@@ -14,14 +14,14 @@
       theme: {
         extend: {
           colors: {
-            paper: '#FAFAFA', 
-            ink: '#1A1A1A', 
-            subtle: '#71717A', 
-            divider: '#E4E4E7', 
+            paper: '#FAFAFA',
+            ink: '#1A1A1A',
+            subtle: '#71717A',
+            divider: '#E4E4E7',
             accent: '#A67C52'
           },
           fontFamily: {
-            serif: ['"Playfair Display"', 'serif'], 
+            serif: ['"Playfair Display"', 'serif'],
             sans: ['"Inter"', 'sans-serif'],
           }
         }
@@ -70,10 +70,10 @@
         if (!response.ok) throw new Error(`Error cargando ${file}`);
         const html = await response.text();
         container.innerHTML = html;
-        
+
         document.querySelectorAll('.essay-lang-btn').forEach(btn => btn.classList.remove('font-bold', 'border-b-2'));
         const activeBtn = document.querySelector(`.essay-lang-btn[onclick*="${lang}"]`);
-        if(activeBtn) activeBtn.classList.add('font-bold', 'border-b-2', 'border-ink');
+        if (activeBtn) activeBtn.classList.add('font-bold', 'border-b-2', 'border-ink');
 
       } catch (error) {
         console.error("Error cargando ensayos:", lang, error);
@@ -88,7 +88,7 @@
 
       loadSection("field-notes", "/sections/field.html");  <!-- AQUI SE MONTA FIELD.HTML -->
 
-      loadEssays('es'); 
+      loadEssays('es');
 
       loadSection("books", "/sections/books.html");
       loadSection("selflove", "/sections/selflove.html");
@@ -100,7 +100,7 @@
 <body class="bg-paper text-ink font-sans antialiased selection:bg-accent selection:text-paper">
 
   <div id="navbar"></div>
-  <div id="home"></div> 
+  <div id="home"></div>
   <div id="about"></div>
   <div id="lab"></div>
 
@@ -123,16 +123,19 @@
 // Función maestra que conecta tu web con el servidor de Vercel
 async function ejecutarAuditoria(tipo) {
     console.log("Iniciando auditoría técnica de:", tipo);
-    
+
     const esClarity = tipo === 'discern';
     const inputId = esClarity ? 'situationInput' : 'patternInput';
-    const resultId = esClClarity ? 'clarityResult' : 'noteResult';
+
+    // ✔ CORRECCIÓN AQUÍ (antes decía esClClarity)
+    const resultId = esClarity ? 'clarityResult' : 'noteResult';
+
     const contentId = esClarity ? 'clarityContent' : 'noteContent';
     const spinnerId = esClarity ? 'analyzeSpinner' : 'noteSpinner';
     const btnTextId = esClarity ? 'analyzeBtnText' : 'noteBtnText';
 
     const textoUsuario = document.getElementById(inputId).value.trim();
-    
+
     if (textoUsuario.length < 20) {
         alert("Andrés, necesito un poco más de contexto para procesar la auditoría.");
         return;
@@ -147,17 +150,17 @@ async function ejecutarAuditoria(tipo) {
     btnText.style.opacity = "0.3";
 
     try {
-        const response = await fetch('/api', { 
+        const response = await fetch('/api', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-                text: textoUsuario, 
-                type: tipo 
+            body: JSON.stringify({
+                text: textoUsuario,
+                type: tipo
             })
         });
 
         const data = await response.json();
-        
+
         if (data.output) {
             contentArea.innerHTML = data.output.replace(/\n/g, '<br>');
             resultBox.classList.remove('hidden');
