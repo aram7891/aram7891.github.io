@@ -1,97 +1,60 @@
-<section id="ai-tools" class="py-32 px-6 md:px-12 bg-paper border-t border-b
-border-divider text-ink">
+<script>
+// Función maestra que conecta tu web con el servidor de Vercel
+async function ejecutarAuditoria(tipo) {
+    console.log("Iniciando auditoría técnica de:", tipo);
+    
+    const esClarity = tipo === 'discern';
+    const inputId = esClarity ? 'situationInput' : 'patternInput';
+    const resultId = esClClarity ? 'clarityResult' : 'noteResult';
+    const contentId = esClarity ? 'clarityContent' : 'noteContent';
+    const spinnerId = esClarity ? 'analyzeSpinner' : 'noteSpinner';
+    const btnTextId = esClarity ? 'analyzeBtnText' : 'noteBtnText';
 
-  <div class="max-w-5xl mx-auto">
+    const textoUsuario = document.getElementById(inputId).value.trim();
+    
+    if (textoUsuario.length < 20) {
+        alert("Andrés, necesito un poco más de contexto para procesar la auditoría.");
+        return;
+    }
 
-    <div class="text-center mb-16">
-      <span class="text-[10px] font-bold tracking-widest uppercase text-subtle mb-2
-      block" data-i18n="tools-label">Laboratorio de Discernimiento</span>
+    const spinner = document.getElementById(spinnerId);
+    const btnText = document.getElementById(btnTextId);
+    const resultBox = document.getElementById(resultId);
+    const contentArea = document.getElementById(contentId);
 
-      <h2 class="font-serif text-4xl mb-4" data-i18n="tools-title">Interacción con la
-      Claridad</h2>
+    spinner.classList.remove('hidden');
+    btnText.style.opacity = "0.3";
 
-<p class="text-[9px] text-accent mb-4 uppercase tracking-[0.2em] font-bold"
-data-i18n="tool2-subtitle">Patrones de Decisión / Tolerancia</p>
+    try {
+        const response = await fetch('/api', { 
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                text: textoUsuario, 
+                type: tipo 
+            })
+        });
 
-    </div>
+        const data = await response.json();
+        
+        if (data.output) {
+            contentArea.innerHTML = data.output.replace(/\n/g, '<br>');
+            resultBox.classList.remove('hidden');
+            resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        } else {
+            throw new Error("Respuesta vacía");
+        }
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+    } catch (error) {
+        console.error("Fallo en el Laboratorio:", error);
+        contentArea.innerText = "Error de conexión con el motor de IA. Reintenta en un momento.";
+        resultBox.classList.remove('hidden');
+    } finally {
+        spinner.classList.add('hidden');
+        btnText.style.opacity = "1";
+    }
+}
 
-      <!-- DISCERNIMIENTO RELACIONAL -->
-      <article class="p-10 flex flex-col shadow-sm border border-divider bg-white">
-
-        <h3 class="font-serif text-2xl mb-2 tracking-tight"
-        data-i18n="tool1-title">Discernimiento Relacional</h3>
-
-        <p class="text-[9px] text-accent mb-4 uppercase tracking-[0.2em] font-bold"
-        data-i18n="tool1-subtitle">Perspectiva Técnica</p>
-
-        <p class="text-xs text-subtle mb-6 leading-relaxed">
-          <span data-i18n="tool1-help">Describe una dinámica que te genere
-          confusión.</span>
-          <span class="block mt-1 font-bold text-ink italic"
-          data-i18n="tool1-example">Ej: "Me busca constantemente pero evade formalizar".</span>
-        </p>
-
-        <textarea id="situationInput" rows="5" class="w-full p-4 text-sm border
-        border-divider rounded-none bg-paper focus:ring-1 focus:ring-ink outline-none mb-6"
-        data-i18n-placeholder="placeholder-discern"></textarea>
-
-        <button onclick="analyzeClarity()" id="analyzeBtn" class="w-full py-4 bg-ink
-        text-white text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-opacity-90 flex
-        items-center justify-center transition-all">
-          <span id="analyzeSpinner" class="spinner hidden"></span>
-          <span id="analyzeBtnText" data-i18n="btn-analyze">Obtener
-          Perspectiva</span>
-        </button>
-
-        <div id="clarityResult" class="mt-8 p-6 bg-paper border border-divider text-[10px]
-        hidden">
-          <span class="block font-bold mb-3 uppercase tracking-[0.2em] text-subtle"
-          data-i18n="record-label">Registro de Auditoría</span>
-          <div id="clarityContent" class="leading-relaxed"></div>
-        </div>
-
-      </article>
-
-      <!-- AUDITORÍA EMOCIONAL -->
-      <article class="p-10 flex flex-col shadow-sm border border-divider bg-white">
-
-        <h3 class="font-serif text-2xl mb-2 tracking-tight"
-        data-i18n="tool2-title">Auditoría Emocional</h3>
-
-        <p class="text-[9px] text-accent mb-4 uppercase tracking-[0.2em] font-bold"
-        data-i18n="tool2-subtitle">Patrones de Activo/Pasivo</p>
-
-        <p class="text-xs text-subtle mb-6 leading-relaxed">
-          <span data-i18n="tool2-help">Introduce un comportamiento o ciclo que repites.</span>
-          <span class="block mt-1 font-bold text-ink italic"
-          data-i18n="tool2-example">Ej: "Suelo ignorar banderas rojas por el potencial de la persona".</span>
-        </p>
-
-        <textarea id="patternInput" rows="5" class="w-full p-4 text-sm border
-        border-divider rounded-none bg-paper focus:ring-1 focus:ring-ink outline-none mb-6"
-        data-i18n-placeholder="placeholder-audit"></textarea>
-
-        <button onclick="generateFieldNote()" id="noteBtn" class="w-full py-4 border
-        border-ink text-ink text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-ink
-        hover:text-white flex items-center justify-center transition-all">
-          <span id="noteSpinner" class="spinner hidden"></span>
-          <span id="noteBtnText" data-i18n="btn-generate">Generar Nota de
-          Campo</span>
-        </button>
-
-        <div id="noteResult" class="mt-8 p-6 bg-paper border border-divider text-[10px]
-        hidden">
-          <span class="block font-bold mb-3 uppercase tracking-[0.2em] text-subtle"
-          data-i18n="record-label">Registro de Auditoría</span>
-          <div id="noteContent" class="leading-relaxed"></div>
-        </div>
-
-      </article>
-
-    </div>
-
-  </div>
-
-</section>
+function analyzeClarity() { ejecutarAuditoria('discern'); }
+function generateFieldNote() { ejecutarAuditoria('audit'); }
+</script>
