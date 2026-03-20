@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // --- 1. LOS CEREBROS (Tus instrucciones maestras) ---
 const promptDiscernimiento = `
@@ -23,35 +23,44 @@ Estructura de respuesta en español:
 4. **Punto de Intervención:** (La acción concreta para cerrar el ciclo de tolerancia).
 `;
 
-// --- 2. LA FUNCIÓN MOTOR (Con manejo de errores para tu Plan de Pago) ---
+// --- 2. MOTOR ACTUALIZADO (API nueva, estable y sin errores falsos) ---
 export async function obtenerAuditoria(texto, tipo) {
   try {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) throw new Error("API_KEY_MISSING: Revisa las variables de Vercel.");
 
+    // Inicialización correcta con la API nueva
     const genAI = new GoogleGenerativeAI(apiKey);
-    const instruccion = tipo === 'discern' ? promptDiscernimiento : promptAuditoria;
 
-    const model = genAI.getGenerativeModel({ 
-      model: "gemini-1.5-flash" 
+    const instruccion = tipo === "discern"
+      ? promptDiscernimiento
+      : promptAuditoria;
+
+    // Modelo actualizado con configuración explícita
+    const model = genAI.getGenerativeModel({
+      model: "gemini-1.5-flash",
+      generationConfig: {
+        temperature: 0.7,
+      },
     });
 
-    // Usamos startChat para asegurar que la instrucción se mantenga firme
+    // Chat actualizado (API nueva)
     const chat = model.startChat({
       history: [
         { role: "user", parts: [{ text: instruccion }] },
-        { role: "model", parts: [{ text: "Entendido. Soy tu Auditor de Claridad. Enviame el caso." }] },
+        { role: "model", parts: [{ text: "Entendido. Soy tu Auditor de Claridad. Envíame el caso." }] },
       ],
     });
 
+    // Enviar el texto del usuario
     const result = await chat.sendMessage(texto);
     const response = await result.response;
+
     return response.text();
 
   } catch (error) {
-    // Esto es lo que verás en Vercel Logs si algo falla
     console.error("--- ERROR EN GEMINI.JS ---");
     console.error("Mensaje:", error.message);
-    throw error; 
+    throw error;
   }
 }
