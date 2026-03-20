@@ -1,6 +1,5 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-// --- LOS CEREBROS ---
 const promptDiscernimiento = `
 Eres un Auditor Técnico Relacional. Tu misión es desglosar la situación del usuario separando la 'Narrativa' de los 'Hechos'. No valides emociones, identifica inconsistencias lógicas entre lo que se dice y lo que se hace.
 
@@ -24,16 +23,27 @@ Estructura de respuesta en español:
 `;
 
 export async function obtenerAuditoria(texto, tipo) {
-  const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-  
-  // Elegimos el cerebro según lo que pidió el usuario
-  const instruccion = tipo === 'discern' ? promptDiscernimiento : promptAuditoria;
+  try {
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+    const instruccion = tipo === 'discern' ? promptDiscernimiento : promptAuditoria;
 
-  const model = genAI.getGenerativeModel({ 
-    model: "gemini-1.5-flash",
-    systemInstruction: instruccion 
-  });
+    const model = genAI.getGenerativeModel({ 
+      model: "gemini-1.5-flash",
+      systemInstruction: instruccion
+    });
 
-  const result = await model.generateContent(texto);
-  return result.response.text();
+    // Configuramos para que no se bloquee por tonterías
+    const result = await model.generateContent({
+      contents: [{ role: "user", parts: [{ text: texto }]}],
+      generationConfig: { maxOutputTokens: 500 }
+    });
+
+    const response = await result.response;
+    return response.text();
+
+  } catch (error) {
+    // ESTO ES LO MÁS IMPORTANTE: Ahora verás el error real en Vercel Logs
+    console.error("DETALLE DEL ERROR DE GOOGLE:", error.message);
+    throw new Error("Error en la conexión con Gemini: " + error.message);
+  }
 }
