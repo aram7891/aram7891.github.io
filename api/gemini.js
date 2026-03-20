@@ -1,45 +1,39 @@
-export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Método no permitido" });
-  }
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
-  try {
-    const { prompt } = req.body;
+// --- LOS CEREBROS ---
+const promptDiscernimiento = `
+Eres un Auditor Técnico Relacional. Tu misión es desglosar la situación del usuario separando la 'Narrativa' de los 'Hechos'. No valides emociones, identifica inconsistencias lógicas entre lo que se dice y lo que se hace.
 
-    if (!prompt) {
-      return res.status(400).json({ error: "Falta el prompt" });
-    }
+Estructura de respuesta en español:
+1. **Hechos Auditados:** (Lista de acciones verificables).
+2. **Brechas de Lógica:** (Donde las palabras no coinciden con los actos).
+3. **Nivel de Ruido:** (Qué parte de la confusión es subjetiva).
+4. **Hipótesis Técnica:** (Conclusión fría basada en datos).
+`;
 
-    const apiKey = process.env.GEMINI_API_KEY;
+const promptAuditoria = `
+Eres un Analista de Patrones de Ejecución Humana. Tu marco de análisis es exclusivamente: Decisión vs. Tolerancia.
+- Decisión: Acciones conscientes que el usuario toma.
+- Tolerancia: Comportamientos o situaciones que el usuario permite por omisión.
 
-    if (!apiKey) {
-      return res.status(500).json({ error: "Falta GEMINI_API_KEY en Vercel" });
-    }
+Estructura de respuesta en español:
+1. **Ciclo de Decisión:** (Lo que estás eligiendo hacer activamente).
+2. **Umbral de Tolerancia:** (Lo que estás permitiendo que suceda sin poner límites).
+3. **Costo de la Omisión:** (Qué pierdes al no actuar).
+4. **Punto de Intervención:** (La acción concreta para cerrar el ciclo de tolerancia).
+`;
 
-    const response = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + apiKey,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contents: [
-            {
-              parts: [{ text: prompt }]
-            }
-          ]
-        })
-      }
-    );
+export async function obtenerAuditoria(texto, tipo) {
+  const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+  
+  // Elegimos el cerebro según lo que pidió el usuario
+  const instruccion = tipo === 'discern' ? promptDiscernimiento : promptAuditoria;
 
-    const data = await response.json();
+  const model = genAI.getGenerativeModel({ 
+    model: "gemini-1.5-flash",
+    systemInstruction: instruccion 
+  });
 
-    const text =
-      data?.candidates?.[0]?.content?.parts?.[0]?.text ||
-      "No se pudo generar respuesta.";
-
-    return res.status(200).json({ text });
-  } catch (error) {
-    console.error("Error en Gemini:", error);
-    return res.status(500).json({ error: "Error interno del servidor" });
-  }
+  const result = await model.generateContent(texto);
+  return result.response.text();
 }
