@@ -13,7 +13,6 @@ export default async function handler(req, res) {
 
     const client = new OpenAI({ apiKey });
 
-    // Selección del prompt según el tipo
     const promptDiscernimiento = `
 Eres un Auditor Técnico Relacional. Tu misión es desglosar la situación del usuario separando la 'Narrativa' de los 'Hechos'. No valides emociones, identifica inconsistencias lógicas entre lo que se dice y lo que se hace.
 
@@ -58,3 +57,4 @@ Estructura de respuesta en español:
     res.status(500).json({ error: "Falla en el motor del laboratorio." });
   }
 }
+
