@@ -1,102 +1,8 @@
-<!DOCTYPE html>
-<html lang="es">
+</script>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- FAVICON CORRECTO PARA VERCEL -->
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
 
-  <title>Andrés Ramírez — Claridad Antes que Conexión</title>
-
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            paper: '#FAFAFA',
-            ink: '#1A1A1A',
-            subtle: '#71717A',
-            divider: '#E4E4E7',
-            accent: '#A67C52'
-          },
-          fontFamily: {
-            serif: ['"Playfair Display"', 'serif'],
-            sans: ['"Inter"', 'sans-serif'],
-          }
-        }
-      }
-    }
-  </script>
-
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="/styles/global.css" />
-
-  <script src="/styles/scripts/translations.js" defer></script>
-  <script src="/styles/scripts/main.js" defer></script>
-
-  <script>
-    async function loadSection(id, file) {
-      try {
-        const container = document.getElementById(id);
-        const response = await fetch(file);
-        if (!response.ok) throw new Error(`Error cargando ${file}`);
-        const html = await response.text();
-        container.innerHTML = html;
-
-        const scripts = container.querySelectorAll("script");
-        scripts.forEach((oldScript) => {
-          const newScript = document.createElement("script");
-          Array.from(oldScript.attributes).forEach(attr =>
-            newScript.setAttribute(attr.name, attr.value)
-          );
-          newScript.appendChild(document.createTextNode(oldScript.innerHTML));
-          oldScript.parentNode.replaceChild(newScript, oldScript);
-        });
-
-      } catch (error) {
-        console.error("Error en la sección:", id, error);
-      }
-    }
-
-    async function loadEssays(lang) {
-      const file = lang === 'es' ? '/sections/ensayos-es.html' : '/sections/essays-en.html';
-      try {
-        const container = document.getElementById("essays");
-        const response = await fetch(file);
-        if (!response.ok) throw new Error(`Error cargando ${file}`);
-        const html = await response.text();
-        container.innerHTML = html;
-
-        document.querySelectorAll('.essay-lang-btn').forEach(btn => btn.classList.remove('font-bold', 'border-b-2'));
-        const activeBtn = document.querySelector(`.essay-lang-btn[onclick*="${lang}"]`);
-        if (activeBtn) activeBtn.classList.add('font-bold', 'border-b-2', 'border-ink');
-
-      } catch (error) {
-        console.error("Error cargando ensayos:", lang, error);
-      }
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      loadSection("navbar", "/sections/navbar.html");
-      loadSection("home", "/sections/hero.html");
-      loadSection("about", "/sections/about.html");
-
-      // ✔ LABORATORIO AHORA VA AQUÍ
-      loadSection("lab", "/sections/lab.html");
-
-      loadEssays('es');
-
-      loadSection("books", "/sections/books.html");
-      loadSection("selflove", "/sections/selflove.html");
-
-      // Field Notes antes del footer
-      loadSection("field-notes", "/sections/field.html");
-
-      loadSection("footer", "/sections/footer.html");
-    });
-  </script>
 </head>
 
 <body class="bg-paper text-ink font-sans antialiased selection:bg-accent selection:text-paper">
@@ -183,7 +89,6 @@ async function ejecutarAuditoria(tipo) {
 function analyzeClarity() { ejecutarAuditoria('discern'); }
 function generateFieldNote() { ejecutarAuditoria('audit'); }
 </script>
-
 
 </body>
 </html>
