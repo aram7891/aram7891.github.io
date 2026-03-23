@@ -138,7 +138,7 @@ async function ejecutarAuditoria(tipo) {
     const textoUsuario = document.getElementById(inputId).value.trim();
 
     if (textoUsuario.length < 20) {
-        alert("Andrés, necesito un poco más de contexto para procesar la auditoría.");
+        alert("Necesito un poco más de contexto para procesar la auditoría.");
         return;
     }
 
@@ -151,7 +151,7 @@ async function ejecutarAuditoria(tipo) {
     btnText.style.opacity = "0.3";
 
     try {
-        const response = await fetch('/api', {
+        const response = await fetch('/api/index', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -172,7 +172,7 @@ async function ejecutarAuditoria(tipo) {
 
     } catch (error) {
         console.error("Fallo en el Laboratorio:", error);
-        contentArea.innerText = "Error de conexión con el motor de IA. Reintenta en un momento.";
+        contentArea.innerText = "No se pudo procesar la solicitud. Intenta nuevamente.";
         resultBox.classList.remove('hidden');
     } finally {
         spinner.classList.add('hidden');
@@ -183,6 +183,7 @@ async function ejecutarAuditoria(tipo) {
 function analyzeClarity() { ejecutarAuditoria('discern'); }
 function generateFieldNote() { ejecutarAuditoria('audit'); }
 </script>
+
 
 </body>
 </html>
