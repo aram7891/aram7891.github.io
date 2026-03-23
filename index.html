@@ -1,8 +1,44 @@
-</script>
+<!DOCTYPE html>
+<html lang="es">
 
-  <!-- FAVICON CORRECTO PARA VERCEL -->
-  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- FAVICON -->
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+
+  <title>Andrés Ramírez</title>
+
+  <!-- TIPOGRAFÍA -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- ESTILOS -->
+  <link rel="stylesheet" href="styles/global.css" />
+  <link rel="stylesheet" href="styles/transitions.css" />
+  <link rel="stylesheet" href="styles/essays.css" />
+  <link rel="stylesheet" href="styles/lab.css" />
+
+  <!-- CARGA DE SECCIONES -->
+  <script>
+    async function loadSection(id, file) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const html = await fetch(file).then(r => r.text());
+      el.innerHTML = html;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      loadSection("navbar", "sections/navbar.html");
+      loadSection("home", "sections/home.html");
+      loadSection("about", "sections/about.html");
+      loadSection("lab", "sections/lab.html");
+      loadSection("books", "sections/books.html");
+      loadSection("selflove", "sections/selflove.html");
+      loadSection("field-notes", "sections/field-notes.html");
+      loadSection("footer", "sections/footer.html");
+    });
+  </script>
 </head>
 
 <body class="bg-paper text-ink font-sans antialiased selection:bg-accent selection:text-paper">
@@ -11,9 +47,10 @@
   <div id="home"></div>
   <div id="about"></div>
 
-  <!-- ✔ LABORATORIO DESPUÉS DEL AUTOR -->
+  <!-- LABORATORIO -->
   <div id="lab"></div>
 
+  <!-- ENSAYOS -->
   <section class="max-w-7xl mx-auto px-6 py-20">
     <div class="flex justify-center space-x-8 mb-12 border-b border-divider pb-4">
       <button onclick="loadEssays('es')" class="essay-lang-btn text-[10px] tracking-[0.2em] uppercase transition hover:opacity-50">Español</button>
@@ -25,70 +62,11 @@
   <div id="books"></div>
   <div id="selflove"></div>
 
-  <!-- FIELD NOTES ANTES DEL FOOTER -->
+  <!-- FIELD NOTES -->
   <div id="field-notes"></div>
 
   <div id="footer"></div>
 
-<script>
-async function ejecutarAuditoria(tipo) {
-    console.log("Iniciando auditoría técnica de:", tipo);
-
-    const esClarity = tipo === 'discern';
-    const inputId = esClarity ? 'situationInput' : 'patternInput';
-    const resultId = esClarity ? 'clarityResult' : 'noteResult';
-    const contentId = esClarity ? 'clarityContent' : 'noteContent';
-    const spinnerId = esClarity ? 'analyzeSpinner' : 'noteSpinner';
-    const btnTextId = esClarity ? 'analyzeBtnText' : 'noteBtnText';
-
-    const textoUsuario = document.getElementById(inputId).value.trim();
-
-    if (textoUsuario.length < 20) {
-        alert("Necesito un poco más de contexto para procesar la auditoría.");
-        return;
-    }
-
-    const spinner = document.getElementById(spinnerId);
-    const btnText = document.getElementById(btnTextId);
-    const resultBox = document.getElementById(resultId);
-    const contentArea = document.getElementById(contentId);
-
-    spinner.classList.remove('hidden');
-    btnText.style.opacity = "0.3";
-
-    try {
-        const response = await fetch('/api/index', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                text: textoUsuario,
-                type: tipo
-            })
-        });
-
-        const data = await response.json();
-
-        if (data.output) {
-            contentArea.innerHTML = data.output.replace(/\n/g, '<br>');
-            resultBox.classList.remove('hidden');
-            resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        } else {
-            throw new Error("Respuesta vacía");
-        }
-
-    } catch (error) {
-        console.error("Fallo en el Laboratorio:", error);
-        contentArea.innerText = "No se pudo procesar la solicitud. Intenta nuevamente.";
-        resultBox.classList.remove('hidden');
-    } finally {
-        spinner.classList.add('hidden');
-        btnText.style.opacity = "1";
-    }
-}
-
-function analyzeClarity() { ejecutarAuditoria('discern'); }
-function generateFieldNote() { ejecutarAuditoria('audit'); }
-</script>
-
-</body>
-</html>
+  <!-- LABORATORIO SCRIPT -->
+  <script>
+    async function ejecutarAuditoria(tipo) {
