@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Clarity Strategy | Andrés Ramírez</title>
 
+  <!-- Tu Favicon (el famoso Bacon 🥓) -->
   <link rel="icon" type="image/png" href="/assets/images/favicon.png">
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -15,11 +16,34 @@
   <link rel="stylesheet" href="styles/lab.css" />
 
   <script>
+    // Función original blindada: si Vercel falla al cargar una sección, la página no colapsa
     async function loadSection(id, file) {
       const el = document.getElementById(id);
       if (!el) return;
-      const html = await fetch(file).then(r => r.text());
-      el.innerHTML = html;
+      try {
+        const response = await fetch(file);
+        if (!response.ok) throw new Error("HTTP " + response.status);
+        const html = await response.text();
+        el.innerHTML = html;
+      } catch (error) {
+        console.error("Error al cargar la sección " + id + ":", error);
+      }
+    }
+
+    // La función reparada para que los botones de Ensayos funcionen en producción
+    async function loadEssays(lang) {
+      const el = document.getElementById("essays");
+      if (!el) return;
+      
+      const file = `sections/essays-${lang}.html`; 
+      try {
+        const response = await fetch(file);
+        if (!response.ok) throw new Error("HTTP " + response.status);
+        const html = await response.text();
+        el.innerHTML = html;
+      } catch (error) {
+        console.error("Error cargando el idioma " + lang + ":", error);
+      }
     }
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -30,9 +54,9 @@
       loadSection("books", "sections/books.html");
       loadSection("selflove", "sections/selflove.html");
       loadSection("field-notes", "sections/field-notes.html");
-      // Nota: Como el footer oficial ya está integrado abajo en el HTML, 
-      // comenté la carga dinámica del footer para evitar duplicados.
-      // loadSection("footer", "sections/footer.html");
+      
+      // Inicia con español por defecto
+      loadEssays('es');
     });
   </script>
 </head>
@@ -40,6 +64,7 @@
 <body class="bg-paper text-ink font-sans antialiased selection:bg-accent selection:text-paper flex flex-col min-h-screen">
 
   <main class="flex-grow">
+    <!-- Aquí es donde tu JavaScript inyecta tu contenido. Es tu arquitectura dinámica. -->
     <div id="navbar"></div>
     <div id="home"></div>
     <div id="about"></div>
@@ -60,6 +85,7 @@
     <div id="field-notes"></div>
   </main>
 
+  <!-- Tu bloque de identidad intacto con enlaces, tal cual lo diseñaste -->
   <footer class="bg-gray-900 text-white py-10 mt-auto">
       <div class="container mx-auto flex flex-col items-center justify-center">
           <img src="/assets/images/andres-ramirez-portrait.jpg" alt="Andrés Ramírez" class="w-32 h-32 rounded-full object-cover border-4 border-gray-600 mb-6 shadow-lg">
@@ -83,3 +109,5 @@
 
 </body>
 </html>
+
+
