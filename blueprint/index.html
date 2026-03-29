@@ -59,8 +59,9 @@
       <div class="flex flex-col items-center mb-12">
           <div class="relative group">
               <div class="absolute inset-0 bg-brand-blue/5 rounded-full blur-3xl group-hover:bg-brand-blue/15 transition-all duration-1000"></div>
+              <!-- FOTO CORREGIDA -->
               <img 
-                  src="assets/images/andres-ramirez-portrait.jpg" 
+                  src="https://andresramirez.pro/assets/images/andres-ramirez-portrait.jpg" 
                   alt="Andrés Ramírez" 
                   class="relative w-44 h-44 md:w-60 md:h-60 rounded-full object-cover border-[6px] border-white shadow-2xl mb-8 portrait-luxury cursor-pointer"
                   onerror="this.src='https://ui-avatars.com/api/?name=Andres+Ramirez&background=0B1320&color=fff'"
@@ -124,7 +125,8 @@
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center md:items-start gap-12 text-center md:text-left">
             <div class="flex flex-col md:flex-row items-center gap-8">
                 <div class="w-24 h-24 bg-brand-lightBlue shrink-0 relative overflow-hidden shadow-inner rounded-lg">
-                    <img src="assets/images/andres-ramirez-portrait.jpg" alt="Andrés Ramírez" class="w-full h-full object-cover portrait-luxury cursor-pointer" onerror="this.src='https://ui-avatars.com/api/?name=AR&background=2A5C8A&color=fff'">
+                    <!-- FOTO CORREGIDA -->
+                    <img src="https://andresramirez.pro/assets/images/andres-ramirez-portrait.jpg" alt="Andrés Ramírez" class="w-full h-full object-cover portrait-luxury cursor-pointer" onerror="this.src='https://ui-avatars.com/api/?name=AR&background=2A5C8A&color=fff'">
                 </div>
                 <div>
                     <h4 class="font-serif font-semibold text-3xl tracking-tight text-brand-dark mb-1">Andrés Ramírez</h4>
@@ -208,15 +210,10 @@
     }
 
     function openBlueprint() {
-      // AQUÍ ESTÁ LA MAGIA: Forzamos la ruta absoluta incluyendo la carpeta blueprint
       const file = currentLang === 'es' ? '/blueprint/blueprint-es.html' : '/blueprint/blueprint-en.html';
       window.open(file, "_self");
     }
   </script>
 </body>
 </html>
-
-
-
-
 
