@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Blueprint - Andrés Ramírez</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { theme: { extend: { colors: { brand: { bg: '#F4F7F9', dark: '#0B1320', blue: '#2A5C8A', lightBlue: '#D5E1EA' } }, fontFamily: { serif: ['"Playfair Display"', 'serif'], sans: ['"DM Sans"', 'sans-serif'] }, boxShadow: { 'blue-glow': '0 20px 50px rgba(42, 92, 138, 0.15)' } } } }</script>
+    <style> body { scroll-behavior: smooth; } ::selection { background-color: #2A5C8A; color: #F4F7F9; } .hero-glow { animation: softGlow 8s ease infinite; } @keyframes softGlow { 0%, 100% { text-shadow: 0 0 20px rgba(42, 92, 138, 0.1); } 50% { text-shadow: 0 0 40px rgba(42, 92, 138, 0.2); } } @media print { .print-hide { display: none !important; } body { background: white !important; color: black !important; } .page-break { page-break-before: always; } } </style>
+</head>
+<body class="bg-brand-bg text-brand-dark font-sans overflow-x-hidden antialiased">
+
+    <!-- CONTROLES SUPERIORES (Redirige a la versión en Español) -->
+    <div class="fixed top-6 right-6 z-50 print-hide flex items-center gap-3">
+        <div class="bg-white/80 backdrop-blur-md border border-brand-lightBlue shadow-xl flex items-center p-1 rounded-full">
+            <a href="blueprint-es.html" class="px-3 py-1.5 rounded-full text-[10px] font-bold transition-all text-brand-dark/40 hover:text-brand-blue uppercase tracking-widest">ES</a>
+            <button class="px-3 py-1.5 rounded-full text-[10px] font-bold transition-all bg-brand-blue text-white shadow-md uppercase tracking-widest cursor-default">EN</button>
+        </div>
+        <button onclick="window.print()" class="bg-brand-blue text-white px-5 py-2.5 rounded-full shadow-xl hover:bg-brand-dark transition-all text-[10px] font-bold tracking-widest flex items-center gap-2">
+            EXPORT PDF
+        </button>
+    </div>
+
+    <nav class="w-full pt-10 px-8 text-center print-hide">
+        <span class="font-serif font-bold text-xl tracking-tight text-brand-dark border-b border-brand-lightBlue pb-2 inline-block">Andrés Ramírez<span class="text-brand-blue">.</span></span>
+    </nav>
+
+    <!-- HERO -->
+    <header class="max-w-4xl mx-auto px-8 pt-24 pb-16 text-center">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 border border-brand-lightBlue bg-white mb-8 text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue">
+            <span class="w-1.5 h-1.5 bg-brand-blue rounded-full animate-pulse"></span>
+            CLARITY GUIDE
+        </div>
+        <h1 class="text-6xl md:text-8xl font-serif font-semibold tracking-tight text-brand-dark mb-6 leading-[1.05] hero-glow">
+            The Blueprint<span class="text-brand-blue">.</span>
+        </h1>
+        <p class="text-3xl md:text-4xl font-serif italic text-brand-dark/70 mb-12">
+            It's not a blue bird.<br>It's the clarity blueprint that already belongs to you.
+        </p>
+        <div class="max-w-2xl mx-auto bg-white p-8 md:p-12 border border-brand-lightBlue shadow-sm relative mt-16 break-inside-avoid rounded-3xl">
+            <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-brand-bg px-4 text-[10px] uppercase tracking-[0.3em] font-bold text-brand-blue">THE PRINCIPLE</div>
+            <p class="text-xl md:text-2xl font-medium leading-relaxed text-brand-dark">
+                "You don't need to do more. You need to do what actually moves your life forward."
+            </p>
+        </div>
+    </header>
+
+    <!-- INTRODUCCIÓN -->
+    <section class="max-w-3xl mx-auto px-8 pb-12 text-lg md:text-xl leading-relaxed text-brand-dark/80 font-light text-center break-inside-avoid">
+        <p class="mb-6">If you've ever ended the day exhausted, feeling like you were busy but didn't move forward, you speak my language.</p>
+        <p>This isn't a magic formula. It is a silent architecture to return to what matters.</p>
+    </section>
+
+    <!-- EL VIAJE DE LA CLARIDAD -->
+    <section class="max-w-6xl mx-auto px-8 pb-32 page-break">
+        <h2 class="text-3xl md:text-4xl font-serif font-semibold tracking-tight text-center mb-16 text-brand-dark">The Road to Clarity</h2>
+        <div class="grid md:grid-cols-3 gap-8 items-stretch">
+            <div class="bg-white p-10 border border-brand-lightBlue/60 shadow-xl shadow-brand-dark/[0.03] relative rounded-[32px]">
+                <h3 class="text-[10px] font-bold uppercase tracking-[0.3em] text-brand-dark/40 mb-2">WHERE YOU ARE TODAY</h3>
+                <h4 class="text-2xl font-serif italic text-brand-dark mb-8">The Before</h4>
+                <ul class="space-y-6 text-sm font-light text-brand-dark/80">
+                    <li><strong class="block font-medium text-brand-dark mb-1 text-base">The Noise:</strong> Lots of movement, little progress.</li>
+                    <li><strong class="block font-medium text-brand-dark mb-1 text-base">The Paralysis:</strong> Too many options open — literally and mentally.</li>
+                    <li><strong class="block font-medium text-brand-dark mb-1 text-base">The Reaction:</strong> Your day is decided by everything except you.</li>
+                </ul>
+            </div>
+            <div class="bg-white p-10 border-2 border-brand-blue/20 relative rounded-[32px] shadow-blue-glow transform md:-translate-y-2 z-10">
+                <h3 class="text-[10px] font-bold uppercase tracking-[0.3em] text-brand-blue mb-2">WHEN YOU APPLY THIS</h3>
+                <h4 class="text-2xl font-serif italic text-brand-dark mb-8">The During</h4>
+                <ul class="space-y-6 text-sm font-light text-brand-dark/80">
+                    <li><strong class="block font-medium text-brand-dark mb-1 text-base">The Relief:</strong> You don't have to carry everything.</li>
+                    <li><strong class="block font-medium text-brand-dark mb-1 text-base">The Curiosity:</strong> Asking yourself if what you're doing makes sense today.</li>
+                    <li><strong class="block font-medium text-brand-dark mb-1 text-base">The Filter:</strong> Intentional decisions.</li>
+                </ul>
+            </div>
+            <div class="bg-white p-10 border border-brand-lightBlue/60 shadow-xl shadow-brand-dark/[0.03] relative rounded-[32px]">
+                <h3 class="text-[10px] font-bold uppercase tracking-[0.3em] text-brand-dark/40 mb-2">WHERE WE'RE GOING</h3>
+                <h4 class="text-2xl font-serif italic text-brand-dark mb-8">The After</h4>
+                <ul class="space-y-6 text-sm font-light text-brand-dark/80">
+                    <li><strong class="block font-medium text-brand-dark mb-1 text-base">Intentional Focus:</strong> Knowing what to say yes to.</li>
+                    <li><strong class="block font-medium text-brand-dark mb-1 text-base">Serene Execution:</strong> Moving forward without rushing.</li>
+                    <li><strong class="block font-medium text-brand-dark mb-1 text-base">Mental Peace:</strong> Sleeping in peace.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- PILAR 0 -->
+    <section class="max-w-5xl mx-auto px-8 pb-32 break-inside-avoid">
+        <div class="bg-white border border-brand-lightBlue p-12 md:p-20 text-center relative rounded-[40px] shadow-sm">
+            <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-brand-bg px-4 text-[10px] uppercase tracking-[0.3em] font-bold text-brand-blue">PILLAR 0</div>
+            <h2 class="text-4xl md:text-5xl font-serif font-semibold mb-8 text-brand-dark">The True Level of Clarity</h2>
+            <div class="grid md:grid-cols-2 gap-10">
+                <div class="text-left border-l-2 border-brand-lightBlue pl-6">
+                    <span class="block text-[10px] font-bold tracking-widest text-brand-dark/40 uppercase mb-3">LEVEL 1</span>
+                    <p class="text-2xl font-serif text-brand-dark">Sleeping in peace.</p>
+                </div>
+                <div class="text-left border-l-2 border-brand-blue pl-6">
+                    <span class="block text-[10px] font-bold tracking-widest text-brand-blue uppercase mb-3">LEVEL 2</span>
+                    <p class="text-2xl font-serif text-brand-dark leading-snug">Sleeping excited for tomorrow because you can't wait to wake up.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PILARES DE ACCIÓN -->
+    <section class="bg-brand-dark text-white py-32 page-break print-dark-bg relative overflow-hidden">
+        <div class="absolute inset-0 opacity-5" style="background-image: linear-gradient(#2A5C8A 1px, transparent 1px), linear-gradient(90deg, #2A5C8A 1px, transparent 1px); background-size: 40px 40px;"></div>
+        <div class="max-w-4xl mx-auto px-8 relative z-10 space-y-32">
+            
+            <!-- Pilar 1 -->
+            <div class="break-inside-avoid">
+                <p class="text-[10px] font-bold uppercase tracking-[0.4em] text-brand-blue mb-4">PILLAR 01</p>
+                <h2 class="text-5xl font-serif font-semibold mb-8">Radical Prioritization</h2>
+                <p class="text-2xl text-brand-bg/70 mb-12 font-light italic">Your energy is a finite resource. Learn to protect it.</p>
+                
+                <div class="grid md:grid-cols-2 gap-10">
+                    <div class="border-l-2 border-brand-blue/30 pl-6">
+                        <h4 class="font-bold mb-2 uppercase text-[10px] tracking-widest">Your real 20%</h4>
+                        <p class="text-brand-bg/70 text-sm mb-4">Identify the 2 or 3 things that, if you do them, completely change your day and your future.</p>
+                        <div class="text-xs font-light text-brand-bg/50">Immediate action:</div>
+                        <p class="text-brand-bg/80 text-sm mt-1">Open a note and write: “If I could only do 3 things this week that really matter, they would be…”</p>
+                    </div>
+                    <div class="border-l-2 border-brand-blue/30 pl-6">
+                        <h4 class="font-bold mb-2 uppercase text-[10px] tracking-widest">The Strategic “No”</h4>
+                        <p class="text-brand-bg/70 text-sm mb-4">Every well-placed “no” gives you back time, energy, and attention.</p>
+                        <div class="text-xs font-light text-brand-bg/50">Immediate action:</div>
+                        <p class="text-brand-bg/80 text-sm mt-1">Review your schedule for the next 7 days and cancel or delegate <strong>one single thing</strong> that is not part of your real 20%.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pilar 2 -->
+            <div class="break-inside-avoid">
+                <p class="text-[10px] font-bold uppercase tracking-[0.4em] text-brand-blue mb-4">PILLAR 02</p>
+                <h2 class="text-5xl font-serif font-semibold mb-8">Action Systems</h2>
+                <p class="text-2xl text-brand-bg/70 mb-12 font-light italic">Motivation goes up and down. Systems sustain you.</p>
+                
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-white/5 p-8 border border-white/10 rounded-2xl">
+                        <h4 class="font-bold mb-2 text-[10px] tracking-widest uppercase">Mental Download</h4>
+                        <p class="text-brand-bg/70 text-xs mb-4">Get everything out of your head so it stops taking up mental space.</p>
+                        <div class="text-xs font-light text-brand-bg/50">Immediate action:</div>
+                        <p class="text-brand-bg/80 text-xs mt-1">Before going to sleep, write on a piece of paper or note everything that’s swirling in your mind (no filter). Tomorrow you decide what to do with each thing.</p>
+                    </div>
+                    <div class="bg-white/5 p-8 border border-white/10 rounded-2xl">
+                        <h4 class="font-bold mb-2 text-[10px] tracking-widest uppercase">Energy Blocks</h4>
+                        <p class="text-brand-bg/70 text-xs mb-4">Protect 90 minutes where you do only one important thing with zero distractions.</p>
+                        <div class="text-xs font-light text-brand-bg/50">Immediate action:</div>
+                        <p class="text-brand-bg/80 text-xs mt-1">Choose one task from your real 20% and block it tomorrow morning in your calendar as “Deep Work – Do Not Disturb”.</p>
+                    </div>
+                    <div class="bg-white/5 p-8 border border-white/10 rounded-2xl">
+                        <h4 class="font-bold mb-2 text-[10px] tracking-widest uppercase">Day Closer</h4>
+                        <p class="text-brand-bg/70 text-xs mb-4">Decide tomorrow before closing today. That way your mind truly rests.</p>
+                        <div class="text-xs font-light text-brand-bg/50">Immediate action:</div>
+                        <p class="text-brand-bg/80 text-xs mt-1">Every night choose <strong>only one thing</strong> that will be your number 1 priority for the next day. Write it down and close the agenda.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER DE IDENTIDAD -->
+    <footer class="bg-white pt-20 pb-16 px-10 border-t border-brand-lightBlue break-inside-avoid">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12 text-left">
+            <div class="flex items-center gap-6">
+                <img src="assets/images/andres-ramirez-portrait.jpg" alt="Andrés Ramírez" class="w-24 h-24 rounded-full object-cover border-2 border-brand-lightBlue shadow-lg grayscale hover:grayscale-0 transition-all duration-700" onerror="this.src='https://ui-avatars.com/api/?name=Andres+Ramirez&background=2A5C8A&color=fff'">
+                <div>
+                    <h4 class="font-serif font-bold text-2xl text-brand-dark">Andrés Ramírez</h4>
+                    <p class="text-brand-blue text-[10px] font-bold uppercase tracking-widest">Clarity Strategist</p>
+                </div>
+            </div>
+            <div class="text-center md:text-right">
+                <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-dark/40">© THE BLUEPRINT 2026</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+
