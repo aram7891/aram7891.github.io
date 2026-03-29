@@ -5,12 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Andrés Ramírez | The Blueprint</title>
 
-  <!-- Fuentes Premium -->
+  <meta property="og:title" content="Andrés Ramírez | The Blueprint">
+  <meta property="og:description" content="No es un pájaro azul. Es el plano de claridad que ya te pertenece.">
+  <meta property="og:image" content="https://andresramirez.pro/assets/images/andres-ramirez-portrait.jpg">
+  <meta property="og:url" content="https://andresramirez.pro/blueprint">
+  <meta property="og:type" content="website">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Andrés Ramírez | The Blueprint">
+  <meta name="twitter:description" content="No es un pájaro azul. Es el plano de claridad que ya te pertenece.">
+  <meta name="twitter:image" content="https://andresramirez.pro/assets/images/andres-ramirez-portrait.jpg">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
   
-  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
       tailwind.config = {
@@ -53,13 +62,11 @@
 
 <body class="bg-brand-bg text-brand-dark font-sans flex flex-col min-h-screen antialiased selection:bg-brand-blue selection:text-white">
 
-  <!-- 1. LANGUAGE GATE (PUERTA VIP) -->
   <div id="language-gate" class="fixed inset-0 z-50 flex items-center justify-center bg-brand-bg transition-opacity duration-700">
     <div class="text-center max-w-md px-6 w-full animate-reveal">
       <div class="flex flex-col items-center mb-12">
           <div class="relative group">
               <div class="absolute inset-0 bg-brand-blue/5 rounded-full blur-3xl group-hover:bg-brand-blue/15 transition-all duration-1000"></div>
-              <!-- FOTO CORREGIDA -->
               <img 
                   src="https://andresramirez.pro/assets/images/andres-ramirez-portrait.jpg" 
                   alt="Andrés Ramírez" 
@@ -83,7 +90,6 @@
     </div>
   </div>
 
-  <!-- 2. MAIN CONTENT (EL REGALO) -->
   <div id="main-content" class="flex-grow flex flex-col hidden opacity-0 transition-opacity duration-1000">
     <div class="fixed top-6 right-6 z-40">
       <div class="bg-white/90 backdrop-blur-md border border-brand-lightBlue shadow-xl flex items-center p-1 rounded-full text-[10px] font-bold tracking-widest">
@@ -125,7 +131,6 @@
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center md:items-start gap-12 text-center md:text-left">
             <div class="flex flex-col md:flex-row items-center gap-8">
                 <div class="w-24 h-24 bg-brand-lightBlue shrink-0 relative overflow-hidden shadow-inner rounded-lg">
-                    <!-- FOTO CORREGIDA -->
                     <img src="https://andresramirez.pro/assets/images/andres-ramirez-portrait.jpg" alt="Andrés Ramírez" class="w-full h-full object-cover portrait-luxury cursor-pointer" onerror="this.src='https://ui-avatars.com/api/?name=AR&background=2A5C8A&color=fff'">
                 </div>
                 <div>
@@ -216,4 +221,3 @@
   </script>
 </body>
 </html>
-
