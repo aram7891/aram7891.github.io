@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Blueprint - Andrés Ramírez</title>
+    
+    <!-- Fuentes Premium -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            bg: '#F4F7F9',
+                            dark: '#0B1320',
+                            blue: '#2A5C8A',
+                            lightBlue: '#D5E1EA',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"DM Sans"', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'blue-glow': '0 20px 50px rgba(42, 92, 138, 0.15)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { scroll-behavior: smooth; }
+        ::selection { background-color: #2A5C8A; color: #F4F7F9; }
+        
+        .hero-glow { animation: softGlow 8s ease infinite; }
+        @keyframes softGlow {
+            0%, 100% { text-shadow: 0 0 20px rgba(42, 92, 138, 0.1); }
+            50% { text-shadow: 0 0 40px rgba(42, 92, 138, 0.2); }
+        }
+
+        .blueprint-modal {
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translate(-50%, 20px); }
+            to { opacity: 1; transform: translate(-50%, 0); }
+        }
+
+        @media print {
+            .print-hide { display: none !important; }
+            body { background: white !important; color: black !important; }
+            .page-break { page-break-before: always; }
+        }
+    </style>
+</head>
+<body class="bg-brand-bg text-brand-dark font-sans overflow-x-hidden antialiased">
+
+    <!-- CONTROLES SUPERIORES -->
+    <div class="fixed top-6 right-6 z-50 print-hide flex items-center gap-3">
+        <div class="bg-white/80 backdrop-blur-md border border-brand-lightBlue shadow-xl flex items-center p-1 rounded-full">
+            <button onclick="setLang('es')" id="btn-es" class="px-3 py-1.5 rounded-full text-[10px] font-bold transition-all uppercase tracking-widest bg-brand-blue text-white">ES</button>
+            <button onclick="setLang('en')" id="btn-en" class="px-3 py-1.5 rounded-full text-[10px] font-bold transition-all uppercase tracking-widest text-brand-dark hover:text-brand-blue">EN</button>
+        </div>
+        <button onclick="window.print()" class="bg-brand-blue text-white px-5 py-2.5 rounded-full shadow-xl hover:bg-brand-dark transition-all text-[10px] font-bold tracking-widest flex items-center gap-2">
+            <span data-i18n="btn-export">EXPORTAR PDF</span>
+        </button>
+    </div>
+
+    <!-- NAV -->
+    <nav class="w-full pt-10 px-8 text-center print-hide">
+        <span class="font-serif font-bold text-xl tracking-tight text-brand-dark border-b border-brand-lightBlue pb-2 inline-block">Andrés Ramírez<span class="text-brand-blue">.</span></span>
+    </nav>
+
+    <!-- HERO -->
+    <header class="max-w-4xl mx-auto px-8 pt-24 pb-16 text-center">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 border border-brand-lightBlue bg-white mb-8 text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue">
+            <span class="w-1.5 h-1.5 bg-brand-blue rounded-full animate-pulse"></span>
+            <span data-i18n="hero-tag">GUÍA DE CLARIDAD</span>
+        </div>
+        <h1 class="text-6xl md:text-8xl font-serif font-semibold tracking-tight text-brand-dark mb-6 leading-[1.05] hero-glow">
+            The Blueprint<span class="text-brand-blue">.</span>
+        </h1>
+        <p class="text-3xl md:text-4xl font-serif italic text-brand-dark/70 mb-12" data-i18n="hero-sub">
+            No es un pájaro azul.<br>Es el plano de claridad que ya te pertenece.
+        </p>
+        <div class="max-w-2xl mx-auto bg-white p-8 md:p-12 border border-brand-lightBlue shadow-sm relative mt-16 break-inside-avoid rounded-3xl">
+            <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-brand-bg px-4 text-[10px] uppercase tracking-[0.3em] font-bold text-brand-blue" data-i18n="hero-quote-tag">EL PRINCIPIO</div>
+            <p class="text-xl md:text-2xl font-medium leading-relaxed text-brand-dark" data-i18n="hero-quote">
+                "No necesitas hacer más. Necesitas hacer lo que de verdad mueve tu vida hacia adelante."
+            </p>
+        </div>
+    </header>
+
+    <!-- INTRODUCCIÓN -->
+    <section class="max-w-3xl mx-auto px-8 pb-12 text-lg md:text-xl leading-relaxed text-brand-dark/80 font-light text-center break-inside-avoid">
+        <p class="mb-6" data-i18n="intro-1"></p>
+        <p data-i18n="intro-2"></p>
+    </section>
+
+    <!-- EL VIAJE DE LA CLARIDAD -->
+    <section class="max-w-6xl mx-auto px-8 pb-32 page-break">
+        <h2 class="text-3xl md:text-4xl font-serif font-semibold tracking-tight text-center mb-16 text-brand-dark" data-i18n="journey-title"></h2>
+        <div class="grid md:grid-cols-3 gap-8 items-stretch">
+            <!-- ANTES -->
+            <div class="bg-white p-10 border border-brand-lightBlue/60 shadow-xl shadow-brand-dark/[0.03] relative rounded-[32px] transition-all">
+                <h3 class="text-[10px] font-bold uppercase tracking-[0.3em] text-brand-dark/40 mb-2" data-i18n="journey-1-tag"></h3>
+                <h4 class="text-2xl font-serif italic text-brand-dark mb-8" data-i18n="journey-1-title"></h4>
+                <ul class="space-y-6 text-sm font-light text-brand-dark/80" data-i18n="journey-1-list"></ul>
+            </div>
+            
+            <!-- DURANTE -->
+            <div class="bg-white p-10 border-2 border-brand-blue/20 relative rounded-[32px] shadow-blue-glow transform md:-translate-y-2 z-10">
+                <h3 class="text-[10px] font-bold uppercase tracking-[0.3em] text-brand-blue mb-2" data-i18n="journey-2-tag"></h3>
+                <h4 class="text-2xl font-serif italic text-brand-dark mb-8" data-i18n="journey-2-title"></h4>
+                <ul class="space-y-6 text-sm font-light text-brand-dark/80" data-i18n="journey-2-list"></ul>
+            </div>
+            
+            <!-- DESPUÉS -->
+            <div class="bg-white p-10 border border-brand-lightBlue/60 shadow-xl shadow-brand-dark/[0.03] relative rounded-[32px] transition-all">
+                <h3 class="text-[10px] font-bold uppercase tracking-[0.3em] text-brand-dark/40 mb-2" data-i18n="journey-3-tag"></h3>
+                <h4 class="text-2xl font-serif italic text-brand-dark mb-8" data-i18n="journey-3-title"></h4>
+                <ul class="space-y-6 text-sm font-light text-brand-dark/80" data-i18n="journey-3-list"></ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- PILAR 0 -->
+    <section class="max-w-5xl mx-auto px-8 pb-32 break-inside-avoid">
+        <div class="bg-white border border-brand-lightBlue p-12 md:p-20 text-center relative rounded-[40px] shadow-sm">
+            <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-brand-bg px-4 text-[10px] uppercase tracking-[0.3em] font-bold text-brand-blue" data-i18n="pilar0-tag">PILAR 0</div>
+            <h2 class="text-4xl md:text-5xl font-serif font-semibold mb-8 text-brand-dark" data-i18n="pilar0-title"></h2>
+            <div class="grid md:grid-cols-2 gap-10">
+                <div class="text-left border-l-2 border-brand-lightBlue pl-6">
+                    <span class="block text-[10px] font-bold tracking-widest text-brand-dark/40 uppercase mb-3" data-i18n="level-1-tag"></span>
+                    <p class="text-2xl font-serif text-brand-dark" data-i18n="level-1-text"></p>
+                </div>
+                <div class="text-left border-l-2 border-brand-blue pl-6">
+                    <span class="block text-[10px] font-bold tracking-widest text-brand-blue uppercase mb-3" data-i18n="level-2-tag"></span>
+                    <p class="text-2xl font-serif text-brand-dark leading-snug" data-i18n="level-2-text"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PILARES DE ACCIÓN -->
+    <section class="bg-brand-dark text-white py-32 page-break print-dark-bg relative overflow-hidden">
+        <div class="absolute inset-0 opacity-5" style="background-image: linear-gradient(#2A5C8A 1px, transparent 1px), linear-gradient(90deg, #2A5C8A 1px, transparent 1px); background-size: 40px 40px;"></div>
+        <div class="max-w-4xl mx-auto px-8 relative z-10 space-y-32">
+            <!-- Pilar 1 -->
+            <div class="break-inside-avoid">
+                <p class="text-[10px] font-bold uppercase tracking-[0.4em] text-brand-blue mb-4">PILLAR 01</p>
+                <h2 class="text-5xl font-serif font-semibold mb-8" data-i18n="p1-title"></h2>
+                <p class="text-2xl text-brand-bg/70 mb-12 font-light italic" data-i18n="p1-desc"></p>
+                <div data-i18n="p1-content"></div>
+            </div>
+            <!-- Pilar 2 -->
+            <div class="break-inside-avoid">
+                <p class="text-[10px] font-bold uppercase tracking-[0.4em] text-brand-blue mb-4">PILLAR 02</p>
+                <h2 class="text-5xl font-serif font-semibold mb-8" data-i18n="p2-title"></h2>
+                <p class="text-2xl text-brand-bg/70 mb-12 font-light italic" data-i18n="p2-desc"></p>
+                <div data-i18n="p2-content"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER DE IDENTIDAD -->
+    <footer class="bg-white pt-20 pb-16 px-10 border-t border-brand-lightBlue break-inside-avoid">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12 text-left">
+            <div class="flex items-center gap-6">
+                <!-- Fotografía con la ruta relativa sincronizada -->
+                <img src="assets/images/andres-ramirez-portrait.jpg" alt="Andrés Ramírez" 
+                     class="w-24 h-24 rounded-full object-cover border-2 border-brand-lightBlue shadow-lg grayscale hover:grayscale-0 transition-all duration-700"
+                     onerror="this.src='https://ui-avatars.com/api/?name=Andres+Ramirez&background=2A5C8A&color=fff'">
+                <div>
+                    <h4 class="font-serif font-bold text-2xl text-brand-dark">Andrés Ramírez</h4>
+                    <p class="text-brand-blue text-[10px] font-bold uppercase tracking-widest">Clarity Strategist</p>
+                    <div class="flex gap-4 mt-3 print-hide">
+                        <a href="https://www.threads.net/@aram7891" target="_blank" class="text-[10px] font-bold text-brand-dark/40 hover:text-brand-blue transition-colors">THREADS</a>
+                        <a href="https://www.instagram.com/selfloveclubusa" target="_blank" class="text-[10px] font-bold text-brand-dark/40 hover:text-brand-blue transition-colors">INSTAGRAM</a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center md:text-right">
+                <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-dark/40">© THE BLUEPRINT 2024</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL COMPACTO DE PERFIL -->
+    <div id="blueprint-modal" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-[9999] hidden print-hide blueprint-modal w-max">
+        <div onclick="openProfile()" class="bg-white/95 backdrop-blur-xl border border-brand-lightBlue shadow-2xl rounded-full px-6 py-3.5 flex items-center gap-4 hover:bg-brand-bg transition-all cursor-pointer group">
+            <img src="assets/images/andres-ramirez-portrait.jpg" alt="Andrés" 
+                 class="w-6 h-6 rounded-full object-cover border border-brand-lightBlue"
+                 onerror="this.src='https://ui-avatars.com/api/?name=Andres+Ramirez&background=2A5C8A&color=fff'">
+            <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-dark group-hover:text-brand-blue transition-colors" data-i18n="modal-profile">MI PERFIL</span>
+            <span class="text-brand-blue font-bold group-hover:translate-x-1 transition-transform">→</span>
+        </div>
+    </div>
+
+    <script>
+        const translations = {
+            es: {
+                "btn-export": "EXPORTAR PDF",
+                "hero-tag": "GUÍA DE CLARIDAD",
+                "hero-sub": "No es un pájaro azul. Es el plano de claridad que ya te pertenece.",
+                "hero-quote-tag": "EL PRINCIPIO",
+                "hero-quote": "\"No necesitas hacer más. Necesitas hacer lo que de verdad mueve tu vida hacia adelante.\"",
+                "intro-1": "Si alguna vez has terminado el día agotado, con la sensación de que estuviste ocupado pero no avanzaste, sabes exactamente de qué hablo. <strong class='font-medium text-brand-dark'>Ese ruido interno es universal. A todos nos pasa.</strong>",
+                "intro-2": "Esto no es una fórmula mágica ni un truco de productividad. Es una forma simple —y realista— de volver a lo esencial.",
+                "journey-title": "El Viaje de la Claridad",
+                "journey-1-tag": "DÓNDE ESTÁS HOY",
+                "journey-1-title": "El Antes",
+                "journey-1-list": `<li><strong class="block font-medium text-brand-dark mb-1 text-base">El Ruido:</strong> Mucho movimiento, poco avance.</li><li><strong class="block font-medium text-brand-dark mb-1 text-base">La Parálisis:</strong> Demasiadas opciones abiertas —literal y mentalmente.</li><li><strong class="block font-medium text-brand-dark mb-1 text-base">La Reacción:</strong> Tu día lo decide todo menos tú.</li>`,
+                "journey-2-tag": "AL APLICAR ESTO",
+                "journey-2-title": "El Durante",
+                "journey-2-list": `<li><strong class="block font-medium text-brand-dark mb-1 text-base">El Alivio:</strong> No tienes que cargar con todo.</li><li><strong class="block font-medium text-brand-dark mb-1 text-base">La Curiosidad:</strong> Preguntarte si lo que haces tiene sentido hoy.</li><li><strong class="block font-medium text-brand-dark mb-1 text-base">El Filtro:</strong> Decisiones intencionales.</li>`,
+                "journey-3-tag": "HACIA DÓNDE VAMOS",
+                "journey-3-title": "El Después",
+                "journey-3-list": `<li><strong class="block font-medium text-brand-dark mb-1 text-base">Foco Intencional:</strong> Saber a qué decirle sí.</li><li><strong class="block font-medium text-brand-dark mb-1 text-base">Ejecución Serena:</strong> Avanzar sin correr.</li><li><strong class="block font-medium text-brand-dark mb-1 text-base">Paz Mental:</strong> Dormir en paz.</li>`,
+                "pilar0-tag": "PILAR 0",
+                "pilar0-title": "El Nivel Real de Claridad",
+                "level-1-tag": "NIVEL 1",
+                "level-1-text": "Dormir en paz.",
+                "level-2-tag": "NIVEL 2",
+                "level-2-text": "Dormir esperando que amanezca porque estás emocionado.",
+                "p1-title": "Priorización Radical",
+                "p1-desc": "Tu energía es limitada. No la trates como si no lo fuera.",
+                "p1-content": `
+                    <div class="grid md:grid-cols-2 gap-10">
+                        <div class="border-l-2 border-brand-blue/30 pl-6">
+                            <h4 class="font-bold mb-2 uppercase text-[10px] tracking-widest">Tu 20% real</h4>
+                            <p class="text-brand-bg/70 text-sm mb-4">Identifica las 2 o 3 cosas que, si las haces, cambian completamente tu día y tu futuro.</p>
+                            <div class="text-xs font-light text-brand-bg/50">Acción inmediata:</div>
+                            <p class="text-brand-bg/80 text-sm mt-1">Abre una nota y escribe: “Si solo pudiera hacer 3 cosas esta semana que realmente importen, serían…”</p>
+                        </div>
+                        <div class="border-l-2 border-brand-blue/30 pl-6">
+                            <h4 class="font-bold mb-2 uppercase text-[10px] tracking-widest">El “No” Estratégico</h4>
+                            <p class="text-brand-bg/70 text-sm mb-4">Cada “no” bien puesto te devuelve tiempo, energía y atención.</p>
+                            <div class="text-xs font-light text-brand-bg/50">Acción inmediata:</div>
+                            <p class="text-brand-bg/80 text-sm mt-1">Revisa tu agenda de los próximos 7 días y cancela o delega **una sola cosa** que no sea tu 20% real.</p>
+                        </div>
+                    </div>`,
+                "p2-title": "Sistemas de Acción",
+                "p2-desc": "La motivación sube y baja. Los sistemas te sostienen.",
+                "p2-content": `
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="bg-white/5 p-8 border border-white/10 rounded-2xl">
+                            <h4 class="font-bold mb-2 text-[10px] tracking-widest uppercase">Descarga Mental</h4>
+                            <p class="text-brand-bg/70 text-xs mb-4">Saca todo lo que tienes en la cabeza para que deje de ocupar espacio mental.</p>
+                            <div class="text-xs font-light text-brand-bg/50">Acción inmediata:</div>
+                            <p class="text-brand-bg/80 text-xs mt-1">Antes de dormir escribe en una hoja o nota todo lo que te ronda la mente (sin filtro). Mañana decides qué hacer con cada cosa.</p>
+                        </div>
+                        <div class="bg-white/5 p-8 border border-white/10 rounded-2xl">
+                            <h4 class="font-bold mb-2 text-[10px] tracking-widest uppercase">Bloques de Energía</h4>
+                            <p class="text-brand-bg/70 text-xs mb-4">Protege 90 minutos donde solo haces una cosa importante sin distracciones.</p>
+                            <div class="text-xs font-light text-brand-bg/50">Acción inmediata:</div>
+                            <p class="text-brand-bg/80 text-xs mt-1">Elige una tarea de tu 20% real y bloquéala mañana por la mañana en tu calendario como “Deep Work – No tocar”.</p>
+                        </div>
+                        <div class="bg-white/5 p-8 border border-white/10 rounded-2xl">
+                            <h4 class="font-bold mb-2 text-[10px] tracking-widest uppercase">Cierre del Día</h4>
+                            <p class="text-brand-bg/70 text-xs mb-4">Decide el mañana antes de cerrar hoy. Así tu mente descansa de verdad.</p>
+                            <div class="text-xs font-light text-brand-bg/50">Acción inmediata:</div>
+                            <p class="text-brand-bg/80 text-xs mt-1">Cada noche elige **solo una cosa** que será tu prioridad número 1 del día siguiente. Escríbela y cierra la agenda.</p>
+                        </div>
+                    </div>`,
+                "modal-profile": "MI PERFIL"
+            },
+            en: {
+                "btn-export": "EXPORT PDF",
+                "hero-tag": "CLARITY GUIDE",
+                "hero-sub": "It's not a blue bird. It's the clarity blueprint that already belongs to you.",
+                "hero-quote-tag": "THE PRINCIPLE",
+                "hero-quote": "\"You don't need to do more. You need to do what actually moves your life forward.\"",
+                "intro-1": "If you've ever ended the day exhausted, feeling like you were busy but didn't move forward, you speak my language.",
+                "intro-2": "This isn't a magic formula. It is a silent architecture to return to what matters.",
+                "journey-title": "The Road to Clarity",
+                "journey-1-tag": "WHERE YOU ARE TODAY",
+                "journey-1-title": "The Before",
+                "journey-1-list": `<li><strong class="block font-medium text-brand-dark mb-1 text-base">The Noise:</strong> Lots of movement, little progress.</li><li><strong class="block font-medium text-brand-dark mb-1 text-base">The Paralysis:</strong> Too many options open — literally and mentally.</li><li><strong class="block font-medium text-brand-dark mb-1 text-base">The Reaction:</strong> Your day is decided by everything except you.</li>`,
+                "journey-2-tag": "WHEN YOU APPLY THIS",
+                "journey-2-title": "The During",
+                "journey-2-list": `<li><strong class="block font-medium text-brand-dark mb-1 text-base">The Relief:</strong> You don't have to carry everything.</li><li><strong class="block font-medium text-brand-dark mb-1 text-base">The Curiosity:</strong> Asking yourself if what you're doing makes sense today.</li><li><strong class="block font-medium text-brand-dark mb-1 text-base">The Filter:</strong> Intentional decisions.</li>`,
+                "journey-3-tag": "WHERE WE'RE GOING",
+                "journey-3-title": "The After",
+                "journey-3-list": `<li><strong class="block font-medium text-brand-dark mb-1 text-base">Intentional Focus:</strong> Knowing what to say yes to.</li><li><strong class="block font-medium text-brand-dark mb-1 text-base">Serene Execution:</strong> Moving forward without rushing.</li><li><strong class="block font-medium text-brand-dark mb-1 text-base">Mental Peace:</strong> Sleeping in peace.</li>`,
+                "pilar0-tag": "PILLAR 0",
+                "pilar0-title": "The True Level of Clarity",
+                "level-1-tag": "LEVEL 1",
+                "level-1-text": "Sleeping in peace.",
+                "level-2-tag": "LEVEL 2",
+                "level-2-text": "Sleeping excited for tomorrow because you can't wait to wake up.",
+                "p1-title": "Radical Prioritization",
+                "p1-desc": "Your energy is a finite resource. Learn to protect it.",
+                "p1-content": `
+                    <div class="grid md:grid-cols-2 gap-10">
+                        <div class="border-l-2 border-brand-blue/30 pl-6">
+                            <h4 class="font-bold mb-2 uppercase text-[10px] tracking-widest">Your real 20%</h4>
+                            <p class="text-brand-bg/70 text-sm mb-4">Identify the 2 or 3 things that, if you do them, completely change your day and your future.</p>
+                            <div class="text-xs font-light text-brand-bg/50">Immediate action:</div>
+                            <p class="text-brand-bg/80 text-sm mt-1">Open a note and write: “If I could only do 3 things this week that really matter, they would be…”</p>
+                        </div>
+                        <div class="border-l-2 border-brand-blue/30 pl-6">
+                            <h4 class="font-bold mb-2 uppercase text-[10px] tracking-widest">The Strategic “No”</h4>
+                            <p class="text-brand-bg/70 text-sm mb-4">Every well-placed “no” gives you back time, energy, and attention.</p>
+                            <div class="text-xs font-light text-brand-bg/50">Immediate action:</div>
+                            <p class="text-brand-bg/80 text-sm mt-1">Review your schedule for the next 7 days and cancel or delegate <strong>one single thing</strong> that is not part of your real 20%.</p>
+                        </div>
+                    </div>`,
+                "p2-title": "Action Systems",
+                "p2-desc": "Motivation goes up and down. Systems sustain you.",
+                "p2-content": `
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="bg-white/5 p-8 border border-white/10 rounded-2xl">
+                            <h4 class="font-bold mb-2 text-[10px] tracking-widest uppercase">Mental Download</h4>
+                            <p class="text-brand-bg/70 text-xs mb-4">Get everything out of your head so it stops taking up mental space.</p>
+                            <div class="text-xs font-light text-brand-bg/50">Immediate action:</div>
+                            <p class="text-brand-bg/80 text-xs mt-1">Before going to sleep, write on a piece of paper or note everything that’s swirling in your mind (no filter). Tomorrow you decide what to do with each thing.</p>
+                        </div>
+                        <div class="bg-white/5 p-8 border border-white/10 rounded-2xl">
+                            <h4 class="font-bold mb-2 text-[10px] tracking-widest uppercase">Energy Blocks</h4>
+                            <p class="text-brand-bg/70 text-xs mb-4">Protect 90 minutes where you do only one important thing with zero distractions.</p>
+                            <div class="text-xs font-light text-brand-bg/50">Immediate action:</div>
+                            <p class="text-brand-bg/80 text-xs mt-1">Choose one task from your real 20% and block it tomorrow morning in your calendar as “Deep Work – Do Not Disturb”.</p>
+                        </div>
+                        <div class="bg-white/5 p-8 border border-white/10 rounded-2xl">
+                            <h4 class="font-bold mb-2 text-[10px] tracking-widest uppercase">Day Closer</h4>
+                            <p class="text-brand-bg/70 text-xs mb-4">Decide tomorrow before closing today. That way your mind truly rests.</p>
+                            <div class="text-xs font-light text-brand-bg/50">Immediate action:</div>
+                            <p class="text-brand-bg/80 text-xs mt-1">Every night choose <strong>only one thing</strong> that will be your number 1 priority for the next day. Write it down and close the agenda.</p>
+                        </div>
+                    </div>`,
+                "modal-profile": "MY PROFILE"
+            }
+        };
+
+        // NOTA: Aquí se sincronizó la variable "lang" para que coincida con tu archivo Gate
+        function setLang(lang) {
+            localStorage.setItem("lang", lang);
+            apply(lang);
+        }
+
+        function apply(lang) {
+            document.documentElement.lang = lang;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) el.innerHTML = translations[lang][key];
+            });
+            
+            const btnEs = document.getElementById('btn-es');
+            const btnEn = document.getElementById('btn-en');
+            const active = "bg-brand-blue text-white shadow-md";
+            const inactive = "text-brand-dark/40 hover:text-brand-blue";
+            
+            if (lang === 'es') { 
+                btnEs.className = `px-3 py-1.5 rounded-full text-[10px] font-bold transition-all ${active} uppercase tracking-widest`; 
+                btnEn.className = `px-3 py-1.5 rounded-full text-[10px] font-bold transition-all ${inactive} uppercase tracking-widest`; 
+            } else { 
+                btnEn.className = `px-3 py-1.5 rounded-full text-[10px] font-bold transition-all ${active} uppercase tracking-widest`; 
+                btnEs.className = `px-3 py-1.5 rounded-full text-[10px] font-bold transition-all ${inactive} uppercase tracking-widest`; 
+            }
+        }
+
+        function openProfile() {
+            window.open('https://www.andresramirez.pro', '_blank');
+        }
+
+        window.onload = () => {
+            // Lee la memoria que dejó la Puerta (Gate)
+            apply(localStorage.getItem("lang") || 'es');
+            setTimeout(() => {
+                document.getElementById('blueprint-modal').classList.remove('hidden');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
+
