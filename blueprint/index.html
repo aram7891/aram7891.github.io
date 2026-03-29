@@ -33,7 +33,6 @@
       }
   </script>
   <style>
-      /* Filtro Luxury: Inicia en B&W, pasa a color con hover suave */
       .portrait-luxury {
           filter: grayscale(100%);
           transition: filter 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s ease;
@@ -60,7 +59,6 @@
       <div class="flex flex-col items-center mb-12">
           <div class="relative group">
               <div class="absolute inset-0 bg-brand-blue/5 rounded-full blur-3xl group-hover:bg-brand-blue/15 transition-all duration-1000"></div>
-              <!-- NOTA: Asegúrate que el nombre de la foto coincida con este src -->
               <img 
                   src="assets/images/andres-ramirez-portrait.jpg" 
                   alt="Andrés Ramírez" 
@@ -86,7 +84,6 @@
 
   <!-- 2. MAIN CONTENT (EL REGALO) -->
   <div id="main-content" class="flex-grow flex flex-col hidden opacity-0 transition-opacity duration-1000">
-    <!-- Selector de Idioma Flotante (Para cambiar después de entrar) -->
     <div class="fixed top-6 right-6 z-40">
       <div class="bg-white/90 backdrop-blur-md border border-brand-lightBlue shadow-xl flex items-center p-1 rounded-full text-[10px] font-bold tracking-widest">
         <button onclick="changeLanguage('es')" id="btn-toggle-es" class="px-3 py-1.5 rounded-full transition-all text-brand-dark hover:text-brand-blue uppercase">ES</button>
@@ -97,7 +94,7 @@
     <main class="flex-grow flex items-center justify-center px-6 py-24 relative z-10">
       <div class="max-w-xl w-full bg-white border border-brand-lightBlue p-10 md:p-16 shadow-2xl relative text-center">
         
-        <!-- BADGE DEL REGALO (Icono circular superior) -->
+        <!-- BADGE DEL REGALO -->
         <div class="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-white border border-brand-lightBlue w-24 h-24 rounded-full flex items-center justify-center shadow-xl">
           <div class="bg-brand-bg w-20 h-20 rounded-full flex items-center justify-center text-brand-blue">
             <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -114,6 +111,7 @@
         
         <!-- BOTONES DE ACCIÓN -->
         <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+          <!-- ESTE BOTÓN AHORA ABRE CORRECTAMENTE blueprint.html -->
           <button onclick="openBlueprint()" class="w-full sm:w-auto px-12 py-4 bg-brand-blue text-white font-bold tracking-[0.2em] text-[10px] uppercase shadow-2xl hover:bg-brand-dark transition-all duration-500 flex items-center justify-center gap-4 group rounded-full hover:scale-[1.05] active:scale-[0.95]">
             <svg class="w-5 h-5 group-hover:-rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 11H3M21 11V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V11M21 11C21 9.89543 20.1046 9 19 9H5C3.89543 9 3 9.89543 3 11M12 21V9M12 9H16.5C17.8807 9 19 7.88071 19 6.5C19 5.11929 17.8807 4 16.5 4C14.75 4 12 9 12 9ZM12 9H7.5C6.11929 9 5 7.88071 5 6.5C5 5.11929 6.11929 4 7.5 4C9.25 4 12 9 12 9Z"></path></svg>
             <span data-i18n="btn-primary"></span>
@@ -125,17 +123,11 @@
       </div>
     </main>
 
-    <!-- FOOTER CON IDENTIDAD PROFESIONAL -->
     <footer class="bg-white pt-16 pb-12 px-10 border-t border-brand-lightBlue relative z-10 mt-auto">
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center md:items-start gap-12 text-center md:text-left">
             <div class="flex flex-col md:flex-row items-center gap-8">
                 <div class="w-24 h-24 bg-brand-lightBlue shrink-0 relative overflow-hidden shadow-inner rounded-lg">
-                    <img 
-                        src="assets/images/andres-ramirez-portrait.jpg" 
-                        alt="Andrés Ramírez" 
-                        class="w-full h-full object-cover portrait-luxury cursor-pointer"
-                        onerror="this.src='https://ui-avatars.com/api/?name=AR&background=2A5C8A&color=fff'"
-                    >
+                    <img src="assets/images/andres-ramirez-portrait.jpg" alt="Andrés Ramírez" class="w-full h-full object-cover portrait-luxury cursor-pointer" onerror="this.src='https://ui-avatars.com/api/?name=AR&background=2A5C8A&color=fff'">
                 </div>
                 <div>
                     <h4 class="font-serif font-semibold text-3xl tracking-tight text-brand-dark mb-1">Andrés Ramírez</h4>
@@ -185,8 +177,12 @@
     const btnEs = document.getElementById('btn-toggle-es');
     const btnEn = document.getElementById('btn-toggle-en');
 
+    // BLINDAJE DE SEGURIDAD PARA SAFARI (Evita que los botones fallen)
+    function safeSetLang(lang) { try { localStorage.setItem("lang", lang); } catch(e) {} }
+    function safeGetLang() { try { return localStorage.getItem("lang"); } catch(e) { return null; } }
+
     document.addEventListener("DOMContentLoaded", () => {
-        const savedLang = localStorage.getItem("lang");
+        const savedLang = safeGetLang();
         if (savedLang) {
             gateScreen.style.display = 'none';
             mainContent.classList.remove('hidden');
@@ -198,7 +194,7 @@
     });
 
     function selectLanguageAndProceed(lang) {
-        localStorage.setItem("lang", lang);
+        safeSetLang(lang);
         gateScreen.classList.add('opacity-0');
         setTimeout(() => {
             gateScreen.style.display = 'none';
@@ -209,7 +205,7 @@
     }
 
     function changeLanguage(lang) {
-        localStorage.setItem("lang", lang);
+        safeSetLang(lang);
         applyLanguage(lang);
     }
 
@@ -226,11 +222,12 @@
         btnEn.className = "px-3 py-1.5 rounded-full transition-all " + (lang === 'en' ? activeClass : inactiveClass);
     }
 
-```javascript
     function openBlueprint() {
+      // AQUÍ SE CORRIGIÓ EL ERROR: Ahora abre el archivo correcto.
       window.open("blueprint.html", "_blank", "noopener,noreferrer");
     }
   </script>
 </body>
 </html>
+
 
