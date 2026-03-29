@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Andrés Ramírez | The Blueprint</title>
+
+  <!-- Fuentes Premium -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+      tailwind.config = {
+          theme: {
+              extend: {
+                  colors: {
+                      brand: {
+                          bg: '#F4F7F9',
+                          dark: '#0B1320',
+                          blue: '#2A5C8A',
+                          lightBlue: '#D5E1EA',
+                      }
+                  },
+                  fontFamily: {
+                      serif: ['"Playfair Display"', 'serif'],
+                      sans: ['"DM Sans"', 'sans-serif'],
+                  }
+              }
+          }
+      }
+  </script>
+  <style>
+      /* Filtro Luxury: Inicia en B&W, pasa a color con hover suave */
+      .portrait-luxury {
+          filter: grayscale(100%);
+          transition: filter 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s ease;
+      }
+      .portrait-luxury:hover {
+          filter: grayscale(0%);
+          transform: scale(1.03);
+      }
+      @keyframes revealUp {
+          from { opacity: 0; transform: translateY(30px); }
+          to { opacity: 1; transform: translateY(0); }
+      }
+      .animate-reveal {
+          animation: revealUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+      }
+  </style>
+</head>
+
+<body class="bg-brand-bg text-brand-dark font-sans flex flex-col min-h-screen antialiased selection:bg-brand-blue selection:text-white">
+
+  <!-- 1. LANGUAGE GATE (PUERTA VIP) -->
+  <div id="language-gate" class="fixed inset-0 z-50 flex items-center justify-center bg-brand-bg transition-opacity duration-700">
+    <div class="text-center max-w-md px-6 w-full animate-reveal">
+      <div class="flex flex-col items-center mb-12">
+          <div class="relative group">
+              <div class="absolute inset-0 bg-brand-blue/5 rounded-full blur-3xl group-hover:bg-brand-blue/15 transition-all duration-1000"></div>
+              <!-- NOTA: Asegúrate que el nombre de la foto coincida con este src -->
+              <img 
+                  src="assets/images/andres-ramirez-portrait.jpg" 
+                  alt="Andrés Ramírez" 
+                  class="relative w-44 h-44 md:w-60 md:h-60 rounded-full object-cover border-[6px] border-white shadow-2xl mb-8 portrait-luxury cursor-pointer"
+                  onerror="this.src='https://ui-avatars.com/api/?name=Andres+Ramirez&background=0B1320&color=fff'"
+              >
+          </div>
+          <h1 class="font-serif font-semibold text-4xl md:text-5xl tracking-tight text-brand-dark mb-2">Andrés Ramírez</h1>
+          <p class="text-brand-blue text-[10px] font-bold uppercase tracking-[0.4em] mt-3 opacity-90">Clarity Strategist</p>
+      </div>
+
+      <div class="bg-white border border-brand-lightBlue p-10 md:p-14 shadow-2xl relative">
+          <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-brand-bg px-4 text-[10px] font-bold uppercase tracking-[0.4em] text-brand-blue border border-brand-lightBlue">Entrance</div>
+          <h2 class="text-2xl font-serif font-semibold text-brand-dark mb-2 mt-4 italic">This is for you.</h2>
+          <h3 class="text-xl font-serif text-brand-dark/70 mb-10">Esto es para ti.</h3>
+          <div class="flex flex-col gap-4">
+            <button onclick="selectLanguageAndProceed('en')" class="w-full py-4 border border-brand-lightBlue text-brand-dark font-bold tracking-[0.2em] text-[10px] uppercase transition-all duration-300 rounded-full hover:bg-brand-blue hover:text-white shadow-sm hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]">English</button>
+            <button onclick="selectLanguageAndProceed('es')" class="w-full py-4 border border-brand-lightBlue text-brand-dark font-bold tracking-[0.2em] text-[10px] uppercase transition-all duration-300 rounded-full hover:bg-brand-blue hover:text-white shadow-sm hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]">Español</button>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. MAIN CONTENT (EL REGALO) -->
+  <div id="main-content" class="flex-grow flex flex-col hidden opacity-0 transition-opacity duration-1000">
+    <!-- Selector de Idioma Flotante (Para cambiar después de entrar) -->
+    <div class="fixed top-6 right-6 z-40">
+      <div class="bg-white/90 backdrop-blur-md border border-brand-lightBlue shadow-xl flex items-center p-1 rounded-full text-[10px] font-bold tracking-widest">
+        <button onclick="changeLanguage('es')" id="btn-toggle-es" class="px-3 py-1.5 rounded-full transition-all text-brand-dark hover:text-brand-blue uppercase">ES</button>
+        <button onclick="changeLanguage('en')" id="btn-toggle-en" class="px-3 py-1.5 rounded-full transition-all text-brand-dark hover:text-brand-blue uppercase">EN</button>
+      </div>
+    </div>
+
+    <main class="flex-grow flex items-center justify-center px-6 py-24 relative z-10">
+      <div class="max-w-xl w-full bg-white border border-brand-lightBlue p-10 md:p-16 shadow-2xl relative text-center">
+        
+        <!-- BADGE DEL REGALO (Icono circular superior) -->
+        <div class="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-white border border-brand-lightBlue w-24 h-24 rounded-full flex items-center justify-center shadow-xl">
+          <div class="bg-brand-bg w-20 h-20 rounded-full flex items-center justify-center text-brand-blue">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M21 11H3M21 11V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V11M21 11C21 9.89543 20.1046 9 19 9H5C3.89543 9 3 9.89543 3 11M12 21V9M12 9H16.5C17.8807 9 19 7.88071 19 6.5C19 5.11929 17.8807 4 16.5 4C14.75 4 12 9 12 9ZM12 9H7.5C6.11929 9 5 7.88071 5 6.5C5 5.11929 6.11929 4 7.5 4C9.25 4 12 9 12 9Z"></path>
+            </svg>
+          </div>
+        </div>
+        
+        <div class="mt-8"></div>
+        <p class="text-[10px] font-bold uppercase tracking-[0.5em] text-brand-blue mb-10" data-i18n="tag"></p>
+        <p class="text-xl md:text-2xl text-brand-dark/70 font-light mb-8 leading-relaxed" data-i18n="joke"></p>
+        <p class="text-[10px] font-bold uppercase tracking-[0.4em] text-brand-dark/20 mb-14 border-b border-brand-lightBlue pb-10 inline-block" data-i18n="reality"></p>
+        <p class="text-4xl md:text-5xl font-serif font-semibold text-brand-dark mb-16 leading-tight" data-i18n="hook"></p>
+        
+        <!-- BOTONES DE ACCIÓN -->
+        <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+          <button onclick="openBlueprint()" class="w-full sm:w-auto px-12 py-4 bg-brand-blue text-white font-bold tracking-[0.2em] text-[10px] uppercase shadow-2xl hover:bg-brand-dark transition-all duration-500 flex items-center justify-center gap-4 group rounded-full hover:scale-[1.05] active:scale-[0.95]">
+            <svg class="w-5 h-5 group-hover:-rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 11H3M21 11V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V11M21 11C21 9.89543 20.1046 9 19 9H5C3.89543 9 3 9.89543 3 11M12 21V9M12 9H16.5C17.8807 9 19 7.88071 19 6.5C19 5.11929 17.8807 4 16.5 4C14.75 4 12 9 12 9ZM12 9H7.5C6.11929 9 5 7.88071 5 6.5C5 5.11929 6.11929 4 7.5 4C9.25 4 12 9 12 9Z"></path></svg>
+            <span data-i18n="btn-primary"></span>
+          </button>
+          <a href="https://andresramirez.pro" target="_blank" class="w-full sm:w-auto px-12 py-4 border border-brand-lightBlue text-brand-dark/40 hover:text-brand-dark hover:border-brand-blue font-bold text-[10px] uppercase tracking-[0.2em] transition-all duration-300 rounded-full">
+            <span data-i18n="btn-secondary"></span>
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <!-- FOOTER CON IDENTIDAD PROFESIONAL -->
+    <footer class="bg-white pt-16 pb-12 px-10 border-t border-brand-lightBlue relative z-10 mt-auto">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center md:items-start gap-12 text-center md:text-left">
+            <div class="flex flex-col md:flex-row items-center gap-8">
+                <div class="w-24 h-24 bg-brand-lightBlue shrink-0 relative overflow-hidden shadow-inner rounded-lg">
+                    <img 
+                        src="assets/images/andres-ramirez-portrait.jpg" 
+                        alt="Andrés Ramírez" 
+                        class="w-full h-full object-cover portrait-luxury cursor-pointer"
+                        onerror="this.src='https://ui-avatars.com/api/?name=AR&background=2A5C8A&color=fff'"
+                    >
+                </div>
+                <div>
+                    <h4 class="font-serif font-semibold text-3xl tracking-tight text-brand-dark mb-1">Andrés Ramírez</h4>
+                    <p class="text-brand-blue text-[10px] font-bold uppercase tracking-[0.3em]">Clarity Strategist</p>
+                </div>
+            </div>
+            <div class="flex flex-col md:items-end gap-6 text-[10px] font-bold uppercase tracking-[0.4em] text-brand-dark/30">
+                <p data-i18n="footer-connect"></p>
+                <div class="flex gap-10">
+                    <a href="https://threads.net/@aram7891" target="_blank" class="text-brand-dark/60 hover:text-brand-blue transition-all flex items-center gap-3 group">Threads</a>
+                    <a href="https://instagram.com/selfloveclubusa" target="_blank" class="text-brand-dark/60 hover:text-brand-blue transition-all flex items-center gap-3 group">Instagram</a>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-6xl mx-auto mt-20 pt-8 border-t border-brand-lightBlue flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] text-brand-dark/40 font-bold uppercase tracking-[0.5em]">
+            <p data-i18n="footer-rights"></p>
+        </div>
+    </footer>
+  </div>
+
+  <script>
+    const translations = {
+        es: {
+            "tag": "Un regalo para ti",
+            "joke": "A mi mente hispana <span class=\"font-serif italic text-brand-blue font-semibold\">\"Blueprint\"</span> siempre le suena a un pájaro azul.",
+            "reality": "En realidad significa plano.",
+            "hook": "El plano de claridad que ya te pertenece.<br><span class=\"italic text-brand-blue\">Ábrelo.</span>",
+            "btn-primary": "Abrir el Blueprint",
+            "btn-secondary": "Ir a mi sitio",
+            "footer-connect": "Conecta conmigo",
+            "footer-rights": "© 2026 andresramirez.pro | Clarity Strategy"
+        },
+        en: {
+            "tag": "A gift for you",
+            "joke": "To my Spanish-speaking mind, <span class=\"font-serif italic text-brand-blue font-semibold\">\"Blueprint\"</span> sounds like a rare blue bird.",
+            "reality": "It actually means a structural plan.",
+            "hook": "The clarity plan that already belongs to you.<br><span class=\"italic text-brand-blue\">Open it.</span>",
+            "btn-primary": "Open the Blueprint",
+            "btn-secondary": "Go to my site",
+            "footer-connect": "Connect with me",
+            "footer-rights": "© 2026 andresramirez.pro | Clarity Strategy"
+        }
+    };
+
+    const gateScreen = document.getElementById('language-gate');
+    const mainContent = document.getElementById('main-content');
+    const btnEs = document.getElementById('btn-toggle-es');
+    const btnEn = document.getElementById('btn-toggle-en');
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const savedLang = localStorage.getItem("lang");
+        if (savedLang) {
+            gateScreen.style.display = 'none';
+            mainContent.classList.remove('hidden');
+            setTimeout(() => { mainContent.classList.remove('opacity-0'); }, 50);
+            applyLanguage(savedLang);
+        } else {
+            gateScreen.style.display = 'flex';
+        }
+    });
+
+    function selectLanguageAndProceed(lang) {
+        localStorage.setItem("lang", lang);
+        gateScreen.classList.add('opacity-0');
+        setTimeout(() => {
+            gateScreen.style.display = 'none';
+            applyLanguage(lang);
+            mainContent.classList.remove('hidden');
+            setTimeout(() => { mainContent.classList.remove('opacity-0'); }, 50);
+        }, 700);
+    }
+
+    function changeLanguage(lang) {
+        localStorage.setItem("lang", lang);
+        applyLanguage(lang);
+    }
+
+    function applyLanguage(lang) {
+        document.documentElement.lang = lang;
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (translations[lang]?.[key]) el.innerHTML = translations[lang][key];
+        });
+
+        const activeClass = "bg-brand-blue text-white shadow-lg";
+        const inactiveClass = "text-brand-dark hover:text-brand-blue";
+        btnEs.className = "px-3 py-1.5 rounded-full transition-all " + (lang === 'es' ? activeClass : inactiveClass);
+        btnEn.className = "px-3 py-1.5 rounded-full transition-all " + (lang === 'en' ? activeClass : inactiveClass);
+    }
+
+    function openBlueprint() {
+      const lang = localStorage.getItem("lang") || 'es';
+      const file = lang === 'es' ? 'blueprint-es.html' : 'blueprint-en.html';
+      window.open(file, "_blank", "noopener,noreferrer");
+    }
+  </script>
+</body>
+</html>
+
