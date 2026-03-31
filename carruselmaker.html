@@ -7,14 +7,11 @@ import {
 const API_KEY = ""; 
 const MODEL_NAME = "gemini-2.5-flash-preview-09-2025";
 
-// --- RUTAS DE IMÁGENES ---
-// 1. Principal: Tu repositorio (La mejor opción para producción)
+// --- RUTAS DE IMÁGENES (OPTMIZADAS PARA andresramirez.pro) ---
+// Esta ruta asume que el HTML está en la raíz y la foto en /assets/...
 const ANDRES_PHOTO_PROD = "/assets/images/andres-ramirez-portrait.jpg"; 
 
-// 2. Respaldo: Tu link de Imgur (Para que la veas aquí en el Canvas)
-const ANDRES_PHOTO_IMGUR = "PEGA_AQUI_TU_LINK_DE_IMGUR"; 
-
-// 3. Fallback de emergencia
+// Fallback de emergencia (Solo se verá si el server no encuentra la foto local)
 const ANDRES_PHOTO_FALLBACK = "https://ui-avatars.com/api/?name=Andres+Ramirez&background=0f172a&color=fff&size=128";
 
 const App = () => {
@@ -70,7 +67,7 @@ const App = () => {
     2. Tono: Inspirador, sistémico, premium.
     3. Slide 1: Título tipo Hook (máx 10 palabras) y un subtítulo intrigante.
     4. Slides 2-6: Desarrollo del concepto. 2-4 frases densas y valiosas.
-    5. Slide 7: Cierre potente y directo (Llamado a la acción final).
+    5. Slide 7: Cierre potente y directo. Sin iconos ni arrobas en el texto generado, el diseño base ya tiene la foto de Andrés. Solo texto accionable.
     6. Devuelve un JSON válido.
   `;
 
@@ -125,7 +122,7 @@ const App = () => {
           return;
         }
       } catch (e) {
-        if (i === 4) setError("Error de conexión. Intenta de nuevo.");
+        if (i === 4) setError("Error de conexión con el motor de claridad. Intenta de nuevo.");
       }
       await new Promise(r => setTimeout(r, delay));
       delay *= 2;
@@ -177,8 +174,7 @@ const App = () => {
             className="w-10 h-10 rounded-full border-2 border-slate-100 object-cover"
             onError={(e) => {
               e.target.onerror = null; 
-              // Si falla el repo local, intenta con Imgur. Si falla Imgur, usa el Fallback.
-              e.target.src = ANDRES_PHOTO_IMGUR.includes("PEGA_AQUI") ? ANDRES_PHOTO_FALLBACK : ANDRES_PHOTO_IMGUR;
+              e.target.src = ANDRES_PHOTO_FALLBACK;
             }}
             alt="Andrés Ramírez"
           />
@@ -271,7 +267,7 @@ const App = () => {
                       </p>
                     </div>
                   ) : currentSlide === 6 ? (
-                    // LÁMINA 7: LIMPIA, DIRECTA Y SIN ICONOS NI HANDLES REDUNDANTES
+                    // LÁMINA 7: LIMPIA, DIRECTA Y SELLANDO CON LA FOTO ABAJO
                     <div className="space-y-6 flex flex-col items-center text-center">
                       <h3 className={`text-4xl font-black leading-tight ${currentTheme.fontHeading}`}>
                         {slides[currentSlide].title}
@@ -295,13 +291,13 @@ const App = () => {
 
                 <div className={`flex items-center justify-between border-t ${currentTheme.border} pt-6 z-10`}>
                   <div className="flex items-center gap-3">
-                    {/* Imagen de Footer Sellando la Pieza */}
+                    {/* Imagen de Footer Sellando la Pieza - Ahora tira directo de Producción */}
                     <img 
                       src={ANDRES_PHOTO_PROD} 
                       className="w-10 h-10 rounded-full border border-white/20 object-cover aspect-square shadow-sm" 
                       onError={(e) => {
                         e.target.onerror = null; 
-                        e.target.src = ANDRES_PHOTO_IMGUR.includes("PEGA_AQUI") ? ANDRES_PHOTO_FALLBACK : ANDRES_PHOTO_IMGUR;
+                        e.target.src = ANDRES_PHOTO_FALLBACK;
                       }}
                       alt="Andrés Ramírez"
                     />
@@ -337,13 +333,13 @@ const App = () => {
         </div>
       </main>
       
+      {/* Footer Preservando Identidad como indicado */}
       <footer className="py-10 text-center opacity-30">
-        <p className="text-[9px] font-black tracking-[0.4em] uppercase text-slate-600">Andrés Ramírez • 2026 • @selfloveclubusa</p>
+        <p className="text-[9px] font-black tracking-[0.4em] uppercase text-slate-600">Andrés Ramírez • @aram7891 • @selfloveclubusa</p>
       </footer>
     </div>
   );
 };
 
 export default App;
-
 
