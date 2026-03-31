@@ -21,10 +21,8 @@
 </head>
 
 <body class="bg-slate-50 text-slate-900 font-sans selection:bg-purple-200">
-  <!-- Aquí es donde React inyectará toda la aplicación -->
   <div id="root"></div>
 
-  <!-- Script principal de React con Babel -->
   <script type="text/babel" data-type="module">
     import React, { useState, useRef, useEffect } from 'https://esm.sh/react@18';
     import { createRoot } from 'https://esm.sh/react-dom@18/client';
@@ -33,19 +31,14 @@
       Type, Send, ChevronLeft, ChevronRight, Key, Eye, EyeOff
     } from 'https://esm.sh/lucide-react@0.263';
 
-    // CORRECCIÓN 1: Usar el modelo público estable.
-    const MODEL_NAME = "gemini-1.5-flash";
+    // ¡AQUÍ ESTÁ LA SOLUCIÓN! Apuntando al modelo principal de la generación 2.5
+    const MODEL_NAME = "gemini-2.5-flash";
 
     const ANDRES_PHOTO_PROD = "/assets/images/andres-ramirez-portrait.jpg"; 
     const ANDRES_PHOTO_FALLBACK = "https://ui-avatars.com/api/?name=Andres+Ramirez&background=0f172a&color=fff&size=128";
 
     const App = () => {
-      // =========================================================================
-      // ⚠️ SI QUIERES DEJAR LA LLAVE FIJA, PÉGALA ENTRE LAS COMILLAS DE ABAJO ⚠️
-      // =========================================================================
-      const [apiKey, setApiKey] = useState("AIzaSyC5fnU170l6n9s-aLu4EgVm1o546bgSjcE"); // <-- Ejemplo: useState("AIzaSy...");
-      // =========================================================================
-      
+      const [apiKey, setApiKey] = useState(""); 
       const [showKey, setShowKey] = useState(false);
       const [essay, setEssay] = useState("");
       const [loading, setLoading] = useState(false);
@@ -57,7 +50,6 @@
 
       const slideRef = useRef(null);
 
-      // Cargar la llave guardada al iniciar (si se usó la interfaz visual)
       useEffect(() => {
         const savedKey = localStorage.getItem('kinetic_api_key');
         if (savedKey && !apiKey) setApiKey(savedKey);
@@ -66,7 +58,7 @@
       const handleKeyChange = (e) => {
         const val = e.target.value;
         setApiKey(val);
-        localStorage.setItem('kinetic_api_key', val); // Guarda localmente en TU navegador
+        localStorage.setItem('kinetic_api_key', val); 
       };
 
       const stylesConfig = {
@@ -111,7 +103,7 @@
         2. Tono: Inspirador, sistémico, premium.
         3. Slide 1: Título tipo Hook (máx 10 palabras) y un subtítulo intrigante.
         4. Slides 2-6: Desarrollo del concepto. 2-4 frases densas y valiosas.
-        5. Slide 7: Cierre potente y directo. Sin iconos ni arrobas en el texto generado, el diseño base ya tiene la foto de Andrés. Solo texto accionable.
+        5. Slide 7: Cierre potente y directo. Sin iconos ni arrobas en el texto generado.
         6. Devuelve un JSON válido.
       `;
 
@@ -120,9 +112,10 @@
         setLoading(true);
         setError(null);
 
-        // Validación estricta de la llave
-        if (!apiKey.trim()) {
-          setError("Chamo, necesitas ingresar tu API Key en la configuración arriba para usar el motor.");
+        const cleanApiKey = apiKey.trim();
+
+        if (!cleanApiKey) {
+          setError("Chamo, necesitas ingresar tu API Key en la configuración arriba.");
           setLoading(false);
           return;
         }
@@ -153,41 +146,32 @@
           }
         };
 
-        let delay = 1000;
-        for (let i = 0; i < 5; i++) {
-          try {
-            const response = await fetch(
-              `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${apiKey}`,
-              {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
-              }
-            );
-            
-            if (response.ok) {
-              const result = await response.json();
-              const data = JSON.parse(result.candidates[0].content.parts[0].text);
-              setSlides(data.slides);
-              setCurrentSlide(0);
-              setLoading(false);
-              return;
-            } else {
-              // CORRECCIÓN 2: Capturar errores de HTTP (como llave inválida)
-              const errData = await response.json();
-              console.error("Error de API Gemini:", errData);
-              throw new Error(errData.error?.message || "Error HTTP");
+        try {
+          const response = await fetch(
+            `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${cleanApiKey}`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload)
             }
-          } catch (e) {
-            console.error(`Fallo en el intento ${i + 1}:`, e);
-            if (i === 4) {
-                setError(`Fallo la conexión. Revisa que tu API Key sea correcta. Detalle en consola (F12).`);
-            }
+          );
+          
+          if (response.ok) {
+            const result = await response.json();
+            const data = JSON.parse(result.candidates[0].content.parts[0].text);
+            setSlides(data.slides);
+            setCurrentSlide(0);
+          } else {
+            const errData = await response.json().catch(() => null);
+            const errorMsg = errData?.error?.message || `Error HTTP ${response.status}`;
+            throw new Error(errorMsg);
           }
-          await new Promise(r => setTimeout(r, delay));
-          delay *= 2;
+        } catch (e) {
+          console.error("Detalle técnico del error:", e);
+          setError(`Google dice: "${e.message}". Revisa la consola o intenta generar nuevamente.`);
+        } finally {
+          setLoading(false);
         }
-        setLoading(false);
       };
 
       const exportAsJpg = async () => {
@@ -245,7 +229,6 @@
             {/* Input Area */}
             <div className="lg:col-span-5 space-y-6">
               
-              {/* Módulo de Seguridad para API Key */}
               <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm flex flex-col gap-3">
                 <div className="flex items-center gap-2 text-slate-700">
                   <Key className="w-4 h-4 text-purple-600" />
@@ -305,7 +288,11 @@
                   {loading ? "ESTRATIFICANDO..." : "GENERAR CARRUSEL"}
                 </button>
 
-                {error && <p className="mt-4 text-xs font-bold text-red-500 text-center uppercase">{error}</p>}
+                {error && (
+                  <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-xl">
+                    <p className="text-[11px] font-bold text-red-600 text-center uppercase">{error}</p>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -428,4 +415,5 @@
   </script>
 </body>
 </html>
+
 
