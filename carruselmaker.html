@@ -360,14 +360,14 @@
                       )}
                     </div>
 
-                    <div className={`flex items-center justify-between border-t ${currentTheme.border} pt-6 z-10`}>
+                  <div className={`flex items-center justify-between border-t ${currentTheme.border} pt-6 z-10`}>
                       <div className="flex items-center gap-3">
                         <img 
-                          src={ANDRES_PHOTO_PROD} 
+                          src="/assets/images/andres-ramirez-portrait.jpg" 
                           className="w-10 h-10 rounded-full border border-white/20 object-cover aspect-square shadow-sm" 
                           onError={(e) => {
                             e.target.onerror = null; 
-                            e.target.src = ANDRES_PHOTO_FALLBACK;
+                            e.target.src = "/assets/images/andres-ramirez-portrait.jpg";
                           }}
                           alt="Andrés Ramírez"
                         />
@@ -403,8 +403,19 @@
             </div>
           </main>
           
-          <footer className="py-10 text-center opacity-30">
-            <p className="text-[9px] font-black tracking-[0.4em] uppercase text-slate-600">Andrés Ramírez • @aram7891 • @selfloveclubusa</p>
+          <footer className="py-10 text-center opacity-30 flex flex-col items-center justify-center gap-2">
+            <img 
+              src="/assets/images/andres-ramirez-portrait.jpg" 
+              alt="Andrés Ramírez" 
+              className="w-6 h-6 rounded-full object-cover grayscale opacity-70"
+            />
+            <p className="text-[9px] font-black tracking-[0.4em] uppercase text-slate-600 flex items-center justify-center gap-2 flex-wrap">
+              <span>Andrés Ramírez</span>
+              <span>•</span>
+              <a href="https://threads.net/@aram7891" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900 transition-colors">@aram7891</a>
+              <span>•</span>
+              <a href="https://instagram.com/selfloveclubusa" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900 transition-colors">@selfloveclubusa</a>
+            </p>
           </footer>
         </div>
       );
@@ -415,5 +426,3 @@
   </script>
 </body>
 </html>
-
-
