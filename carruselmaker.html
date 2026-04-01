@@ -28,13 +28,13 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     
-    <!-- FontAwesome for Icons -->
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- html-to-image for JPG Export -->
+    <!-- html-to-image -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.js"></script>
 
-    <!-- React, ReactDOM & Babel -->
+    <!-- React & Babel -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -53,9 +53,6 @@
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
 
-        // El motor universal y estable. Solo funciona con TU clave.
-        const TEXT_MODEL = "gemini-1.5-flash-latest"; 
-        
         const fetchWithRetry = async (url, options, maxRetries = 3) => {
             let retries = 0;
             while (retries < maxRetries) {
@@ -65,7 +62,7 @@
                     
                     if (response.status === 400) throw new Error("API Key inválida o mal copiada. Revísala.");
                     if (response.status === 403) throw new Error("Permiso denegado. Verifica tu API Key.");
-                    if (response.status === 404) throw new Error("Modelo no encontrado.");
+                    if (response.status === 404) throw new Error("Modelo no encontrado. Prueba con otro modelo o crea una nueva API Key.");
                     if (response.status === 429) {
                         const delay = Math.pow(2, retries) * 1000;
                         await new Promise(res => setTimeout(res, delay));
@@ -83,6 +80,7 @@
         const App = () => {
             const [essay, setEssay] = useState("");
             const [userApiKey, setUserApiKey] = useState("");
+            const [selectedModel, setSelectedModel] = useState("gemini-2.5-flash");
             const [loading, setLoading] = useState(false);
             const [slides, setSlides] = useState(null);
             const [currentSlide, setCurrentSlide] = useState(0);
@@ -91,6 +89,7 @@
             const [currentStyle, setCurrentStyle] = useState("Kinetic");
             const [polishing, setPolishing] = useState(false);
             const [isSpeaking, setIsSpeaking] = useState(false);
+            const [listingModels, setListingModels] = useState(false);
 
             const slideRef = useRef(null);
 
@@ -102,9 +101,37 @@
                 Modern: { container: "bg-gradient-to-br from-indigo-50 via-white to-blue-50 text-slate-900", accent: "bg-indigo-600", textAccent: "text-indigo-600", border: "border-indigo-100", fontHeading: "font-sans font-extrabold tracking-tight", fontBody: "font-sans", tag: "bg-indigo-900 text-white", logoFilter: "" }
             };
 
+            const listAvailableModels = async () => {
+                if (!userApiKey.trim()) {
+                    alert("Primero pega tu API Key");
+                    return;
+                }
+                setListingModels(true);
+                try {
+                    const url = `https://generativelanguage.googleapis.com/v1beta/models?key=${userApiKey.trim()}`;
+                    const data = await fetch(url).then(res => res.ok ? res.json() : { error: res.status });
+                    
+                    if (data.error) {
+                        throw new Error("No se pudo obtener la lista (revisa tu API Key)");
+                    }
+                    
+                    const modelNames = data.models
+                        ? data.models.map(m => m.name.replace("models/", ""))
+                        : ["No se encontraron modelos"];
+                    
+                    const message = `✅ Modelos disponibles para tu API Key:\n\n` +
+                                    modelNames.join("\n") +
+                                    `\n\n🔥 Recomendado: copia uno de estos y pégalo en el selector de arriba.`;
+                    alert(message);
+                } catch (err) {
+                    alert("❌ Error al listar modelos: " + err.message + "\n\nPrueba creando una NUEVA API Key en https://aistudio.google.com/app/apikey");
+                } finally {
+                    setListingModels(false);
+                }
+            };
+
             const generateCarousel = async () => {
                 if (!essay.trim()) return;
-
                 if (!userApiKey.trim()) {
                     setError("Por favor, ingresa tu API Key.");
                     return;
@@ -114,7 +141,7 @@
                 setError(null);
                 setCurrentSlide(0);
 
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/${TEXT_MODEL}:generateContent?key=${userApiKey.trim()}`;
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/${selectedModel}:generateContent?key=${userApiKey.trim()}`;
 
                 const payload = {
                     contents: [{
@@ -136,9 +163,12 @@ Formato JSON:
 }
 
 Reglas:
-- Español
+- Todo en español
+- Tono motivacional y de claridad kinética
 - 7 slides exactos
-- Slide 1 intro, 2-6 contenido, 7 cierre`
+- Slide 1: introducción poderosa
+- Slides 2-6: insights clave o consejos prácticos
+- Slide 7: cierre impactante con llamada a acción`
                         }]
                     }]
                 };
@@ -152,16 +182,10 @@ Reglas:
 
                     const responseText = data.candidates?.[0]?.content?.parts?.[0]?.text;
 
-                    if (!responseText) {
-                        throw new Error("La API no devolvió contenido.");
-                    }
+                    if (!responseText) throw new Error("La API no devolvió contenido.");
 
-                    // 🔥 EXTRAER JSON aunque venga sucio
                     const jsonMatch = responseText.match(/\{[\s\S]*\}/);
-
-                    if (!jsonMatch) {
-                        throw new Error("No vino JSON válido.");
-                    }
+                    if (!jsonMatch) throw new Error("No vino JSON válido.");
 
                     const parsed = JSON.parse(jsonMatch[0]);
 
@@ -170,7 +194,6 @@ Reglas:
                     }
 
                     setSlides(parsed.slides);
-
                 } catch (err) {
                     setError(err.message);
                 } finally {
@@ -182,10 +205,9 @@ Reglas:
                 if (!slides || !userApiKey.trim()) return;
 
                 setPolishing(true);
-
                 const currentData = slides[currentSlide];
 
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/${TEXT_MODEL}:generateContent?key=${userApiKey.trim()}`;
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/${selectedModel}:generateContent?key=${userApiKey.trim()}`;
 
                 const payload = {
                     contents: [{
@@ -214,7 +236,6 @@ Formato:
                     const responseText = data.candidates?.[0]?.content?.parts?.[0]?.text;
 
                     const jsonMatch = responseText.match(/\{[\s\S]*\}/);
-
                     if (!jsonMatch) throw new Error("JSON inválido");
 
                     const refined = JSON.parse(jsonMatch[0]);
@@ -227,7 +248,6 @@ Formato:
                     };
 
                     setSlides(newSlides);
-
                 } catch (err) {
                     console.error(err);
                 } finally {
@@ -299,6 +319,28 @@ Formato:
                                             <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noreferrer" className="text-[10px] text-kinetic hover:underline font-bold">Obtener Gratis Aquí</a>
                                         </div>
                                         <input type="password" className="w-full bg-[#0b1121] border border-slate-700 rounded-xl p-3 text-sm focus:border-kinetic focus:outline-none text-slate-300" placeholder="Pega tu API Key obligatoriamente aquí..." value={userApiKey} onChange={(e) => setUserApiKey(e.target.value)} />
+                                    </div>
+
+                                    {/* NUEVO SELECTOR DE MODELO */}
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500"><i className="fa-solid fa-cube mr-1"></i> Modelo Gemini</label>
+                                        <select 
+                                            value={selectedModel}
+                                            onChange={(e) => setSelectedModel(e.target.value)}
+                                            className="w-full bg-[#0b1121] border border-slate-700 rounded-xl p-3 text-sm focus:border-kinetic focus:outline-none text-slate-300"
+                                        >
+                                            <option value="gemini-2.5-flash">gemini-2.5-flash (recomendado)</option>
+                                            <option value="gemini-2.5-flash-lite">gemini-2.5-flash-lite (más rápido y barato)</option>
+                                            <option value="gemini-1.5-flash">gemini-1.5-flash (si tu key es vieja)</option>
+                                        </select>
+                                        <button 
+                                            onClick={listAvailableModels}
+                                            disabled={listingModels || !userApiKey.trim()}
+                                            className="w-full text-xs font-bold bg-[#0b1121] hover:bg-slate-800 border border-slate-700 py-2 rounded-xl flex items-center justify-center gap-2"
+                                        >
+                                            {listingModels ? <i className="fa-solid fa-circle-notch fa-spin"></i> : <i className="fa-solid fa-list"></i>}
+                                            {listingModels ? "Cargando modelos..." : "🔎 Ver Modelos Disponibles para mi Key"}
+                                        </button>
                                     </div>
 
                                     <div className="space-y-3">
@@ -390,7 +432,7 @@ Formato:
                                 <div className="h-[600px] w-full max-w-[480px] flex flex-col justify-center items-center text-center p-12 border border-slate-800 rounded-[40px] bg-surface/50 relative overflow-hidden">
                                     <i className="fa-solid fa-layer-group text-5xl text-slate-700 mb-6"></i>
                                     <h3 className="text-2xl font-serif text-white">Kinetic Strategy</h3>
-                                    <p className="text-slate-400 text-sm mt-3 font-light">Ingresa tu API Key, tu contenido y genera tus activos.</p>
+                                    <p className="text-slate-400 text-sm mt-3 font-light">Ingresa tu API Key, elige modelo y genera tus activos.</p>
                                 </div>
                             )}
                         </div>
