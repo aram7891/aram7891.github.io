@@ -54,7 +54,7 @@
         const { useState, useEffect, useRef } = React;
 
         // El motor universal y estable. Solo funciona con TU clave.
-        const TEXT_MODEL = "gemini-1.5-pro-latest"; 
+        const TEXT_MODEL = "gemini-1.5-flash-latest"; 
         
         const fetchWithRetry = async (url, options, maxRetries = 3) => {
             let retries = 0;
@@ -104,89 +104,73 @@
 
             const generateCarousel = async () => {
                 if (!essay.trim()) return;
+
                 if (!userApiKey.trim()) {
-                    setError("Por favor, ingresa tu API Key para poder generar el carrusel.");
+                    setError("Por favor, ingresa tu API Key.");
                     return;
                 }
 
                 setLoading(true);
                 setError(null);
                 setCurrentSlide(0);
-                if (isSpeaking) { window.speechSynthesis.cancel(); setIsSpeaking(false); }
 
                 const url = `https://generativelanguage.googleapis.com/v1beta/models/${TEXT_MODEL}:generateContent?key=${userApiKey.trim()}`;
-                
+
                 const payload = {
-                    contents: [{ 
-                        parts: [{ 
-                            text: `Crea EXACTAMENTE 7 láminas de carrusel para el Self Love Club basado en este ensayo de Andrés Ramírez:
+                    contents: [{
+                        parts: [{
+                            text: `Crea EXACTAMENTE 7 láminas de carrusel para el Self Love Club basado en este ensayo:
 
 ${essay}
 
-Reglas estrictas:
-- Todo en español, tono motivacional, inspirador y de claridad kinética.
-- Slide 1: Introducción poderosa al tema principal del ensayo.
-- Slides 2 a 6: Cada uno un insight clave o consejo práctico del ensayo.
-- Slide 7: Cierre impactante con llamada a acción.
-- title: corto e impactante (1-2 líneas)
-- subtitle: subtítulo complementario 
-- body: texto principal conciso y legible (ideal para carrusel)
-- slideNumber: número del 1 al 7
+Formato JSON:
+{
+  "slides": [
+    {
+      "title": "",
+      "subtitle": "",
+      "body": "",
+      "slideNumber": 1
+    }
+  ]
+}
 
-Devuelve SOLO el JSON con la estructura exacta.` 
-                        }] 
-                    }],
-                    systemInstruction: { 
-                        parts: [{ 
-                            text: `Eres el estratega de contenido oficial del Self Love Club de Andrés Ramírez. Crea carruseles virales y profundos.` 
-                        }] 
-                    },
-                    generationConfig: { 
-                        responseMimeType: "application/json",
-                        responseSchema: {
-                            type: "OBJECT",
-                            properties: { 
-                                slides: { 
-                                    type: "ARRAY", 
-                                    items: { 
-                                        type: "OBJECT", 
-                                        properties: { 
-                                            title: { type: "STRING" }, 
-                                            subtitle: { type: "STRING" }, 
-                                            body: { type: "STRING" }, 
-                                            slideNumber: { type: "NUMBER" } 
-                                        },
-                                        required: ["title", "subtitle", "body", "slideNumber"]
-                                    },
-                                    minItems: 7,
-                                    maxItems: 7
-                                } 
-                            },
-                            required: ["slides"]
-                        }
-                    }
+Reglas:
+- Español
+- 7 slides exactos
+- Slide 1 intro, 2-6 contenido, 7 cierre`
+                        }]
+                    }]
                 };
 
                 try {
-                    const data = await fetchWithRetry(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-                    
-                    if (!data.candidates || !data.candidates[0]?.content?.parts?.[0]?.text) {
-                        throw new Error("La API no devolvió contenido válido. Intenta de nuevo o verifica tu API Key.");
+                    const data = await fetchWithRetry(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    const responseText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                    if (!responseText) {
+                        throw new Error("La API no devolvió contenido.");
                     }
 
-                    const responseText = data.candidates[0].content.parts[0].text;
-                    let parsed;
-                    try {
-                        parsed = JSON.parse(responseText);
-                    } catch (parseErr) {
-                        throw new Error("La IA no devolvió un JSON válido. Intenta generar de nuevo.");
+                    // 🔥 EXTRAER JSON aunque venga sucio
+                    const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+
+                    if (!jsonMatch) {
+                        throw new Error("No vino JSON válido.");
                     }
 
-                    if (!parsed.slides || !Array.isArray(parsed.slides) || parsed.slides.length !== 7) {
-                        throw new Error("La respuesta no contiene exactamente 7 slides. Intenta de nuevo.");
+                    const parsed = JSON.parse(jsonMatch[0]);
+
+                    if (!parsed.slides || parsed.slides.length !== 7) {
+                        throw new Error("No hay 7 slides.");
                     }
 
                     setSlides(parsed.slides);
+
                 } catch (err) {
                     setError(err.message);
                 } finally {
@@ -196,57 +180,54 @@ Devuelve SOLO el JSON con la estructura exacta.`
 
             const polishSlide = async () => {
                 if (!slides || !userApiKey.trim()) return;
-                
+
                 setPolishing(true);
+
                 const currentData = slides[currentSlide];
+
                 const url = `https://generativelanguage.googleapis.com/v1beta/models/${TEXT_MODEL}:generateContent?key=${userApiKey.trim()}`;
-                
+
                 const payload = {
-                    contents: [{ 
-                        parts: [{ 
-                            text: `Refina este slide para que sea más impactante, claro y motivacional. Mantén el espíritu original pero mejóralo según el estilo Kinetic Clarity / Self Love Club.
+                    contents: [{
+                        parts: [{
+                            text: `Mejora este slide y devuélvelo en JSON:
 
-Diseño actual: ${currentStyle}
+${JSON.stringify(currentData)}
 
-Slide actual: ${JSON.stringify(currentData)}
-
-Devuelve SOLO JSON con title, subtitle y body mejorados.` 
-                        }] 
-                    }],
-                    systemInstruction: { 
-                        parts: [{ text: "Responde siempre en formato JSON estricto." }] 
-                    },
-                    generationConfig: { 
-                        responseMimeType: "application/json",
-                        responseSchema: {
-                            type: "OBJECT",
-                            properties: {
-                                title: { type: "STRING" },
-                                subtitle: { type: "STRING" },
-                                body: { type: "STRING" }
-                            },
-                            required: ["title", "subtitle", "body"]
-                        }
-                    }
+Formato:
+{
+ "title": "",
+ "subtitle": "",
+ "body": ""
+}`
+                        }]
+                    }]
                 };
 
                 try {
-                    const data = await fetchWithRetry(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-                    
-                    if (!data.candidates || !data.candidates[0]?.content?.parts?.[0]?.text) {
-                        throw new Error("Error al pulir el slide.");
-                    }
+                    const data = await fetchWithRetry(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
 
-                    const responseText = data.candidates[0].content.parts[0].text;
-                    const refined = JSON.parse(responseText);
-                    
+                    const responseText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                    const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+
+                    if (!jsonMatch) throw new Error("JSON inválido");
+
+                    const refined = JSON.parse(jsonMatch[0]);
+
                     const newSlides = [...slides];
-                    newSlides[currentSlide] = { 
-                        ...currentData, 
-                        ...refined, 
-                        slideNumber: currentData.slideNumber 
+                    newSlides[currentSlide] = {
+                        ...currentData,
+                        ...refined,
+                        slideNumber: currentData.slideNumber
                     };
+
                     setSlides(newSlides);
+
                 } catch (err) {
                     console.error(err);
                 } finally {
