@@ -3,12 +3,12 @@
   "short_name": "Carrusel",
   "icons": [
     {
-      "src": "assets/Images/logo-192.png",
+      "src": "assets/images/logo-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "assets/Images/logo.png",
+      "src": "assets/images/logo.png",
       "sizes": "512x512",
       "type": "image/png"
     }
