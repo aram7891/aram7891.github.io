@@ -6,7 +6,7 @@
   <title>Kinetic Clarity Engine — Clarity Strategist</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 
@@ -24,9 +24,22 @@
   import { Sparkles, Loader2, Image as ImageIcon, Type, Send, ChevronLeft, ChevronRight, Key, Eye, EyeOff, AlertTriangle, Video } from 'https://esm.sh/lucide-react@0.263';
 
   const MODEL_NAME = "gemini-2.5-pro";
-  // Identidad de marca estricta
   const ANDRES_PHOTO_PROD = "/assets/images/andres-ramirez-portrait.jpg";
   const ANDRES_PHOTO_FALLBACK = "https://ui-avatars.com/api/?name=Andres+Ramirez&background=0f172a&color=fff&size=128";
+
+  // Galería curada de Unsplash (Minimalista, Negocios, Claridad) - No requiere API Key
+  const UNSPLASH_GALLERY = [
+    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=600&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?q=80&w=600&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=600&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=600&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=600&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?q=80&w=600&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1459156212016-c812468e2115?q=80&w=600&auto=format&fit=crop"
+  ];
+
+  const getRandomImage = () => UNSPLASH_GALLERY[Math.floor(Math.random() * UNSPLASH_GALLERY.length)];
 
   const App = () => {
     const [apiKey, setApiKey] = useState(localStorage.getItem('kinetic_api_key') || "");
@@ -43,10 +56,32 @@
 
     useEffect(() => { if (apiKey) localStorage.setItem('kinetic_api_key', apiKey); }, [apiKey]);
 
+    // Estilos RADICALMENTE diferenciados
     const stylesConfig = {
-      Kinetic: { container: "bg-[#0f172a] text-[#f8fafc]", accent: "bg-[#a855f7]", border: "border-slate-800", fontHeading: "font-serif", fontBody: "font-sans", tag: "bg-[#a855f7] text-white" },
-      ClarityWhite: { container: "bg-white text-slate-900", accent: "bg-blue-600", border: "border-slate-200", fontHeading: "font-sans font-black", fontBody: "font-sans", tag: "bg-slate-900 text-white" },
-      NoirGold: { container: "bg-[#050816] text-[#f9fafb]", accent: "bg-[#fbbf24]", border: "border-[#1f2937]", fontHeading: "font-serif", fontBody: "font-sans", tag: "bg-[#fbbf24] text-black" }
+      Kinetic: { 
+        container: "bg-zinc-50 text-zinc-900", // Ahora es CLARO y moderno
+        accent: "bg-purple-600", 
+        border: "border-zinc-200", 
+        fontHeading: "font-sans font-black tracking-tighter uppercase", 
+        fontBody: "font-sans text-zinc-700 font-medium", 
+        tag: "bg-purple-600 text-white font-bold rounded-none" 
+      },
+      ClarityWhite: { 
+        container: "bg-white text-slate-900", 
+        accent: "bg-blue-600", 
+        border: "border-slate-200", 
+        fontHeading: "font-sans font-black tracking-tight", 
+        fontBody: "font-sans text-slate-600 font-medium", 
+        tag: "bg-blue-600 text-white font-bold rounded-none" 
+      },
+      NoirGold: { 
+        container: "bg-black text-[#fdfbf7]", // OSCURO puro con Oro
+        accent: "bg-[#d4af37]", 
+        border: "border-[#333333]", 
+        fontHeading: "font-serif font-bold", 
+        fontBody: "font-serif text-[#cccccc] italic", 
+        tag: "bg-[#d4af37] text-black font-bold rounded-none" 
+      }
     };
 
     const generateCarousel = async () => {
@@ -57,11 +92,18 @@
       setLoading(true);
       setError(null);
 
-      // System prompt ajustado para asegurar prompts de imagen descriptivos en inglés
-      const systemInstruction = `Eres un estratega de contenido de élite para Andrés Ramírez. Transforma el texto en EXACTAMENTE 7 láminas para un carrusel de Instagram. 
-      Devuelve SOLO un JSON válido con esta estructura: 
-      {"slides": [{"title":"Título corto","subtitle":"...","body":"Texto principal corto","imagePrompt":"A highly detailed, minimalist, aesthetic, square 3D render representing [tema clave de la lámina], clean background","slideNumber":1}, ...]}. 
-      CRÍTICO: El campo 'imagePrompt' DEBE estar en inglés y ser una descripción muy visual para generar una imagen con IA.`;
+      // Instrucciones estrictas sobre la ESTRUCTURA: Solo láminas 2 y 6 son tipo 'image'
+      const systemInstruction = `Eres un estratega de contenido para Andrés Ramírez. Crea EXACTAMENTE 7 láminas para un carrusel a partir del texto del usuario. 
+      Devuelve SOLO un JSON válido con esta estructura exacta y estricta:
+      {"slides": [
+        {"type": "text", "title": "Título impactante", "body": "Subtítulo corto", "slideNumber": 1},
+        {"type": "image", "title": "Título", "body": "Texto principal (MÁXIMO 20 palabras)", "slideNumber": 2},
+        {"type": "text", "title": "Título", "body": "Texto principal (MÁXIMO 25 palabras)", "slideNumber": 3},
+        {"type": "text", "title": "Título", "body": "Texto principal (MÁXIMO 25 palabras)", "slideNumber": 4},
+        {"type": "text", "title": "Título", "body": "Texto principal (MÁXIMO 25 palabras)", "slideNumber": 5},
+        {"type": "image", "title": "Título", "body": "Texto principal (MÁXIMO 20 palabras)", "slideNumber": 6},
+        {"type": "text", "title": "Conclusión", "body": "Llamado a la acción (MÁXIMO 20 palabras)", "slideNumber": 7}
+      ]}`;
 
       try {
         const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${apiKey.trim()}`, {
@@ -70,25 +112,26 @@
           body: JSON.stringify({
             contents: [{ parts: [{ text: essay }] }],
             systemInstruction: { parts: [{ text: systemInstruction }] },
-            generationConfig: { responseMimeType: "application/json", temperature: 0.7 }
+            generationConfig: { responseMimeType: "application/json", temperature: 0.5 }
           })
         });
 
         const result = await response.json();
         if (result.error) throw new Error(result.error.message);
 
-        // Limpiar posible formato markdown del JSON
         let rawText = result.candidates[0].content.parts[0].text;
         rawText = rawText.replace(/```json/g, '').replace(/```/g, '');
         
         const data = JSON.parse(rawText);
         if (!data.slides || data.slides.length !== 7) throw new Error("No se generaron 7 slides correctamente.");
 
-        // Inyectar URL de imagen dinámica basada en el prompt
-        const slidesWithImages = data.slides.map(slide => ({
-          ...slide,
-          image: `https://image.pollinations.ai/prompt/${encodeURIComponent(slide.imagePrompt)}?width=512&height=512&nologo=true`
-        }));
+        // Inyectar imágenes estéticas de Unsplash automáticamente SOLO donde type === 'image'
+        const slidesWithImages = data.slides.map(slide => {
+          if (slide.type === 'image') {
+            return { ...slide, image: getRandomImage() };
+          }
+          return slide; // Las láminas de texto no llevan imagen
+        });
 
         setSlides(slidesWithImages);
         setCurrentSlide(0);
@@ -122,7 +165,7 @@
         const zip = new JSZip();
         for (let i = 0; i < slides.length; i++) {
           setCurrentSlide(i);
-          await new Promise(r => setTimeout(r, 600)); // Dar tiempo a que cargue la imagen
+          await new Promise(r => setTimeout(r, 600)); 
           const dataUrl = await toJpeg(slideRef.current, { quality: 0.95, pixelRatio: 3 });
           zip.file(`slide-${i+1}.jpg`, dataUrl.split(",")[1], { base64: true });
         }
@@ -138,7 +181,6 @@
       }
     };
 
-    // Nueva lógica robusta para exportar Video usando MediaRecorder y html-to-image
     const exportVideo = async () => {
       if (!slides || !slideRef.current) return alert("Genera primero el carrusel");
       setExporting(true);
@@ -146,7 +188,6 @@
       try {
         const { toCanvas } = await import('https://cdn.skypack.dev/html-to-image');
         
-        // Crear canvas para grabar, duplicando la resolución para mejor calidad (1080x1350 ratio)
         const recordCanvas = document.createElement('canvas');
         recordCanvas.width = slideRef.current.offsetWidth * 2;
         recordCanvas.height = slideRef.current.offsetHeight * 2;
@@ -171,20 +212,16 @@
 
         recorder.start();
 
-        // Iterar sobre cada slide
         for (let i = 0; i < slides.length; i++) {
           setCurrentSlide(i);
           setExportProgress(`Grabando lámina ${i + 1} de ${slides.length}...`);
           
-          // Esperar a que React renderice y la imagen cargue completamente
           await new Promise(r => setTimeout(r, 1000));
-
           const frameCanvas = await toCanvas(slideRef.current, { pixelRatio: 2 });
 
-          // Dibujar el frame repetidas veces para crear una duración de ~3.5 segundos por slide (100 frames a 30fps)
           for (let f = 0; f < 100; f++) {
             ctx.drawImage(frameCanvas, 0, 0);
-            await new Promise(r => setTimeout(r, 33)); // Aproximadamente 30fps
+            await new Promise(r => setTimeout(r, 33)); 
           }
         }
 
@@ -213,10 +250,10 @@
     };
 
     const currentTheme = stylesConfig[currentStyle];
+    const currentSlideData = slides ? slides[currentSlide] : null;
 
     return (
       <div className="min-h-screen">
-        {/* Header con identidad */}
         <nav className="bg-white border-b border-slate-200 py-4 px-6 flex justify-between items-center sticky top-0 z-50 shadow-sm">
           <div className="flex items-center gap-3">
             <div className="bg-slate-900 p-2 rounded-xl"><Sparkles className="text-purple-400 w-5 h-5" /></div>
@@ -232,9 +269,8 @@
         </nav>
 
         <main className="max-w-7xl mx-auto p-6 md:p-10 grid grid-cols-1 lg:grid-cols-12 gap-10">
-          {/* Left Panel */}
+          {/* Panel Izquierdo */}
           <div className="lg:col-span-5 space-y-6">
-            {/* API Key */}
             <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm">
               <Key className="w-4 h-4 text-purple-600 mb-2" />
               <div className="relative">
@@ -243,7 +279,6 @@
               </div>
             </div>
 
-            {/* Textarea */}
             <div className="bg-white p-8 rounded-[32px] border border-slate-100 shadow-xl">
               <div className="flex gap-2 mb-6">
                 {Object.keys(stylesConfig).map(s => (
@@ -258,12 +293,11 @@
             </div>
           </div>
 
-          {/* Preview Panel */}
+          {/* Panel de Vista Previa */}
           <div className="lg:col-span-7 flex flex-col items-center">
             {slides ? (
               <div className="w-full max-w-[480px] space-y-6">
                 
-                {/* Controles de Exportación y Navegación */}
                 <div className="flex flex-col gap-4 bg-white p-5 rounded-3xl border border-slate-200 shadow-sm">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2 bg-slate-100 rounded-xl px-2 py-1">
@@ -284,57 +318,67 @@
                   </button>
                 </div>
 
-                {/* SLIDE VISUAL (El ratio es 4:5 típico de Instagram) */}
-                <div ref={slideRef} className={`w-[480px] h-[600px] ${currentTheme.container} rounded-[40px] shadow-2xl p-10 flex flex-col justify-between relative overflow-hidden transition-colors duration-300`}>
+                {/* CONTENEDOR DE LA LÁMINA */}
+                <div ref={slideRef} className={`w-[480px] h-[600px] ${currentTheme.container} border ${currentTheme.border} shadow-2xl p-8 flex flex-col relative overflow-hidden transition-colors duration-300`}>
                   
-                  {/* Slide Header */}
-                  <div className="flex justify-between items-center z-10 w-full">
+                  {/* Header (Fijo) */}
+                  <div className="flex justify-between items-center z-10 w-full shrink-0 h-6">
                     <div className="text-[10px] font-black tracking-widest opacity-50 uppercase">Self Love Club</div>
-                    <div className={`w-10 h-1.5 ${currentTheme.accent} rounded-full`} />
+                    <div className={`w-10 h-1.5 ${currentTheme.accent}`} />
                   </div>
 
-                  {/* Slide Content - Modificado para Centrado e Imagen Cuadrada */}
-                  <div className="flex-1 flex flex-col items-center justify-center space-y-6 text-center mt-4">
-                    {slides[currentSlide].image && (
+                  {/* Contenido Dinámico (Solo muestra imagen si es tipo 'image') */}
+                  <div className="flex-1 flex flex-col items-center justify-center text-center gap-6 my-4 w-full px-4">
+                    
+                    {currentSlideData.type === 'image' && currentSlideData.image && (
                       <img 
-                        src={slides[currentSlide].image} 
-                        crossOrigin="anonymous" /* Vital para exportar canvas sin error de CORS */
-                        className="w-56 h-56 object-cover rounded-[2rem] shadow-lg shrink-0 border-4 border-white/5" 
+                        src={currentSlideData.image} 
+                        crossOrigin="anonymous" 
+                        /* 100% Cuadrada. Sin bordes redondeados. */
+                        className="w-64 h-64 aspect-square object-cover rounded-none shrink-0 border border-slate-500/20" 
                         alt="Slide visual"
                       />
                     )}
-                    <h3 className={`text-4xl font-black ${currentTheme.fontHeading} leading-tight`}>{slides[currentSlide].title}</h3>
-                    <p className={`text-lg opacity-90 ${currentTheme.fontBody} font-medium max-w-[95%] leading-snug`}>
-                      {slides[currentSlide].body || slides[currentSlide].subtitle}
-                    </p>
+
+                    <div className="flex flex-col gap-3 w-full">
+                      <h3 className={`leading-[1.1] ${currentTheme.fontHeading} ${currentSlideData.type === 'image' ? 'text-[28px]' : 'text-[38px]'}`}>
+                        {currentSlideData.title}
+                      </h3>
+                      <p className={`opacity-90 ${currentTheme.fontBody} leading-snug mx-auto ${currentSlideData.type === 'image' ? 'text-[15px] max-w-[90%]' : 'text-[18px] max-w-[100%]'}`}>
+                        {currentSlideData.body}
+                      </p>
+                    </div>
+
                   </div>
 
-                  {/* Slide Footer - Modificado con tu identidad de marca */}
-                  <div className={`flex justify-between items-center border-t ${currentTheme.border} pt-5 w-full`}>
+                  {/* Footer (Fijo) */}
+                  <div className={`flex justify-between items-center border-t ${currentTheme.border} pt-4 w-full shrink-0 h-14`}>
                     <div className="flex items-center gap-3 text-left">
-                      <img src={ANDRES_PHOTO_PROD} className="w-10 h-10 rounded-full border border-slate-500/30 object-cover" onError={e => e.target.src = ANDRES_PHOTO_FALLBACK} alt="Andres Ramirez" />
-                      <div>
-                        <p className="font-black text-[13px] leading-none mb-1">Andrés Ramírez</p>
+                      <img src={ANDRES_PHOTO_PROD} className="w-10 h-10 rounded-full object-cover shrink-0" onError={e => e.target.src = ANDRES_PHOTO_FALLBACK} alt="Andres Ramirez" />
+                      <div className="flex flex-col justify-center">
+                        <p className="font-bold text-[13px] leading-tight mb-0.5">Andrés Ramírez</p>
                         <p className="text-[9px] font-semibold opacity-70 tracking-wide">IG: @selfloveclubusa | TH: @aram7891</p>
                       </div>
                     </div>
-                    <div className={`px-4 py-1.5 rounded-full text-xs font-black tracking-widest ${currentTheme.tag}`}>
-                      0{slides[currentSlide].slideNumber}
+                    <div className={`px-4 py-1.5 text-xs font-black tracking-widest ${currentTheme.tag}`}>
+                      0{currentSlideData.slideNumber}
                     </div>
                   </div>
                 </div>
 
-                {/* Subir imagen manual (Opcional) */}
-                <div className="flex items-center justify-center gap-2 text-sm text-slate-500">
-                  <ImageIcon className="w-4 h-4" />
-                  <span>¿Quieres cambiar la imagen?</span>
-                  <input type="file" accept="image/*" onChange={e => handleImageUpload(e.target.files[0])} className="text-xs file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 cursor-pointer" />
-                </div>
+                {/* Opción de sobrescribir la imagen si al usuario no le gusta la que eligió Unsplash */}
+                {currentSlideData.type === 'image' && (
+                  <div className="flex items-center justify-center gap-2 text-sm text-slate-500">
+                    <ImageIcon className="w-4 h-4" />
+                    <span>Cambiar esta imagen:</span>
+                    <input type="file" accept="image/*" onChange={e => handleImageUpload(e.target.files[0])} className="text-xs file:mr-4 file:py-1 file:px-3 file:rounded-none file:border file:border-slate-300 file:text-xs file:font-semibold file:bg-white file:text-slate-700 hover:file:bg-slate-50 cursor-pointer" />
+                  </div>
+                )}
               </div>
             ) : (
               <div className="w-[480px] h-[600px] border-4 border-dashed border-slate-300 rounded-[40px] flex flex-col items-center justify-center text-slate-400 gap-4 bg-slate-50">
                 <Sparkles className="w-12 h-12 text-slate-300" />
-                <p className="font-medium text-sm text-center px-10">Motor listo y calibrado.<br/>Pega tu contenido a la izquierda y dale al botón de generar.</p>
+                <p className="font-medium text-sm text-center px-10">Motor calibrado.<br/>Láminas 2 y 6 con fotos reales.<br/>Pega tu contenido y genera.</p>
               </div>
             )}
           </div>
@@ -348,4 +392,5 @@
   </script>
 </body>
 </html>
+
 
