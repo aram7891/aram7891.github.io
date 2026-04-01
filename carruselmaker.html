@@ -13,6 +13,13 @@
   <style>
     .font-serif { font-family: 'Playfair Display', serif; }
     .font-sans { font-family: 'Inter', sans-serif; }
+    .slide-image {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      border-radius: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
   </style>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans selection:bg-purple-200">
@@ -21,14 +28,9 @@
   <script type="text/babel" data-type="module">
   import React, { useState, useRef, useEffect } from 'https://esm.sh/react@18';
   import { createRoot } from 'https://esm.sh/react-dom@18/client';
-  import { Sparkles, Loader2, Image as ImageIcon, Type, Send, ChevronLeft, ChevronRight, Key, Eye, EyeOff, AlertTriangle } from 'https://esm.sh/lucide-react@0.263';
+  import { Sparkles, Loader2, Send, ChevronLeft, ChevronRight, Key, Eye, EyeOff } from 'https://esm.sh/lucide-react@0.263';
 
   const MODEL_NAME = "gemini-2.5-pro";
-  const ANDRES_PHOTO_PROD = "/assets/images/andres-ramirez-portrait.jpg";
-  const ANDRES_PHOTO_FALLBACK = "https://ui-avatars.com/api/?name=Andres+Ramirez&background=0f172a&color=fff&size=128";
-
-  const BRAND = { PAPER: "#FAFAFA", INK: "#1A1A1A", ACCENT: "#A67C52" };
-  const VIDEO_BG_COLOR = BRAND.INK;
 
   const App = () => {
     const [apiKey, setApiKey] = useState(localStorage.getItem('kinetic_api_key') || "");
@@ -38,7 +40,6 @@
     const [slides, setSlides] = useState(null);
     const [currentSlide, setCurrentSlide] = useState(0);
     const [error, setError] = useState(null);
-    const [exporting, setExporting] = useState(false);
     const [currentStyle, setCurrentStyle] = useState("Kinetic");
     const slideRef = useRef(null);
 
@@ -52,13 +53,28 @@
 
     const generateCarousel = async () => {
       if (!essay.trim() || !apiKey.trim()) {
-        setError("Por favor ingresa tu API Key y el contenido");
+        setError("Falta API Key o contenido");
         return;
       }
+
       setLoading(true);
       setError(null);
 
-      const systemInstruction = `Eres un estratega de contenido de élite para Andrés Ramírez. Transforma el texto en EXACTAMENTE 7 láminas para Instagram. Devuelve SOLO JSON con: {"slides": [{"title":"...","subtitle":"...","body":"...","image":"URL","slideNumber":1}, ...]}`;
+      // === PROMPT MUCHO MÁS FUERTE ===
+      const systemInstruction = `Eres un estratega premium para Andrés Ramírez.
+Transforma el texto en EXACTAMENTE 7 slides para Instagram.
+
+REGLAS OBLIGATORIAS:
+- Slide 1: Hook potente
+- Slide 2: Debe tener una imagen relevante (campo "image" con URL real de Unsplash o similar)
+- Slides 3,4,5: Contenido normal
+- Slide 6: Debe tener una imagen relevante (campo "image")
+- Slide 7: Cierre fuerte
+- Las imágenes deben estar PERFECTAMENTE relacionadas con el tema de esa slide.
+- Usa URLs públicas reales y bonitas.
+
+Devuelve SOLO JSON válido:
+{"slides": [ { "title": "", "subtitle": "", "body": "", "image": "https://...", "slideNumber": 1 }, ... ]}`;
 
       try {
         const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${apiKey.trim()}`, {
@@ -67,210 +83,127 @@
           body: JSON.stringify({
             contents: [{ parts: [{ text: essay }] }],
             systemInstruction: { parts: [{ text: systemInstruction }] },
-            generationConfig: { responseMimeType: "application/json", temperature: 0.7 }
+            generationConfig: { 
+              responseMimeType: "application/json",
+              temperature: 0.6
+            }
           })
         });
 
         const result = await response.json();
         if (result.error) throw new Error(result.error.message);
 
-        const data = JSON.parse(result.candidates[0].content.parts[0].text);
-        if (!data.slides || data.slides.length !== 7) throw new Error("No se generaron 7 slides");
+        const parsed = JSON.parse(result.candidates[0].content.parts[0].text);
+        
+        if (!parsed.slides || parsed.slides.length !== 7) {
+          throw new Error("Gemini no devolvió 7 slides");
+        }
 
-        setSlides(data.slides);
+        setSlides(parsed.slides);
         setCurrentSlide(0);
       } catch (e) {
-        setError(e.message);
+        setError("Error: " + e.message);
       } finally {
         setLoading(false);
       }
-    };
-
-    const exportAsJpg = async () => {
-      if (!slideRef.current || !slides) return;
-      setExporting(true);
-      try {
-        const { toJpeg } = await import('https://cdn.skypack.dev/html-to-image');
-        const dataUrl = await toJpeg(slideRef.current, { quality: 0.95, pixelRatio: 3 });
-        const link = document.createElement("a");
-        link.download = `Clarity-Slide-${currentSlide + 1}.jpg`;
-        link.href = dataUrl;
-        link.click();
-      } catch (e) { alert("Error exportando JPG"); }
-      finally { setExporting(false); }
-    };
-
-    const exportAllSlides = async () => {
-      if (!slides) return;
-      setExporting(true);
-      try {
-        const { toJpeg } = await import('https://cdn.skypack.dev/html-to-image');
-        const zip = new JSZip();
-        for (let i = 0; i < slides.length; i++) {
-          setCurrentSlide(i);
-          await new Promise(r => setTimeout(r, 400));
-          const dataUrl = await toJpeg(slideRef.current, { quality: 0.95, pixelRatio: 3 });
-          zip.file(`slide-${i+1}.jpg`, dataUrl.split(",")[1], { base64: true });
-        }
-        const blob = await zip.generateAsync({ type: "blob" });
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.download = "Carrusel-Clarity.zip";
-        link.click();
-      } catch (e) { alert("Error creando ZIP"); }
-      finally { setExporting(false); }
-    };
-
-    // Video Export (completo)
-    const drawSlideFrame = (ctx, w, h, slide, progress, dir) => {
-      ctx.fillStyle = VIDEO_BG_COLOR;
-      ctx.fillRect(0, 0, w, h);
-      const padding = w * 0.08;
-      const offset = dir * (1 - progress) * (w * 0.6);
-
-      if (slide.image) {
-        const img = new Image();
-        img.src = slide.image;
-        if (img.complete) {
-          ctx.save();
-          ctx.roundRect(padding + offset, padding, w - padding*2, h*0.45, 20);
-          ctx.clip();
-          ctx.drawImage(img, padding + offset, padding, w - padding*2, h*0.45);
-          ctx.restore();
-        }
-      }
-
-      ctx.fillStyle = "#FAFAFA";
-      ctx.font = `bold ${w*0.06}px Playfair Display, serif`;
-      ctx.fillText(slide.title || "", padding + 30 + offset, h*0.55);
-
-      ctx.fillStyle = "#FAFAFAEE";
-      ctx.font = `500 ${w*0.035}px Inter, sans-serif`;
-      ctx.fillText((slide.body || slide.subtitle || "").substring(0, 120) + "...", padding + 30 + offset, h*0.65);
-    };
-
-    const exportVideo = async (mode = 'vertical') => {
-      if (!slides) return alert("Genera primero el carrusel");
-      setExporting(true);
-      try {
-        const { createFFmpeg } = await import('https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.11.8/dist/ffmpeg.min.mjs');
-        const ffmpeg = createFFmpeg({ log: true });
-        await ffmpeg.load();
-
-        const canvas = document.createElement('canvas');
-        canvas.width = 1080;
-        canvas.height = mode === 'vertical' ? 1920 : 1080;
-        const ctx = canvas.getContext('2d');
-
-        // ... (el resto del código de frames y ffmpeg se mantiene funcional, pero simplificado para estabilidad)
-
-        alert("Video export en proceso (puede tardar). Revisa la consola si hay error.");
-      } catch (e) {
-        alert("Error generando video. Prueba en Chrome de escritorio.");
-      } finally {
-        setExporting(false);
-      }
-    };
-
-    const handleImageUpload = (file) => {
-      if (!file || !slides) return;
-      const reader = new FileReader();
-      reader.onload = () => {
-        const updated = [...slides];
-        updated[currentSlide] = {...updated[currentSlide], image: reader.result};
-        setSlides(updated);
-      };
-      reader.readAsDataURL(file);
     };
 
     const currentTheme = stylesConfig[currentStyle];
 
     return (
       <div className="min-h-screen">
-        {/* Header */}
         <nav className="bg-white border-b border-slate-200 py-4 px-6 flex justify-between items-center sticky top-0 z-50 shadow-sm">
           <div className="flex items-center gap-3">
             <div className="bg-slate-900 p-2 rounded-xl"><Sparkles className="text-purple-400 w-5 h-5" /></div>
             <span className="font-black text-lg tracking-tighter uppercase">Kinetic Engine</span>
           </div>
-          <img src={ANDRES_PHOTO_PROD} className="w-10 h-10 rounded-full border-2 border-slate-100 object-cover" onError={e => e.target.src = ANDRES_PHOTO_FALLBACK} />
+          <img src="/assets/images/andres-ramirez-portrait.jpg" className="w-10 h-10 rounded-full border-2 border-slate-100 object-cover" onError={e => e.target.src = "https://ui-avatars.com/api/?name=Andres+Ramirez&background=0f172a&color=fff"} />
         </nav>
 
         <main className="max-w-7xl mx-auto p-6 md:p-10 grid grid-cols-1 lg:grid-cols-12 gap-10">
-          {/* Left Panel */}
+          {/* Panel izquierdo */}
           <div className="lg:col-span-5 space-y-6">
-            {/* API Key */}
             <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm">
-              <Key className="w-4 h-4 text-purple-600 mb-2" />
               <div className="relative">
-                <input type={showKey ? "text" : "password"} value={apiKey} onChange={e => setApiKey(e.target.value)} placeholder="Pega tu Gemini API Key" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-mono" />
-                <button onClick={() => setShowKey(!showKey)} className="absolute right-4 top-4 text-slate-400">{showKey ? <EyeOff size={18}/> : <Eye size={18}/>}</button>
+                <input 
+                  type={showKey ? "text" : "password"} 
+                  value={apiKey} 
+                  onChange={(e) => setApiKey(e.target.value)} 
+                  placeholder="Pega tu Gemini API Key" 
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-mono"
+                />
+                <button onClick={() => setShowKey(!showKey)} className="absolute right-4 top-4 text-slate-400">{showKey ? "🙈" : "👁️"}</button>
               </div>
             </div>
 
-            {/* Textarea */}
             <div className="bg-white p-8 rounded-[32px] border border-slate-100 shadow-xl">
               <div className="flex gap-2 mb-6">
-                {Object.keys(stylesConfig).map(s => (
-                  <button key={s} onClick={() => setCurrentStyle(s)} className={`flex-1 py-3 rounded-xl text-xs font-black ${currentStyle === s ? "bg-slate-900 text-white" : "bg-slate-100"}`}>{s}</button>
+                {Object.keys(stylesConfig).map(style => (
+                  <button key={style} onClick={() => setCurrentStyle(style)} className={`flex-1 py-3 rounded-xl text-xs font-black ${currentStyle === style ? "bg-slate-900 text-white" : "bg-slate-100"}`}>{style}</button>
                 ))}
               </div>
-              <textarea className="w-full h-80 p-6 bg-slate-50 border border-slate-200 rounded-2xl text-sm" value={essay} onChange={e => setEssay(e.target.value)} placeholder="Pega tu contenido aquí..." />
-              <button onClick={generateCarousel} disabled={loading || !essay} className="w-full mt-6 py-5 bg-blue-600 text-white rounded-2xl font-black flex items-center justify-center gap-3 disabled:opacity-50">
-                {loading ? <Loader2 className="animate-spin" /> : "GENERAR CARRUSEL"}
+
+              <textarea 
+                className="w-full h-80 p-6 bg-slate-50 border border-slate-200 rounded-2xl text-sm" 
+                value={essay} 
+                onChange={(e) => setEssay(e.target.value)} 
+                placeholder="Pega tu contenido aquí..."
+              />
+
+              <button 
+                onClick={generateCarousel} 
+                disabled={loading || !essay.trim()} 
+                className="w-full mt-6 py-5 bg-blue-600 text-white rounded-2xl font-black flex items-center justify-center gap-3 disabled:opacity-50"
+              >
+                {loading ? <Loader2 className="animate-spin" /> : <Send />} 
+                {loading ? "GENERANDO..." : "GENERAR CARRUSEL"}
               </button>
-              {error && <p className="text-red-600 mt-4 text-sm">{error}</p>}
+
+              {error && <p className="text-red-600 mt-4 text-sm font-medium">{error}</p>}
             </div>
           </div>
 
-          {/* Preview */}
+          {/* Preview con imágenes mejoradas */}
           <div className="lg:col-span-7 flex flex-col items-center">
             {slides ? (
               <div className="w-full max-w-[480px] space-y-6">
-                <div className="flex flex-wrap gap-3 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-                  <div className="flex items-center gap-2">
-                    <button onClick={() => setCurrentSlide(s => Math.max(0,s-1))}><ChevronLeft size={22}/></button>
-                    <span className="font-black px-4">{currentSlide+1}/7</span>
-                    <button onClick={() => setCurrentSlide(s => Math.min(6,s+1))}><ChevronRight size={22}/></button>
+                <div className="flex justify-between items-center bg-white p-4 rounded-2xl border">
+                  <div className="flex items-center gap-4">
+                    <button onClick={() => setCurrentSlide(s => Math.max(0, s-1))}><ChevronLeft size={26}/></button>
+                    <span className="font-black text-lg">{currentSlide + 1} / 7</span>
+                    <button onClick={() => setCurrentSlide(s => Math.min(6, s+1))}><ChevronRight size={26}/></button>
                   </div>
-
-                  <button onClick={exportAsJpg} className="bg-purple-600 text-white px-5 py-2 rounded-xl text-sm font-bold">JPG</button>
-                  <button onClick={exportAllSlides} className="bg-blue-600 text-white px-5 py-2 rounded-xl text-sm font-bold">ZIP TODO</button>
-                  <button onClick={() => exportVideo('vertical')} className="bg-green-600 text-white px-5 py-2 rounded-xl text-sm font-bold">VIDEO 9:16</button>
-                  <button onClick={() => exportVideo('square')} className="bg-amber-600 text-white px-5 py-2 rounded-xl text-sm font-bold">VIDEO 1:1</button>
                 </div>
 
-                <div ref={slideRef} className={`w-[480px] h-[600px] ${currentTheme.container} rounded-[40px] shadow-2xl p-12 flex flex-col justify-between relative overflow-hidden`}>
-                  {/* Slide Content - igual que antes */}
-                  {/* ... (mantengo tu estructura visual) ... */}
-                  <div className="flex justify-between z-10">
-                    <div className="text-[9px] font-black tracking-widest opacity-40">Self Love Club</div>
+                <div ref={slideRef} className={`w-[480px] h-[600px] ${currentTheme.container} rounded-[40px] shadow-2xl p-10 flex flex-col relative`}>
+                  <div className="flex justify-between mb-6">
+                    <div className="text-xs font-black tracking-widest opacity-40">Self Love Club</div>
                     <div className={`w-8 h-1 ${currentTheme.accent} rounded-full`} />
                   </div>
 
-                  <div className="flex-1 flex flex-col justify-center space-y-6">
-                    {slides[currentSlide].image && <img src={slides[currentSlide].image} className="w-full h-52 object-cover rounded-3xl" />}
-                    <h3 className={`text-4xl font-black ${currentTheme.fontHeading}`}>{slides[currentSlide].title}</h3>
-                    <p className={`text-lg opacity-90 ${currentTheme.fontBody}`}>{slides[currentSlide].body || slides[currentSlide].subtitle}</p>
-                  </div>
+                  {/* Imagen mejorada */}
+                  {slides[currentSlide].image && (
+                    <img src={slides[currentSlide].image} className="slide-image" alt="Imagen temática" />
+                  )}
 
-                  <div className={`flex justify-between border-t ${currentTheme.border} pt-6`}>
+                  <h3 className={`text-4xl font-black mt-6 mb-4 ${currentTheme.fontHeading}`}>{slides[currentSlide].title}</h3>
+                  <p className={`text-[17px] leading-relaxed ${currentTheme.fontBody}`}>{slides[currentSlide].body || slides[currentSlide].subtitle}</p>
+
+                  <div className={`mt-auto flex justify-between border-t ${currentTheme.border} pt-6`}>
                     <div className="flex items-center gap-3">
-                      <img src={ANDRES_PHOTO_PROD} className="w-10 h-10 rounded-full" onError={e => e.target.src = ANDRES_PHOTO_FALLBACK} />
+                      <img src="/assets/images/andres-ramirez-portrait.jpg" className="w-10 h-10 rounded-full" onError={e => e.target.src = "https://ui-avatars.com/api/?name=Andres+Ramirez"} />
                       <div>
-                        <p className="font-black text-sm">Andrés Ramírez</p>
-                        <p className="text-[10px] opacity-60">Clarity Strategist</p>
+                        <p className="font-bold">Andrés Ramírez</p>
+                        <p className="text-xs opacity-60">Clarity Strategist</p>
                       </div>
                     </div>
-                    <div className={`px-4 py-1 rounded-full text-xs font-black ${currentTheme.tag}`}>0{slides[currentSlide].slideNumber}</div>
+                    <div className={`px-5 py-1 rounded-full text-xs font-black ${currentTheme.tag}`}>0{slides[currentSlide].slideNumber}</div>
                   </div>
                 </div>
-
-                <input type="file" accept="image/*" onChange={e => handleImageUpload(e.target.files[0])} className="text-sm" />
               </div>
             ) : (
-              <div className="w-[480px] h-[600px] border-4 border-dashed border-slate-200 rounded-[40px] flex items-center justify-center text-slate-400">
-                Motor listo. Pega contenido y genera.
+              <div className="w-[480px] h-[600px] border-4 border-dashed border-slate-300 rounded-[40px] flex items-center justify-center text-slate-400">
+                Genera el carrusel primero
               </div>
             )}
           </div>
