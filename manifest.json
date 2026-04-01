@@ -1,6 +1,10 @@
 {
-  "name": "Presentación SelfLoveClub",
-  "short_name": "SelfLoveClub",
+  "name": "Carrusel Maker",
+  "short_name": "Carrusel",
+  "start_url": "carruselmaker.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
   "icons": [
     {
       "src": "logo.png",
@@ -8,13 +12,9 @@
       "type": "image/png"
     },
     {
-      "src": "logo.PNG",
+      "src": "logo.png",
       "sizes": "512x512",
       "type": "image/png"
     }
-  ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff"
+  ]
 }
