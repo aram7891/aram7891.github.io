@@ -5,33 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kinetic Clarity Engine - Self Love Club</title>
     
-    <!-- Sistema de Radar de Errores (Para diagnosticar bloqueos del servidor) -->
-    <script>
-        window.addEventListener('error', function(event) {
-            const errorDiv = document.createElement('div');
-            errorDiv.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; background: #ef4444; color: white; padding: 20px; z-index: 9999; font-family: monospace; border-bottom: 4px solid #b91c1c;';
-            errorDiv.innerHTML = `
-                <h3 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 10px;">🚨 Bloqueo Detectado por el Servidor</h3>
-                <p><strong>Mensaje:</strong> ${event.message}</p>
-                <p><strong>Archivo:</strong> ${event.filename}</p>
-                <p><strong>Línea:</strong> ${event.lineno}</p>
-                <p style="margin-top: 15px; font-size: 0.9rem; opacity: 0.9;">Tómale una foto a este error y envíasela a tu estratega técnica (Gemini).</p>
-            `;
-            document.body.appendChild(errorDiv);
-        });
-        
-        // Capturar errores de promesas (ej. fallos de red por CORS)
-        window.addEventListener('unhandledrejection', function(event) {
-             const errorDiv = document.createElement('div');
-            errorDiv.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; background: #f59e0b; color: black; padding: 20px; z-index: 9999; font-family: monospace; border-bottom: 4px solid #d97706;';
-            errorDiv.innerHTML = `
-                <h3 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 10px;">⚠️ Error de Red / API</h3>
-                <p><strong>Motivo:</strong> ${event.reason}</p>
-            `;
-            document.body.appendChild(errorDiv);
-        });
-    </script>
-
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -61,16 +34,13 @@
     <!-- html-to-image for JPG Export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.js"></script>
 
-    <!-- React & ReactDOM (Usando CDNJS en lugar de Unpkg para evitar bloqueos de CORS en producción) -->
-    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
-    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
-    
-    <!-- Babel for JSX compilation (CDNJS) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.6/babel.min.js"></script>
+    <!-- React, ReactDOM & Babel -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <style>
         body { background-color: #0f172a; color: #f8fafc; margin: 0; padding: 0; }
-        /* Custom Scrollbar for textareas */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #1e293b; }
         ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
@@ -80,30 +50,31 @@
 <body>
     <div id="root"></div>
 
-    <script type="text/babel" data-type="module">
+    <script type="text/babel">
         const { useState, useEffect, useRef } = React;
 
-        // Entorno Público / Standalone
-        const TEXT_MODEL = "gemini-1.5-flash"; // Modelo público y estable
-
-        // Funciones de utilidad para fetch
-        const fetchWithRetry = async (url, options, maxRetries = 5) => {
+        // El motor universal y estable. Solo funciona con TU clave.
+        const TEXT_MODEL = "gemini-1.5-flash"; 
+        
+        const fetchWithRetry = async (url, options, maxRetries = 3) => {
             let retries = 0;
             while (retries < maxRetries) {
                 try {
                     const response = await fetch(url, options);
                     if (response.ok) return await response.json();
+                    
+                    if (response.status === 400) throw new Error("API Key inválida o mal copiada. Revísala.");
+                    if (response.status === 403) throw new Error("Permiso denegado. Verifica tu API Key.");
+                    if (response.status === 404) throw new Error("Modelo no encontrado.");
                     if (response.status === 429) {
                         const delay = Math.pow(2, retries) * 1000;
                         await new Promise(res => setTimeout(res, delay));
                         retries++;
                         continue;
                     }
-                    throw new Error(`API Error: ${response.status} - Verifica tu API Key`);
+                    throw new Error(`Error de servidor (${response.status}).`);
                 } catch (err) {
                     if (retries === maxRetries - 1) throw err;
-                    const delay = Math.pow(2, retries) * 1000;
-                    await new Promise(res => setTimeout(res, delay));
                     retries++;
                 }
             }
@@ -111,136 +82,113 @@
 
         const App = () => {
             const [essay, setEssay] = useState("");
-            const [userApiKey, setUserApiKey] = useState(""); // El usuario debe ingresar su clave
+            const [userApiKey, setUserApiKey] = useState("");
             const [loading, setLoading] = useState(false);
             const [slides, setSlides] = useState(null);
             const [currentSlide, setCurrentSlide] = useState(0);
             const [error, setError] = useState(null);
             const [exporting, setExporting] = useState(false);
             const [currentStyle, setCurrentStyle] = useState("Kinetic");
-            
             const [polishing, setPolishing] = useState(false);
-            const [isSpeaking, setIsSpeaking] = useState(false); // Estado para la narración nativa
+            const [isSpeaking, setIsSpeaking] = useState(false);
 
             const slideRef = useRef(null);
 
-            // Estilos del Carrusel Generado
             const stylesConfig = {
-                Kinetic: {
-                    container: "bg-[#0f172a] text-[#f8fafc]",
-                    accent: "bg-[#a855f7]",
-                    textAccent: "text-[#a855f7]",
-                    border: "border-slate-800",
-                    fontHeading: "font-serif",
-                    fontBody: "font-sans",
-                    tag: "bg-[#a855f7] text-white",
-                    logoFilter: "invert brightness-200"
-                },
-                Brutalist: {
-                    container: "bg-white text-black border-[6px] border-black",
-                    accent: "bg-yellow-400",
-                    textAccent: "text-black underline decoration-yellow-400 decoration-8",
-                    border: "border-black",
-                    fontHeading: "font-sans font-black uppercase tracking-tighter",
-                    fontBody: "font-sans font-bold",
-                    tag: "bg-black text-white",
-                    logoFilter: "contrast-150"
-                },
-                DarkMode: {
-                    container: "bg-slate-950 text-white",
-                    accent: "bg-blue-500",
-                    textAccent: "text-blue-400",
-                    border: "border-slate-800",
-                    fontHeading: "font-sans font-black",
-                    fontBody: "font-sans",
-                    tag: "bg-white text-black",
-                    logoFilter: "invert brightness-200"
-                },
-                Stoic: {
-                    container: "bg-[#f4f1ea] text-[#2c2c2c]",
-                    accent: "bg-[#8b7e66]",
-                    textAccent: "text-[#5d5444]",
-                    border: "border-[#e0ddd5]",
-                    fontHeading: "font-serif italic font-bold",
-                    fontBody: "font-serif italic",
-                    tag: "bg-[#2c2c2c] text-white",
-                    logoFilter: "sepia contrast-110"
-                },
-                Modern: {
-                    container: "bg-gradient-to-br from-indigo-50 via-white to-blue-50 text-slate-900",
-                    accent: "bg-indigo-600",
-                    textAccent: "text-indigo-600",
-                    border: "border-indigo-100",
-                    fontHeading: "font-sans font-extrabold tracking-tight",
-                    fontBody: "font-sans",
-                    tag: "bg-indigo-900 text-white",
-                    logoFilter: ""
-                }
+                Kinetic: { container: "bg-[#0f172a] text-[#f8fafc]", accent: "bg-[#a855f7]", textAccent: "text-[#a855f7]", border: "border-slate-800", fontHeading: "font-serif", fontBody: "font-sans", tag: "bg-[#a855f7] text-white", logoFilter: "invert brightness-200" },
+                Brutalist: { container: "bg-white text-black border-[6px] border-black", accent: "bg-yellow-400", textAccent: "text-black underline decoration-yellow-400 decoration-8", border: "border-black", fontHeading: "font-sans font-black uppercase tracking-tighter", fontBody: "font-sans font-bold", tag: "bg-black text-white", logoFilter: "contrast-150" },
+                DarkMode: { container: "bg-slate-950 text-white", accent: "bg-blue-500", textAccent: "text-blue-400", border: "border-slate-800", fontHeading: "font-sans font-black", fontBody: "font-sans", tag: "bg-white text-black", logoFilter: "invert brightness-200" },
+                Stoic: { container: "bg-[#f4f1ea] text-[#2c2c2c]", accent: "bg-[#8b7e66]", textAccent: "text-[#5d5444]", border: "border-[#e0ddd5]", fontHeading: "font-serif italic font-bold", fontBody: "font-serif italic", tag: "bg-[#2c2c2c] text-white", logoFilter: "sepia contrast-110" },
+                Modern: { container: "bg-gradient-to-br from-indigo-50 via-white to-blue-50 text-slate-900", accent: "bg-indigo-600", textAccent: "text-indigo-600", border: "border-indigo-100", fontHeading: "font-sans font-extrabold tracking-tight", fontBody: "font-sans", tag: "bg-indigo-900 text-white", logoFilter: "" }
             };
-
-            const systemInstruction = `
-                Actúa como un estratega de contenido de élite para Andrés Ramírez (Clarity Strategist).
-                Transforma ensayos técnicos en 7 láminas de carrusel de alto impacto. No pierdas la profundidad.
-                ESTRUCTURA JSON:
-                1. Slide 1 (Hook): Título disruptivo + Subtítulo estratégico profundo.
-                2. Slide 2 (The Problem): Explica el costo oculto o la ineficiencia con detalle.
-                3. Slides 3-5 (The Core): 3 pilares accionables, manteniendo la sustancia del ensayo.
-                4. Slide 6 (The Insight): Frase de autoridad y conclusión de peso.
-                5. Slide 7 (CTA): "Sígueme para más claridad."
-            `;
 
             const generateCarousel = async () => {
                 if (!essay.trim()) return;
                 if (!userApiKey.trim()) {
-                    setError("Inserta tu API Key de Gemini para ejecutar la estrategia.");
+                    setError("Por favor, ingresa tu API Key para poder generar el carrusel.");
                     return;
                 }
 
                 setLoading(true);
                 setError(null);
                 setCurrentSlide(0);
-                if (isSpeaking) window.speechSynthesis.cancel();
-                setIsSpeaking(false);
+                if (isSpeaking) { window.speechSynthesis.cancel(); setIsSpeaking(false); }
 
                 const url = `https://generativelanguage.googleapis.com/v1beta/models/${TEXT_MODEL}:generateContent?key=${userApiKey.trim()}`;
+                
                 const payload = {
-                    contents: [{ parts: [{ text: `Ensayo a procesar: ${essay}` }] }],
-                    systemInstruction: { parts: [{ text: systemInstruction }] },
+                    contents: [{ 
+                        parts: [{ 
+                            text: `Crea EXACTAMENTE 7 láminas de carrusel para el Self Love Club basado en este ensayo de Andrés Ramírez:
+
+${essay}
+
+Reglas estrictas:
+- Todo en español, tono motivacional, inspirador y de claridad kinética.
+- Slide 1: Introducción poderosa al tema principal del ensayo.
+- Slides 2 a 6: Cada uno un insight clave o consejo práctico del ensayo.
+- Slide 7: Cierre impactante con llamada a acción.
+- title: corto e impactante (1-2 líneas)
+- subtitle: subtítulo complementario 
+- body: texto principal conciso y legible (ideal para carrusel)
+- slideNumber: número del 1 al 7
+
+Devuelve SOLO el JSON con la estructura exacta.` 
+                        }] 
+                    }],
+                    systemInstruction: { 
+                        parts: [{ 
+                            text: `Eres el estratega de contenido oficial del Self Love Club de Andrés Ramírez. Crea carruseles virales y profundos.` 
+                        }] 
+                    },
                     generationConfig: { 
                         responseMimeType: "application/json",
                         responseSchema: {
                             type: "OBJECT",
-                            properties: {
-                                slides: {
-                                    type: "ARRAY",
-                                    items: {
-                                        type: "OBJECT",
-                                        properties: {
-                                            title: { type: "STRING" },
-                                            subtitle: { type: "STRING" },
-                                            body: { type: "STRING" },
-                                            slideNumber: { type: "NUMBER" }
-                                        }
-                                    }
-                                }
-                            }
+                            properties: { 
+                                slides: { 
+                                    type: "ARRAY", 
+                                    items: { 
+                                        type: "OBJECT", 
+                                        properties: { 
+                                            title: { type: "STRING" }, 
+                                            subtitle: { type: "STRING" }, 
+                                            body: { type: "STRING" }, 
+                                            slideNumber: { type: "NUMBER" } 
+                                        },
+                                        required: ["title", "subtitle", "body", "slideNumber"]
+                                    },
+                                    minItems: 7,
+                                    maxItems: 7
+                                } 
+                            },
+                            required: ["slides"]
                         }
                     }
                 };
 
                 try {
-                    const data = await fetchWithRetry(url, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
+                    const data = await fetchWithRetry(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
                     
-                    if (!data.candidates) throw new Error("Respuesta inválida de la API.");
-                    
-                    const parsed = JSON.parse(data.candidates[0].content.parts[0].text);
+                    if (!data.candidates || !data.candidates[0]?.content?.parts?.[0]?.text) {
+                        throw new Error("La API no devolvió contenido válido. Intenta de nuevo o verifica tu API Key.");
+                    }
+
+                    const responseText = data.candidates[0].content.parts[0].text;
+                    let parsed;
+                    try {
+                        parsed = JSON.parse(responseText);
+                    } catch (parseErr) {
+                        throw new Error("La IA no devolvió un JSON válido. Intenta generar de nuevo.");
+                    }
+
+                    if (!parsed.slides || !Array.isArray(parsed.slides) || parsed.slides.length !== 7) {
+                        throw new Error("La respuesta no contiene exactamente 7 slides. Intenta de nuevo.");
+                    }
+
                     setSlides(parsed.slides);
                 } catch (err) {
-                    setError(err.message || "Fallo en la generación estratégica. Revisa tu API Key.");
+                    setError(err.message);
                 } finally {
                     setLoading(false);
                 }
@@ -248,87 +196,93 @@
 
             const polishSlide = async () => {
                 if (!slides || !userApiKey.trim()) return;
+                
                 setPolishing(true);
                 const currentData = slides[currentSlide];
-                
                 const url = `https://generativelanguage.googleapis.com/v1beta/models/${TEXT_MODEL}:generateContent?key=${userApiKey.trim()}`;
-                const prompt = `Refina este slide de carrusel para que sea más impactante. Tono de diseño: ${currentStyle}. Texto actual: ${JSON.stringify(currentData)}`;
                 
                 const payload = {
-                    contents: [{ parts: [{ text: prompt }] }],
-                    systemInstruction: { parts: [{ text: "Responde solo en JSON con los campos 'title', 'subtitle' y 'body'." }] },
-                    generationConfig: { responseMimeType: "application/json" }
+                    contents: [{ 
+                        parts: [{ 
+                            text: `Refina este slide para que sea más impactante, claro y motivacional. Mantén el espíritu original pero mejóralo según el estilo Kinetic Clarity / Self Love Club.
+
+Diseño actual: ${currentStyle}
+
+Slide actual: ${JSON.stringify(currentData)}
+
+Devuelve SOLO JSON con title, subtitle y body mejorados.` 
+                        }] 
+                    }],
+                    systemInstruction: { 
+                        parts: [{ text: "Responde siempre en formato JSON estricto." }] 
+                    },
+                    generationConfig: { 
+                        responseMimeType: "application/json",
+                        responseSchema: {
+                            type: "OBJECT",
+                            properties: {
+                                title: { type: "STRING" },
+                                subtitle: { type: "STRING" },
+                                body: { type: "STRING" }
+                            },
+                            required: ["title", "subtitle", "body"]
+                        }
+                    }
                 };
 
                 try {
-                    const data = await fetchWithRetry(url, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                    const refined = JSON.parse(data.candidates[0].content.parts[0].text);
+                    const data = await fetchWithRetry(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                    
+                    if (!data.candidates || !data.candidates[0]?.content?.parts?.[0]?.text) {
+                        throw new Error("Error al pulir el slide.");
+                    }
+
+                    const responseText = data.candidates[0].content.parts[0].text;
+                    const refined = JSON.parse(responseText);
+                    
                     const newSlides = [...slides];
-                    newSlides[currentSlide] = { ...currentData, ...refined };
+                    newSlides[currentSlide] = { 
+                        ...currentData, 
+                        ...refined, 
+                        slideNumber: currentData.slideNumber 
+                    };
                     setSlides(newSlides);
                 } catch (err) {
                     console.error(err);
-                    alert("No se pudo pulir. Revisa tu API Key.");
                 } finally {
                     setPolishing(false);
                 }
             };
 
-            // Nueva función de Narración usando el navegador (Offline/Nativo)
             const toggleNarration = () => {
                 if (!slides) return;
-                
-                if (isSpeaking) {
-                    window.speechSynthesis.cancel();
-                    setIsSpeaking(false);
-                    return;
-                }
-
-                if (!('speechSynthesis' in window)) {
-                    alert("Tu navegador actual no soporta la síntesis de voz nativa.");
-                    return;
-                }
+                if (isSpeaking) { window.speechSynthesis.cancel(); setIsSpeaking(false); return; }
+                if (!('speechSynthesis' in window)) { alert("Tu navegador no soporta narración de voz nativa."); return; }
 
                 const fullText = slides.map(s => `${s.title}. ${s.subtitle || ''} ${s.body || ''}`).join(' ');
                 const utterance = new SpeechSynthesisUtterance(fullText);
-                utterance.lang = 'es-ES'; // Configurado para Español
-                utterance.rate = 1.0;
-                
+                utterance.lang = 'es-ES'; 
                 utterance.onend = () => setIsSpeaking(false);
                 utterance.onerror = () => setIsSpeaking(false);
-                
                 window.speechSynthesis.speak(utterance);
                 setIsSpeaking(true);
             };
 
-            // Detener voz al desmontar el componente
             useEffect(() => {
-                return () => {
-                    if ('speechSynthesis' in window) {
-                        window.speechSynthesis.cancel();
-                    }
-                };
+                return () => { if ('speechSynthesis' in window) window.speechSynthesis.cancel(); };
             }, []);
 
             const exportAsJpg = async () => {
-                if (!window.htmlToImage) {
-                    alert("Cargando librerías de exportación, intenta de nuevo en un segundo.");
-                    return;
-                }
+                if (!window.htmlToImage) { alert("El exportador aún está cargando. Intenta en unos segundos."); return; }
                 setExporting(true);
                 try {
                     const dataUrl = await window.htmlToImage.toJpeg(slideRef.current, { quality: 1, pixelRatio: 3 });
                     const link = document.createElement('a');
-                    link.download = `SLC-Slide-${slides[currentSlide].slideNumber}-${currentStyle}.jpg`;
+                    link.download = `SLC-Slide-${slides[currentSlide].slideNumber}.jpg`;
                     link.href = dataUrl;
                     link.click();
                 } catch (err) {
-                    console.error(err);
-                    alert("Hubo un problema exportando. Intenta de nuevo.");
+                    alert("Ocurrió un problema al descargar la imagen.");
                 } finally {
                     setExporting(false);
                 }
@@ -336,13 +290,9 @@
 
             return (
                 <div className="min-h-screen bg-kineticDark text-slate-200 font-sans selection:bg-kinetic selection:text-white pb-20">
-                    
-                    {/* Dark Elegant Navbar */}
                     <nav className="border-b border-slate-800 bg-[#0b1121] py-5 px-8 flex justify-between items-center sticky top-0 z-50 shadow-lg">
                         <div className="flex items-center gap-4">
-                            <div className="bg-kinetic/10 p-2.5 rounded-lg border border-kinetic/20">
-                                <i className="fa-solid fa-wand-magic-sparkles text-kinetic"></i>
-                            </div>
+                            <div className="bg-kinetic/10 p-2.5 rounded-lg border border-kinetic/20"><i className="fa-solid fa-wand-magic-sparkles text-kinetic"></i></div>
                             <span className="font-serif font-bold text-2xl tracking-wide text-white">Kinetic Clarity</span>
                         </div>
                         <div className="flex items-center gap-4">
@@ -350,113 +300,64 @@
                                 <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Self Love Club</p>
                                 <p className="text-sm font-serif text-slate-300">Andrés Ramírez</p>
                             </div>
-                            <img 
-                                src="/assets/images/andres-ramirez-portrait.jpg" 
-                                className="w-11 h-11 rounded-full border-2 border-slate-700 shadow-md object-cover" 
-                                onError={(e) => e.target.src="https://ui-avatars.com/api/?name=AR&background=a855f7&color=fff"} 
-                                alt="Andrés Ramírez"
-                            />
+                            <img src="/assets/images/andres-ramirez-portrait.jpg" className="w-11 h-11 rounded-full border-2 border-slate-700 shadow-md object-cover" onError={(e) => e.target.src="https://ui-avatars.com/api/?name=AR&background=a855f7&color=fff"} alt="Andrés Ramírez" />
                         </div>
                     </nav>
 
                     <main className="max-w-7xl mx-auto p-8 mt-6 grid grid-cols-1 lg:grid-cols-12 gap-12">
-                        
-                        {/* Panel Izquierdo: Controles */}
                         <div className="lg:col-span-5 space-y-6">
                             <div className="bg-surface p-8 rounded-3xl shadow-2xl border border-slate-800 relative overflow-hidden">
-                                {/* Ambient Glow */}
                                 <div className="absolute top-0 right-0 w-64 h-64 bg-kinetic/5 rounded-full blur-[80px] -mr-20 -mt-20 pointer-events-none"></div>
-
                                 <h2 className="text-3xl font-serif font-bold mb-2 text-white">Generador de Activos</h2>
-                                <p className="text-slate-400 text-sm mb-8 font-light">Convierte tus ensayos técnicos en carruseles de alto impacto desde cualquier dispositivo.</p>
+                                <p className="text-slate-400 text-sm mb-8 font-light">Transforma conocimiento en carruseles.</p>
                                 
                                 <div className="space-y-6 relative z-10">
-                                    {/* Local API Key Input */}
                                     <div className="space-y-2">
                                         <div className="flex justify-between items-center">
-                                            <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500"><i className="fa-solid fa-key mr-1"></i> Gemini API Key</label>
+                                            <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500"><i className="fa-solid fa-key mr-1"></i> API Key de Gemini</label>
                                             <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noreferrer" className="text-[10px] text-kinetic hover:underline font-bold">Obtener Gratis Aquí</a>
                                         </div>
-                                        <input 
-                                            type="password"
-                                            className="w-full bg-[#0b1121] border border-slate-700 rounded-xl p-3 text-sm focus:border-kinetic focus:outline-none transition-colors text-slate-300"
-                                            placeholder="Pega tu API Key de Google AI Studio..."
-                                            value={userApiKey}
-                                            onChange={(e) => setUserApiKey(e.target.value)}
-                                        />
+                                        <input type="password" className="w-full bg-[#0b1121] border border-slate-700 rounded-xl p-3 text-sm focus:border-kinetic focus:outline-none text-slate-300" placeholder="Pega tu API Key obligatoriamente aquí..." value={userApiKey} onChange={(e) => setUserApiKey(e.target.value)} />
                                     </div>
 
                                     <div className="space-y-3">
                                         <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500"><i className="fa-solid fa-palette mr-1"></i> Dirección de Arte</label>
                                         <div className="grid grid-cols-3 gap-3">
                                             {Object.keys(stylesConfig).map(s => (
-                                                <button 
-                                                    key={s} 
-                                                    onClick={() => setCurrentStyle(s)} 
-                                                    className={`py-2.5 rounded-xl text-[10px] font-bold transition-all border ${currentStyle === s ? 'bg-kinetic text-white border-kinetic shadow-lg shadow-kinetic/20' : 'bg-[#0b1121] text-slate-400 border-slate-700 hover:border-slate-500'}`}
-                                                >
-                                                    {s.toUpperCase()}
-                                                </button>
+                                                <button key={s} onClick={() => setCurrentStyle(s)} className={`py-2.5 rounded-xl text-[10px] font-bold transition-all border ${currentStyle === s ? 'bg-kinetic text-white border-kinetic shadow-lg' : 'bg-[#0b1121] text-slate-400 border-slate-700'}`}>{s.toUpperCase()}</button>
                                             ))}
                                         </div>
                                     </div>
 
                                     <div className="space-y-2">
-                                        <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500"><i className="fa-solid fa-file-lines mr-1"></i> Contenido Bruto</label>
-                                        <textarea 
-                                            className="w-full h-64 p-5 bg-[#0b1121] border border-slate-700 rounded-2xl focus:border-kinetic focus:outline-none transition-colors text-sm text-slate-300 leading-relaxed font-light"
-                                            placeholder="Pega tu ensayo (ej: El Autoconocimiento como Activo Económico)..."
-                                            value={essay}
-                                            onChange={(e) => setEssay(e.target.value)}
-                                        />
+                                        <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500"><i className="fa-solid fa-file-lines mr-1"></i> Ensayo</label>
+                                        <textarea className="w-full h-48 p-5 bg-[#0b1121] border border-slate-700 rounded-2xl focus:border-kinetic outline-none text-sm text-slate-300 leading-relaxed font-light" placeholder="Pega tu ensayo..." value={essay} onChange={(e) => setEssay(e.target.value)} />
                                     </div>
 
-                                    {error && <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-xs"><i className="fa-solid fa-circle-exclamation mr-1"></i> {error}</div>}
+                                    {error && <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-xs font-medium"><i className="fa-solid fa-circle-exclamation mr-1"></i> {error}</div>}
 
-                                    <button 
-                                        onClick={generateCarousel} 
-                                        disabled={loading || !essay || !userApiKey} 
-                                        className="w-full py-4 bg-white text-kineticDark rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-slate-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-xl"
-                                    >
+                                    <button onClick={generateCarousel} disabled={loading || !essay || !userApiKey} className="w-full py-4 bg-white text-kineticDark rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-slate-200 disabled:opacity-50 transition-all shadow-xl">
                                         {loading ? <i className="fa-solid fa-circle-notch fa-spin"></i> : <i className="fa-solid fa-wand-magic-sparkles"></i>}
-                                        {loading ? "SINTETIZANDO ESTRATEGIA..." : "GENERAR CARRUSEL"}
+                                        {loading ? "SINTETIZANDO..." : "GENERAR CARRUSEL"}
                                     </button>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Panel Derecho: Preview */}
                         <div className="lg:col-span-7 flex flex-col items-center">
                             {slides ? (
                                 <div className="flex flex-col items-center gap-8 w-full">
-                                    {/* Smart Toolbar */}
                                     <div className="w-full max-w-[480px] flex justify-between items-center bg-surface p-3 rounded-2xl border border-slate-800 shadow-xl">
                                         <div className="flex gap-2">
-                                            <button onClick={polishSlide} disabled={polishing} className="flex items-center gap-2 bg-[#0b1121] text-slate-300 px-4 py-2 rounded-xl text-xs font-bold hover:bg-slate-800 transition-colors border border-slate-700">
-                                                {polishing ? <i className="fa-solid fa-circle-notch fa-spin"></i> : <i className="fa-solid fa-pen-nib"></i>}
-                                                Pulir
-                                            </button>
-                                            <button onClick={toggleNarration} className="flex items-center gap-2 bg-[#0b1121] text-slate-300 px-4 py-2 rounded-xl text-xs font-bold hover:bg-slate-800 transition-colors border border-slate-700">
-                                                {isSpeaking ? <i className="fa-solid fa-stop text-red-400"></i> : <i className="fa-solid fa-volume-high"></i>}
-                                                {isSpeaking ? "Detener" : "Narrar"}
-                                            </button>
+                                            <button onClick={polishSlide} disabled={polishing} className="flex items-center gap-2 bg-[#0b1121] text-slate-300 px-4 py-2 rounded-xl text-xs font-bold hover:bg-slate-800 border border-slate-700">{polishing ? <i className="fa-solid fa-circle-notch fa-spin"></i> : <i className="fa-solid fa-pen-nib"></i>} Pulir</button>
+                                            <button onClick={toggleNarration} className="flex items-center gap-2 bg-[#0b1121] text-slate-300 px-4 py-2 rounded-xl text-xs font-bold hover:bg-slate-800 border border-slate-700">{isSpeaking ? <i className="fa-solid fa-stop text-red-400"></i> : <i className="fa-solid fa-volume-high"></i>} {isSpeaking ? "Detener" : "Narrar"}</button>
                                         </div>
-                                        <button onClick={exportAsJpg} disabled={exporting} className="bg-kinetic text-white px-5 py-2 rounded-xl font-bold text-xs flex items-center gap-2 hover:bg-purple-500 transition-colors shadow-lg shadow-kinetic/20">
-                                            {exporting ? <i className="fa-solid fa-circle-notch fa-spin"></i> : <i className="fa-solid fa-download"></i>}
-                                            JPG
-                                        </button>
+                                        <button onClick={exportAsJpg} disabled={exporting} className="bg-kinetic text-white px-5 py-2 rounded-xl font-bold text-xs flex items-center gap-2 hover:bg-purple-500">{exporting ? <i className="fa-solid fa-circle-notch fa-spin"></i> : <i className="fa-solid fa-download"></i>} JPG</button>
                                     </div>
 
-                                    {/* The Slide Canvas */}
-                                    <div 
-                                        ref={slideRef} 
-                                        className={`w-[480px] h-[600px] ${stylesConfig[currentStyle].container} rounded-[40px] shadow-2xl flex flex-col justify-between p-14 relative overflow-hidden transition-all duration-500`}
-                                        style={currentStyle === 'Brutalist' ? { borderRadius: '0px' } : {}}
-                                    >
+                                    <div ref={slideRef} className={`w-[480px] h-[600px] ${stylesConfig[currentStyle].container} rounded-[40px] shadow-2xl flex flex-col justify-between p-14 relative overflow-hidden transition-all duration-500`} style={currentStyle === 'Brutalist' ? { borderRadius: '0px' } : {}}>
                                         <div className="flex justify-between items-center z-10">
-                                            <span className={`text-[9px] font-black tracking-[0.4em] uppercase opacity-40 ${stylesConfig[currentStyle].fontBody}`}>
-                                                {slides[currentSlide].slideNumber === 7 ? "Clarity Strategist" : "Self Love Club USA"}
-                                            </span>
+                                            <span className={`text-[9px] font-black tracking-[0.4em] uppercase opacity-40 ${stylesConfig[currentStyle].fontBody}`}>{slides[currentSlide].slideNumber === 7 ? "Clarity Strategist" : "Self Love Club"}</span>
                                             <div className={`w-2 h-2 rounded-full ${stylesConfig[currentStyle].accent}`}></div>
                                         </div>
 
@@ -470,9 +371,7 @@
                                             ) : slides[currentSlide].slideNumber === 7 ? (
                                                 <div className="space-y-8 flex flex-col items-center text-center">
                                                     <h3 className={`text-4xl ${stylesConfig[currentStyle].fontHeading}`}>{slides[currentSlide].title}</h3>
-                                                    <div className={`w-20 h-20 rounded-full border-2 border-dashed ${stylesConfig[currentStyle].border} flex items-center justify-center`}>
-                                                        <i className={`fa-solid fa-user-plus text-3xl ${stylesConfig[currentStyle].textAccent}`}></i>
-                                                    </div>
+                                                    <div className={`w-20 h-20 rounded-full border-2 border-dashed ${stylesConfig[currentStyle].border} flex items-center justify-center`}><i className={`fa-solid fa-user-plus text-3xl ${stylesConfig[currentStyle].textAccent}`}></i></div>
                                                     <p className={`text-xl tracking-tight ${stylesConfig[currentStyle].fontBody} font-bold`}>@aram7891</p>
                                                 </div>
                                             ) : (
@@ -486,55 +385,36 @@
                                         <div className={`flex items-center justify-between border-t ${stylesConfig[currentStyle].border} pt-8 z-10`}>
                                             {slides[currentSlide].slideNumber === 7 ? (
                                                 <div className="flex items-center gap-4">
-                                                    <img src="/assets/images/andres-ramirez-portrait.jpg" className="w-12 h-12 rounded-full border border-slate-300 object-cover" onError={(e) => e.target.src="https://ui-avatars.com/api/?name=AR&background=a855f7&color=fff"} alt="Andrés Ramírez" />
-                                                    <div className="flex flex-col">
-                                                        <span className={`text-xs uppercase font-bold ${stylesConfig[currentStyle].fontBody}`}>Andrés Ramírez</span>
-                                                        <span className="text-[9px] font-bold opacity-50 uppercase tracking-widest">Clarity Strategist</span>
-                                                    </div>
+                                                    <img src="/assets/images/andres-ramirez-portrait.jpg" className="w-12 h-12 rounded-full border border-slate-300 object-cover" onError={(e) => e.target.src="https://ui-avatars.com/api/?name=AR&background=a855f7&color=fff"} />
+                                                    <div className="flex flex-col"><span className={`text-xs uppercase font-bold ${stylesConfig[currentStyle].fontBody}`}>Andrés Ramírez</span><span className="text-[9px] font-bold opacity-50 uppercase tracking-widest">Strategist</span></div>
                                                 </div>
                                             ) : (
                                                 <div className="flex items-center gap-4">
-                                                    <img src="/assets/images/slc-logo.png" className={`w-12 h-12 object-contain opacity-90 ${stylesConfig[currentStyle].logoFilter}`} onError={(e) => e.target.src="https://ui-avatars.com/api/?name=SLC&background=000&color=fff"} alt="Self Love Club" />
-                                                    <div className="flex flex-col">
-                                                        <span className={`text-[10px] uppercase tracking-widest font-bold ${stylesConfig[currentStyle].fontBody}`}>Self Love Club</span>
-                                                        <span className="text-[9px] font-bold opacity-40 italic">Systemic Assets</span>
-                                                    </div>
+                                                    <img src="/assets/images/slc-logo.png" className={`w-12 h-12 object-contain opacity-90 ${stylesConfig[currentStyle].logoFilter}`} onError={(e) => e.target.src="https://ui-avatars.com/api/?name=SLC&background=000&color=fff"} />
+                                                    <div className="flex flex-col"><span className={`text-[10px] uppercase tracking-widest font-bold ${stylesConfig[currentStyle].fontBody}`}>Self Love Club</span><span className="text-[9px] font-bold opacity-40 italic">Assets</span></div>
                                                 </div>
                                             )}
                                             <div className={`px-4 py-1.5 rounded-full text-[10px] font-black ${stylesConfig[currentStyle].tag}`}>0{slides[currentSlide].slideNumber}</div>
                                         </div>
-                                        
-                                        {/* Visual Glows depending on style */}
                                         <div className={`absolute -bottom-20 -right-20 w-80 h-80 opacity-20 rounded-full blur-[100px] pointer-events-none ${stylesConfig[currentStyle].accent}`}></div>
                                     </div>
 
-                                    {/* Controles de Paginación */}
                                     <div className="flex items-center gap-6 bg-surface p-3 rounded-full border border-slate-800 shadow-xl">
-                                        <button onClick={() => setCurrentSlide(p => Math.max(0, p - 1))} className="w-10 h-10 rounded-full bg-[#0b1121] flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-700 transition-colors disabled:opacity-30" disabled={currentSlide === 0}>
-                                            <i className="fa-solid fa-chevron-left"></i>
-                                        </button>
-                                        <div className="flex gap-2">
-                                            {slides.map((_, i) => (
-                                                <div key={i} onClick={() => setCurrentSlide(i)} className={`h-1.5 rounded-full transition-all cursor-pointer ${currentSlide === i ? 'w-8 bg-kinetic' : 'w-2 bg-slate-600 hover:bg-slate-400'}`} />
-                                            ))}
-                                        </div>
-                                        <button onClick={() => setCurrentSlide(p => Math.min(6, p - -1))} className="w-10 h-10 rounded-full bg-[#0b1121] flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-700 transition-colors disabled:opacity-30" disabled={currentSlide === 6}>
-                                            <i className="fa-solid fa-chevron-right"></i>
-                                        </button>
+                                        <button onClick={() => setCurrentSlide(p => Math.max(0, p - 1))} className="w-10 h-10 rounded-full bg-[#0b1121] flex items-center justify-center text-slate-400 hover:text-white disabled:opacity-30" disabled={currentSlide === 0}><i className="fa-solid fa-chevron-left"></i></button>
+                                        <div className="flex gap-2">{slides.map((_, i) => (<div key={i} onClick={() => setCurrentSlide(i)} className={`h-1.5 rounded-full cursor-pointer ${currentSlide === i ? 'w-8 bg-kinetic' : 'w-2 bg-slate-600 hover:bg-slate-400'}`} />))}</div>
+                                        <button onClick={() => setCurrentSlide(p => Math.min(6, p + 1))} className="w-10 h-10 rounded-full bg-[#0b1121] flex items-center justify-center text-slate-400 hover:text-white disabled:opacity-30" disabled={currentSlide === 6}><i className="fa-solid fa-chevron-right"></i></button>
                                     </div>
                                 </div>
                             ) : (
                                 <div className="h-[600px] w-full max-w-[480px] flex flex-col justify-center items-center text-center p-12 border border-slate-800 rounded-[40px] bg-surface/50 relative overflow-hidden">
-                                    <div className="absolute inset-0 bg-gradient-to-br from-kinetic/5 to-transparent"></div>
-                                    <i className="fa-solid fa-layer-group text-5xl text-slate-700 mb-6 relative z-10"></i>
-                                    <h3 className="text-2xl font-serif text-white relative z-10">Kinetic Strategy</h3>
-                                    <p className="text-slate-400 text-sm mt-3 font-light relative z-10">Ingresa tu contenido y transforma conocimiento en activos visuales de élite.</p>
+                                    <i className="fa-solid fa-layer-group text-5xl text-slate-700 mb-6"></i>
+                                    <h3 className="text-2xl font-serif text-white">Kinetic Strategy</h3>
+                                    <p className="text-slate-400 text-sm mt-3 font-light">Ingresa tu API Key, tu contenido y genera tus activos.</p>
                                 </div>
                             )}
                         </div>
                     </main>
 
-                    {/* Identidad de Marca Obligatoria */}
                     <footer className="mt-20 py-8 border-t border-slate-800 text-center">
                         <div className="flex justify-center gap-8 text-xs font-black text-slate-500 uppercase tracking-widest">
                             <a href="https://threads.net/@aram7891" target="_blank" rel="noreferrer" className="hover:text-kinetic transition-colors"><i className="fa-brands fa-threads text-lg"></i> @aram7891</a>
