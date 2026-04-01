@@ -13,7 +13,7 @@
       "type": "image/png"
     }
   ],
-  "start_url": "carruselmaker.html",
+  "start_url": "/carruselmaker.html",
   "display": "standalone",
   "background_color": "#0f172a",
   "theme_color": "#0f172a"
