@@ -39,6 +39,15 @@
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
+    <!-- PWA + Icono (tu foto logo.PNG como muñeco en el escritorio) -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="logo.PNG">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <!-- JSZip para descargar las 7 diapositivas juntas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
     <style>
         body { background-color: #0f172a; color: #f8fafc; margin: 0; padding: 0; }
         ::-webkit-scrollbar { width: 8px; }
@@ -101,6 +110,45 @@
                 DarkMode: { container: "bg-slate-950 text-white", accent: "bg-blue-500", textAccent: "text-blue-400", border: "border-slate-800", fontHeading: "font-sans font-black", fontBody: "font-sans", tag: "bg-white text-black", logoFilter: "invert brightness-200" },
                 Stoic: { container: "bg-[#f4f1ea] text-[#2c2c2c]", accent: "bg-[#8b7e66]", textAccent: "text-[#5d5444]", border: "border-[#e0ddd5]", fontHeading: "font-serif italic font-bold", fontBody: "font-serif italic", tag: "bg-[#2c2c2c] text-white", logoFilter: "sepia contrast-110" },
                 Modern: { container: "bg-gradient-to-br from-indigo-50 via-white to-blue-50 text-slate-900", accent: "bg-indigo-600", textAccent: "text-indigo-600", border: "border-indigo-100", fontHeading: "font-sans font-extrabold tracking-tight", fontBody: "font-sans", tag: "bg-indigo-900 text-white", logoFilter: "" }
+            };
+
+            // ✅ NUEVA FUNCIÓN: Descargar las 7 diapositivas en un solo ZIP
+            const downloadAllAsZip = async () => {
+                if (!slides) {
+                    alert("Primero genera el carrusel de 7 diapositivas.");
+                    return;
+                }
+                if (!window.htmlToImage) {
+                    alert("El exportador de imágenes aún está cargando. Espera unos segundos.");
+                    return;
+                }
+
+                setExporting(true);
+                const zip = new JSZip();
+                const originalSlide = currentSlide;
+
+                try {
+                    for (let i = 0; i < slides.length; i++) {
+                        setCurrentSlide(i);
+                        await new Promise(resolve => setTimeout(resolve, 450));
+                        const dataUrl = await window.htmlToImage.toJpeg(slideRef.current, { quality: 1, pixelRatio: 3 });
+                        const res = await fetch(dataUrl);
+                        const blob = await res.blob();
+                        zip.file(`SLC-Slide-${slides[i].slideNumber}.jpg`, blob);
+                    }
+
+                    const content = await zip.generateAsync({type: "blob"});
+                    const link = document.createElement("a");
+                    link.href = URL.createObjectURL(content);
+                    link.download = "Presentacion_SelfLoveClub_7_Diapositivas.zip";
+                    link.click();
+                } catch (err) {
+                    console.error(err);
+                    alert("Hubo un problema al generar el ZIP. Inténtalo de nuevo.");
+                } finally {
+                    setCurrentSlide(originalSlide);
+                    setExporting(false);
+                }
             };
 
             const listAvailableModels = async () => {
@@ -366,7 +414,12 @@ Formato:
                                             <button onClick={polishSlide} disabled={polishing} className="flex items-center gap-2 bg-[#0b1121] text-slate-300 px-4 py-2 rounded-xl text-xs font-bold hover:bg-slate-800 border border-slate-700">{polishing ? <i className="fa-solid fa-circle-notch fa-spin"></i> : <i className="fa-solid fa-pen-nib"></i>} Pulir</button>
                                             <button onClick={toggleNarration} className="flex items-center gap-2 bg-[#0b1121] text-slate-300 px-4 py-2 rounded-xl text-xs font-bold hover:bg-slate-800 border border-slate-700">{isSpeaking ? <i className="fa-solid fa-stop text-red-400"></i> : <i className="fa-solid fa-volume-high"></i>} {isSpeaking ? "Detener" : "Narrar"}</button>
                                         </div>
-                                        <button onClick={exportAsJpg} disabled={exporting} className="bg-kinetic text-white px-5 py-2 rounded-xl font-bold text-xs flex items-center gap-2 hover:bg-purple-500">{exporting ? <i className="fa-solid fa-circle-notch fa-spin"></i> : <i className="fa-solid fa-download"></i>} JPG</button>
+                                        <div className="flex items-center gap-2">
+                                            <button onClick={exportAsJpg} disabled={exporting} className="bg-kinetic text-white px-5 py-2 rounded-xl font-bold text-xs flex items-center gap-2 hover:bg-purple-500">{exporting ? <i className="fa-solid fa-circle-notch fa-spin"></i> : <i className="fa-solid fa-download"></i>} JPG</button>
+                                            <button onClick={downloadAllAsZip} disabled={exporting} className="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2 rounded-xl font-bold text-xs flex items-center gap-2">
+                                                {exporting ? <i className="fa-solid fa-circle-notch fa-spin"></i> : <i className="fa-solid fa-file-zipper"></i>} ZIP (todas)
+                                            </button>
+                                        </div>
                                     </div>
 
                                     <div ref={slideRef} className={`w-[480px] h-[600px] ${stylesConfig[currentStyle].container} rounded-[40px] shadow-2xl flex flex-col justify-between p-14 relative overflow-hidden transition-all duration-500`} style={currentStyle === 'Brutalist' ? { borderRadius: '0px' } : {}}>
@@ -383,7 +436,6 @@ Formato:
                                                     <p className={`text-xl opacity-60 font-medium italic ${stylesConfig[currentStyle].fontBody}`}>{slides[currentSlide].subtitle}</p>
                                                 </div>
                                             ) : slides[currentSlide].slideNumber === 7 ? (
-                                                // ✅ SLIDE 7 LIMPIA: solo mensaje final centrado + foto pequeña abajo
                                                 <div className="space-y-8 flex flex-col items-center text-center">
                                                     <h3 className={`text-4xl ${stylesConfig[currentStyle].fontHeading}`}>{slides[currentSlide].title}</h3>
                                                     {slides[currentSlide].body && (
@@ -402,13 +454,11 @@ Formato:
 
                                         <div className={`flex items-center justify-between border-t ${stylesConfig[currentStyle].border} pt-8 z-10`}>
                                             {slides[currentSlide].slideNumber === 7 ? (
-                                                // Foto pequeña de Andrés en slide 7 (solo una vez)
                                                 <div className="flex items-center gap-4">
                                                     <img src="/assets/images/andres-ramirez-portrait.jpg" className="w-12 h-12 rounded-full border border-slate-300 object-cover" onError={(e) => e.target.src="https://ui-avatars.com/api/?name=AR&background=a855f7&color=fff"} />
                                                     <div className="flex flex-col"><span className={`text-xs uppercase font-bold ${stylesConfig[currentStyle].fontBody}`}>Andrés Ramírez</span><span className="text-[9px] font-bold opacity-50 uppercase tracking-widest">Strategist</span></div>
                                                 </div>
                                             ) : (
-                                                // Slides 1-6: Self Love Club + logo + "Tools"
                                                 <div className="flex items-center gap-4">
                                                     <img src="/assets/images/slc-logo.png" className={`w-12 h-12 object-contain opacity-90 ${stylesConfig[currentStyle].logoFilter}`} onError={(e) => e.target.src="https://ui-avatars.com/api/?name=SLC&background=000&color=fff"} />
                                                     <div className="flex flex-col">
