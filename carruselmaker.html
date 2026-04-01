@@ -53,6 +53,8 @@
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
 
+        const TEXT_MODEL = "gemini-2.5-flash"; 
+        
         const fetchWithRetry = async (url, options, maxRetries = 3) => {
             let retries = 0;
             while (retries < maxRetries) {
@@ -62,7 +64,7 @@
                     
                     if (response.status === 400) throw new Error("API Key inválida o mal copiada. Revísala.");
                     if (response.status === 403) throw new Error("Permiso denegado. Verifica tu API Key.");
-                    if (response.status === 404) throw new Error("Modelo no encontrado. Prueba con otro modelo o crea una nueva API Key.");
+                    if (response.status === 404) throw new Error("Modelo no encontrado.");
                     if (response.status === 429) {
                         const delay = Math.pow(2, retries) * 1000;
                         await new Promise(res => setTimeout(res, delay));
@@ -111,20 +113,12 @@
                     const url = `https://generativelanguage.googleapis.com/v1beta/models?key=${userApiKey.trim()}`;
                     const data = await fetch(url).then(res => res.ok ? res.json() : { error: res.status });
                     
-                    if (data.error) {
-                        throw new Error("No se pudo obtener la lista (revisa tu API Key)");
-                    }
+                    if (data.error) throw new Error("No se pudo obtener la lista");
                     
-                    const modelNames = data.models
-                        ? data.models.map(m => m.name.replace("models/", ""))
-                        : ["No se encontraron modelos"];
-                    
-                    const message = `✅ Modelos disponibles para tu API Key:\n\n` +
-                                    modelNames.join("\n") +
-                                    `\n\n🔥 Recomendado: copia uno de estos y pégalo en el selector de arriba.`;
-                    alert(message);
+                    const modelNames = data.models ? data.models.map(m => m.name.replace("models/", "")) : ["No se encontraron modelos"];
+                    alert(`✅ Modelos disponibles para tu API Key:\n\n${modelNames.join("\n")}\n\n🔥 Recomendado: gemini-2.5-flash`);
                 } catch (err) {
-                    alert("❌ Error al listar modelos: " + err.message + "\n\nPrueba creando una NUEVA API Key en https://aistudio.google.com/app/apikey");
+                    alert("❌ Error al listar modelos: " + err.message);
                 } finally {
                     setListingModels(false);
                 }
@@ -181,7 +175,6 @@ Reglas:
                     });
 
                     const responseText = data.candidates?.[0]?.content?.parts?.[0]?.text;
-
                     if (!responseText) throw new Error("La API no devolvió contenido.");
 
                     const jsonMatch = responseText.match(/\{[\s\S]*\}/);
@@ -234,7 +227,6 @@ Formato:
                     });
 
                     const responseText = data.candidates?.[0]?.content?.parts?.[0]?.text;
-
                     const jsonMatch = responseText.match(/\{[\s\S]*\}/);
                     if (!jsonMatch) throw new Error("JSON inválido");
 
@@ -321,7 +313,6 @@ Formato:
                                         <input type="password" className="w-full bg-[#0b1121] border border-slate-700 rounded-xl p-3 text-sm focus:border-kinetic focus:outline-none text-slate-300" placeholder="Pega tu API Key obligatoriamente aquí..." value={userApiKey} onChange={(e) => setUserApiKey(e.target.value)} />
                                     </div>
 
-                                    {/* NUEVO SELECTOR DE MODELO */}
                                     <div className="space-y-2">
                                         <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500"><i className="fa-solid fa-cube mr-1"></i> Modelo Gemini</label>
                                         <select 
@@ -392,10 +383,14 @@ Formato:
                                                     <p className={`text-xl opacity-60 font-medium italic ${stylesConfig[currentStyle].fontBody}`}>{slides[currentSlide].subtitle}</p>
                                                 </div>
                                             ) : slides[currentSlide].slideNumber === 7 ? (
+                                                // ✅ SLIDE 7 LIMPIA: solo mensaje final centrado + foto pequeña abajo
                                                 <div className="space-y-8 flex flex-col items-center text-center">
                                                     <h3 className={`text-4xl ${stylesConfig[currentStyle].fontHeading}`}>{slides[currentSlide].title}</h3>
-                                                    <div className={`w-20 h-20 rounded-full border-2 border-dashed ${stylesConfig[currentStyle].border} flex items-center justify-center`}><i className={`fa-solid fa-user-plus text-3xl ${stylesConfig[currentStyle].textAccent}`}></i></div>
-                                                    <p className={`text-xl tracking-tight ${stylesConfig[currentStyle].fontBody} font-bold`}>@aram7891</p>
+                                                    {slides[currentSlide].body && (
+                                                        <p className={`text-xl opacity-80 leading-relaxed max-w-[340px] ${stylesConfig[currentStyle].fontBody}`}>
+                                                            {slides[currentSlide].body}
+                                                        </p>
+                                                    )}
                                                 </div>
                                             ) : (
                                                 <div className="space-y-4">
@@ -407,14 +402,19 @@ Formato:
 
                                         <div className={`flex items-center justify-between border-t ${stylesConfig[currentStyle].border} pt-8 z-10`}>
                                             {slides[currentSlide].slideNumber === 7 ? (
+                                                // Foto pequeña de Andrés en slide 7 (solo una vez)
                                                 <div className="flex items-center gap-4">
                                                     <img src="/assets/images/andres-ramirez-portrait.jpg" className="w-12 h-12 rounded-full border border-slate-300 object-cover" onError={(e) => e.target.src="https://ui-avatars.com/api/?name=AR&background=a855f7&color=fff"} />
                                                     <div className="flex flex-col"><span className={`text-xs uppercase font-bold ${stylesConfig[currentStyle].fontBody}`}>Andrés Ramírez</span><span className="text-[9px] font-bold opacity-50 uppercase tracking-widest">Strategist</span></div>
                                                 </div>
                                             ) : (
+                                                // Slides 1-6: Self Love Club + logo + "Tools"
                                                 <div className="flex items-center gap-4">
                                                     <img src="/assets/images/slc-logo.png" className={`w-12 h-12 object-contain opacity-90 ${stylesConfig[currentStyle].logoFilter}`} onError={(e) => e.target.src="https://ui-avatars.com/api/?name=SLC&background=000&color=fff"} />
-                                                    <div className="flex flex-col"><span className={`text-[10px] uppercase tracking-widest font-bold ${stylesConfig[currentStyle].fontBody}`}>Self Love Club</span><span className="text-[9px] font-bold opacity-40 italic">Assets</span></div>
+                                                    <div className="flex flex-col">
+                                                        <span className={`text-[10px] uppercase tracking-widest font-bold ${stylesConfig[currentStyle].fontBody}`}>Self Love Club</span>
+                                                        <span className="text-[9px] font-bold opacity-40 italic">Tools</span>
+                                                    </div>
                                                 </div>
                                             )}
                                             <div className={`px-4 py-1.5 rounded-full text-[10px] font-black ${stylesConfig[currentStyle].tag}`}>0{slides[currentSlide].slideNumber}</div>
