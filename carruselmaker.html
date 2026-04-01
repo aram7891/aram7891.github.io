@@ -5,6 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kinetic Clarity Engine - Self Love Club</title>
     
+    <!-- Sistema de Radar de Errores (Para diagnosticar bloqueos del servidor) -->
+    <script>
+        window.addEventListener('error', function(event) {
+            const errorDiv = document.createElement('div');
+            errorDiv.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; background: #ef4444; color: white; padding: 20px; z-index: 9999; font-family: monospace; border-bottom: 4px solid #b91c1c;';
+            errorDiv.innerHTML = `
+                <h3 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 10px;">🚨 Bloqueo Detectado por el Servidor</h3>
+                <p><strong>Mensaje:</strong> ${event.message}</p>
+                <p><strong>Archivo:</strong> ${event.filename}</p>
+                <p><strong>Línea:</strong> ${event.lineno}</p>
+                <p style="margin-top: 15px; font-size: 0.9rem; opacity: 0.9;">Tómale una foto a este error y envíasela a tu estratega técnica (Gemini).</p>
+            `;
+            document.body.appendChild(errorDiv);
+        });
+        
+        // Capturar errores de promesas (ej. fallos de red por CORS)
+        window.addEventListener('unhandledrejection', function(event) {
+             const errorDiv = document.createElement('div');
+            errorDiv.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; background: #f59e0b; color: black; padding: 20px; z-index: 9999; font-family: monospace; border-bottom: 4px solid #d97706;';
+            errorDiv.innerHTML = `
+                <h3 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 10px;">⚠️ Error de Red / API</h3>
+                <p><strong>Motivo:</strong> ${event.reason}</p>
+            `;
+            document.body.appendChild(errorDiv);
+        });
+    </script>
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -34,15 +61,15 @@
     <!-- html-to-image for JPG Export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.js"></script>
 
-    <!-- React & ReactDOM -->
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- React & ReactDOM (Usando CDNJS en lugar de Unpkg para evitar bloqueos de CORS en producción) -->
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
     
-    <!-- Babel for JSX compilation in browser -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Babel for JSX compilation (CDNJS) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.6/babel.min.js"></script>
 
     <style>
-        body { background-color: #0f172a; color: #f8fafc; }
+        body { background-color: #0f172a; color: #f8fafc; margin: 0; padding: 0; }
         /* Custom Scrollbar for textareas */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #1e293b; }
@@ -53,7 +80,7 @@
 <body>
     <div id="root"></div>
 
-    <script type="text/babel">
+    <script type="text/babel" data-type="module">
         const { useState, useEffect, useRef } = React;
 
         // Entorno Público / Standalone
@@ -382,4 +409,146 @@
                                             value={essay}
                                             onChange={(e) => setEssay(e.target.value)}
                                         />
-                
+                                    </div>
+
+                                    {error && <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-xs"><i className="fa-solid fa-circle-exclamation mr-1"></i> {error}</div>}
+
+                                    <button 
+                                        onClick={generateCarousel} 
+                                        disabled={loading || !essay || !userApiKey} 
+                                        className="w-full py-4 bg-white text-kineticDark rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-slate-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-xl"
+                                    >
+                                        {loading ? <i className="fa-solid fa-circle-notch fa-spin"></i> : <i className="fa-solid fa-wand-magic-sparkles"></i>}
+                                        {loading ? "SINTETIZANDO ESTRATEGIA..." : "GENERAR CARRUSEL"}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Panel Derecho: Preview */}
+                        <div className="lg:col-span-7 flex flex-col items-center">
+                            {slides ? (
+                                <div className="flex flex-col items-center gap-8 w-full">
+                                    {/* Smart Toolbar */}
+                                    <div className="w-full max-w-[480px] flex justify-between items-center bg-surface p-3 rounded-2xl border border-slate-800 shadow-xl">
+                                        <div className="flex gap-2">
+                                            <button onClick={polishSlide} disabled={polishing} className="flex items-center gap-2 bg-[#0b1121] text-slate-300 px-4 py-2 rounded-xl text-xs font-bold hover:bg-slate-800 transition-colors border border-slate-700">
+                                                {polishing ? <i className="fa-solid fa-circle-notch fa-spin"></i> : <i className="fa-solid fa-pen-nib"></i>}
+                                                Pulir
+                                            </button>
+                                            <button onClick={toggleNarration} className="flex items-center gap-2 bg-[#0b1121] text-slate-300 px-4 py-2 rounded-xl text-xs font-bold hover:bg-slate-800 transition-colors border border-slate-700">
+                                                {isSpeaking ? <i className="fa-solid fa-stop text-red-400"></i> : <i className="fa-solid fa-volume-high"></i>}
+                                                {isSpeaking ? "Detener" : "Narrar"}
+                                            </button>
+                                        </div>
+                                        <button onClick={exportAsJpg} disabled={exporting} className="bg-kinetic text-white px-5 py-2 rounded-xl font-bold text-xs flex items-center gap-2 hover:bg-purple-500 transition-colors shadow-lg shadow-kinetic/20">
+                                            {exporting ? <i className="fa-solid fa-circle-notch fa-spin"></i> : <i className="fa-solid fa-download"></i>}
+                                            JPG
+                                        </button>
+                                    </div>
+
+                                    {/* The Slide Canvas */}
+                                    <div 
+                                        ref={slideRef} 
+                                        className={`w-[480px] h-[600px] ${stylesConfig[currentStyle].container} rounded-[40px] shadow-2xl flex flex-col justify-between p-14 relative overflow-hidden transition-all duration-500`}
+                                        style={currentStyle === 'Brutalist' ? { borderRadius: '0px' } : {}}
+                                    >
+                                        <div className="flex justify-between items-center z-10">
+                                            <span className={`text-[9px] font-black tracking-[0.4em] uppercase opacity-40 ${stylesConfig[currentStyle].fontBody}`}>
+                                                {slides[currentSlide].slideNumber === 7 ? "Clarity Strategist" : "Self Love Club USA"}
+                                            </span>
+                                            <div className={`w-2 h-2 rounded-full ${stylesConfig[currentStyle].accent}`}></div>
+                                        </div>
+
+                                        <div className="z-10 space-y-6">
+                                            <div className={`w-12 h-1 ${stylesConfig[currentStyle].accent} mb-4`}></div>
+                                            {slides[currentSlide].slideNumber === 1 ? (
+                                                <div className="space-y-6">
+                                                    <h3 className={`text-5xl leading-[1.05] ${stylesConfig[currentStyle].fontHeading}`}>{slides[currentSlide].title}</h3>
+                                                    <p className={`text-xl opacity-60 font-medium italic ${stylesConfig[currentStyle].fontBody}`}>{slides[currentSlide].subtitle}</p>
+                                                </div>
+                                            ) : slides[currentSlide].slideNumber === 7 ? (
+                                                <div className="space-y-8 flex flex-col items-center text-center">
+                                                    <h3 className={`text-4xl ${stylesConfig[currentStyle].fontHeading}`}>{slides[currentSlide].title}</h3>
+                                                    <div className={`w-20 h-20 rounded-full border-2 border-dashed ${stylesConfig[currentStyle].border} flex items-center justify-center`}>
+                                                        <i className={`fa-solid fa-user-plus text-3xl ${stylesConfig[currentStyle].textAccent}`}></i>
+                                                    </div>
+                                                    <p className={`text-xl tracking-tight ${stylesConfig[currentStyle].fontBody} font-bold`}>@aram7891</p>
+                                                </div>
+                                            ) : (
+                                                <div className="space-y-4">
+                                                    <h3 className={`text-3xl leading-tight ${stylesConfig[currentStyle].fontHeading}`}>{slides[currentSlide].title}</h3>
+                                                    <p className={`text-lg opacity-80 leading-relaxed ${stylesConfig[currentStyle].fontBody}`}>{slides[currentSlide].body}</p>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        <div className={`flex items-center justify-between border-t ${stylesConfig[currentStyle].border} pt-8 z-10`}>
+                                            {slides[currentSlide].slideNumber === 7 ? (
+                                                <div className="flex items-center gap-4">
+                                                    <img src="/assets/images/andres-ramirez-portrait.jpg" className="w-12 h-12 rounded-full border border-slate-300 object-cover" onError={(e) => e.target.src="https://ui-avatars.com/api/?name=AR&background=a855f7&color=fff"} alt="Andrés Ramírez" />
+                                                    <div className="flex flex-col">
+                                                        <span className={`text-xs uppercase font-bold ${stylesConfig[currentStyle].fontBody}`}>Andrés Ramírez</span>
+                                                        <span className="text-[9px] font-bold opacity-50 uppercase tracking-widest">Clarity Strategist</span>
+                                                    </div>
+                                                </div>
+                                            ) : (
+                                                <div className="flex items-center gap-4">
+                                                    <img src="/assets/images/slc-logo.png" className={`w-12 h-12 object-contain opacity-90 ${stylesConfig[currentStyle].logoFilter}`} onError={(e) => e.target.src="https://ui-avatars.com/api/?name=SLC&background=000&color=fff"} alt="Self Love Club" />
+                                                    <div className="flex flex-col">
+                                                        <span className={`text-[10px] uppercase tracking-widest font-bold ${stylesConfig[currentStyle].fontBody}`}>Self Love Club</span>
+                                                        <span className="text-[9px] font-bold opacity-40 italic">Systemic Assets</span>
+                                                    </div>
+                                                </div>
+                                            )}
+                                            <div className={`px-4 py-1.5 rounded-full text-[10px] font-black ${stylesConfig[currentStyle].tag}`}>0{slides[currentSlide].slideNumber}</div>
+                                        </div>
+                                        
+                                        {/* Visual Glows depending on style */}
+                                        <div className={`absolute -bottom-20 -right-20 w-80 h-80 opacity-20 rounded-full blur-[100px] pointer-events-none ${stylesConfig[currentStyle].accent}`}></div>
+                                    </div>
+
+                                    {/* Controles de Paginación */}
+                                    <div className="flex items-center gap-6 bg-surface p-3 rounded-full border border-slate-800 shadow-xl">
+                                        <button onClick={() => setCurrentSlide(p => Math.max(0, p - 1))} className="w-10 h-10 rounded-full bg-[#0b1121] flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-700 transition-colors disabled:opacity-30" disabled={currentSlide === 0}>
+                                            <i className="fa-solid fa-chevron-left"></i>
+                                        </button>
+                                        <div className="flex gap-2">
+                                            {slides.map((_, i) => (
+                                                <div key={i} onClick={() => setCurrentSlide(i)} className={`h-1.5 rounded-full transition-all cursor-pointer ${currentSlide === i ? 'w-8 bg-kinetic' : 'w-2 bg-slate-600 hover:bg-slate-400'}`} />
+                                            ))}
+                                        </div>
+                                        <button onClick={() => setCurrentSlide(p => Math.min(6, p - -1))} className="w-10 h-10 rounded-full bg-[#0b1121] flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-700 transition-colors disabled:opacity-30" disabled={currentSlide === 6}>
+                                            <i className="fa-solid fa-chevron-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="h-[600px] w-full max-w-[480px] flex flex-col justify-center items-center text-center p-12 border border-slate-800 rounded-[40px] bg-surface/50 relative overflow-hidden">
+                                    <div className="absolute inset-0 bg-gradient-to-br from-kinetic/5 to-transparent"></div>
+                                    <i className="fa-solid fa-layer-group text-5xl text-slate-700 mb-6 relative z-10"></i>
+                                    <h3 className="text-2xl font-serif text-white relative z-10">Kinetic Strategy</h3>
+                                    <p className="text-slate-400 text-sm mt-3 font-light relative z-10">Ingresa tu contenido y transforma conocimiento en activos visuales de élite.</p>
+                                </div>
+                            )}
+                        </div>
+                    </main>
+
+                    {/* Identidad de Marca Obligatoria */}
+                    <footer className="mt-20 py-8 border-t border-slate-800 text-center">
+                        <div className="flex justify-center gap-8 text-xs font-black text-slate-500 uppercase tracking-widest">
+                            <a href="https://threads.net/@aram7891" target="_blank" rel="noreferrer" className="hover:text-kinetic transition-colors"><i className="fa-brands fa-threads text-lg"></i> @aram7891</a>
+                            <a href="https://instagram.com/selfloveclubusa" target="_blank" rel="noreferrer" className="hover:text-kinetic transition-colors"><i className="fa-brands fa-instagram text-lg"></i> @selfloveclubusa</a>
+                        </div>
+                    </footer>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
+
+
