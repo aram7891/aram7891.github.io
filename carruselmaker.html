@@ -63,8 +63,6 @@
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
 
-        const TEXT_MODEL = "gemini-2.5-flash"; 
-        
         const fetchWithRetry = async (url, options, maxRetries = 3) => {
             let retries = 0;
             while (retries < maxRetries) {
@@ -188,18 +186,18 @@
                 const payload = {
                     contents: [{
                         parts: [{
-                            text: `Crea EXACTAMENTE 7 láminas de carrusel para el Self Love Club.
+                            text: `Create EXACTLY 7 carousel slides for Self Love Club based on the following text.
 
-Reglas importantes:
-- Respeta el idioma original del input. No traduzcas.
-- Tono motivacional y de claridad kinética.
-- 7 slides exactos.
-- La presentación debe desarrollar UNA sola idea de principio a fin.
-- Slide 1: título fuerte + premisa central.
-- Slides 2-6: desarrollo continuo de esa premisa (no contenidos independientes).
-- Slide 7: cierre que conecta con la premisa inicial y ofrece una llamada a la acción.
+Rules:
+- Respond entirely in the same language as the input text below. Do not translate to Spanish.
+- Use a motivational tone with kinetic clarity.
+- Exactly 7 slides.
+- The whole presentation must develop ONE single idea from beginning to end.
+- Slide 1: Strong title + central premise.
+- Slides 2-6: Continuous development of that premise (not independent content).
+- Slide 7: Closing that connects back to the initial premise and includes a clear call to action.
 
-Formato JSON exacto:
+Return the response in this exact JSON format:
 {
   "slides": [
     {
@@ -211,7 +209,7 @@ Formato JSON exacto:
   ]
 }
 
-Ensayo base:
+Input text:
 ${essay}`
                         }]
                     }]
@@ -255,11 +253,11 @@ ${essay}`
                 const payload = {
                     contents: [{
                         parts: [{
-                            text: `Mejora este slide y devuélvelo en JSON:
+                            text: `Improve this slide while keeping the exact same language as the original (do not translate to Spanish). Return only the improved JSON.
 
 ${JSON.stringify(currentData)}
 
-Formato:
+Format:
 {
  "title": "",
  "subtitle": "",
