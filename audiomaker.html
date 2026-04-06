@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Máquina Editorial | The Clarity Asset</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- PDF.js para procesar el ensayo -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <!-- ExifReader para metadata de imágenes -->
+    <script src="https://cdn.jsdelivr.net/npm/exifreader@4.20.0/dist/exif-reader.min.js"></script>
+
+    <script>
+        // Configuración de Tailwind para un look editorial
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        editorial: {
+                            50: '#f9f9f9',
+                            900: '#1a1a1a',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: theme('colors.editorial.50'); color: theme('colors.editorial.900'); }
+        .hide { display: none !important; }
+        .spinner { border: 3px solid rgba(0,0,0,0.1); width: 24px; height: 24px; border-radius: 50%; border-left-color: #1a1a1a; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col p-6 md:p-12">
+
+    <!-- Header -->
+    <header class="max-w-4xl mx-auto w-full mb-12">
+        <h1 class="text-4xl font-serif font-bold tracking-tight mb-2">La Máquina Editorial</h1>
+        <p class="text-gray-600">Procesador local: PDF → Artbook → Estructura de Podcast para <span class="font-bold">The Clarity Asset</span></p>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto w-full flex-grow space-y-8">
+        
+        <!-- Controles de Input -->
+        <section class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-200">
+            <h2 class="text-xl font-bold mb-6 border-b pb-2">1. Fuentes y Configuración</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Inputs de Archivos -->
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-semibold mb-1">Upload PDF (Ensayo)</label>
+                        <input type="file" id="pdfInput" accept="application/pdf" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200 cursor-pointer">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-1">Upload Artbook (Carpeta de Imágenes)</label>
+                        <input type="file" id="imgFolder" webkitdirectory multiple class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200 cursor-pointer">
+                    </div>
+                </div>
+
+                <!-- Configuraciones del Podcast -->
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-semibold mb-1">Podcast Title</label>
+                        <!-- AQUÍ SE INTEGRÓ EL NUEVO NOMBRE POR DEFECTO -->
+                        <input type="text" id="podcastTitle" value="The Clarity Asset" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black font-semibold">
+                    </div>
+                    <div class="flex space-x-4">
+                        <div class="w-1/2">
+                            <label class="block text-sm font-semibold mb-1">Duración (min)</label>
+                            <input type="text" id="durationTarget" value="7-8" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black">
+                        </div>
+                        <div class="w-1/2">
+                            <label class="block text-sm font-semibold mb-1">Idioma</label>
+                            <select id="language" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black">
+                                <option value="en">English</option>
+                                <option value="es">Español</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 flex items-center justify-between">
+                <button id="processBtn" class="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800 transition flex items-center">
+                    Procesar Assets
+                    <div id="loadingIcon" class="spinner ml-3 hide"></div>
+                </button>
+                <span id="statusText" class="text-sm text-gray-500 font-medium">Esperando archivos...</span>
+            </div>
+        </section>
+
+        <!-- Resultados -->
+        <section id="resultsSection" class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-200 hide">
+            <div class="flex justify-between items-center mb-6 border-b pb-2">
+                <h2 class="text-xl font-bold">2. Output Editorial</h2>
+                <div class="flex space-x-3">
+                    <button id="downloadScriptBtn" class="text-sm bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded font-medium transition">↓ Script .TXT</button>
+                    <button id="downloadManifestBtn" class="text-sm bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded font-medium transition">↓ Artbook .JSON</button>
+                    <button id="downloadMetadataBtn" class="text-sm bg-black text-white hover:bg-gray-800 px-4 py-2 rounded font-medium transition">↓ Full Metadata .JSON</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Preview Script -->
+                <div>
+                    <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-3">Podcast Script Preview</h3>
+                    <textarea id="scriptPreview" class="w-full h-96 p-4 text-sm font-mono bg-gray-50 border border-gray-200 rounded-lg focus:outline-none" readonly></textarea>
+                </div>
+
+                <!-- Preview Artbook -->
+                <div>
+                    <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-3">Artbook Manifest Preview</h3>
+                    <div id="artbookGallery" class="grid grid-cols-2 gap-2 max-h-96 overflow-y-auto p-2 bg-gray-50 border border-gray-200 rounded-lg">
+                        <!-- Las imágenes se inyectarán aquí -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Identity Constraint -->
+    <footer class="max-w-4xl mx-auto w-full mt-12 py-8 border-t border-gray-200">
+        <div class="flex flex-col md:flex-row items-center justify-center md:justify-between space-y-4 md:space-y-0">
+            <div class="flex items-center space-x-4">
+                <img src="/assets/images/andres-ramirez-portrait.jpg" alt="Andrés Ramírez" class="w-12 h-12 rounded-full object-cover border border-gray-300" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjY2JjYmNiIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PGNpcmNsZSBjeD0iMTIiIGN5PSI4IiByPSI1Ii8+PHBhdGggZD0iTTIwIDIxdi0yYTcgNyAwIDAwLTE0IDB2MiIvPjwvc3ZnPg=='">
+                <div class="text-sm text-gray-600">
+                    <p class="font-bold text-black">Andrés Ramírez</p>
+                    <p>Clarity Strategist</p>
+                </div>
+            </div>
+            <div class="text-sm text-gray-500 font-medium space-x-3">
+                <a href="https://threads.net/@aram7891" target="_blank" class="hover:text-black transition">Threads: @aram7891</a>
+                <span>|</span>
+                <a href="https://instagram.com/selfloveclubusa" target="_blank" class="hover:text-black transition">IG: @selfloveclubusa</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lógica de la Aplicación -->
+    <script>
+        // Configurar PDF.js Worker
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        // Estado Global
+        let editorialData = {
+            podcast: {},
+            source: {},
+            artbook: [],
+            structure: {}
+        };
+        let finalScriptText = "";
+
+        // Referencias a elementos del DOM
+        const btnProcess = document.getElementById('processBtn');
+        const statusText = document.getElementById('statusText');
+        const loadingIcon = document.getElementById('loadingIcon');
+        const resultsSection = document.getElementById('resultsSection');
+        
+        btnProcess.addEventListener('click', async () => {
+            const pdfFile = document.getElementById('pdfInput').files[0];
+            const imgFiles = document.getElementById('imgFolder').files;
+
+            if (!pdfFile || imgFiles.length === 0) {
+                alert("Por favor sube un PDF y la carpeta de imágenes del artbook.");
+                return;
+            }
+
+            try {
+                btnProcess.disabled = true;
+                loadingIcon.classList.remove('hide');
+                statusText.innerText = "Extrayendo texto del PDF...";
+
+                // 1. Procesar PDF
+                const pdfData = await processPDF(pdfFile);
+                
+                statusText.innerText = "Procesando imágenes del Artbook...";
+                // 2. Procesar Imágenes
+                const artbookData = await processImages(imgFiles);
+
+                // 3. Construir Metadata General
+                buildEditorialData(pdfData, artbookData);
+
+                statusText.innerText = "Generando Guion...";
+                // 4. Generar Script Text
+                generatePodcastScript();
+
+                // 5. Actualizar UI
+                renderUI();
+
+                statusText.innerText = "¡Procesamiento exitoso!";
+                statusText.classList.remove("text-gray-500", "text-red-600");
+                statusText.classList.add("text-green-600");
+
+            } catch (error) {
+                console.error(error);
+                statusText.innerText = "Error procesando: " + error.message;
+                statusText.classList.remove("text-gray-500", "text-green-600");
+                statusText.classList.add("text-red-600");
+            } finally {
+                btnProcess.disabled = false;
+                loadingIcon.classList.add('hide');
+            }
+        });
+
+        // LÓGICA: Procesar PDF
+        async function processPDF(file) {
+            const arrayBuffer = await file.arrayBuffer();
+            const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+            let fullText = "";
+
+            for (let i = 1; i <= pdf.numPages; i++) {
+                const page = await pdf.getPage(i);
+                const textContent = await page.getTextContent();
+                const pageText = textContent.items.map(item => item.str).join(" ");
+                fullText += pageText + "\n\n";
+            }
+
+            // Detección heurística básica (MVP)
+            const paragraphs = fullText.split('\n\n').filter(p => p.trim().length > 0);
+            const title = paragraphs[0]?.substring(0, 100) || file.name.replace('.pdf', '');
+            
+            // Simulación de búsqueda de secciones (busca líneas cortas o párrafos significativos)
+            const sections = [];
+            let currentSectionId = 1;
+            
+            // Simplificación para el prototipo: tomamos bloques de texto arbitrarios como secciones si no detectamos estructura estricta
+            for (let i = 1; i < paragraphs.length; i += 3) {
+                if (paragraphs[i]) {
+                    sections.push({
+                        id: currentSectionId++,
+                        title: `Section ${currentSectionId - 1}`,
+                        text: paragraphs[i].trim(),
+                        summary: paragraphs[i].trim().substring(0, 150) + "..." // Pseudo-summary local
+                    });
+                }
+                if (sections.length >= 3) break; // Extraer max 3 secciones para el ejemplo
+            }
+
+            const hook = paragraphs.find(p => p.length > 50 && p.length < 200) || "The contemporary problem isn't the lack of data. It's the inability to tell signal from noise.";
+
+            return {
+                title: title.trim(),
+                hook: hook.trim(),
+                sections: sections
+            };
+        }
+
+        // LÓGICA: Procesar Imágenes
+        async function processImages(fileList) {
+            const files = Array.from(fileList).filter(f => f.type.startsWith('image/'));
+            // Ordenar alfabéticamente/por numeración en nombre
+            files.sort((a, b) => a.name.localeCompare(b.name));
+
+            const artbook = [];
+            let order = 1;
+
+            for (const file of files) {
+                let metadata = { date: "Unknown", camera: "Unknown" };
+                
+                try {
+                    // Extraer EXIF
+                    const arrayBuffer = await file.arrayBuffer();
+                    const tags = ExifReader.load(arrayBuffer);
+                    if (tags['DateTimeOriginal']) metadata.date = tags['DateTimeOriginal'].description;
+                    if (tags['Model']) metadata.camera = tags['Model'].description;
+                } catch (e) {
+                    console.warn(`No EXIF for ${file.name}`);
+                }
+
+                // Generar Blob URL para previsualización inmediata
+                const previewUrl = URL.createObjectURL(file);
+
+                artbook.push({
+                    filename: file.name,
+                    order: order++,
+                    title: `Plate ${order < 11 ? '0'+(order-1) : order-1}`,
+                    alt: `Visual representation from ${file.name}`,
+                    metadata: metadata,
+                    _previewUrl: previewUrl // Privado, no irá al JSON final, solo para UI
+                });
+            }
+            return artbook;
+        }
+
+        // LÓGICA: Construir JSON Editorial
+        function buildEditorialData(pdfData, artbookData) {
+            const settings = {
+                title: document.getElementById('podcastTitle').value,
+                duration: document.getElementById('durationTarget').value,
+                lang: document.getElementById('language').value
+            };
+
+            // Remover el campo privado _previewUrl del JSON final del artbook mapeándolo
+            const cleanArtbook = artbookData.map(item => {
+                const { _previewUrl, ...cleanItem } = item;
+                return cleanItem;
+            });
+
+            editorialData = {
+                podcast: {
+                    title: settings.title,
+                    episode_slug: pdfData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, ''),
+                    duration_target: `${settings.duration}min`,
+                    language: settings.lang
+                },
+                source: {
+                    type: "essay",
+                    author: "Self Love Club | Research & Strategy",
+                    original_title: pdfData.title,
+                    tags: ["strategy", "clarity", "auto-generated"]
+                },
+                artbook: cleanArtbook,
+                structure: {
+                    hook: pdfData.hook,
+                    sections: pdfData.sections
+                }
+            };
+
+            // Guardamos la versión con URLs para la galería UI
+            editorialData._uiArtbook = artbookData; 
+        }
+
+        // LÓGICA: Generar Guion
+        function generatePodcastScript() {
+            const p = editorialData.podcast;
+            const s = editorialData.source;
+            const st = editorialData.structure;
+
+            let script = `[PODCAST TITLE]: ${p.title}\n`;
+            script += `EPISODE: ${s.original_title}\n\n`;
+            script += `INTRO\n"${st.hook}"\n\n`;
+            script += `Today we explore the dynamics behind ${s.original_title}...\n\n`;
+
+            st.sections.forEach((sec, idx) => {
+                script += `SECTION ${idx + 1} — ${sec.title}\n`;
+                script += `${sec.summary}\n\n`;
+            });
+
+            script += `REFLECTION\nHow do we balance the noise with the truth? That is the ultimate strategic question.\n\n`;
+            script += `OUTRO\nThank you for listening to ${p.title}. For visual references, check the episode's artbook.\n`;
+
+            finalScriptText = script;
+        }
+
+        // LÓGICA: Actualizar UI
+        function renderUI() {
+            // Mostrar script
+            document.getElementById('scriptPreview').value = finalScriptText;
+
+            // Mostrar Galería
+            const gallery = document.getElementById('artbookGallery');
+            gallery.innerHTML = '';
+            editorialData._uiArtbook.forEach(img => {
+                const div = document.createElement('div');
+                div.className = "relative group rounded overflow-hidden bg-gray-200 aspect-square";
+                div.innerHTML = `
+                    <img src="${img._previewUrl}" alt="${img.alt}" class="object-cover w-full h-full">
+                    <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white text-xs p-1 truncate">
+                        ${img.order}. ${img.filename}
+                    </div>
+                `;
+                gallery.appendChild(div);
+            });
+
+            // Revelar sección
+            resultsSection.classList.remove('hide');
+        }
+
+        // LÓGICA: Descargas
+        function downloadFile(content, fileName, mimeType) {
+            const blob = new Blob([content], { type: mimeType });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        document.getElementById('downloadScriptBtn').addEventListener('click', () => {
+            downloadFile(finalScriptText, `${editorialData.podcast.episode_slug}-script.txt`, 'text/plain');
+        });
+
+        document.getElementById('downloadManifestBtn').addEventListener('click', () => {
+            downloadFile(JSON.stringify(editorialData.artbook, null, 2), `${editorialData.podcast.episode_slug}-artbook.json`, 'application/json');
+        });
+
+        document.getElementById('downloadMetadataBtn').addEventListener('click', () => {
+            // Clonamos sin los datos UI
+            const exportData = { ...editorialData };
+            delete exportData._uiArtbook;
+            downloadFile(JSON.stringify(exportData, null, 2), `${editorialData.podcast.episode_slug}-full-metadata.json`, 'application/json');
+        });
+
+    </script>
+</body>
+</html>
+
+
