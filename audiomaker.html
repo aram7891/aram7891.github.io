@@ -42,12 +42,17 @@
     <!-- Header -->
     <header class="max-w-4xl mx-auto w-full mb-12">
         <h1 class="text-4xl font-serif font-bold tracking-tight mb-2">La Máquina Editorial</h1>
-        <p class="text-gray-600">Procesador local: PDF → Artbook → Estructura de Podcast para <span class="font-bold">The Clarity Asset</span></p>
+        <p class="text-gray-600">Procesador local para: <span class="font-bold text-black">The Clarity Asset</span></p>
     </header>
 
     <!-- Main Content -->
     <main class="max-w-4xl mx-auto w-full flex-grow space-y-8">
         
+        <!-- Instrucciones Rápidas -->
+        <div class="bg-blue-50 border-l-4 border-blue-900 p-4 rounded-r text-sm text-blue-900">
+            <p><strong>Flujo rápido para Shortcuts:</strong> 1. Sube tu ensayo en PDF → 2. Sube la carpeta de imágenes → 3. Haz clic en "Procesar" → 4. Usa el botón "Copiar para Shortcut".</p>
+        </div>
+
         <!-- Controles de Input -->
         <section class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-200">
             <h2 class="text-xl font-bold mb-6 border-b pb-2">1. Fuentes y Configuración</h2>
@@ -56,11 +61,13 @@
                 <!-- Inputs de Archivos -->
                 <div class="space-y-4">
                     <div>
-                        <label class="block text-sm font-semibold mb-1">Upload PDF (Ensayo)</label>
+                        <label class="block text-sm font-semibold mb-1">1. Upload Ensayo (PDF)</label>
+                        <p class="text-xs text-gray-500 mb-2">El ensayo que vas a grabar hoy (ej. "Signal vs Noise.pdf")</p>
                         <input type="file" id="pdfInput" accept="application/pdf" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200 cursor-pointer">
                     </div>
-                    <div>
-                        <label class="block text-sm font-semibold mb-1">Upload Artbook (Carpeta de Imágenes)</label>
+                    <div class="pt-2">
+                        <label class="block text-sm font-semibold mb-1">2. Upload Artbook (Carpeta)</label>
+                        <p class="text-xs text-gray-500 mb-2">La carpeta con las imágenes cuadradas de este ensayo</p>
                         <input type="file" id="imgFolder" webkitdirectory multiple class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200 cursor-pointer">
                     </div>
                 </div>
@@ -69,19 +76,18 @@
                 <div class="space-y-4">
                     <div>
                         <label class="block text-sm font-semibold mb-1">Podcast Title</label>
-                        <!-- AQUÍ SE INTEGRÓ EL NUEVO NOMBRE POR DEFECTO -->
-                        <input type="text" id="podcastTitle" value="The Clarity Asset" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black font-semibold">
+                        <input type="text" id="podcastTitle" value="The Clarity Asset" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black font-semibold text-gray-700" readonly>
                     </div>
                     <div class="flex space-x-4">
                         <div class="w-1/2">
-                            <label class="block text-sm font-semibold mb-1">Duración (min)</label>
-                            <input type="text" id="durationTarget" value="7-8" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black">
+                            <label class="block text-sm font-semibold mb-1">Duración Objetivo (min)</label>
+                            <input type="number" id="durationTarget" value="8" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black">
                         </div>
                         <div class="w-1/2">
                             <label class="block text-sm font-semibold mb-1">Idioma</label>
                             <select id="language" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black">
                                 <option value="en">English</option>
-                                <option value="es">Español</option>
+                                <option value="es" selected>Español</option>
                             </select>
                         </div>
                     </div>
@@ -101,24 +107,30 @@
         <section id="resultsSection" class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-200 hide">
             <div class="flex justify-between items-center mb-6 border-b pb-2">
                 <h2 class="text-xl font-bold">2. Output Editorial</h2>
-                <div class="flex space-x-3">
-                    <button id="downloadScriptBtn" class="text-sm bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded font-medium transition">↓ Script .TXT</button>
-                    <button id="downloadManifestBtn" class="text-sm bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded font-medium transition">↓ Artbook .JSON</button>
-                    <button id="downloadMetadataBtn" class="text-sm bg-black text-white hover:bg-gray-800 px-4 py-2 rounded font-medium transition">↓ Full Metadata .JSON</button>
+                <div class="hidden md:flex space-x-3">
+                    <span class="text-xs text-gray-400 self-center">Archivos de archivo (opcional):</span>
+                    <button id="downloadManifestBtn" class="text-xs bg-gray-100 hover:bg-gray-200 px-3 py-2 rounded font-medium transition">↓ Artbook .JSON</button>
+                    <button id="downloadMetadataBtn" class="text-xs bg-gray-100 hover:bg-gray-200 px-3 py-2 rounded font-medium transition">↓ Metadata .JSON</button>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <!-- Preview Script -->
-                <div>
-                    <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-3">Podcast Script Preview</h3>
-                    <textarea id="scriptPreview" class="w-full h-96 p-4 text-sm font-mono bg-gray-50 border border-gray-200 rounded-lg focus:outline-none" readonly></textarea>
+                <div class="flex flex-col h-full">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider">Guion Completo (Para Shortcut)</h3>
+                        <!-- BOTÓN PARA COPIAR DIRECTO -->
+                        <button id="copyScriptBtn" class="text-sm bg-black text-white hover:bg-gray-800 px-4 py-2 rounded-lg font-bold transition flex items-center shadow-sm">
+                            📋 Copiar para Shortcut
+                        </button>
+                    </div>
+                    <textarea id="scriptPreview" class="w-full flex-grow min-h-[400px] p-4 text-sm font-mono bg-gray-50 border border-gray-200 rounded-lg focus:outline-none leading-relaxed" readonly></textarea>
                 </div>
 
                 <!-- Preview Artbook -->
                 <div>
-                    <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-3">Artbook Manifest Preview</h3>
-                    <div id="artbookGallery" class="grid grid-cols-2 gap-2 max-h-96 overflow-y-auto p-2 bg-gray-50 border border-gray-200 rounded-lg">
+                    <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-3">Preview del Artbook</h3>
+                    <div id="artbookGallery" class="grid grid-cols-2 gap-2 max-h-[400px] overflow-y-auto p-2 bg-gray-50 border border-gray-200 rounded-lg">
                         <!-- Las imágenes se inyectarán aquí -->
                     </div>
                 </div>
@@ -150,12 +162,7 @@
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
         // Estado Global
-        let editorialData = {
-            podcast: {},
-            source: {},
-            artbook: [],
-            structure: {}
-        };
+        let editorialData = { podcast: {}, source: {}, artbook: [], structure: {} };
         let finalScriptText = "";
 
         // Referencias a elementos del DOM
@@ -176,10 +183,11 @@
             try {
                 btnProcess.disabled = true;
                 loadingIcon.classList.remove('hide');
-                statusText.innerText = "Extrayendo texto del PDF...";
+                statusText.innerText = "Extrayendo texto completo del PDF...";
 
                 // 1. Procesar PDF
-                const pdfData = await processPDF(pdfFile);
+                const targetMinutes = parseInt(document.getElementById('durationTarget').value) || 8;
+                const pdfData = await processPDF(pdfFile, targetMinutes);
                 
                 statusText.innerText = "Procesando imágenes del Artbook...";
                 // 2. Procesar Imágenes
@@ -188,7 +196,7 @@
                 // 3. Construir Metadata General
                 buildEditorialData(pdfData, artbookData);
 
-                statusText.innerText = "Generando Guion...";
+                statusText.innerText = "Estructurando Guion...";
                 // 4. Generar Script Text
                 generatePodcastScript();
 
@@ -210,8 +218,8 @@
             }
         });
 
-        // LÓGICA: Procesar PDF
-        async function processPDF(file) {
+        // LÓGICA: Procesar PDF (NUEVA VERSIÓN LARGA)
+        async function processPDF(file, targetMinutes) {
             const arrayBuffer = await file.arrayBuffer();
             const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
             let fullText = "";
@@ -223,68 +231,76 @@
                 fullText += pageText + "\n\n";
             }
 
-            // Detección heurística básica (MVP)
-            const paragraphs = fullText.split('\n\n').filter(p => p.trim().length > 0);
-            const title = paragraphs[0]?.substring(0, 100) || file.name.replace('.pdf', '');
+            // Limpiamos y filtramos párrafos reales (ignoramos basurilla corta)
+            const rawParagraphs = fullText.split('\n\n').map(p => p.trim()).filter(p => p.length > 50);
+            const title = file.name.replace('.pdf', '');
             
-            // Simulación de búsqueda de secciones (busca líneas cortas o párrafos significativos)
-            const sections = [];
-            let currentSectionId = 1;
-            
-            // Simplificación para el prototipo: tomamos bloques de texto arbitrarios como secciones si no detectamos estructura estricta
-            for (let i = 1; i < paragraphs.length; i += 3) {
-                if (paragraphs[i]) {
-                    sections.push({
-                        id: currentSectionId++,
-                        title: `Section ${currentSectionId - 1}`,
-                        text: paragraphs[i].trim(),
-                        summary: paragraphs[i].trim().substring(0, 150) + "..." // Pseudo-summary local
-                    });
+            // Buscar un buen hook al principio
+            const hook = rawParagraphs.find(p => p.length > 80 && p.length < 300) || "En entornos modernos, el problema no es el exceso de estímulos, sino la falta de interpretación.";
+
+            // Para 8 minutos, buscamos aprox 1200 palabras (150 palabras x minuto)
+            const targetWords = targetMinutes * 150;
+            let currentWords = 0;
+            let bodyParagraphs = [];
+
+            // Recopilamos párrafos hasta acercarnos a la duración objetivo
+            for (let i = 1; i < rawParagraphs.length; i++) { // Saltamos el index 0 que suele ser el título
+                const p = rawParagraphs[i];
+                const wordCount = p.split(/\s+/).length;
+                if (currentWords + wordCount <= targetWords + 200) { // Margen de error
+                    bodyParagraphs.push(p);
+                    currentWords += wordCount;
+                } else {
+                    break;
                 }
-                if (sections.length >= 3) break; // Extraer max 3 secciones para el ejemplo
             }
 
-            const hook = paragraphs.find(p => p.length > 50 && p.length < 200) || "The contemporary problem isn't the lack of data. It's the inability to tell signal from noise.";
+            // Si el ensayo es corto, agarramos todo lo que haya
+            if (bodyParagraphs.length === 0) bodyParagraphs = rawParagraphs;
 
-            return {
-                title: title.trim(),
-                hook: hook.trim(),
-                sections: sections
-            };
+            // Dividir los párrafos extraídos en 4 bloques sustanciales
+            const sections = [];
+            const numSections = 4;
+            const parasPerSection = Math.ceil(bodyParagraphs.length / numSections);
+            
+            for (let i = 0; i < numSections; i++) {
+                const chunk = bodyParagraphs.slice(i * parasPerSection, (i + 1) * parasPerSection);
+                if (chunk.length > 0) {
+                    sections.push({
+                        id: i + 1,
+                        title: `Punto de Inflexión ${i + 1}`,
+                        summary: chunk.join('\n\n') // AQUÍ MANTENEMOS TODO EL TEXTO
+                    });
+                }
+            }
+
+            return { title: title.trim(), hook: hook.trim(), sections: sections };
         }
 
         // LÓGICA: Procesar Imágenes
         async function processImages(fileList) {
             const files = Array.from(fileList).filter(f => f.type.startsWith('image/'));
-            // Ordenar alfabéticamente/por numeración en nombre
             files.sort((a, b) => a.name.localeCompare(b.name));
-
             const artbook = [];
             let order = 1;
 
             for (const file of files) {
                 let metadata = { date: "Unknown", camera: "Unknown" };
-                
                 try {
-                    // Extraer EXIF
                     const arrayBuffer = await file.arrayBuffer();
                     const tags = ExifReader.load(arrayBuffer);
                     if (tags['DateTimeOriginal']) metadata.date = tags['DateTimeOriginal'].description;
                     if (tags['Model']) metadata.camera = tags['Model'].description;
-                } catch (e) {
-                    console.warn(`No EXIF for ${file.name}`);
-                }
+                } catch (e) { console.warn(`No EXIF for ${file.name}`); }
 
-                // Generar Blob URL para previsualización inmediata
                 const previewUrl = URL.createObjectURL(file);
-
                 artbook.push({
                     filename: file.name,
                     order: order++,
                     title: `Plate ${order < 11 ? '0'+(order-1) : order-1}`,
                     alt: `Visual representation from ${file.name}`,
                     metadata: metadata,
-                    _previewUrl: previewUrl // Privado, no irá al JSON final, solo para UI
+                    _previewUrl: previewUrl 
                 });
             }
             return artbook;
@@ -298,7 +314,6 @@
                 lang: document.getElementById('language').value
             };
 
-            // Remover el campo privado _previewUrl del JSON final del artbook mapeándolo
             const cleanArtbook = artbookData.map(item => {
                 const { _previewUrl, ...cleanItem } = item;
                 return cleanItem;
@@ -318,13 +333,8 @@
                     tags: ["strategy", "clarity", "auto-generated"]
                 },
                 artbook: cleanArtbook,
-                structure: {
-                    hook: pdfData.hook,
-                    sections: pdfData.sections
-                }
+                structure: { hook: pdfData.hook, sections: pdfData.sections }
             };
-
-            // Guardamos la versión con URLs para la galería UI
             editorialData._uiArtbook = artbookData; 
         }
 
@@ -333,29 +343,40 @@
             const p = editorialData.podcast;
             const s = editorialData.source;
             const st = editorialData.structure;
+            const lang = p.language;
+
+            // Textos dinámicos por idioma
+            const tIntro = lang === 'es' ? "INTRODUCCIÓN" : "INTRO";
+            const tToday = lang === 'es' ? "Hoy exploramos la dinámica detrás de" : "Today we explore the dynamics behind";
+            const tSection = lang === 'es' ? "SECCIÓN" : "SECTION";
+            const tReflect = lang === 'es' ? "REFLEXIÓN ESTRATÉGICA" : "STRATEGIC REFLECTION";
+            const tReflectText = lang === 'es' 
+                ? "¿Cómo equilibramos el ruido con la verdad? Esa es la pregunta definitiva en entornos modernos." 
+                : "How do we balance the noise with the truth? That is the ultimate strategic question.";
+            const tOutro = lang === 'es' ? "CIERRE" : "OUTRO";
+            const tOutroText = lang === 'es' 
+                ? `Gracias por escuchar ${p.title}. Para referencias visuales que acompañan este concepto, revisa el artbook del episodio.` 
+                : `Thank you for listening to ${p.title}. For visual references, check the episode's artbook.`;
 
             let script = `[PODCAST TITLE]: ${p.title}\n`;
             script += `EPISODE: ${s.original_title}\n\n`;
-            script += `INTRO\n"${st.hook}"\n\n`;
-            script += `Today we explore the dynamics behind ${s.original_title}...\n\n`;
+            script += `${tIntro}\n"${st.hook}"\n\n`;
+            script += `${tToday} ${s.original_title}...\n\n`;
 
             st.sections.forEach((sec, idx) => {
-                script += `SECTION ${idx + 1} — ${sec.title}\n`;
-                script += `${sec.summary}\n\n`;
+                script += `${tSection} ${idx + 1} — ${sec.title}\n`;
+                script += `${sec.summary}\n\n`; // AHORA SÍ TRAE LOS PÁRRAFOS COMPLETOS
             });
 
-            script += `REFLECTION\nHow do we balance the noise with the truth? That is the ultimate strategic question.\n\n`;
-            script += `OUTRO\nThank you for listening to ${p.title}. For visual references, check the episode's artbook.\n`;
+            script += `${tReflect}\n${tReflectText}\n\n`;
+            script += `${tOutro}\n${tOutroText}\n`;
 
             finalScriptText = script;
         }
 
         // LÓGICA: Actualizar UI
         function renderUI() {
-            // Mostrar script
             document.getElementById('scriptPreview').value = finalScriptText;
-
-            // Mostrar Galería
             const gallery = document.getElementById('artbookGallery');
             gallery.innerHTML = '';
             editorialData._uiArtbook.forEach(img => {
@@ -369,12 +390,39 @@
                 `;
                 gallery.appendChild(div);
             });
-
-            // Revelar sección
             resultsSection.classList.remove('hide');
         }
 
-        // LÓGICA: Descargas
+        // LÓGICA: Botón Copiar a Portapapeles
+        document.getElementById('copyScriptBtn').addEventListener('click', function() {
+            const textAreaElement = document.getElementById('scriptPreview');
+            
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = textAreaElement.value;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            tempTextArea.setSelectionRange(0, 99999); 
+            
+            try {
+                document.execCommand('copy');
+                const originalText = this.innerHTML;
+                this.innerHTML = '✅ ¡Copiado y listo!';
+                this.classList.remove('bg-black', 'hover:bg-gray-800');
+                this.classList.add('bg-green-600', 'hover:bg-green-700');
+                
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                    this.classList.add('bg-black', 'hover:bg-gray-800');
+                    this.classList.remove('bg-green-600', 'hover:bg-green-700');
+                }, 2000);
+            } catch (err) {
+                alert('No se pudo copiar automáticamente. Por favor, selecciona el texto y cópialo.');
+            }
+            
+            document.body.removeChild(tempTextArea);
+        });
+
+        // LÓGICA: Descargas (Opcionales)
         function downloadFile(content, fileName, mimeType) {
             const blob = new Blob([content], { type: mimeType });
             const url = URL.createObjectURL(blob);
@@ -387,16 +435,11 @@
             URL.revokeObjectURL(url);
         }
 
-        document.getElementById('downloadScriptBtn').addEventListener('click', () => {
-            downloadFile(finalScriptText, `${editorialData.podcast.episode_slug}-script.txt`, 'text/plain');
-        });
-
         document.getElementById('downloadManifestBtn').addEventListener('click', () => {
             downloadFile(JSON.stringify(editorialData.artbook, null, 2), `${editorialData.podcast.episode_slug}-artbook.json`, 'application/json');
         });
 
         document.getElementById('downloadMetadataBtn').addEventListener('click', () => {
-            // Clonamos sin los datos UI
             const exportData = { ...editorialData };
             delete exportData._uiArtbook;
             downloadFile(JSON.stringify(exportData, null, 2), `${editorialData.podcast.episode_slug}-full-metadata.json`, 'application/json');
