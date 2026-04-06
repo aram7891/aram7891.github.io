@@ -12,7 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/exifreader@4.20.0/dist/exif-reader.min.js"></script>
 
     <script>
-        // Configuración de Tailwind para un look editorial
+        // Configuración de Tailwind
         tailwind.config = {
             theme: {
                 extend: {
@@ -42,15 +42,16 @@
     <!-- Header -->
     <header class="max-w-4xl mx-auto w-full mb-12">
         <h1 class="text-4xl font-serif font-bold tracking-tight mb-2">La Máquina Editorial</h1>
-        <p class="text-gray-600">Procesador local para: <span class="font-bold text-black">The Clarity Asset</span></p>
+        <p class="text-gray-600">Procesador local para: <span class="font-bold text-black">The Clarity Asset / El Activo de la Claridad</span></p>
     </header>
 
     <!-- Main Content -->
     <main class="max-w-4xl mx-auto w-full flex-grow space-y-8">
         
         <!-- Instrucciones Rápidas -->
-        <div class="bg-blue-50 border-l-4 border-blue-900 p-4 rounded-r text-sm text-blue-900">
-            <p><strong>Flujo rápido para Shortcuts:</strong> 1. Sube tu ensayo en PDF → 2. Sube la carpeta de imágenes → 3. Haz clic en "Procesar" → 4. Usa el botón "Copiar para Shortcut".</p>
+        <div class="bg-blue-50 border-l-4 border-blue-900 p-4 rounded-r text-sm text-blue-900 shadow-sm">
+            <p><strong>Flujo rápido para Shortcuts:</strong> 1. Sube tu ensayo en PDF → 2. Sube la carpeta de imágenes → 3. Haz clic en "Procesar" → 4. Usa el botón "Copiar para Shortcut".<br>
+            <strong>Resultado:</strong> Guion 100% natural (sin títulos, sin viñetas), intro + cierre fijos, duración promedio 6 minutos. Listo para voz México #1 o Siri US #3.</p>
         </div>
 
         <!-- Controles de Input -->
@@ -62,7 +63,7 @@
                 <div class="space-y-4">
                     <div>
                         <label class="block text-sm font-semibold mb-1">1. Upload Ensayo (PDF)</label>
-                        <p class="text-xs text-gray-500 mb-2">El ensayo que vas a grabar hoy (ej. "Signal vs Noise.pdf")</p>
+                        <p class="text-xs text-gray-500 mb-2">El ensayo que vas a grabar hoy</p>
                         <input type="file" id="pdfInput" accept="application/pdf" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200 cursor-pointer">
                     </div>
                     <div class="pt-2">
@@ -75,13 +76,14 @@
                 <!-- Configuraciones del Podcast -->
                 <div class="space-y-4">
                     <div>
-                        <label class="block text-sm font-semibold mb-1">Podcast Title</label>
-                        <input type="text" id="podcastTitle" value="The Clarity Asset" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black font-semibold text-gray-700" readonly>
+                        <label class="block text-sm font-semibold mb-1">Nombre del Podcast</label>
+                        <input type="text" id="podcastTitle" value="The Clarity Asset" class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-black font-semibold text-gray-700">
+                        <p class="text-xs text-gray-500 mt-1">Escribe "The Clarity Asset" (inglés) o "El Activo de la Claridad" (español)</p>
                     </div>
                     <div class="flex space-x-4">
                         <div class="w-1/2">
                             <label class="block text-sm font-semibold mb-1">Duración Objetivo (min)</label>
-                            <input type="number" id="durationTarget" value="8" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black">
+                            <input type="number" id="durationTarget" value="6" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black">
                         </div>
                         <div class="w-1/2">
                             <label class="block text-sm font-semibold mb-1">Idioma</label>
@@ -95,7 +97,7 @@
             </div>
 
             <div class="mt-8 flex items-center justify-between">
-                <button id="processBtn" class="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800 transition flex items-center">
+                <button id="processBtn" class="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800 transition flex items-center shadow-md">
                     Procesar Assets
                     <div id="loadingIcon" class="spinner ml-3 hide"></div>
                 </button>
@@ -108,7 +110,6 @@
             <div class="flex justify-between items-center mb-6 border-b pb-2">
                 <h2 class="text-xl font-bold">2. Output Editorial</h2>
                 <div class="hidden md:flex space-x-3">
-                    <span class="text-xs text-gray-400 self-center">Archivos de archivo (opcional):</span>
                     <button id="downloadManifestBtn" class="text-xs bg-gray-100 hover:bg-gray-200 px-3 py-2 rounded font-medium transition">↓ Artbook .JSON</button>
                     <button id="downloadMetadataBtn" class="text-xs bg-gray-100 hover:bg-gray-200 px-3 py-2 rounded font-medium transition">↓ Metadata .JSON</button>
                 </div>
@@ -118,19 +119,18 @@
                 <!-- Preview Script -->
                 <div class="flex flex-col h-full">
                     <div class="flex justify-between items-center mb-3">
-                        <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider">Guion Completo (Para Shortcut)</h3>
-                        <!-- BOTÓN PARA COPIAR DIRECTO -->
+                        <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider">Guion de Audio (Monólogo – Listo para TTS)</h3>
                         <button id="copyScriptBtn" class="text-sm bg-black text-white hover:bg-gray-800 px-4 py-2 rounded-lg font-bold transition flex items-center shadow-sm">
                             📋 Copiar para Shortcut
                         </button>
                     </div>
-                    <textarea id="scriptPreview" class="w-full flex-grow min-h-[400px] p-4 text-sm font-mono bg-gray-50 border border-gray-200 rounded-lg focus:outline-none leading-relaxed" readonly></textarea>
+                    <textarea id="scriptPreview" class="w-full flex-grow min-h-[500px] p-5 text-sm font-serif bg-gray-50 border border-gray-200 rounded-lg focus:outline-none leading-relaxed resize-none" readonly></textarea>
                 </div>
 
                 <!-- Preview Artbook -->
                 <div>
                     <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-3">Preview del Artbook</h3>
-                    <div id="artbookGallery" class="grid grid-cols-2 gap-2 max-h-[400px] overflow-y-auto p-2 bg-gray-50 border border-gray-200 rounded-lg">
+                    <div id="artbookGallery" class="grid grid-cols-2 gap-2 max-h-[500px] overflow-y-auto p-2 bg-gray-50 border border-gray-200 rounded-lg">
                         <!-- Las imágenes se inyectarán aquí -->
                     </div>
                 </div>
@@ -138,7 +138,7 @@
         </section>
     </main>
 
-    <!-- Footer Identity Constraint -->
+    <!-- Footer -->
     <footer class="max-w-4xl mx-auto w-full mt-12 py-8 border-t border-gray-200">
         <div class="flex flex-col md:flex-row items-center justify-center md:justify-between space-y-4 md:space-y-0">
             <div class="flex items-center space-x-4">
@@ -158,19 +158,16 @@
 
     <!-- Lógica de la Aplicación -->
     <script>
-        // Configurar PDF.js Worker
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-        // Estado Global
         let editorialData = { podcast: {}, source: {}, artbook: [], structure: {} };
         let finalScriptText = "";
 
-        // Referencias a elementos del DOM
         const btnProcess = document.getElementById('processBtn');
         const statusText = document.getElementById('statusText');
         const loadingIcon = document.getElementById('loadingIcon');
         const resultsSection = document.getElementById('resultsSection');
-        
+
         btnProcess.addEventListener('click', async () => {
             const pdfFile = document.getElementById('pdfInput').files[0];
             const imgFiles = document.getElementById('imgFolder').files;
@@ -185,32 +182,26 @@
                 loadingIcon.classList.remove('hide');
                 statusText.innerText = "Extrayendo texto completo del PDF...";
 
-                // 1. Procesar PDF
-                const targetMinutes = parseInt(document.getElementById('durationTarget').value) || 8;
+                const targetMinutes = parseInt(document.getElementById('durationTarget').value) || 6;
                 const pdfData = await processPDF(pdfFile, targetMinutes);
                 
                 statusText.innerText = "Procesando imágenes del Artbook...";
-                // 2. Procesar Imágenes
                 const artbookData = await processImages(imgFiles);
 
-                // 3. Construir Metadata General
                 buildEditorialData(pdfData, artbookData);
 
-                statusText.innerText = "Estructurando Guion...";
-                // 4. Generar Script Text
+                statusText.innerText = "Estructurando guion natural (sin títulos ni viñetas)...";
                 generatePodcastScript();
 
-                // 5. Actualizar UI
                 renderUI();
 
-                statusText.innerText = "¡Procesamiento exitoso!";
+                statusText.innerText = "¡Procesamiento exitoso! Guion listo para voz México #1";
                 statusText.classList.remove("text-gray-500", "text-red-600");
                 statusText.classList.add("text-green-600");
 
             } catch (error) {
                 console.error(error);
                 statusText.innerText = "Error procesando: " + error.message;
-                statusText.classList.remove("text-gray-500", "text-green-600");
                 statusText.classList.add("text-red-600");
             } finally {
                 btnProcess.disabled = false;
@@ -218,7 +209,7 @@
             }
         });
 
-        // LÓGICA: Procesar PDF (NUEVA VERSIÓN LARGA)
+        // PROCESAR PDF (mantiene tu lógica de recorte a ~6 minutos)
         async function processPDF(file, targetMinutes) {
             const arrayBuffer = await file.arrayBuffer();
             const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
@@ -231,53 +222,29 @@
                 fullText += pageText + "\n\n";
             }
 
-            // Limpiamos y filtramos párrafos reales (ignoramos basurilla corta)
-            const rawParagraphs = fullText.split('\n\n').map(p => p.trim()).filter(p => p.length > 50);
+            const rawParagraphs = fullText.split('\n\n').map(p => p.trim()).filter(p => p.length > 40);
             const title = file.name.replace('.pdf', '');
-            
-            // Buscar un buen hook al principio
-            const hook = rawParagraphs.find(p => p.length > 80 && p.length < 300) || "En entornos modernos, el problema no es el exceso de estímulos, sino la falta de interpretación.";
 
-            // Para 8 minutos, buscamos aprox 1200 palabras (150 palabras x minuto)
-            const targetWords = targetMinutes * 150;
+            const targetWords = targetMinutes * 150; // ≈150 palabras por minuto
             let currentWords = 0;
             let bodyParagraphs = [];
 
-            // Recopilamos párrafos hasta acercarnos a la duración objetivo
-            for (let i = 1; i < rawParagraphs.length; i++) { // Saltamos el index 0 que suele ser el título
-                const p = rawParagraphs[i];
+            for (let p of rawParagraphs) {
                 const wordCount = p.split(/\s+/).length;
-                if (currentWords + wordCount <= targetWords + 200) { // Margen de error
-                    bodyParagraphs.push(p);
+                if (currentWords + wordCount <= targetWords + 250) {
+                    bodyParagraphs.push(p.replace(/\s+/g, ' '));
                     currentWords += wordCount;
                 } else {
                     break;
                 }
             }
 
-            // Si el ensayo es corto, agarramos todo lo que haya
-            if (bodyParagraphs.length === 0) bodyParagraphs = rawParagraphs;
+            if (bodyParagraphs.length === 0) bodyParagraphs = rawParagraphs.map(p => p.replace(/\s+/g, ' '));
 
-            // Dividir los párrafos extraídos en 4 bloques sustanciales
-            const sections = [];
-            const numSections = 4;
-            const parasPerSection = Math.ceil(bodyParagraphs.length / numSections);
-            
-            for (let i = 0; i < numSections; i++) {
-                const chunk = bodyParagraphs.slice(i * parasPerSection, (i + 1) * parasPerSection);
-                if (chunk.length > 0) {
-                    sections.push({
-                        id: i + 1,
-                        title: `Punto de Inflexión ${i + 1}`,
-                        summary: chunk.join('\n\n') // AQUÍ MANTENEMOS TODO EL TEXTO
-                    });
-                }
-            }
-
-            return { title: title.trim(), hook: hook.trim(), sections: sections };
+            return { title: title.trim(), paragraphs: bodyParagraphs };
         }
 
-        // LÓGICA: Procesar Imágenes
+        // PROCESAR IMÁGENES (sin cambios)
         async function processImages(fileList) {
             const files = Array.from(fileList).filter(f => f.type.startsWith('image/'));
             files.sort((a, b) => a.name.localeCompare(b.name));
@@ -291,7 +258,7 @@
                     const tags = ExifReader.load(arrayBuffer);
                     if (tags['DateTimeOriginal']) metadata.date = tags['DateTimeOriginal'].description;
                     if (tags['Model']) metadata.camera = tags['Model'].description;
-                } catch (e) { console.warn(`No EXIF for ${file.name}`); }
+                } catch (e) {}
 
                 const previewUrl = URL.createObjectURL(file);
                 artbook.push({
@@ -306,10 +273,9 @@
             return artbook;
         }
 
-        // LÓGICA: Construir JSON Editorial
         function buildEditorialData(pdfData, artbookData) {
             const settings = {
-                title: document.getElementById('podcastTitle').value,
+                title: document.getElementById('podcastTitle').value.trim() || (document.getElementById('language').value === 'es' ? 'El Activo de la Claridad' : 'The Clarity Asset'),
                 duration: document.getElementById('durationTarget').value,
                 lang: document.getElementById('language').value
             };
@@ -320,61 +286,79 @@
             });
 
             editorialData = {
-                podcast: {
-                    title: settings.title,
-                    episode_slug: pdfData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, ''),
-                    duration_target: `${settings.duration}min`,
-                    language: settings.lang
-                },
+                podcast: settings,
                 source: {
                     type: "essay",
                     author: "Self Love Club | Research & Strategy",
                     original_title: pdfData.title,
-                    tags: ["strategy", "clarity", "auto-generated"]
+                    tags: ["clarity", "strategy", "auto-generated"]
                 },
                 artbook: cleanArtbook,
-                structure: { hook: pdfData.hook, sections: pdfData.sections }
+                structure: { paragraphs: pdfData.paragraphs }
             };
             editorialData._uiArtbook = artbookData; 
         }
 
-        // LÓGICA: Generar Guion
+        // FUNCIÓN CLAVE: Convierte el texto en parlamento 100% natural
+        function naturalizeParagraphs(paragraphs, lang) {
+            let body = "";
+            const isSpanish = lang === 'es';
+
+            paragraphs.forEach(para => {
+                // 1. Eliminar títulos y subtítulos (líneas cortas en mayúsculas o que terminan en :)
+                if (para.length < 90 && (para === para.toUpperCase() || para.trim().endsWith(':'))) {
+                    return; // saltamos títulos
+                }
+
+                // 2. Convertir viñetas y listas a lenguaje hablado natural
+                let spoken = para
+                    .replace(/•\s*/g, isSpanish ? 'Por ejemplo, ' : 'For example, ')
+                    .replace(/-\s*/g, isSpanish ? 'Otro punto importante es que ' : 'Another key point is that ')
+                    .replace(/\*\s*/g, isSpanish ? 'Además, ' : 'Also, ')
+                    .replace(/^\d+\.\s*/gm, isSpanish ? 'En primer lugar, ' : 'First, ')
+                    .replace(/^\d+\)\s*/gm, isSpanish ? 'Luego, ' : 'Then, ');
+
+                // 3. Asegurar puntuación fluida y pausas naturales
+                spoken = spoken.replace(/\.\s+/g, '. ').replace(/,\s+/g, ', ');
+
+                body += spoken + "\n\n";
+            });
+
+            return body;
+        }
+
+        // GENERAR GUION CON TU ESTRUCTURA EXACTA
         function generatePodcastScript() {
             const p = editorialData.podcast;
             const s = editorialData.source;
-            const st = editorialData.structure;
-            const lang = p.language;
+            const paragraphs = editorialData.structure.paragraphs;
+            const lang = p.lang;
 
-            // Textos dinámicos por idioma
-            const tIntro = lang === 'es' ? "INTRODUCCIÓN" : "INTRO";
-            const tToday = lang === 'es' ? "Hoy exploramos la dinámica detrás de" : "Today we explore the dynamics behind";
-            const tSection = lang === 'es' ? "SECCIÓN" : "SECTION";
-            const tReflect = lang === 'es' ? "REFLEXIÓN ESTRATÉGICA" : "STRATEGIC REFLECTION";
-            const tReflectText = lang === 'es' 
-                ? "¿Cómo equilibramos el ruido con la verdad? Esa es la pregunta definitiva en entornos modernos." 
-                : "How do we balance the noise with the truth? That is the ultimate strategic question.";
-            const tOutro = lang === 'es' ? "CIERRE" : "OUTRO";
-            const tOutroText = lang === 'es' 
-                ? `Gracias por escuchar ${p.title}. Para referencias visuales que acompañan este concepto, revisa el artbook del episodio.` 
-                : `Thank you for listening to ${p.title}. For visual references, check the episode's artbook.`;
+            let script = "";
 
-            let script = `[PODCAST TITLE]: ${p.title}\n`;
-            script += `EPISODE: ${s.original_title}\n\n`;
-            script += `${tIntro}\n"${st.hook}"\n\n`;
-            script += `${tToday} ${s.original_title}...\n\n`;
+            // INTRO (igual al que Ximena tenía + tu nombre de podcast)
+            if (lang === 'es') {
+                script += `Bienvenidos a ${p.title}, el podcast donde el autoconocimiento y la claridad se convierten en tu mayor ventaja competitiva en la vida y en los negocios. Exploramos ideas que transforman cómo lideramos, decidimos y crecemos.\n\n`;
+                script += `Imagina esto: hoy vamos a profundizar en el concepto de ${s.original_title}.\n\n`;
+            } else {
+                script += `Welcome to ${p.title}, the podcast where self-awareness and clarity become your greatest competitive advantage in life and business. We explore ideas that transform how we lead, decide, and grow.\n\n`;
+                script += `Picture this: today we are going to dive into the concept of ${s.original_title}.\n\n`;
+            }
 
-            st.sections.forEach((sec, idx) => {
-                script += `${tSection} ${idx + 1} — ${sec.title}\n`;
-                script += `${sec.summary}\n\n`; // AHORA SÍ TRAE LOS PÁRRAFOS COMPLETOS
-            });
+            // CUERPO NATURALIZADO (sin títulos, sin viñetas, lenguaje hablado)
+            const naturalBody = naturalizeParagraphs(paragraphs, lang);
+            script += naturalBody;
 
-            script += `${tReflect}\n${tReflectText}\n\n`;
-            script += `${tOutro}\n${tOutroText}\n`;
+            // CIERRE CON TU NUEVA FIRMA “Claridad!”
+            if (lang === 'es') {
+                script += `Gracias por escuchar este episodio de ${p.title}. Si este contenido te resonó, compártelo con alguien que lo necesite y suscríbete para no perderte el próximo. Recuerda: tu autoconocimiento es tu mayor inversión. ¡A desear claridad siempre! Claridad!\n`;
+            } else {
+                script += `Thank you for listening to this episode of ${p.title}. If this content resonated with you, share it with someone who needs it and subscribe so you don't miss the next one. Remember: your self-awareness is your greatest investment. Clarity always! Clarity!\n`;
+            }
 
-            finalScriptText = script;
+            finalScriptText = script.trim();
         }
 
-        // LÓGICA: Actualizar UI
         function renderUI() {
             document.getElementById('scriptPreview').value = finalScriptText;
             const gallery = document.getElementById('artbookGallery');
@@ -393,60 +377,46 @@
             resultsSection.classList.remove('hide');
         }
 
-        // LÓGICA: Botón Copiar a Portapapeles
+        // Botón Copiar
         document.getElementById('copyScriptBtn').addEventListener('click', function() {
             const textAreaElement = document.getElementById('scriptPreview');
-            
             const tempTextArea = document.createElement('textarea');
             tempTextArea.value = textAreaElement.value;
             document.body.appendChild(tempTextArea);
             tempTextArea.select();
-            tempTextArea.setSelectionRange(0, 99999); 
-            
-            try {
-                document.execCommand('copy');
-                const originalText = this.innerHTML;
-                this.innerHTML = '✅ ¡Copiado y listo!';
-                this.classList.remove('bg-black', 'hover:bg-gray-800');
-                this.classList.add('bg-green-600', 'hover:bg-green-700');
-                
-                setTimeout(() => {
-                    this.innerHTML = originalText;
-                    this.classList.add('bg-black', 'hover:bg-gray-800');
-                    this.classList.remove('bg-green-600', 'hover:bg-green-700');
-                }, 2000);
-            } catch (err) {
-                alert('No se pudo copiar automáticamente. Por favor, selecciona el texto y cópialo.');
-            }
-            
+            tempTextArea.setSelectionRange(0, 99999);
+            document.execCommand('copy');
             document.body.removeChild(tempTextArea);
+
+            const originalText = this.innerHTML;
+            this.innerHTML = '✅ ¡Copiado y listo para tu iPhone!';
+            this.classList.add('bg-green-600');
+            setTimeout(() => {
+                this.innerHTML = originalText;
+                this.classList.remove('bg-green-600');
+            }, 2000);
         });
 
-        // LÓGICA: Descargas (Opcionales)
+        // Descargas opcionales
         function downloadFile(content, fileName, mimeType) {
             const blob = new Blob([content], { type: mimeType });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
             a.download = fileName;
-            document.body.appendChild(a);
             a.click();
-            document.body.removeChild(a);
             URL.revokeObjectURL(url);
         }
 
         document.getElementById('downloadManifestBtn').addEventListener('click', () => {
-            downloadFile(JSON.stringify(editorialData.artbook, null, 2), `${editorialData.podcast.episode_slug}-artbook.json`, 'application/json');
+            downloadFile(JSON.stringify(editorialData.artbook, null, 2), `${editorialData.podcast.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-artbook.json`, 'application/json');
         });
 
         document.getElementById('downloadMetadataBtn').addEventListener('click', () => {
             const exportData = { ...editorialData };
             delete exportData._uiArtbook;
-            downloadFile(JSON.stringify(exportData, null, 2), `${editorialData.podcast.episode_slug}-full-metadata.json`, 'application/json');
+            downloadFile(JSON.stringify(exportData, null, 2), `${editorialData.podcast.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-metadata.json`, 'application/json');
         });
-
     </script>
 </body>
 </html>
-
-
