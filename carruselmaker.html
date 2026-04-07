@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kinetic Clarity Engine - Self Love Club</title>
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -25,28 +24,22 @@
         }
     </script>
 
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     
-    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- html-to-image -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.js"></script>
 
-    <!-- React & Babel -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-    <!-- PWA + Icono -->
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="assets/Images/logo.png" type="image/png">
     <link rel="apple-touch-icon" href="assets/Images/logo.png">
     <meta name="theme-color" content="#0f172a">
     <meta name="apple-mobile-web-app-capable" content="yes">
 
-    <!-- JSZip -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
     <style>
@@ -188,14 +181,14 @@
                         parts: [{
                             text: `Create EXACTLY 7 carousel slides for Self Love Club based on the following text.
 
+CRITICAL RULE: This must be a SINGLE CONTINUOUS NARRATIVE THREAD, not 7 independent ideas. It should read like a page-turner where one sentence naturally flows into the next slide.
+
 Rules:
-- Respond entirely in the same language as the input text below. Do not translate to Spanish.
-- Use a motivational tone with kinetic clarity.
-- Exactly 7 slides.
-- The whole presentation must develop ONE single idea from beginning to end.
-- Slide 1: Strong title + central premise.
-- Slides 2-6: Continuous development of that premise (not independent content).
-- Slide 7: Closing that connects back to the initial premise and includes a clear call to action.
+- Respond entirely in the same language as the input text below.
+- Use a conversational, motivational tone with kinetic clarity.
+- Slide 1 (The Hook): Provide a strong "title" and "subtitle" to introduce the premise. Leave "body" empty.
+- Slides 2 to 6 (The Thread): DO NOT use "title" or "subtitle" (leave them empty strings). ONLY use the "body" field to continue the story smoothly from the previous slide. They must read like continuous paragraphs of the same essay. 
+- Slide 7 (The Close): Provide a strong closing "title" and a clear call to action in the "body".
 
 Return the response in this exact JSON format:
 {
@@ -212,7 +205,10 @@ Return the response in this exact JSON format:
 Input text:
 ${essay}`
                         }]
-                    }]
+                    }],
+                    generationConfig: {
+                        responseMimeType: "application/json"
+                    }
                 };
 
                 try {
@@ -225,10 +221,7 @@ ${essay}`
                     const responseText = data.candidates?.[0]?.content?.parts?.[0]?.text;
                     if (!responseText) throw new Error("La API no devolvió contenido.");
 
-                    const jsonMatch = responseText.match(/\{[\s\S]*\}/);
-                    if (!jsonMatch) throw new Error("No vino JSON válido.");
-
-                    const parsed = JSON.parse(jsonMatch[0]);
+                    const parsed = JSON.parse(responseText);
 
                     if (!parsed.slides || parsed.slides.length !== 7) {
                         throw new Error("No hay 7 slides.");
@@ -253,7 +246,9 @@ ${essay}`
                 const payload = {
                     contents: [{
                         parts: [{
-                            text: `Improve this slide while keeping the exact same language as the original (do not translate to Spanish). Return only the improved JSON.
+                            text: `Improve the wording of this specific slide while keeping the exact same language as the original. 
+Maintain the continuous narrative flow (if it has no title, don't add one, just polish the body).
+Return only the improved JSON.
 
 ${JSON.stringify(currentData)}
 
@@ -264,7 +259,10 @@ Format:
  "body": ""
 }`
                         }]
-                    }]
+                    }],
+                    generationConfig: {
+                        responseMimeType: "application/json"
+                    }
                 };
 
                 try {
@@ -275,10 +273,7 @@ Format:
                     });
 
                     const responseText = data.candidates?.[0]?.content?.parts?.[0]?.text;
-                    const jsonMatch = responseText.match(/\{[\s\S]*\}/);
-                    if (!jsonMatch) throw new Error("JSON inválido");
-
-                    const refined = JSON.parse(jsonMatch[0]);
+                    const refined = JSON.parse(responseText);
 
                     const newSlides = [...slides];
                     newSlides[currentSlide] = {
@@ -300,7 +295,7 @@ Format:
                 if (isSpeaking) { window.speechSynthesis.cancel(); setIsSpeaking(false); return; }
                 if (!('speechSynthesis' in window)) { alert("Tu navegador no soporta narración de voz nativa."); return; }
 
-                const fullText = slides.map(s => `${s.title}. ${s.subtitle || ''} ${s.body || ''}`).join(' ');
+                const fullText = slides.map(s => `${s.title || ''}. ${s.subtitle || ''} ${s.body || ''}`).join(' ');
                 const utterance = new SpeechSynthesisUtterance(fullText);
                 utterance.lang = 'es-ES'; 
                 utterance.onend = () => setIsSpeaking(false);
@@ -342,7 +337,7 @@ Format:
                                 <p className="text-sm font-serif text-slate-300">Andrés Ramírez</p>
                             </div>
                             <img 
-                                src="assets/images/andres-ramirez-portrait.jpg" 
+                                src="/assets/images/andres-ramirez-portrait.jpg" 
                                 className="w-11 h-11 rounded-full border-2 border-slate-700 shadow-md object-cover" 
                                 onError={(e) => e.target.src="https://ui-avatars.com/api/?name=AR&background=a855f7&color=fff"} 
                                 alt="Andrés Ramírez" 
@@ -355,7 +350,7 @@ Format:
                             <div className="bg-surface p-8 rounded-3xl shadow-2xl border border-slate-800 relative overflow-hidden">
                                 <div className="absolute top-0 right-0 w-64 h-64 bg-kinetic/5 rounded-full blur-[80px] -mr-20 -mt-20 pointer-events-none"></div>
                                 <h2 className="text-3xl font-serif font-bold mb-2 text-white">Generador de Activos</h2>
-                                <p className="text-slate-400 text-sm mb-8 font-light">Transforma conocimiento en carruseles.</p>
+                                <p className="text-slate-400 text-sm mb-8 font-light">Transforma conocimiento en carruseles fluidos.</p>
                                 
                                 <div className="space-y-6 relative z-10">
                                     <div className="space-y-2">
@@ -374,6 +369,7 @@ Format:
                                             className="w-full bg-[#0b1121] border border-slate-700 rounded-xl p-3 text-sm focus:border-kinetic focus:outline-none text-slate-300"
                                         >
                                             <option value="gemini-2.5-flash">gemini-2.5-flash (recomendado)</option>
+                                            <option value="gemini-2.5-pro">gemini-2.5-pro (mejor redacción)</option>
                                             <option value="gemini-2.5-flash-lite">gemini-2.5-flash-lite (más rápido y barato)</option>
                                             <option value="gemini-1.5-flash">gemini-1.5-flash (si tu key es vieja)</option>
                                         </select>
@@ -398,14 +394,14 @@ Format:
 
                                     <div className="space-y-2">
                                         <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500"><i className="fa-solid fa-file-lines mr-1"></i> Ensayo</label>
-                                        <textarea className="w-full h-48 p-5 bg-[#0b1121] border border-slate-700 rounded-2xl focus:border-kinetic outline-none text-sm text-slate-300 leading-relaxed font-light" placeholder="Pega tu ensayo..." value={essay} onChange={(e) => setEssay(e.target.value)} />
+                                        <textarea className="w-full h-48 p-5 bg-[#0b1121] border border-slate-700 rounded-2xl focus:border-kinetic outline-none text-sm text-slate-300 leading-relaxed font-light" placeholder="Pega tu ensayo (se generará como una historia continua)..." value={essay} onChange={(e) => setEssay(e.target.value)} />
                                     </div>
 
                                     {error && <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-xs font-medium"><i className="fa-solid fa-circle-exclamation mr-1"></i> {error}</div>}
 
                                     <button onClick={generateCarousel} disabled={loading || !essay || !userApiKey} className="w-full py-4 bg-white text-kineticDark rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-slate-200 disabled:opacity-50 transition-all shadow-xl">
                                         {loading ? <i className="fa-solid fa-circle-notch fa-spin"></i> : <i className="fa-solid fa-wand-magic-sparkles"></i>}
-                                        {loading ? "SINTETIZANDO..." : "GENERAR CARRUSEL"}
+                                        {loading ? "SINTETIZANDO HISTORIA..." : "GENERAR CARRUSEL"}
                                     </button>
                                 </div>
                             </div>
@@ -433,15 +429,16 @@ Format:
                                             <div className={`w-2 h-2 rounded-full ${stylesConfig[currentStyle].accent}`}></div>
                                         </div>
 
-                                        <div className="z-10 space-y-6">
-                                            <div className={`w-12 h-1 ${stylesConfig[currentStyle].accent} mb-4`}></div>
+                                        <div className={`z-10 w-full flex-grow flex flex-col justify-center ${slides[currentSlide].slideNumber === 7 ? 'items-center text-center' : ''}`}>
+                                            <div className={`w-12 h-1 ${stylesConfig[currentStyle].accent} mb-6 ${slides[currentSlide].slideNumber === 7 ? 'mx-auto' : ''}`}></div>
+                                            
                                             {slides[currentSlide].slideNumber === 1 ? (
                                                 <div className="space-y-6">
                                                     <h3 className={`text-5xl leading-[1.05] ${stylesConfig[currentStyle].fontHeading}`}>{slides[currentSlide].title}</h3>
                                                     <p className={`text-xl opacity-60 font-medium italic ${stylesConfig[currentStyle].fontBody}`}>{slides[currentSlide].subtitle}</p>
                                                 </div>
                                             ) : slides[currentSlide].slideNumber === 7 ? (
-                                                <div className="space-y-8 flex flex-col items-center text-center">
+                                                <div className="space-y-6 flex flex-col items-center">
                                                     <h3 className={`text-4xl ${stylesConfig[currentStyle].fontHeading}`}>{slides[currentSlide].title}</h3>
                                                     {slides[currentSlide].body && (
                                                         <p className={`text-xl opacity-80 leading-relaxed max-w-[340px] ${stylesConfig[currentStyle].fontBody}`}>
@@ -451,17 +448,21 @@ Format:
                                                 </div>
                                             ) : (
                                                 <div className="space-y-4">
-                                                    <h3 className={`text-3xl leading-tight ${stylesConfig[currentStyle].fontHeading}`}>{slides[currentSlide].title}</h3>
-                                                    <p className={`text-lg opacity-80 leading-relaxed ${stylesConfig[currentStyle].fontBody}`}>{slides[currentSlide].body}</p>
+                                                    {slides[currentSlide].title && (
+                                                        <h3 className={`text-3xl leading-tight ${stylesConfig[currentStyle].fontHeading}`}>{slides[currentSlide].title}</h3>
+                                                    )}
+                                                    <p className={`${slides[currentSlide].title ? 'text-lg' : 'text-2xl leading-[1.5]'} opacity-90 font-medium ${stylesConfig[currentStyle].fontBody}`}>
+                                                        {slides[currentSlide].body}
+                                                    </p>
                                                 </div>
                                             )}
                                         </div>
 
-                                        <div className={`flex items-center justify-between border-t ${stylesConfig[currentStyle].border} pt-8 z-10`}>
+                                        <div className={`flex items-center justify-between border-t ${stylesConfig[currentStyle].border} pt-8 z-10 mt-6`}>
                                             {slides[currentSlide].slideNumber === 7 ? (
                                                 <div className="flex items-center gap-4">
                                                     <img 
-                                                        src="assets/images/andres-ramirez-portrait.jpg" 
+                                                        src="/assets/images/andres-ramirez-portrait.jpg" 
                                                         className="w-12 h-12 rounded-full border border-slate-300 object-cover" 
                                                         onError={(e) => e.target.src="https://ui-avatars.com/api/?name=AR&background=a855f7&color=fff"} 
                                                         alt="Andrés Ramírez" 
@@ -501,7 +502,13 @@ Format:
                         </div>
                     </main>
 
-                    <footer className="mt-20 py-8 border-t border-slate-800 text-center">
+                    <footer className="mt-20 py-8 border-t border-slate-800 text-center flex flex-col items-center justify-center gap-6">
+                        <img 
+                            src="/assets/images/andres-ramirez-portrait.jpg" 
+                            className="w-16 h-16 rounded-full border-2 border-slate-700 shadow-md object-cover" 
+                            onError={(e) => e.target.src="https://ui-avatars.com/api/?name=AR&background=a855f7&color=fff"} 
+                            alt="Andrés Ramírez" 
+                        />
                         <div className="flex justify-center gap-8 text-xs font-black text-slate-500 uppercase tracking-widest">
                             <a href="https://threads.net/@aram7891" target="_blank" rel="noreferrer" className="hover:text-kinetic transition-colors"><i className="fa-brands fa-threads text-lg"></i> @aram7891</a>
                             <a href="https://instagram.com/selfloveclubusa" target="_blank" rel="noreferrer" className="hover:text-kinetic transition-colors"><i className="fa-brands fa-instagram text-lg"></i> @selfloveclubusa</a>
