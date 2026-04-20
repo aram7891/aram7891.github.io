@@ -128,7 +128,7 @@ body { margin: 0; padding: 0; overflow-x: hidden; width: 100%; background-color:
         </div>
         <div class="flex-1 flex justify-center">
             <div class="w-64 h-64 md:w-96 md:h-96 overflow-hidden rounded-full border border-divider shadow-sm bg-zinc-100">
-                <img src="/assets/images/andres-ramirez-portrait.jpg" alt="Andrés Ramírez" class="author-photo w-full h-full object-cover">
+                <img src="/assets/images/andres-ramirez-portrait.jpg" alt="Andrés Ramírez - Clarity Strategist" class="author-photo w-full h-full object-cover" loading="lazy" decoding="async">
             </div>
         </div>
     </section>
@@ -162,7 +162,7 @@ body { margin: 0; padding: 0; overflow-x: hidden; width: 100%; background-color:
                         <span data-i18n="tool1-help">Describe una dinámica que te genere confusión.</span>
                         <span class="block mt-1 font-bold text-ink italic" data-i18n="tool1-example">Ej: "Me busca constantemente pero evade formalizar".</span>
                     </p>
-                    <textarea id="situationInput" rows="5" class="w-full p-4 text-sm border border-divider rounded-none bg-paper focus:ring-1 focus:ring-ink outline-none mb-6" data-i18n-placeholder="placeholder-discern"></textarea>
+                    <textarea id="situationInput" rows="5" minlength="15" maxlength="500" class="w-full p-4 text-sm border border-divider rounded-none bg-paper focus:ring-1 focus:ring-ink outline-none mb-6" data-i18n-placeholder="placeholder-discern" required></textarea>
                     <button onclick="analyzeClarity()" id="analyzeBtn" class="w-full py-4 bg-ink text-white text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-opacity-90 flex items-center justify-center transition-all">
                         <span id="analyzeSpinner" class="spinner hidden"></span>
                         <span id="analyzeBtnText" data-i18n="btn-analyze">Obtener Perspectiva</span>
@@ -176,7 +176,7 @@ body { margin: 0; padding: 0; overflow-x: hidden; width: 100%; background-color:
                         <span data-i18n="tool2-help">Introduce un comportamiento o ciclo que repites.</span>
                         <span class="block mt-1 font-bold text-ink italic" data-i18n="tool2-example">Ej: "Suelo ignorar banderas rojas por el potencial de la persona".</span>
                     </p>
-                    <input id="patternInput" type="text" class="w-full p-4 text-sm border border-divider rounded-none bg-paper focus:ring-1 focus:ring-ink outline-none mb-6" data-i18n-placeholder="placeholder-audit">
+                    <input id="patternInput" type="text" minlength="15" maxlength="300" class="w-full p-4 text-sm border border-divider rounded-none bg-paper focus:ring-1 focus:ring-ink outline-none mb-6" data-i18n-placeholder="placeholder-audit" required>
                     <button onclick="generateFieldNote()" id="noteBtn" class="w-full py-4 border border-ink text-ink text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-ink hover:text-white flex items-center justify-center transition-all">
                         <span id="noteSpinner" class="spinner hidden"></span>
                         <span id="noteBtnText" data-i18n="btn-generate">Generar Nota de Campo</span>
@@ -213,11 +213,6 @@ body { margin: 0; padding: 0; overflow-x: hidden; width: 100%; background-color:
                     <a href="/content/essays/es/Arbitraje Emocional.pdf" target="_blank" class="read-btn">[LEER MÁS]</a>
                 </article>
                 <article class="essay-card">
-                    <h3 class="font-serif text-2xl mb-4 italic">El Costo de Oportunidad de Complacer a la Gente</h3>
-                    <p class="text-xs text-subtle leading-relaxed mb-8">Analizo cómo la búsqueda de aprobación externa es una mala asignación de capital emocional que erosiona la autonomía decisional.</p>
-                    <a href="/content/essays/es/El Costo de Oportunidad de Complacer a la Gente.pdf" target="_blank" class="read-btn">[LEER MÁS]</a>
-                </article>
-                <article class="essay-card">
                     <h3 class="font-serif text-2xl mb-4 italic">La Arquitectura del Silencio</h3>
                     <p class="text-xs text-subtle leading-relaxed mb-8">Lo que no decimos distorsiona nuestra percepción. Nombrar la realidad es la herramienta necesaria para restaurar la fidelidad de nuestras interacciones.</p>
                     <a href="/content/essays/es/La Arquitectura del Silencio.pdf" target="_blank" class="read-btn">[LEER MÁS]</a>
@@ -233,19 +228,9 @@ body { margin: 0; padding: 0; overflow-x: hidden; width: 100%; background-color:
                     <a href="/content/essays/es/Señal versus Ruido.pdf" target="_blank" class="read-btn">[LEER MÁS]</a>
                 </article>
                 <article class="essay-card">
-                    <h3 class="font-serif text-2xl mb-4 italic">El Progreso Disfrazado de Derrota</h3>
-                    <p class="text-xs text-subtle leading-relaxed mb-8">Por qué el crecimiento real suele sentirse como un vacío o una torpeza. Es el proceso de dejar de sobrevivir para empezar a decidir.</p>
-                    <a href="/content/essays/es/El Progreso Disfrazado de Derrota.pdf" target="_blank" class="read-btn">[LEER MÁS]</a>
-                </article>
-                <article class="essay-card">
                     <h3 class="font-serif text-2xl mb-4 italic">Conexión como Bien De Lujo</h3>
                     <p class="text-xs text-subtle leading-relaxed mb-8">Reflexiono sobre cómo el entorno digital ha encarecido el precio de la vulnerabilidad, prefiriendo la anestesia del algoritmo al vínculo real.</p>
                     <a href="/content/essays/es/Conexión como Bien De Lujo.pdf" target="_blank" class="read-btn">[LEER MÁS]</a>
-                </article>
-                <article class="essay-card">
-                    <h3 class="font-serif text-2xl mb-4 italic">Medir para Entender o Medir para Ocultar</h3>
-                    <p class="text-xs text-subtle leading-relaxed mb-8">Una mirada a los sistemas que usamos para ubicarnos. Medir honestamente no te define, simplemente te deja sin excusas frente a lo que repites.</p>
-                    <a href="/content/essays/es/Medir para Entender o Medir para Ocultar.pdf" target="_blank" class="read-btn">[LEER MÁS]</a>
                 </article>
             </div>
 
@@ -261,11 +246,6 @@ body { margin: 0; padding: 0; overflow-x: hidden; width: 100%; background-color:
                     <a href="/content/essays/en/Emotional Arbitrage.pdf" target="_blank" class="read-btn">[READ MORE]</a>
                 </article>
                 <article class="essay-card">
-                    <h3 class="font-serif text-2xl mb-4 italic">The Opportunity Cost of People-Pleasing</h3>
-                    <p class="text-xs text-subtle leading-relaxed mb-8">Analyzing how the compulsive need for external validation operates as an invisible tax, diverting capital away from truth and innovation.</p>
-                    <a href="/content/essays/en/The Opportunity Cost of People-Pleasing.pdf" target="_blank" class="read-btn">[READ MORE]</a>
-                </article>
-                <article class="essay-card">
                     <h3 class="font-serif text-2xl mb-4 italic">The Architecture of Silence</h3>
                     <p class="text-xs text-subtle leading-relaxed mb-8">How the unsaid distorts reality. Naming what matters is the essential tool for maintaining clarity and preventing emotional decay.</p>
                     <a href="/content/essays/en/The Architecture of Silence.pdf" target="_blank" class="read-btn">[READ MORE]</a>
@@ -277,7 +257,7 @@ body { margin: 0; padding: 0; overflow-x: hidden; width: 100%; background-color:
                 </article>
                 <article class="essay-card">
                     <h3 class="font-serif text-2xl mb-4 italic">Signal vs Noise</h3>
-                    <p class="text-xs text-subtle leading-relaxed mb-8">How to tell signal from noise in a saturated world. Clarity doesn’t come from consuming more; it comes from learning to ignore better.</p>
+                    <p class="text-xs text-subtle leading-relaxed mb-8">How to tell signal from noise in a saturated world. Clarity doesn't come from consuming more; it comes from learning to ignore better.</p>
                     <a href="/content/essays/en/Signal vs Noise.pdf" target="_blank" class="read-btn">[READ MORE]</a>
                 </article>
                 <article class="essay-card">
@@ -285,6 +265,11 @@ body { margin: 0; padding: 0; overflow-x: hidden; width: 100%; background-color:
                     <p class="text-xs text-subtle leading-relaxed mb-8">A behavioral look at self-location systems. Why codes often fail when pressure increases, and why honesty is the only real measurement.</p>
                     <a href="/content/essays/en/Measuring to Understand or Measuring to Hide.pdf" target="_blank" class="read-btn">[READ MORE]</a>
                 </article>
+            </div>
+
+            <div class="mt-16 text-center border-t border-divider pt-12">
+                <p class="text-subtle text-sm mb-6">Los ensayos completos y análisis profundos están disponibles en <strong>Self Love Club</strong>.</p>
+                <a href="https://instagram.com/selfloveclubusa" target="_blank" rel="noopener noreferrer" class="px-8 py-3 bg-accent text-white text-sm font-bold uppercase tracking-widest hover:bg-opacity-90 rounded-sm transition-all inline-block">Acceder al Ecosistema</a>
             </div>
         </div>
     </section>
@@ -339,7 +324,7 @@ body { margin: 0; padding: 0; overflow-x: hidden; width: 100%; background-color:
                     <div class="text-[7px] border-t border-divider pt-2 opacity-50">Workbook</div>
                 </div>
                 <div class="flex-1 text-left">
-                    <h3 class="font-serif text-2xl mb-3">Don’t Lose Yourself While Dating</h3>
+                    <h3 class="font-serif text-2xl mb-3">Don't Lose Yourself While Dating</h3>
                     <p class="text-xs text-subtle leading-relaxed mb-6">A Practical Workbook for Setting Boundaries, Protecting Your Identity, and Choosing From Clarity.</p>
                     <a href="https://a.co/d/04zOx2K6" target="_blank" class="read-btn">Amazon</a>
                 </div>
@@ -381,153 +366,18 @@ body { margin: 0; padding: 0; overflow-x: hidden; width: 100%; background-color:
 <footer class="py-32 px-6 bg-paper text-center border-t border-divider text-ink">
     <div class="max-w-4xl mx-auto flex flex-col items-center">
         <div class="w-16 h-16 mb-8 overflow-hidden rounded-full border border-divider shadow-sm">
-            <img src="/assets/images/andres-ramirez-portrait.jpg" alt="Andrés Ramírez" class="author-photo w-full h-full">
+            <img src="/assets/images/andres-ramirez-portrait.jpg" alt="Andrés Ramírez - Clarity Strategist" class="author-photo w-full h-full" loading="lazy" decoding="async">
         </div>
         <div class="font-serif text-2xl mb-4 tracking-[0.3em] uppercase font-bold">ANDRÉS RAMÍREZ</div>
         <p class="text-[10px] text-subtle uppercase tracking-[0.3em] mb-12 italic">andres@selfloveclubstore.com</p>
         <div class="flex gap-10 text-[10px] font-bold uppercase tracking-[0.3em] text-subtle mb-16">
-            <a href="https://www.threads.net/@aram7891" target="_blank" class="hover:text-ink">Threads</a>
-            <a href="https://www.instagram.com/selfloveclubusa" target="_blank" class="hover:text-ink">Instagram</a>
+            <a href="https://www.threads.net/@aram7891" target="_blank" rel="noopener noreferrer" class="hover:text-ink">Threads</a>
+            <a href="https://www.instagram.com/selfloveclubusa" target="_blank" rel="noopener noreferrer" class="hover:text-ink">Instagram</a>
         </div>
         <div class="text-[8px] text-zinc-400 uppercase tracking-[0.4em]">&copy; 2026 Andrés Ramírez. All rights reserved.</div>
     </div>
 </footer>
 
-<script>
-/**
- * LÓGICA DE TRADUCCIÓN Y UI (ÍNTEGRA)
- */
-const translations = {
-    es: {
-        "nav-home": "Inicio", "nav-about": "Autor", "nav-tools": "Laboratorio", "nav-books": "Libros", "nav-archive": "Archivo",
-        "hero-kicker": "Autor", "hero-title": "Claridad antes que Conexión.", "hero-subtitle": "Porque el costo de amar sin discernir es perderte a ti mismo.",
-        "hero-btn-read": "Leer mis escritos", "hero-btn-more": "Más sobre mí",
-        "about-kicker": "Sobre el Autor", "about-title": "Andrés Ramírez",
-        "about-p1": "Escribo para personas que buscan claridad —no perfección— en sus relaciones. Mi trabajo explora cómo la presión emocional distorsiona el juicio, y cómo mantenerte alineado contigo mismo al elegir quién y qué permites entrar en tu vida.",
-        "about-p2": "No prometo transformaciones ni soluciones rápidas. Ofrezco presencia, discernimiento y herramientas para tomar decisiones adultas bajo presión emocional. Este trabajo es para personas que están cansadas de repetir patrones que ya entienden—aquellos listos para asumir la responsabilidad personal, la madurez emocional y el coraje silencioso requerido para elegir conexiones alineadas con sus valores, no con sus miedos o fantasías.",
-        "about-p3": "No me interesa ayudar a que las personas se sientan mejor temporalmente o a replantear todo como crecimiento. Me interesa ayudar a que las personas se mantengan intactas cuando el deseo, la esperanza o la soledad generan presión para comprometer su claridad. Estos libros no tratan sobre cómo ser más digno de amor, más sanado o más atractivo. Tratan sobre aprender a no abandonarte a ti mismo mientras buscas conexión.",
-        "tools-label": "Laboratorio de Discernimiento", "tools-title": "Interacción con la Claridad", "tools-desc": "Laboratorio práctico de discernimiento relacional. Convertimos confusión emocional en datos accionables mediante auditorías técnicas.",
-        "tool1-title": "Discernimiento Relacional", "tool1-subtitle": "Perspectiva Técnica", "tool1-help": "Describe una dinámica que te genere confusión.", "tool1-example": "Ej: \"Me busca constantemente pero evade formalizar\".",
-        "tool2-title": "Auditoría Emocional", "tool2-subtitle": "Patrones de Activo/Pasivo", "tool2-help": "Introduce un comportamiento o ciclo que repites.", "tool2-example": "Ej: \"Suelo ignorar banderas rojas por el potencial de la persona\".",
-        "btn-analyze": "Obtener Perspectiva", "btn-generate": "Generar Nota de Campo", "archive-label": "Hemeroteca", "archive-title": "Archivo de Ensayos",
-        "placeholder-discern": "Tu situación...", "placeholder-audit": "Tu patrón...", "tab-es": "Español", "tab-en": "English", "record-label": "Registro de Auditoría", "notes-kicker": "Archivo Privado", "notes-title": "Notas de Campo", "notes-p1": "Una vez al mes envío una nota técnica a quienes desean profundizar en el marco de \"Claridad antes que Conexión\".", "notes-cta": "Solicitar Acceso al Archivo", "notes-btn": "Recibir Notas Privadas",
-        "slc-p1": "Soy el creador de Self Love Club—una plataforma dedicada a la claridad, el autorrespeto y la toma de decisiones consciente en las relaciones. Self Love Club no se trata de afirmaciones o atajos de autoestima. Es un ecosistema curado de ideas, herramientas y trabajo escrito diseñado para ayudar a las personas a mantenerse arraigadas en su identidad mientras navegan la atracción, el apego y la elección.",
-        "slc-p2": "Todo dentro del club está construido en torno al autoconocimiento aplicado—cómo la claridad se convierte en algo que practicas, no solo que entiendes. No se trata de sentirse bien en el momento; se trata de desarrollar la capacidad de tomar decisiones que honran quién eres, incluso cuando las emociones están a flor de piel y la presión externa aumenta.",
-        "slc-p3": "La plataforma sirve como un recurso integral para aquellos comprometidos a mantener su integridad mientras buscan una conexión significativa. Es para personas que entienden que el amor propio no se trata de aislamiento o perfección, sino de mantenerse conectado a uno mismo mientras se permanece abierto a los demás.",
-        "slc-btn": "Explorar el Ecosistema"
-    },
-    en: {
-        "nav-home": "Home", "nav-about": "Author", "nav-tools": "Lab", "nav-books": "Books", "nav-archive": "Archive",
-        "hero-kicker": "Author", "hero-title": "Clarity Before Connection.", "hero-subtitle": "Because attraction without discernment costs you yourself.",
-        "hero-btn-read": "Read my essays", "hero-btn-more": "More about me",
-        "about-kicker": "About the Author", "about-title": "Andrés Ramírez",
-        "about-p1": "I write for people who seek clarity—not perfection—in their relationships. My work explores how emotional pressure distorts judgment, and how to stay aligned with yourself while choosing who and what you allow into your life.",
-        "about-p2": "I don't promise transformation or quick fixes. I offer presence, discernment, and tools for making adult decisions under emotional pressure. This work is for people who are tired of repeating patterns they already understand—those ready to embrace personal responsibility, emotional maturity, and the quiet courage required to choose connections aligned with their values, not their fears or fantasies.",
-        "about-p3": "I'm not interested in helping people feel better temporarily or reframe everything as growth. I'm interested in helping people stay intact when desire, hope, or loneliness create pressure to compromise clarity. These books are not about becoming more lovable, more healed, or more attractive. They are about learning how not to abandon yourself while seeking connection.",
-        "tools-label": "Discernment Lab", "tools-title": "Clarity Interaction", "tools-desc": "Practical relational discernment lab. We turn emotional confusion into actionable data through technical audits.",
-        "btn-analyze": "Get Perspective", "btn-generate": "Generate Field Note", "archive-label": "Archive", "archive-title": "Essay Archive",
-        "placeholder-discern": "Your situation...", "placeholder-audit": "Your pattern...", "tab-es": "Spanish", "tab-en": "English", "slc-btn": "Explore Ecosystem"
-    }
-};
-
-const aiPrompts = {
-    es: { 
-        clarity: "Eres Andrés Ramírez. Autor estoico y clínico. Analiza la dinámica separando HECHOS de NARRATIVA. No saludes. Sé directo e incisivo.", 
-        audit: "Eres Andrés Ramírez. Analiza el patrón como Auditor de Capital Emocional. Clasifica como ACTIVO o PASIVO CRÍTICO. Sé quirúrgico." 
-    },
-    en: { 
-        clarity: "You are Andrés Ramírez. Separate FACTS from NARRATIVE. End with a piercing observation on integrity.", 
-        audit: "You are Andrés Ramírez. Analyze as an Emotional Capital Auditor. Classify as ASSET or CRITICAL LIABILITY. Be brief and surgical." 
-    }
-};
-
-let currentLang = 'es';
-
-function setLanguage(lang) {
-    currentLang = lang;
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (translations[lang][key]) el.innerText = translations[lang][key];
-    });
-    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-        const key = el.getAttribute('data-i18n-placeholder');
-        if (translations[lang][key]) el.placeholder = translations[lang][key];
-    });
-    document.getElementById('btn-es').className = lang === 'es' ? 'lang-switch lang-active rounded-l' : 'lang-switch rounded-l';
-    document.getElementById('btn-en').className = lang === 'en' ? 'lang-switch lang-active rounded-r border-l-0' : 'lang-switch rounded-r border-l-0';
-    switchContentTabs(lang);
-}
-
-function switchContentTabs(tab) {
-    document.getElementById('essays-grid-es').classList.toggle('hidden', tab !== 'es');
-    document.getElementById('essays-grid-en').classList.toggle('hidden', tab !== 'en');
-    document.getElementById('essay-tab-es').className = tab === 'es' ? 'essay-tab active' : 'essay-tab';
-    document.getElementById('essay-tab-en').className = tab === 'en' ? 'essay-tab active' : 'essay-tab';
-}
-
-function scrollToSection(id) {
-    const el = document.getElementById(id);
-    if (el) window.scrollTo({ top: el.offsetTop - 120, behavior: 'smooth' });
-}
-
-function toggleMobileMenu() {
-    // Implementación si fuera necesario el menú móvil
-}
-
-function closeBanner() {
-    document.getElementById('announcement-banner').style.display = 'none';
-    document.documentElement.classList.add('banner-closed');
-}
-
-/**
- * CONEXIÓN SEGURA CON EL LABORATORIO (Vía Vercel)
- */
-async function callGemini(prompt, systemPrompt) {
-    try {
-        const response = await fetch('/api', { 
-            method: 'POST', 
-            headers: { 'Content-Type': 'application/json' }, 
-            body: JSON.stringify({ prompt, systemPrompt }) 
-        });
-        const data = await response.json();
-        return data.result || "Error en el Laboratorio.";
-    } catch (e) {
-        return "Error de conexión con el Laboratorio.";
-    }
-}
-
-function formatResponse(text) {
-    return text.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-}
-
-async function analyzeClarity() {
-    const input = document.getElementById('situationInput');
-    if (!input.value.trim()) return;
-    const btnText = document.getElementById('analyzeBtnText');
-    const spinner = document.getElementById('analyzeSpinner');
-    const div = document.getElementById('clarityResult');
-    spinner.classList.remove('hidden'); btnText.innerText = "...";
-    const text = await callGemini(input.value, aiPrompts[currentLang].clarity);
-    div.innerHTML = formatResponse(text);
-    div.classList.remove('hidden');
-    spinner.classList.add('hidden'); btnText.innerText = translations[currentLang]["btn-analyze"];
-}
-
-async function generateFieldNote() {
-    const input = document.getElementById('patternInput');
-    if (!input.value.trim()) return;
-    const btnText = document.getElementById('noteBtnText');
-    const spinner = document.getElementById('noteSpinner');
-    const divResult = document.getElementById('noteResult');
-    const content = document.getElementById('noteContent');
-    spinner.classList.remove('hidden'); btnText.innerText = "...";
-    const text = await callGemini(input.value, aiPrompts[currentLang].audit);
-    content.innerHTML = formatResponse(text);
-    divResult.classList.remove('hidden');
-    spinner.classList.add('hidden'); btnText.innerText = translations[currentLang]["btn-generate"];
-}
-
-window.onload = () => setLanguage('es');
-</script>
+<script src="/js/main.js"></script>
 </body>
 </html>
