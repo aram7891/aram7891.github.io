@@ -1,6 +1,6 @@
 /**
  * ANDRÉS RAMÍREZ | CLARITY STRATEGIST
- * Main JavaScript (v3.0 - CORRECTA)
+ * Main JavaScript (v3.0 - OPENAI FINAL)
  * Traducción + Laboratorio + Navegación
  */
 
@@ -92,11 +92,11 @@ function closeBanner() {
     document.documentElement.classList.add('banner-closed');
 }
 
-// ====== LABORATORIO ======
+// ====== LABORATORIO (OPENAI) ======
 
-async function callGemini(texto, tipo) {
+async function callLaboratory(texto, tipo) {
     try {
-        console.log('📤 Enviando:', { texto, tipo });
+        console.log('📤 Enviando a OpenAI:', { texto, tipo });
         
         const response = await fetch('/api', { 
             method: 'POST', 
@@ -113,7 +113,7 @@ async function callGemini(texto, tipo) {
         }
         
         const data = await response.json();
-        console.log('✅ Data recibida:', data);
+        console.log('✅ Data recibida de OpenAI:', data);
         
         return data.respuesta || "Error en el Laboratorio.";
     } catch (e) {
@@ -143,7 +143,7 @@ async function analyzeClarity() {
     btnText.innerText = "...";
     input.disabled = true;
     
-    const text = await callGemini(value, 'discern');
+    const text = await callLaboratory(value, 'discern');
     div.innerHTML = formatResponse(text);
     div.classList.remove('hidden');
     
@@ -170,7 +170,7 @@ async function generateFieldNote() {
     btnText.innerText = "...";
     input.disabled = true;
     
-    const text = await callGemini(value, 'audit');
+    const text = await callLaboratory(value, 'audit');
     content.innerHTML = formatResponse(text);
     divResult.classList.remove('hidden');
     
