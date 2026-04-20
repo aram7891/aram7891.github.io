@@ -1,9 +1,7 @@
 /**
  * ANDRÉS RAMÍREZ | CLARITY STRATEGIST
- * Main JavaScript (v2.0)
- * - Traducción i18n
- * - Laboratorio de Discernimiento
- * - Navegación smooth
+ * Main JavaScript (v3.0 - CORRECTA)
+ * Traducción + Laboratorio + Navegación
  */
 
 // ====== TRADUCCIÓN ======
@@ -54,17 +52,6 @@ const translations = {
     }
 };
 
-const aiPrompts = {
-    es: { 
-        clarity: "Eres Andrés Ramírez. Autor estoico y clínico. Analiza la dinámica separando HECHOS de NARRATIVA. No saludes. Sé directo e incisivo.", 
-        audit: "Eres Andrés Ramírez. Analiza el patrón como Auditor de Capital Emocional. Clasifica como ACTIVO o PASIVO CRÍTICO. Sé quirúrgico." 
-    },
-    en: { 
-        clarity: "You are Andrés Ramírez. Separate FACTS from NARRATIVE. End with a piercing observation on integrity.", 
-        audit: "You are Andrés Ramírez. Analyze as an Emotional Capital Auditor. Classify as ASSET or CRITICAL LIABILITY. Be brief and surgical." 
-    }
-};
-
 let currentLang = 'es';
 
 // ====== FUNCIONES PRINCIPALES ======
@@ -97,7 +84,7 @@ function scrollToSection(id) {
 }
 
 function toggleMobileMenu() {
-    // Implementación de menú móvil si fuera necesaria
+    // Mobile menu implementation if needed
 }
 
 function closeBanner() {
@@ -107,19 +94,31 @@ function closeBanner() {
 
 // ====== LABORATORIO ======
 
-async function callGemini(prompt, systemPrompt) {
+async function callGemini(texto, tipo) {
     try {
+        console.log('📤 Enviando:', { texto, tipo });
+        
         const response = await fetch('/api', { 
             method: 'POST', 
             headers: { 'Content-Type': 'application/json' }, 
-            body: JSON.stringify({ prompt, systemPrompt }) 
+            body: JSON.stringify({ texto, tipo }) 
         });
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        
+        console.log('📨 Respuesta status:', response.status);
+        
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            console.error('❌ Error del servidor:', errorData);
+            throw new Error(`HTTP ${response.status}: ${errorData.error || 'Bad Request'}`);
+        }
+        
         const data = await response.json();
-        return data.result || "Error en el Laboratorio.";
+        console.log('✅ Data recibida:', data);
+        
+        return data.respuesta || "Error en el Laboratorio.";
     } catch (e) {
-        console.error('API Error:', e);
-        return "Error de conexión con el Laboratorio. Intenta más tarde.";
+        console.error('❌ API Error:', e);
+        return `Error de conexión: ${e.message}`;
     }
 }
 
@@ -144,7 +143,7 @@ async function analyzeClarity() {
     btnText.innerText = "...";
     input.disabled = true;
     
-    const text = await callGemini(value, aiPrompts[currentLang].clarity);
+    const text = await callGemini(value, 'discern');
     div.innerHTML = formatResponse(text);
     div.classList.remove('hidden');
     
@@ -171,7 +170,7 @@ async function generateFieldNote() {
     btnText.innerText = "...";
     input.disabled = true;
     
-    const text = await callGemini(value, aiPrompts[currentLang].audit);
+    const text = await callGemini(value, 'audit');
     content.innerHTML = formatResponse(text);
     divResult.classList.remove('hidden');
     
