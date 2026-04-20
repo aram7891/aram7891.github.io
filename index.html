@@ -198,6 +198,7 @@ body { margin: 0; padding: 0; overflow-x: hidden; width: 100%; background-color:
             <div class="md:col-span-2">
                 <div class="bg-white border-2 border-sand p-10 shadow-sm">
                     <label for="lab-input" class="block text-[10px] font-bold tracking-widest uppercase text-amber mb-4">¿Qué dinámica o comportamiento se repite?</label>
+                    <p class="text-[9px] text-sand mb-3 italic">Ej: "Me busca constantemente pero evade formalizar" o "Ignoro señales de alerta por el potencial de la persona"</p>
                     <textarea 
                         id="lab-input" 
                         rows="8" 
@@ -471,10 +472,10 @@ async function analizarLaboratorio() {
   document.getElementById('lab-btn').disabled = true;
 
   try {
-    const response = await fetch('/api/analizar', {
+    const response = await fetch('/api', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ texto: input })
+      body: JSON.stringify({ texto: input, tipo: 'discern' })
     });
 
     if (!response.ok) {
@@ -483,7 +484,7 @@ async function analizarLaboratorio() {
 
     const data = await response.json();
     
-    document.getElementById('lab-result-content').innerHTML = formatearResultadoLab(data.analisis);
+    document.getElementById('lab-result-content').innerHTML = formatearResultadoLab(data.respuesta);
     document.getElementById('lab-loading').classList.add('hidden');
     document.getElementById('lab-result').classList.remove('hidden');
   } catch (error) {
