@@ -17,14 +17,17 @@
                     },
                     fontFamily: {
                         serif: ['"Playfair Display"', 'serif'],
-                        sans: ['"Inter"', 'sans-serif']
+                        sans: ['"Inter"', 'sans-serif'],
+                        cormorant: ['"Cormorant Garamond"', 'serif'],
+                        instrument: ['"Instrument Sans"', 'sans-serif'],
+                        dm: ['"DM Mono"', 'monospace']
                     }
                 }
             }
         }
     </script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;600;800&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Instrument+Sans:wght@300;400;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -54,7 +57,7 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState, useEffect, useRef } = React;
+        const { useState, useEffect, useLayoutEffect, useRef } = React;
 
         const fetchWithRetry = async (url, options, maxRetries = 3) => {
             let retries = 0;
@@ -80,6 +83,54 @@
             }
         };
 
+        // Componente Estratégico de Auto-Escalado
+        const AutoFitContent = ({ children, isCenter }) => {
+            const containerRef = useRef(null);
+            const contentRef = useRef(null);
+            const [scale, setScale] = useState(1);
+
+            // Resetea la escala cuando el contenido cambia para medir su tamaño natural
+            useLayoutEffect(() => {
+                setScale(1);
+            }, [children]);
+
+            useLayoutEffect(() => {
+                const container = containerRef.current;
+                const content = contentRef.current;
+                if (!container || !content) return;
+
+                const measureAndScale = () => {
+                    const containerH = container.clientHeight;
+                    const contentH = content.scrollHeight;
+
+                    // Si el contenido es más alto que el contenedor, calculamos el porcentaje exacto para encogerlo
+                    if (contentH > containerH && containerH > 0) {
+                        const newScale = containerH / contentH;
+                        setScale(newScale * 0.95); // 5% de margen de aire para que respire
+                    }
+                };
+                
+                // Ejecutamos después de que el DOM pinte la escala en 1
+                requestAnimationFrame(measureAndScale);
+            }, [children]);
+
+            return (
+                <div ref={containerRef} className={`w-full flex-1 min-h-0 flex flex-col ${isCenter ? 'items-center justify-center' : 'justify-center'} overflow-hidden`}>
+                    <div 
+                        ref={contentRef} 
+                        style={{ 
+                            transform: `scale(${scale})`, 
+                            transformOrigin: isCenter ? 'center center' : 'left center',
+                            width: scale < 1 ? `${100 / scale}%` : '100%',
+                        }} 
+                        className={`flex flex-col gap-4 ${isCenter ? 'items-center text-center' : ''}`}
+                    >
+                        {children}
+                    </div>
+                </div>
+            );
+        };
+
         const App = () => {
             const [essay, setEssay] = useState("");
             const [userApiKey, setUserApiKey] = useState("");
@@ -89,7 +140,7 @@
             const [currentSlide, setCurrentSlide] = useState(0);
             const [error, setError] = useState(null);
             const [exporting, setExporting] = useState(false);
-            const [currentStyle, setCurrentStyle] = useState("Kinetic");
+            const [currentStyle, setCurrentStyle] = useState("Editorial");
             const [polishing, setPolishing] = useState(false);
             const [isSpeaking, setIsSpeaking] = useState(false);
             const [listingModels, setListingModels] = useState(false);
@@ -97,6 +148,7 @@
             const slideRef = useRef(null);
 
             const stylesConfig = {
+                Editorial: { container: "bg-[#F7F4EF] text-[#1A1814]", accent: "bg-[#8B6F4E]", textAccent: "text-[#8B6F4E]", border: "border-[#C4A882]/40", fontHeading: "font-cormorant italic font-semibold tracking-wide", fontBody: "font-instrument", tag: "bg-[#1A1814] text-[#F7F4EF] font-dm", logoFilter: "brightness-0 opacity-90" },
                 Kinetic: { container: "bg-[#0f172a] text-[#f8fafc]", accent: "bg-[#a855f7]", textAccent: "text-[#a855f7]", border: "border-slate-800", fontHeading: "font-serif", fontBody: "font-sans", tag: "bg-[#a855f7] text-white", logoFilter: "invert brightness-200" },
                 Brutalist: { container: "bg-white text-black border-[6px] border-black", accent: "bg-yellow-400", textAccent: "text-black underline decoration-yellow-400 decoration-8", border: "border-black", fontHeading: "font-sans font-black uppercase tracking-tighter", fontBody: "font-sans font-bold", tag: "bg-black text-white", logoFilter: "contrast-150" },
                 DarkMode: { container: "bg-slate-950 text-white", accent: "bg-blue-500", textAccent: "text-blue-400", border: "border-slate-800", fontHeading: "font-sans font-black", fontBody: "font-sans", tag: "bg-white text-black", logoFilter: "invert brightness-200" },
@@ -423,42 +475,47 @@ Format:
                                         </div>
                                     </div>
 
-                                    <div ref={slideRef} className={`w-[480px] h-[600px] ${stylesConfig[currentStyle].container} rounded-[40px] shadow-2xl flex flex-col justify-between p-14 relative overflow-hidden transition-all duration-500`} style={currentStyle === 'Brutalist' ? { borderRadius: '0px' } : {}}>
-                                        <div className="flex justify-between items-center z-10">
-                                            <span className={`text-[9px] font-black tracking-[0.4em] uppercase opacity-40 ${stylesConfig[currentStyle].fontBody}`}>{slides[currentSlide].slideNumber === 7 ? "Clarity Strategist" : "Self Love Club"}</span>
+                                    {/* CONTENEDOR DE LA LÁMINA BLINDADO */}
+                                    <div ref={slideRef} className={`w-[480px] h-[600px] ${stylesConfig[currentStyle].container} rounded-[40px] shadow-2xl flex flex-col p-14 relative overflow-hidden transition-all duration-500`} style={currentStyle === 'Brutalist' ? { borderRadius: '0px' } : {}}>
+                                        
+                                        {/* HEADER - Inamovible */}
+                                        <div className="flex justify-between items-center z-10 flex-none">
+                                            <span className={`text-[9px] uppercase tracking-[0.4em] opacity-50 ${stylesConfig[currentStyle].tag.includes('font-dm') ? 'font-dm' : 'font-bold'} ${stylesConfig[currentStyle].fontBody}`}>{slides[currentSlide].slideNumber === 7 ? "Clarity Strategist" : "Self Love Club"}</span>
                                             <div className={`w-2 h-2 rounded-full ${stylesConfig[currentStyle].accent}`}></div>
                                         </div>
 
-                                        <div className={`z-10 w-full flex-grow flex flex-col justify-center ${slides[currentSlide].slideNumber === 7 ? 'items-center text-center' : ''}`}>
-                                            <div className={`w-12 h-1 ${stylesConfig[currentStyle].accent} mb-6 ${slides[currentSlide].slideNumber === 7 ? 'mx-auto' : ''}`}></div>
+                                        {/* CUERPO CENTRAL CON AUTO-ESCALADO INTELIGENTE */}
+                                        <AutoFitContent isCenter={slides[currentSlide].slideNumber === 7}>
+                                            <div className={`w-12 h-1 flex-none ${stylesConfig[currentStyle].accent} mb-4 ${slides[currentSlide].slideNumber === 7 ? 'mx-auto' : ''}`}></div>
                                             
                                             {slides[currentSlide].slideNumber === 1 ? (
-                                                <div className="space-y-6">
-                                                    <h3 className={`text-5xl leading-[1.05] ${stylesConfig[currentStyle].fontHeading}`}>{slides[currentSlide].title}</h3>
-                                                    <p className={`text-xl opacity-60 font-medium italic ${stylesConfig[currentStyle].fontBody}`}>{slides[currentSlide].subtitle}</p>
-                                                </div>
+                                                <>
+                                                    <h3 className={`text-4xl sm:text-5xl flex-none leading-[1.05] ${stylesConfig[currentStyle].fontHeading}`}>{slides[currentSlide].title}</h3>
+                                                    <p className={`text-lg sm:text-xl opacity-60 italic ${stylesConfig[currentStyle].fontBody}`}>{slides[currentSlide].subtitle}</p>
+                                                </>
                                             ) : slides[currentSlide].slideNumber === 7 ? (
-                                                <div className="space-y-6 flex flex-col items-center">
-                                                    <h3 className={`text-4xl ${stylesConfig[currentStyle].fontHeading}`}>{slides[currentSlide].title}</h3>
+                                                <>
+                                                    <h3 className={`text-3xl sm:text-4xl flex-none ${stylesConfig[currentStyle].fontHeading}`}>{slides[currentSlide].title}</h3>
                                                     {slides[currentSlide].body && (
-                                                        <p className={`text-xl opacity-80 leading-relaxed max-w-[340px] ${stylesConfig[currentStyle].fontBody}`}>
+                                                        <p className={`text-lg sm:text-xl opacity-80 leading-relaxed max-w-[340px] ${stylesConfig[currentStyle].fontBody}`}>
                                                             {slides[currentSlide].body}
                                                         </p>
                                                     )}
-                                                </div>
+                                                </>
                                             ) : (
-                                                <div className="space-y-4">
+                                                <>
                                                     {slides[currentSlide].title && (
-                                                        <h3 className={`text-3xl leading-tight ${stylesConfig[currentStyle].fontHeading}`}>{slides[currentSlide].title}</h3>
+                                                        <h3 className={`text-2xl sm:text-3xl flex-none leading-tight ${stylesConfig[currentStyle].fontHeading}`}>{slides[currentSlide].title}</h3>
                                                     )}
-                                                    <p className={`${slides[currentSlide].title ? 'text-lg' : 'text-2xl leading-[1.5]'} opacity-90 font-medium ${stylesConfig[currentStyle].fontBody}`}>
+                                                    <p className={`${slides[currentSlide].title ? 'text-base sm:text-lg' : 'text-xl sm:text-2xl leading-[1.5]'} opacity-90 ${stylesConfig[currentStyle].fontBody}`}>
                                                         {slides[currentSlide].body}
                                                     </p>
-                                                </div>
+                                                </>
                                             )}
-                                        </div>
+                                        </AutoFitContent>
 
-                                        <div className={`flex items-center justify-between border-t ${stylesConfig[currentStyle].border} pt-8 z-10 mt-6`}>
+                                        {/* FOOTER - Inamovible */}
+                                        <div className={`flex items-center justify-between border-t ${stylesConfig[currentStyle].border} pt-6 mt-auto flex-none z-10`}>
                                             {slides[currentSlide].slideNumber === 7 ? (
                                                 <div className="flex items-center gap-4">
                                                     <img 
@@ -468,7 +525,7 @@ Format:
                                                         alt="Andrés Ramírez" 
                                                     />
                                                     <div className="flex flex-col">
-                                                        <span className={`text-xs uppercase font-bold ${stylesConfig[currentStyle].fontBody}`}>Andrés Ramírez</span>
+                                                        <span className={`text-xs uppercase font-bold tracking-wide ${stylesConfig[currentStyle].tag.includes('font-dm') ? 'font-dm' : stylesConfig[currentStyle].fontBody}`}>Andrés Ramírez</span>
                                                         <span className="text-[9px] font-bold opacity-50 uppercase tracking-widest">Strategist</span>
                                                     </div>
                                                 </div>
@@ -476,14 +533,16 @@ Format:
                                                 <div className="flex items-center gap-4">
                                                     <img src="/assets/images/slc-logo.png" className={`w-12 h-12 object-contain opacity-90 ${stylesConfig[currentStyle].logoFilter}`} onError={(e) => e.target.src="https://ui-avatars.com/api/?name=SLC&background=000&color=fff"} />
                                                     <div className="flex flex-col">
-                                                        <span className={`text-[10px] uppercase tracking-widest font-bold ${stylesConfig[currentStyle].fontBody}`}>Self Love Club</span>
+                                                        <span className={`text-[10px] uppercase tracking-widest font-bold ${stylesConfig[currentStyle].tag.includes('font-dm') ? 'font-dm' : stylesConfig[currentStyle].fontBody}`}>Self Love Club</span>
                                                         <span className="text-[9px] font-bold opacity-40 italic">Tools</span>
                                                     </div>
                                                 </div>
                                             )}
-                                            <div className={`px-4 py-1.5 rounded-full text-[10px] font-black ${stylesConfig[currentStyle].tag}`}>0{slides[currentSlide].slideNumber}</div>
+                                            <div className={`px-4 py-1.5 rounded-full text-[10px] ${stylesConfig[currentStyle].tag}`}>0{slides[currentSlide].slideNumber}</div>
                                         </div>
-                                        <div className={`absolute -bottom-20 -right-20 w-80 h-80 opacity-20 rounded-full blur-[100px] pointer-events-none ${stylesConfig[currentStyle].accent}`}></div>
+                                        {currentStyle !== 'Editorial' && (
+                                            <div className={`absolute -bottom-20 -right-20 w-80 h-80 opacity-20 rounded-full blur-[100px] pointer-events-none ${stylesConfig[currentStyle].accent}`}></div>
+                                        )}
                                     </div>
 
                                     <div className="flex items-center gap-6 bg-surface p-3 rounded-full border border-slate-800 shadow-xl">
