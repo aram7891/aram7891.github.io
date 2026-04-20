@@ -332,49 +332,14 @@
             const payload = {
                 contents: [{
                     parts: [{
-                        text: `Create EXACTLY 7 carousel slides for Self Love Club based on the following text.
-```
+                        text: "Create EXACTLY 7 carousel slides for Self Love Club based on the following text.\n\nCRITICAL RULE: This must be a SINGLE CONTINUOUS NARRATIVE THREAD, not 7 independent ideas.\n\nFormatting rules:\n- NEVER output massive blocks of text\n- Use double line breaks to separate paragraphs\n- Use bullet points (•) for lists\n- Bold key terms using **term**\n\nRules:\n- Respond in the same language as input\n- Slide 1: Strong title and subtitle, leave body empty\n- Slides 2-6: NO title/subtitle, only body text continuing smoothly\n- Slide 7: Strong closing title and call to action\n\nReturn JSON format:\n{\n  slides: [\n    {\n      title: string,\n      subtitle: string,\n      body: string,\n      slideNumber: number\n    }\n  ]\n}\n\nInput text:\n" + essay
+                    }]
+                }],
+                generationConfig: {
+                    responseMimeType: "application/json"
+                }
+            };
 
-CRITICAL RULE: This must be a SINGLE CONTINUOUS NARRATIVE THREAD, not 7 independent ideas. It should read like a page-turner where one sentence naturally flows into the next slide.
-
-CRITICAL FORMATTING RULES FOR ‘body’:
-
-- NEVER output a single massive block of text.
-- Use double line breaks (\n\n) to separate distinct paragraphs.
-- If making a list or bullet points, use a line break and a bullet (•) for each item.
-- If defining a concept or emphasizing a key term, bold it using markdown (**Term:** Definition).
-- Keep the reading experience elegant, spacious, and highly legible.
-
-Rules:
-
-- Respond entirely in the same language as the input text below.
-- Use a conversational, motivational tone with kinetic clarity.
-- Slide 1 (The Hook): Provide a strong “title” and “subtitle” to introduce the premise. Leave “body” empty.
-- Slides 2 to 6 (The Thread): DO NOT use “title” or “subtitle” (leave them empty strings). ONLY use the “body” field to continue the story smoothly from the previous slide, formatting it beautifully with paragraphs and lists as instructed.
-- Slide 7 (The Close): Provide a strong closing “title” and a clear call to action in the “body”.
-
-Return the response in this exact JSON format:
-{
-“slides”: [
-{
-“title”: “”,
-“subtitle”: “”,
-“body”: “”,
-“slideNumber”: 1
-}
-]
-}
-
-Input text:
-${essay}`
-}]
-}],
-generationConfig: {
-responseMimeType: “application/json”
-}
-};
-
-```
             try {
                 const data = await fetchWithRetry(url, {
                     method: 'POST',
@@ -410,28 +375,14 @@ responseMimeType: “application/json”
             const payload = {
                 contents: [{
                     parts: [{
-                        text: `Improve the wording of this specific slide while keeping the exact same language as the original. 
-```
+                        text: "Improve the wording of this specific slide while keeping the exact same language as the original.\nMaintain the continuous narrative flow (if it has no title, don't add one, just polish the body). Make it punchy and concise.\nCRITICAL FORMATTING: Use line breaks for paragraphs, (•) for lists, and (**text**) for bold definitions. DO NOT output a massive block of text.\n\n" + JSON.stringify(currentData) + "\n\nReturn JSON:\n{\n  title: string,\n  subtitle: string,\n  body: string\n}"
+                    }]
+                }],
+                generationConfig: {
+                    responseMimeType: "application/json"
+                }
+            };
 
-Maintain the continuous narrative flow (if it has no title, don’t add one, just polish the body). Make it punchy and concise.
-CRITICAL FORMATTING: Use line breaks (\n\n) for paragraphs, (•) for lists, and (**text**) for bold definitions. DO NOT output a massive block of text.
-
-${JSON.stringify(currentData)}
-
-Format:
-{
-“title”: “”,
-“subtitle”: “”,
-“body”: “”
-}`
-}]
-}],
-generationConfig: {
-responseMimeType: “application/json”
-}
-};
-
-```
             try {
                 const data = await fetchWithRetry(url, {
                     method: 'POST',
