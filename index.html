@@ -191,7 +191,7 @@
                     </div>
                 </div>
 
-                <div id="essays-grid-es" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div id="essays-grid-es" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 transition-opacity duration-300">
                     <article class="essay-card">
                         <h3 class="font-serif text-2xl mb-4 italic">El Autoconocimiento como Activo Económico</h3>
                         <p class="text-xs text-subtle leading-relaxed mb-8">El autoconocimiento no es simplemente un rasgo psicológico; es una ventaja competitiva cuantificable.</p>
@@ -232,10 +232,48 @@
                         <p class="text-xs text-subtle leading-relaxed mb-8">Identificación técnica de ciclos relacionales repetitivos a través de datos conductuales.</p>
                         <a href="/content/essays/es/8-auditoria-patrones.pdf" target="_blank" class="read-btn">[Leer PDF]</a>
                     </article>
+                </div>
+
+                <div id="essays-grid-en" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 hidden transition-opacity duration-300">
                     <article class="essay-card">
-                        <h3 class="font-serif text-2xl mb-4 italic">Protocolos de Claridad</h3>
-                        <p class="text-xs text-subtle leading-relaxed mb-8">Sistemas de respuesta para mantener el eje personal bajo presión externa intensa.</p>
-                        <a href="/content/essays/es/9-protocolos-claridad.pdf" target="_blank" class="read-btn">[Leer PDF]</a>
+                        <h3 class="font-serif text-2xl mb-4 italic">Self-Knowledge as an Economic Asset</h3>
+                        <p class="text-xs text-subtle leading-relaxed mb-8">Self-knowledge is not merely a psychological trait; it is a quantifiable competitive advantage.</p>
+                        <a href="/content/essays/en/1-self-knowledge.pdf" target="_blank" class="read-btn">[Read PDF]</a>
+                    </article>
+                    <article class="essay-card">
+                        <h3 class="font-serif text-2xl mb-4 italic">Emotional Arbitrage</h3>
+                        <p class="text-xs text-subtle leading-relaxed mb-8">Converting emotional market panic into personal profit and strategic clarity.</p>
+                        <a href="/content/essays/en/2-emotional-arbitrage.pdf" target="_blank" class="read-btn">[Read PDF]</a>
+                    </article>
+                    <article class="essay-card">
+                        <h3 class="font-serif text-2xl mb-4 italic">The Opportunity Cost of Pleasing</h3>
+                        <p class="text-xs text-subtle leading-relaxed mb-8">How external validation creates high-interest emotional debt that erodes your autonomy.</p>
+                        <a href="/content/essays/en/3-opportunity-cost.pdf" target="_blank" class="read-btn">[Read PDF]</a>
+                    </article>
+                    <article class="essay-card">
+                        <h3 class="font-serif text-2xl mb-4 italic">The Architecture of Silence</h3>
+                        <p class="text-xs text-subtle leading-relaxed mb-8">Why avoiding difficult conversations creates a vacuum where anxiety multiplies.</p>
+                        <a href="/content/essays/en/4-architecture-of-silence.pdf" target="_blank" class="read-btn">[Read PDF]</a>
+                    </article>
+                    <article class="essay-card">
+                        <h3 class="font-serif text-2xl mb-4 italic">Cognitive Liquidity</h3>
+                        <p class="text-xs text-subtle leading-relaxed mb-8">The danger of merging your identity with your decisions. Flexibility as a survival tool.</p>
+                        <a href="/content/essays/en/5-cognitive-liquidity.pdf" target="_blank" class="read-btn">[Read PDF]</a>
+                    </article>
+                    <article class="essay-card">
+                        <h3 class="font-serif text-2xl mb-4 italic">Emotional Capital: Discernment</h3>
+                        <p class="text-xs text-subtle leading-relaxed mb-8">Investing in the ability to see things as they are, not as we wish them to be.</p>
+                        <a href="/content/essays/en/6-emotional-capital.pdf" target="_blank" class="read-btn">[Read PDF]</a>
+                    </article>
+                    <article class="essay-card">
+                        <h3 class="font-serif text-2xl mb-4 italic">The Validation Trap</h3>
+                        <p class="text-xs text-subtle leading-relaxed mb-8">Analysis of approval-seeking mechanisms and their impact on decision-making.</p>
+                        <a href="/content/essays/en/7-validation-trap.pdf" target="_blank" class="read-btn">[Read PDF]</a>
+                    </article>
+                    <article class="essay-card">
+                        <h3 class="font-serif text-2xl mb-4 italic">Pattern Auditing</h3>
+                        <p class="text-xs text-subtle leading-relaxed mb-8">Technical identification of repetitive relational cycles through behavioral data.</p>
+                        <a href="/content/essays/en/8-pattern-auditing.pdf" target="_blank" class="read-btn">[Read PDF]</a>
                     </article>
                 </div>
             </div>
@@ -359,8 +397,26 @@
             }
         };
 
+        function switchContentTabs(lang) {
+            // Actualizar el estado visual de los tabs de los ensayos
+            document.getElementById('essay-tab-es').classList.remove('active');
+            document.getElementById('essay-tab-en').classList.remove('active');
+            document.getElementById('essay-tab-' + lang).classList.add('active');
+
+            // Mostrar/Ocultar las grillas dependiendo del idioma
+            if (lang === 'es') {
+                document.getElementById('essays-grid-es').classList.remove('hidden');
+                document.getElementById('essays-grid-en').classList.add('hidden');
+            } else {
+                document.getElementById('essays-grid-es').classList.add('hidden');
+                document.getElementById('essays-grid-en').classList.remove('hidden');
+            }
+        }
+
         function setLanguage(lang) {
             document.documentElement.lang = lang;
+            
+            // Actualizar traducciones globales
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (translations[lang][key]) el.textContent = translations[lang][key];
@@ -369,8 +425,13 @@
                 const key = el.getAttribute('data-i18n-placeholder');
                 if (translations[lang][key]) el.placeholder = translations[lang][key];
             });
+            
+            // Actualizar botones del navbar
             document.getElementById('btn-es').className = `lang-switch rounded-l ${lang === 'es' ? 'lang-active' : ''}`;
             document.getElementById('btn-en').className = `lang-switch rounded-r border-l-0 ${lang === 'en' ? 'lang-active' : ''}`;
+
+            // Llamar a la función de la hemeroteca para mantener todo sincronizado
+            switchContentTabs(lang);
         }
 
         function scrollToSection(id) {
