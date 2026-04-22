@@ -1,7 +1,7 @@
-import OpenAI from "openai";
-import { promptDiscernimiento, promptAuditoria } from "./prompts.js";
+const OpenAI = require("openai");
+const { promptDiscernimiento, promptAuditoria } = require("./prompts.js");
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Método no permitido" });
   }
@@ -45,4 +45,4 @@ export default async function handler(req, res) {
     console.error("Error en API:", error);
     return res.status(500).json({ error: "Error interno del servidor" });
   }
-}
+};
