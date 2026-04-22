@@ -1,16 +1,23 @@
-const OpenAI = require("openai");
-const { promptDiscernimiento, promptAuditoria } = require("./prompts.js");
+import OpenAI from "openai";
+import {
+  promptDiscernimiento,
+  promptAuditoria
+} from "./prompts.js";
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method !== "POST") {
-    return res.status(405).json({ error: "Método no permitido" });
+    return res.status(405).json({
+      error: "Método no permitido"
+    });
   }
 
   try {
     const { texto, tipo } = req.body;
 
     if (!texto || !tipo) {
-      return res.status(400).json({ error: "Faltan parámetros: texto o tipo" });
+      return res.status(400).json({
+        error: "Faltan parámetros"
+      });
     }
 
     const client = new OpenAI({
@@ -25,24 +32,32 @@ module.exports = async function handler(req, res) {
         : null;
 
     if (!systemPrompt) {
-      return res.status(400).json({ error: "Tipo inválido" });
+      return res.status(400).json({
+        error: "Tipo inválido"
+      });
     }
 
-    const completion = await client.chat.completions.create({
-      model: "gpt-4o",
-      messages: [
-        { role: "system", content: systemPrompt },
-        { role: "user", content: texto }
-      ],
-      temperature: 0.2,
-      max_tokens: 600
+    const completion =
+      await client.chat.completions.create({
+        model: "gpt-4o-mini",
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: texto }
+        ],
+        temperature: 0.2,
+        max_tokens: 600
+      });
+
+    return res.status(200).json({
+      respuesta:
+        completion.choices[0].message.content
     });
 
-    const respuesta = completion.choices[0].message.content;
-
-    return res.status(200).json({ respuesta });
   } catch (error) {
-    console.error("Error en API:", error);
-    return res.status(500).json({ error: "Error interno del servidor" });
+    console.error(error);
+
+    return res.status(500).json({
+      error: "Error interno del servidor"
+    });
   }
-};
+}
