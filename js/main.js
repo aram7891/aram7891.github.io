@@ -1,6 +1,6 @@
 /**
  * ANDRÉS RAMÍREZ | CLARITY STRATEGIST
- * Main JavaScript - VERSIÓN FINAL COMPLETA
+ * Main JavaScript - VERSIÓN FINAL DEFINITIVA
  * OpenAI + Traducción + Laboratorio
  */
 
@@ -85,7 +85,7 @@ function closeBanner() {
 async function callLaboratory(texto, tipo) {
     try {
         console.log('📤 Enviando a OpenAI:', { texto, tipo });
-        const response = await fetch('/api', { 
+        const response = await fetch('/api/index', { 
             method: 'POST', 
             headers: { 'Content-Type': 'application/json' }, 
             body: JSON.stringify({ texto, tipo }) 
