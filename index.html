@@ -30,38 +30,73 @@ tailwind.config = {
     }
   }
 }
-</script>
-<style>
-:root { scroll-padding-top: 140px; transition: scroll-padding-top 0.3s ease; }
-.banner-closed { scroll-padding-top: 80px; }
-body { margin: 0; padding: 0; overflow-x: hidden; width: 100%; background-color: #FAFAFA; color: #1A1A1A; }
-#announcement-banner { display: flex; align-items: center; justify-content: center; min-height: 40px; transition: all 0.4s ease; position: relative; z-index: 60; }
-.author-photo { filter: grayscale(100%); object-fit: cover; transition: filter 0.4s ease; }
-.author-photo:hover { filter: grayscale(30%); }
-.essay-card { background: #ffffff; border: 1px solid #E4E4E7; padding: 2.5rem 2rem; display: flex; flex-direction: column; transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); height: 100%; }
-.essay-card:hover { border-color: #1A1A1A; transform: translateY(-8px); box-shadow: 0 30px 60px -20px rgba(0,0,0,0.08); }
-.read-btn { display: inline-block; margin-top: auto; padding: 12px 0; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; border-bottom: 1px solid #1A1A1A; color: #1A1A1A; transition: all 0.3s ease; text-decoration: none; cursor: pointer; }
-.read-btn:hover { opacity: 0.5; letter-spacing: 0.3em; }
-.spinner { border: 2px solid rgba(0, 0, 0, 0.1); width: 18px; height: 18px; border-radius: 50%; border-left-color: #1A1A1A; animation: spin 1s linear infinite; display: inline-block; margin-right: 8px; }
-@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-.essay-tab { cursor: pointer; padding: 8px 20px; font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; border-bottom: 2px solid transparent; transition: all 0.3s ease; color: #71717A; }
-.essay-tab.active { border-bottom-color: #1A1A1A; color: #1A1A1A; }
-.lang-switch { font-size: 10px; letter-spacing: 0.1em; cursor: pointer; padding: 4px 12px; border: 1px solid #E4E4E7; transition: all 0.2s ease; font-weight: 700; }
-.lang-active { background: #1A1A1A; color: #FAFAFA; border-color: #1A1A1A; }
-</style>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Andrés Ramírez",
-  "url": "https://www.andresramirez.pro",
-  "image": "https://www.andresramirez.pro/assets/images/andres-ramirez-portrait.jpg",
-  "jobTitle": [ "Clarity Strategist", "Economist", "Author" ],
-  "homeLocation": { "@type": "Place", "name": "Pembroke Pines, Florida" },
-  "brand": { "@type": "Organization", "name": "Self Love Club", "url": "https://www.instagram.com/selfloveclubusa" },
-  "knowsAbout": [ "Relational Discernment", "Emotional Capital", "Stoicism", "Human Performance" ],
-  "sameAs": [ "https://www.instagram.com/selfloveclubusa", "https://www.threads.net/@aram7891", "https://www.linkedin.com/in/andresramirezpro" ]
-}
+<script>
+const translations = {
+    es: {
+        "banner-text": "HAZ DE LA LECTURA TU HERRAMIENTA DE CRECIMIENTO PERSONAL",
+        "banner-link": "EXPLORAR LIBROS",
+        "nav-home": "Inicio",
+        "nav-about": "Autor",
+        "nav-books": "Libros",
+        "nav-archive": "Archivo",
+        "nav-tools": "Laboratorio",
+        "hero-kicker": "Autor",
+        "hero-title": "Claridad antes que Conexión.",
+        "hero-subtitle": "Porque el costo de amar sin discernir es perderte a ti mismo.",
+        "hero-btn-read": "Leer mis escritos",
+        "hero-btn-more": "Más sobre mí",
+        "about-kicker": "Sobre el Autor",
+        "about-title": "Andrés Ramírez",
+        "about-p1": "Escribo para personas que buscan claridad —no perfección— en sus relaciones. Mi trabajo explora cómo la presión emocional distorsiona el juicio, y cómo mantenerte alineado contigo mismo al elegir quién y qué permites entrar en tu vida.",
+        "about-p2": "No prometo transformaciones ni soluciones rápidas. Ofrezco presencia, discernimiento y herramientas para tomar decisiones adultas bajo presión emocional. Este trabajo es para personas que están cansadas de repetir patrones que ya entienden—aquellos listos para asumir la responsabilidad personal, la madurez emocional y el coraje silencioso requerido para elegir conexiones alineadas con sus valores, no con sus miedos o fantasías.",
+        "about-p3": "No me interesa ayudar a que las personas se sientan mejor temporalmente o a replantear todo como crecimiento. Me interesa ayudar a que las personas se mantengan intactas cuando el deseo, la esperanza o la soledad generan presión para comprometer su claridad. Estos libros no tratan sobre cómo ser más digno de amor, más sanado o más atractivo. Tratan sobre aprender a no abandonarte a ti mismo mientras buscas conexión.",
+        "archive-label": "Hemeroteca",
+        "archive-title": "Archivo de Ensayos",
+        "tab-es": "Español",
+        "tab-en": "English",
+        "notes-kicker": "Archivo Privado",
+        "notes-title": "Notas de Campo",
+        "notes-p1": "Una vez al mes envío una nota técnica a quienes desean profundizar en el marco de \"Claridad antes que Conexión\".",
+        "notes-cta": "Solicitar Acceso al Archivo",
+        "notes-btn": "Recibir Notas Privadas",
+        "slc-p1": "Soy el creador de Self Love Club—una plataforma dedicada a la claridad, el autorrespeto y la toma de decisiones consciente en las relaciones. Self Love Club no se trata de afirmaciones o atajos de autoestima. Es un ecosistema curado de ideas, herramientas y trabajo escrito diseñado para ayudar a las personas a mantenerse arraigadas en su identidad mientras navegan la atracción, el apego y la elección.",
+        "slc-p2": "Todo dentro del club está construido en torno al autoconocimiento aplicado—cómo la claridad se convierte en algo que practicas, no solo que entiendes. No se trata de sentirse bien en el momento; se trata de desarrollar la capacidad de tomar decisiones que honran quién eres, incluso cuando las emociones están a flor de piel y la presión externa aumenta.",
+        "slc-p3": "La plataforma sirve como un recurso integral para aquellos comprometidos a mantener su integridad mientras buscan una conexión significativa. Es para personas que entienden que el amor propio no se trata de aislamiento o perfección, sino de mantenerse conectado a uno mismo mientras se permanece abierto a los demás.",
+        "slc-btn": "Explorar el Ecosistema"
+    },
+    en: {
+        "banner-text": "MAKE READING YOUR PERSONAL GROWTH TOOL",
+        "banner-link": "EXPLORE BOOKS",
+        "nav-home": "Home",
+        "nav-about": "Author",
+        "nav-books": "Books",
+        "nav-archive": "Archive",
+        "nav-tools": "Lab",
+        "hero-kicker": "Author",
+        "hero-title": "Clarity Before Connection.",
+        "hero-subtitle": "Because the cost of loving without discernment is losing yourself.",
+        "hero-btn-read": "Read my essays",
+        "hero-btn-more": "More about me",
+        "about-kicker": "About the Author",
+        "about-title": "Andrés Ramírez",
+        "about-p1": "I write for people who seek clarity—not perfection—in their relationships. My work explores how emotional pressure distorts judgment, and how to stay aligned with yourself when choosing who and what you allow into your life.",
+        "about-p2": "I don’t promise transformations or quick fixes. I offer presence, discernment, and tools for making adult decisions under emotional pressure. This work is for people who are tired of repeating patterns they already understand—those ready to take personal responsibility, emotional maturity, and the quiet courage required to choose connections aligned with their values, not their fears or fantasies.",
+        "about-p3": "I’m not interested in helping people feel better temporarily or reframing everything as growth. I’m interested in helping people stay intact when desire, hope, or loneliness creates pressure to compromise their clarity. These books are not about becoming more worthy of love, more healed, or more attractive. They are about learning not to abandon yourself while seeking connection.",
+        "archive-label": "Archive",
+        "archive-title": "Essay Archive",
+        "tab-es": "Spanish",
+        "tab-en": "English",
+        "notes-kicker": "Private Archive",
+        "notes-title": "Field Notes",
+        "notes-p1": "Once a month I send a technical note to those who want to go deeper into the \"Clarity Before Connection\" framework.",
+        "notes-cta": "Request Access to the Archive",
+        "notes-btn": "Receive Private Notes",
+        "slc-p1": "I am the creator of Self Love Club—a platform dedicated to clarity, self-respect, and conscious decision-making in relationships. Self Love Club is not about affirmations or self-esteem shortcuts. It is a curated ecosystem of ideas, tools, and written work designed to help people stay rooted in their identity while navigating attraction, attachment, and choice.",
+        "slc-p2": "Everything inside the club is built around applied self-knowledge—how clarity becomes something you practice, not just understand. It’s not about feeling good in the moment; it’s about developing the ability to make decisions that honor who you are, even when emotions are running high and external pressure increases.",
+        "slc-p3": "The platform serves as a comprehensive resource for those committed to maintaining their integrity while seeking meaningful connection. It is for people who understand that self-love is not about isolation or perfection, but about staying connected to yourself while remaining open to others.",
+        "slc-btn": "Explore the Ecosystem"
+    }
+};
 </script>
 </head>
 
