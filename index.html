@@ -95,6 +95,19 @@ body { margin: 0; padding: 0; overflow-x: hidden; width: 100%; background-color:
             <button class="md:hidden" onclick="toggleMobileMenu()"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
         </div>
     </nav>
+    
+    <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-white border-b border-divider shadow-xl z-40 transition-all duration-300 ease-in-out">
+    <div class="flex flex-col p-8 space-y-6 text-[11px] font-bold tracking-[0.2em] uppercase text-ink">
+        <a href="javascript:void(0)" onclick="closeMobileMenu(); scrollToSection('home')" data-i18n="nav-home">Inicio</a>
+        <a href="javascript:void(0)" onclick="closeMobileMenu(); scrollToSection('about')" data-i18n="nav-about">Autor</a>
+        <a href="javascript:void(0)" onclick="closeMobileMenu(); scrollToSection('books')" data-i18n="nav-books">Libros</a>
+        <a href="javascript:void(0)" onclick="closeMobileMenu(); scrollToSection('essays')" data-i18n="nav-archive">Archivo</a>
+        <a href="laboratorio.html" class="py-3 px-4 bg-ink text-paper text-center rounded-sm" data-i18n="nav-tools">Laboratorio</a>
+    </div>
+</div>
+
+    
+    
 </header>
 
 <main class="pt-40">
