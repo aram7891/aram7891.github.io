@@ -406,6 +406,21 @@ function closeBanner() {
 }
 
 window.onload = () => setLanguage('es');
+
+function toggleMobileMenu() {
+    const menu = document.getElementById('mobile-menu');
+    if (menu) {
+        menu.classList.toggle('hidden');
+    }
+}
+
+function closeMobileMenu() {
+    const menu = document.getElementById('mobile-menu');
+    if (menu) {
+        menu.classList.add('hidden');
+    }
+}
+
 </script>
 </body>
 </html>
