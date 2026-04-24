@@ -79,12 +79,14 @@ body { margin: 0; padding: 0; overflow-x: hidden; width: 100%; background-color:
     <nav id="navbar" class="w-full flex justify-between items-center px-6 py-4 md:px-12 bg-white/90 backdrop-blur-md border-b border-divider">
         <div class="font-serif text-lg tracking-wide font-semibold uppercase text-ink">Andrés Ramírez</div>
         <div class="flex items-center space-x-6">
-            <div class="hidden md:flex space-x-8 text-[10px] font-bold tracking-widest uppercase text-ink">
+            <div class="hidden md:flex space-x-8 text-[10px] font-bold tracking-widest uppercase text-ink items-center">
                 <a href="javascript:void(0)" onclick="scrollToSection('home')" data-i18n="nav-home">Inicio</a>
                 <a href="javascript:void(0)" onclick="scrollToSection('about')" data-i18n="nav-about">Autor</a>
-                <a href="laboratorio.html" class="px-4 py-1.5 bg-[#8B6F4E] border border-[#1A1814] text-[#1A1814] rounded-sm font-bold tracking-widest uppercase" data-i18n="nav-tools">Laboratorio</a>
                 <a href="javascript:void(0)" onclick="scrollToSection('books')" data-i18n="nav-books">Libros</a>
                 <a href="javascript:void(0)" onclick="scrollToSection('essays')" data-i18n="nav-archive" class="text-accent font-bold">Archivo</a>
+                <a href="laboratorio.html" 
+                   class="px-4 py-1.5 bg-transparent border border-[#1A1814] text-[#1A1814] rounded-sm font-bold tracking-widest uppercase hover:bg-ink hover:text-paper transition-all"
+                   data-i18n="nav-tools">Laboratorio</a>
             </div>
             <div class="flex items-center space-x-0 font-bold text-[9px]">
                 <button onclick="setLanguage('es')" id="btn-es" class="lang-switch lang-active rounded-l">ES</button>
@@ -229,7 +231,6 @@ body { margin: 0; padding: 0; overflow-x: hidden; width: 100%; background-color:
     <section id="books" class="py-32 px-6 md:px-12 bg-white text-ink text-center border-t border-divider">
         <h2 class="font-serif text-4xl md:text-5xl mb-16" data-i18n="books-sec-title">Libros</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            
             <article class="essay-card flex flex-col sm:flex-row gap-8 items-center bg-paper">
                 <div class="w-32 sm:w-40 shrink-0 aspect-[2/3] bg-ink text-paper flex flex-col justify-between p-5 shadow-lg select-none">
                     <div class="text-[7px] uppercase tracking-widest opacity-70">Andrés Ramírez</div>
@@ -340,13 +341,11 @@ const translations = {
         "hero-btn-read": "Leer mis escritos", "hero-btn-more": "Más sobre mí",
         "about-kicker": "Sobre el Autor", "about-title": "Andrés Ramírez",
         "about-p1": "Escribo para personas que buscan claridad —no perfección— en sus relaciones. Mi trabajo explora cómo la presión emocional distorsiona el juicio, y cómo mantenerte alineado contigo mismo al elegir quién y qué permites entrar en tu vida.",
-        "about-p2": "No prometo transformaciones ni soluciones rápidas. Ofrezco presencia, discernimiento y herramientas para tomar decisiones adultas bajo presión emocional. Este trabajo es para personas que están cansadas de repetir patrones que ya entienden...",
-        "about-p3": "No me interesa ayudar a que las personas se sientan mejor temporalmente...",
-        "tools-label": "Laboratorio de Discernimiento", "tools-title": "Interacción con la Claridad", "tools-desc": "Laboratorio práctico de discernimiento relacional. Convertimos confusión emocional en datos accionables mediante auditorías técnicas.",
-        "tool1-title": "Discernimiento Relacional", "tool1-subtitle": "Perspectiva Técnica", "tool1-help": "Describe una dinámica que te genere confusión.", "tool1-example": "Ej: \"Me busca constantemente pero evade formalizar\".",
-        "tool2-title": "Auditoría Emocional", "tool2-subtitle": "Patrones de Activo/Pasivo", "tool2-help": "Introduce un comportamiento o ciclo que repites.", "tool2-example": "Ej: \"Suelo ignorar banderas rojas por el potencial de la persona\".",
-        "btn-analyze": "Obtener Perspectiva", "btn-generate": "Generar Nota de Campo", "archive-label": "Hemeroteca", "archive-title": "Archivo de Ensayos",
-        "placeholder-discern": "Tu situación...", "placeholder-audit": "Tu patrón...", "tab-es": "Español", "tab-en": "English", "record-label": "Registro de Auditoría", "notes-kicker": "Archivo Privado", "notes-title": "Notas de Campo", "notes-p1": "Una vez al mes envío una nota técnica a quienes desean profundizar en el marco de \"Claridad antes que Conexión\".", "notes-cta": "Solicitar Acceso al Archivo", "notes-btn": "Recibir Notas Privadas",
+        "about-p2": "No prometo transformaciones ni soluciones rápidas. Ofrezco presencia, discernimiento y herramientas para tomar decisiones adultas bajo presión emocional. Este trabajo es para personas que están cansadas de repetir patrones que ya entienden—aquellos listos para asumir la responsabilidad personal, la madurez emocional y el coraje silencioso requerido para elegir conexiones alineadas con sus valores, no con sus miedos o fantasías.",
+        "about-p3": "No me interesa ayudar a que las personas se sientan mejor temporalmente o a replantear todo como crecimiento. Me interesa ayudar a que las personas se mantengan intactas cuando el deseo, la esperanza o la soledad generan presión para comprometer su claridad. Estos libros no tratan sobre cómo ser más digno de amor, más sanado o más atractivo. Tratan sobre aprender a no abandonarte a ti mismo mientras buscas conexión.",
+        "archive-label": "Hemeroteca", "archive-title": "Archivo de Ensayos",
+        "tab-es": "Español", "tab-en": "English",
+        "notes-kicker": "Archivo Privado", "notes-title": "Notas de Campo", "notes-p1": "Una vez al mes envío una nota técnica a quienes desean profundizar en el marco de \"Claridad antes que Conexión\".", "notes-cta": "Solicitar Acceso al Archivo", "notes-btn": "Recibir Notas Privadas",
         "slc-p1": "Soy el creador de Self Love Club—una plataforma dedicada a la claridad...",
         "slc-p2": "Todo dentro del club está construido en torno al autoconocimiento aplicado...",
         "slc-p3": "La plataforma sirve como un recurso integral...",
@@ -358,20 +357,8 @@ const translations = {
         "hero-btn-read": "Read my essays", "hero-btn-more": "More about me",
         "about-kicker": "About the Author", "about-title": "Andrés Ramírez",
         "about-p1": "I write for people who seek clarity—not perfection—in their relationships...",
-        "tools-label": "Discernment Lab", "tools-title": "Clarity Interaction", "tools-desc": "Practical relational discernment lab. We turn emotional confusion into actionable data through technical audits.",
-        "btn-analyze": "Get Perspective", "btn-generate": "Generate Field Note", "archive-label": "Archive", "archive-title": "Essay Archive",
-        "placeholder-discern": "Your situation...", "placeholder-audit": "Your pattern...", "tab-es": "Spanish", "tab-en": "English", "slc-btn": "Explore Ecosystem"
-    }
-};
-
-const aiPrompts = {
-    es: { 
-        clarity: "Eres Andrés Ramírez. Autor estoico y clínico. Analiza la dinámica separando HECHOS de NARRATIVA. No saludes. Sé directo e incisivo.", 
-        audit: "Eres Andrés Ramírez. Analiza el patrón como Auditor de Capital Emocional. Clasifica como ACTIVO o PASIVO CRÍTICO. Sé quirúrgico." 
-    },
-    en: { 
-        clarity: "You are Andrés Ramírez. Separate FACTS from NARRATIVE. End with a piercing observation on integrity.", 
-        audit: "You are Andrés Ramírez. Analyze as an Emotional Capital Auditor. Classify as ASSET or CRITICAL LIABILITY. Be brief and surgical." 
+        "archive-label": "Archive", "archive-title": "Essay Archive",
+        "tab-es": "Spanish", "tab-en": "English"
     }
 };
 
@@ -382,10 +369,6 @@ function setLanguage(lang) {
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (translations[lang][key]) el.innerText = translations[lang][key];
-    });
-    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-        const key = el.getAttribute('data-i18n-placeholder');
-        if (translations[lang][key]) el.placeholder = translations[lang][key];
     });
     document.getElementById('btn-es').className = lang === 'es' ? 'lang-switch lang-active rounded-l' : 'lang-switch rounded-l';
     document.getElementById('btn-en').className = lang === 'en' ? 'lang-switch lang-active rounded-r border-l-0' : 'lang-switch rounded-r border-l-0';
@@ -409,53 +392,7 @@ function closeBanner() {
     document.documentElement.classList.add('banner-closed');
 }
 
-async function callLaboratorio(prompt, systemPrompt) {
-    try {
-        const response = await fetch('/api', { 
-            method: 'POST', 
-            headers: { 'Content-Type': 'application/json' }, 
-            body: JSON.stringify({ prompt, systemPrompt }) 
-        });
-        const data = await response.json();
-        return data.result || data.error || "Error en el Laboratorio.";
-    } catch (e) {
-        return "Error de conexión con el Laboratorio.";
-    }
-}
-
-function formatResponse(text) {
-    return text.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-}
-
-async function analyzeClarity() {
-    const input = document.getElementById('situationInput');
-    if (!input.value.trim()) return;
-    const btnText = document.getElementById('analyzeBtnText');
-    const spinner = document.getElementById('analyzeSpinner');
-    const div = document.getElementById('clarityResult');
-    spinner.classList.remove('hidden'); btnText.innerText = "...";
-    const text = await callLaboratorio(input.value, aiPrompts[currentLang].clarity);
-    div.innerHTML = formatResponse(text);
-    div.classList.remove('hidden');
-    spinner.classList.add('hidden'); btnText.innerText = translations[currentLang]["btn-analyze"];
-}
-
-async function generateFieldNote() {
-    const input = document.getElementById('patternInput');
-    if (!input.value.trim()) return;
-    const btnText = document.getElementById('noteBtnText');
-    const spinner = document.getElementById('noteSpinner');
-    const divResult = document.getElementById('noteResult');
-    const content = document.getElementById('noteContent');
-    spinner.classList.remove('hidden'); btnText.innerText = "...";
-    const text = await callLaboratorio(input.value, aiPrompts[currentLang].audit);
-    content.innerHTML = formatResponse(text);
-    divResult.classList.remove('hidden');
-    spinner.classList.add('hidden'); btnText.innerText = translations[currentLang]["btn-generate"];
-}
-
 window.onload = () => setLanguage('es');
 </script>
 </body>
 </html>
-``` "https
