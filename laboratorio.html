@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratorio de Claridad</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital@0;1&family=Instrument+Sans:wght@400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --parchment: #F7F4EF;
+            --ink: #1A1814;
+            --amber: #8B6F4E;
+            --sand: #C4A882;
+            --thin-line: 1px solid #D4CFCA;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            background-color: var(--parchment);
+            color: var(--ink);
+            font-family: 'Instrument Sans', sans-serif;
+            font-size: 15px;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* HEADER */
+        .header {
+            padding: 2.5rem 5%;
+            border-bottom: var(--thin-line);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .header-left h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 2rem;
+            font-weight: 400;
+            color: var(--ink);
+            margin-bottom: 0.4rem;
+            letter-spacing: -0.5px;
+        }
+
+        .header-left p {
+            font-size: 13px;
+            color: var(--amber);
+            font-family: 'Instrument Sans', sans-serif;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .lang-toggle {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+        }
+
+        .lang-toggle button {
+            background: none;
+            border: none;
+            font-family: 'DM Mono', monospace;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--sand);
+            cursor: pointer;
+            padding: 0.3rem 0.6rem;
+            transition: all 0.2s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .lang-toggle button.active {
+            color: var(--ink);
+            border-bottom-color: var(--amber);
+        }
+
+        .lang-toggle button:hover:not(.active) {
+            color: var(--amber);
+        }
+
+        /* MAIN CONTAINER */
+        .container {
+            display: flex;
+            height: calc(100vh - 100px);
+        }
+
+        /* MODULE SELECTOR */
+        .modules-panel {
+            width: 22%;
+            border-right: var(--thin-line);
+            padding: 2rem 5%;
+            overflow-y: auto;
+        }
+
+        .modules-panel h3 {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            color: var(--sand);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+        }
+
+        .module-btn {
+            display: block;
+            width: 100%;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            background: transparent;
+            border: var(--thin-line);
+            border-left: 3px solid transparent;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.25s ease;
+        }
+
+        .module-btn h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.1rem;
+            color: var(--ink);
+            margin-bottom: 0.3rem;
+        }
+
+        .module-btn p {
+            font-size: 12px;
+            color: var(--sand);
+            line-height: 1.4;
+        }
+
+        .module-btn:hover {
+            border-left-color: var(--amber);
+            background-color: rgba(139, 111, 78, 0.03);
+        }
+
+        .module-btn.active {
+            border-left-color: var(--amber);
+            background-color: rgba(139, 111, 78, 0.05);
+        }
+
+        .module-btn.active h4 {
+            color: var(--amber);
+        }
+
+        /* MAIN WORKSPACE */
+        .workspace {
+            flex: 1;
+            padding: 3rem 5%;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .workspace-header {
+            margin-bottom: 2rem;
+        }
+
+        .workspace-header h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.8rem;
+            color: var(--ink);
+            margin-bottom: 0.5rem;
+        }
+
+        .workspace-header p {
+            font-size: 14px;
+            color: var(--sand);
+            max-width: 70%;
+        }
+
+        /* TEXTAREA SECTION */
+        .input-section {
+            margin-bottom: 2rem;
+        }
+
+        .textarea-wrapper {
+            position: relative;
+            margin-bottom: 0.8rem;
+        }
+
+        .textarea-wrapper textarea {
+            width: 100%;
+            min-height: 180px;
+            padding: 1.5rem;
+            font-family: 'Instrument Sans', sans-serif;
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--ink);
+            background-color: var(--parchment);
+            border: var(--thin-line);
+            resize: none;
+            overflow: hidden;
+        }
+
+        .textarea-wrapper textarea:focus {
+            outline: none;
+            border-color: var(--amber);
+            box-shadow: inset 0 0 0 2px rgba(139, 111, 78, 0.05);
+        }
+
+        .textarea-wrapper textarea::placeholder {
+            color: var(--sand);
+        }
+
+        .char-counter {
+            font-family: 'DM Mono', monospace;
+            font-size: 12px;
+            color: var(--sand);
+            text-align: right;
+            margin-top: 0.4rem;
+        }
+
+        /* RESPONSE MODE SECTION */
+        .response-mode-section {
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .mode-label {
+            font-size: 14px;
+            color: var(--ink);
+            font-weight: 500;
+            font-family: 'Instrument Sans', sans-serif;
+        }
+
+        .segmented-control {
+            display: flex;
+            gap: 0;
+            border: var(--thin-line);
+            background-color: var(--parchment);
+        }
+
+        .mode-btn {
+            padding: 0.6rem 1.2rem;
+            font-family: 'Instrument Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            border: none;
+            background-color: transparent;
+            color: var(--sand);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex: 1;
+            text-align: center;
+        }
+
+        .mode-btn:first-child {
+            border-right: var(--thin-line);
+        }
+
+        .mode-btn:hover {
+            background-color: rgba(139, 111, 78, 0.03);
+            color: var(--amber);
+        }
+
+        .mode-btn.active {
+            background-color: var(--ink);
+            color: var(--parchment);
+        }
+
+        /* ACTION BUTTONS */
+        .actions {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            font-family: 'Instrument Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            border: var(--thin-line);
+            background-color: var(--parchment);
+            color: var(--ink);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            border-color: var(--amber);
+            background-color: rgba(139, 111, 78, 0.05);
+        }
+
+        .btn.primary {
+            background-color: var(--ink);
+            color: var(--parchment);
+            border-color: var(--ink);
+        }
+
+        .btn.primary:hover {
+            background-color: var(--amber);
+            border-color: var(--amber);
+        }
+
+        /* OUTPUT SECTION */
+        .output-header {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            color: var(--sand);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1.2rem;
+        }
+
+        .output-content {
+            background-color: var(--parchment);
+            border: var(--thin-line);
+            padding: 1.5rem;
+            min-height: 200px;
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--ink);
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-y: auto;
+        }
+
+        /* HISTORY SIDEBAR */
+        .history-panel {
+            width: 20%;
+            border-left: var(--thin-line);
+            padding: 2rem 5%;
+            overflow-y: auto;
+            background-color: rgba(139, 111, 78, 0.02);
+        }
+
+        .history-item {
+            padding: 1rem;
+            border: var(--thin-line);
+            margin-bottom: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        @media (max-width: 1200px) {
+            .container { flex-direction: column; }
+            .modules-panel, .history-panel { width: 100%; border-right: none; border-bottom: var(--thin-line); }
+            .history-panel { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-left">
+            <h1 data-es="Laboratorio de Claridad" data-en="Laboratory of Clarity">Laboratorio de Claridad</h1>
+            <p data-es="Arquitectura mental para decisiones complejas." data-en="Mental architecture for complex decisions.">Arquitectura mental para decisiones complejas.</p>
+        </div>
+        <div class="header-right">
+            <div class="lang-toggle">
+                <button id="lang-es" class="active" onclick="setLanguage('es')">ES</button>
+                <button id="lang-en" onclick="setLanguage('en')">EN</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="modules-panel">
+            <h3 data-es="Módulos" data-en="Modules">Módulos</h3>
+            <button class="module-btn active" data-module="clarity" onclick="selectModule('clarity')">
+                <h4 data-es="01. Protocolo de Claridad" data-en="01. Clarity Protocol">01. Protocolo de Claridad</h4>
+                <p data-es="Analiza y refina tu pensamiento" data-en="Analyze and refine your thinking">Analiza y refina tu pensamiento</p>
+            </button>
+            <button class="module-btn" data-module="field-note" onclick="selectModule('field-note')">
+                <h4 data-es="02. Nota de Campo" data-en="02. Field Note">02. Nota de Campo</h4>
+                <p data-es="Ensayo premium sobre tema" data-en="Premium essay on topic">Ensayo premium sobre tema</p>
+            </button>
+            <button class="module-btn" data-module="hygiene" onclick="selectModule('hygiene')">
+                <h4 data-es="03. Higiene Decisional" data-en="03. Decision Hygiene">03. Higiene Decisional</h4>
+                <p data-es="Evalúa riesgos y sesgos" data-en="Evaluate risks and biases">Evalúa riesgos y sesgos</p>
+            </button>
+        </div>
+
+        <div class="workspace">
+            <div class="workspace-header">
+                <h2 id="workspace-title">Protocolo de Claridad</h2>
+                <p id="workspace-desc">Análisis estructurado de intención, distorsiones y debilidades lógicas.</p>
+            </div>
+
+            <div class="input-section">
+                <div class="textarea-wrapper">
+                    <textarea id="user-input" placeholder="Escribe aquí tu pensamiento..."></textarea>
+                    <div class="char-counter"><span id="char-count">0</span> caracteres</div>
+                </div>
+            </div>
+
+            <div class="response-mode-section">
+                <label class="mode-label">Tono de respuesta:</label>
+                <div class="segmented-control">
+                    <button class="mode-btn active" data-mode="soft" onclick="setResponseMode('soft')">Suave</button>
+                    <button class="mode-btn" data-mode="brutal" onclick="setResponseMode('brutal')">Brutal</button>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="btn primary" id="analyze-btn" onclick="analyzeText()">Analizar</button>
+                <button class="btn" onclick="clearInput()">Limpiar</button>
+            </div>
+
+            <div class="output-section">
+                <div class="output-header">Resultado</div>
+                <div class="output-content" id="output">
+                    <div class="loading">Escribe y haz clic en Analizar para comenzar.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="history-panel">
+            <h3>Últimos Análisis</h3>
+            <div id="history-list"></div>
+        </div>
+    </div>
+</body>
+</html>
