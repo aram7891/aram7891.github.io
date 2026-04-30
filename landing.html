@@ -1,397 +1,1192 @@
-import React, { useState, useEffect } from ‘react’;
-import { ArrowRight, Lock } from ‘lucide-react’;
-
-export default function ProtocoloLanding() {
-const [isVisible, setIsVisible] = useState(false);
-const [scrollY, setScrollY] = useState(0);
-
-useEffect(() => {
-setIsVisible(true);
-const handleScroll = () => setScrollY(window.scrollY);
-window.addEventListener(‘scroll’, handleScroll);
-return () => window.removeEventListener(‘scroll’, handleScroll);
-}, []);
-
-return (
-<div style={{ backgroundColor: ‘#F7F4EF’, color: ‘#1A1814’ }} className=“min-h-screen font-sans”>
-{/* Typography imports */}
-<style>{`
-@import url(‘https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital@0;1&family=Instrument+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap’);
-
-```
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Protocolo de la Claridad - Self Love Club</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital@0;1&family=Instrument+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
     * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
       font-family: 'Instrument Sans', sans-serif;
     }
-    
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: #F7F4EF;
+      color: #1A1814;
+      line-height: 1.6;
+    }
+
     .font-cormorant {
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
     }
-    
+
     .font-mono {
       font-family: 'DM Mono', monospace;
     }
-    
+
+    .container {
+      max-width: 1400px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 5%;
+    }
+
+    /* LANGUAGE TOGGLE */
+    .language-toggle {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      background-color: rgba(247, 244, 239, 0.95);
+      border: 1px solid rgba(139, 111, 78, 0.3);
+      border-radius: 4px;
+      backdrop-filter: blur(10px);
+    }
+
+    .lang-btn {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      padding: 0.5rem 0.75rem;
+      background: none;
+      border: 1px solid transparent;
+      color: #1A1814;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+    }
+
+    .lang-btn.active {
+      color: #8B6F4E;
+      border-bottom: 2px solid #8B6F4E;
+    }
+
+    .lang-btn:hover {
+      color: #8B6F4E;
+    }
+
+    .lang-separator {
+      width: 1px;
+      height: 1rem;
+      background-color: rgba(139, 111, 78, 0.2);
+    }
+
+    .grid-12 {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 3rem;
+    }
+
+    @media (max-width: 768px) {
+      .grid-12 {
+        gap: 2rem;
+      }
+
+      .language-toggle {
+        top: 1rem;
+        right: 1rem;
+        padding: 0.5rem 0.75rem;
+      }
+
+      .lang-btn {
+        font-size: 0.65rem;
+        padding: 0.4rem 0.6rem;
+      }
+    }
+
+    .col-span-6 {
+      grid-column: span 6;
+    }
+
+    .col-span-5 {
+      grid-column: span 5;
+    }
+
+    .col-span-7 {
+      grid-column: span 7;
+    }
+
+    .col-span-12 {
+      grid-column: span 12;
+    }
+
+    @media (max-width: 1024px) {
+      .col-span-6, .col-span-5, .col-span-7 {
+        grid-column: span 12;
+      }
+    }
+
+    /* HERO SECTION */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6rem 5% 0;
+    }
+
     .hero-title {
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
-      font-size: clamp(2.5rem, 8vw, 4.5rem);
+      font-size: clamp(2.8rem, 8vw, 5rem);
       line-height: 1.1;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
+      font-weight: 400;
+      margin-bottom: 2rem;
+      color: #1A1814;
+      animation: fadeInUp 0.9s ease-out forwards;
+      opacity: 0;
     }
-    
-    .fade-in {
-      animation: fadeInUp 0.8s ease-out forwards;
+
+    .hero-subtitle {
+      font-size: 1.125rem;
+      line-height: 1.8;
+      max-width: 580px;
+      color: #1A1814;
+      opacity: 0.85;
+      margin-bottom: 2rem;
+      animation: fadeInUp 0.9s ease-out 0.3s forwards;
+      opacity: 0;
     }
-    
-    .fade-in-delay-1 { animation-delay: 0.1s; }
-    .fade-in-delay-2 { animation-delay: 0.2s; }
-    .fade-in-delay-3 { animation-delay: 0.3s; }
-    
+
+    .label-mono {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #8B6F4E;
+      margin-bottom: 2rem;
+      animation: fadeInUp 0.9s ease-out 0.15s forwards;
+      opacity: 0;
+    }
+
+    .price-section {
+      margin-top: 4rem;
+      animation: fadeInUp 0.9s ease-out 0.45s forwards;
+      opacity: 0;
+    }
+
+    .price-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: #8B6F4E;
+      margin-bottom: 0.5rem;
+    }
+
+    .price-display {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+    }
+
+    .price-amount {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 3.5rem;
+      color: #1A1814;
+    }
+
+    .price-note {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: #8B6F4E;
+      opacity: 0.7;
+    }
+
+    /* DOSSIER */
+    .dossier-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 600px;
+      animation: fadeInUp 0.9s ease-out 0.3s forwards;
+      opacity: 0;
+    }
+
+    .dossier {
+      position: relative;
+      width: 100%;
+      max-width: 320px;
+      aspect-ratio: 3 / 4;
+      background-color: #C4A882;
+      box-shadow: 0 30px 60px rgba(26, 24, 20, 0.2);
+      padding: 3.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      transition: transform 0.1s ease-out;
+    }
+
+    .dossier::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle at 25% 75%, rgba(255,255,255,0.08) 0%, transparent 50%);
+      mix-blend-mode: overlay;
+      pointer-events: none;
+    }
+
+    .dossier-header {
+      position: relative;
+      z-index: 10;
+    }
+
+    .dossier-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      margin-bottom: 2.5rem;
+      color: rgba(26, 24, 20, 0.6);
+    }
+
+    .dossier-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.5rem;
+      line-height: 1.3;
+      color: rgba(26, 24, 20, 0.85);
+    }
+
+    .dossier-modules {
+      position: relative;
+      z-index: 10;
+    }
+
+    .module-line {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .module-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 600;
+      flex-shrink: 0;
+      color: rgba(26, 24, 20, 0.7);
+    }
+
+    .module-line-divider {
+      flex: 1;
+      height: 1px;
+      background-color: rgba(26, 24, 20, 0.25);
+    }
+
+    .modules-more {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      padding-top: 0.5rem;
+      color: rgba(26, 24, 20, 0.5);
+    }
+
+    .dossier-footer {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .dossier-footer-text {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: rgba(26, 24, 20, 0.5);
+    }
+
+    .dossier-clip {
+      position: absolute;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 32px;
+      height: 42px;
+      background-color: #8B6F4E;
+      border-radius: 2px 2px 8px 8px;
+      box-shadow: inset -2px 0 4px rgba(0,0,0,0.25), 0 2px 5px rgba(0,0,0,0.15);
+      z-index: 20;
+    }
+
+    .dossier-shadow {
+      position: absolute;
+      bottom: -1.5rem;
+      left: 0;
+      right: 0;
+      height: 1.5rem;
+      background-color: rgba(26, 24, 20, 0.12);
+      filter: blur(2rem);
+      z-index: 5;
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 5rem 5%;
+    }
+
+    .divider {
+      height: 100px;
+    }
+
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      margin-bottom: 4rem;
+      color: #8B6F4E;
+      animation: fadeInUp 0.9s ease-out forwards;
+      opacity: 0;
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      color: #1A1814;
+      animation: fadeInUp 0.9s ease-out forwards;
+      opacity: 0;
+    }
+
+    .section-text {
+      font-size: 1rem;
+      line-height: 1.8;
+      max-width: 580px;
+      color: #1A1814;
+      opacity: 0.8;
+      animation: fadeInUp 0.9s ease-out 0.1s forwards;
+      opacity: 0;
+    }
+
+    /* QUÉ ES SECTION */
+    .layer-item {
+      position: relative;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(26, 24, 20, 0.1);
+      animation: fadeInUp 0.9s ease-out forwards;
+      opacity: 0;
+    }
+
+    .layer-item:last-child {
+      border-bottom: none;
+    }
+
+    .layer-item:hover {
+      padding-left: 0.75rem;
+      background: rgba(139, 111, 78, 0.02);
+    }
+
+    .layer-header {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .layer-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.875rem;
+      font-weight: 600;
+      flex-shrink: 0;
+      color: #8B6F4E;
+    }
+
+    .layer-content h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: #1A1814;
+    }
+
+    .layer-content p {
+      font-size: 0.875rem;
+      color: #1A1814;
+      opacity: 0.7;
+      line-height: 1.6;
+    }
+
+    /* FINITUD SECTION */
+    .finitud-box {
+      padding: 4rem;
+      border-left: 4px solid #8B6F4E;
+      background-color: rgba(139, 111, 78, 0.04);
+      animation: fadeInUp 0.9s ease-out forwards;
+      opacity: 0;
+    }
+
+    .finitud-box .section-label {
+      margin-bottom: 2rem;
+    }
+
+    .finitud-box .section-title {
+      margin-bottom: 2rem;
+    }
+
+    .finitud-text {
+      font-size: 1rem;
+      line-height: 1.9;
+      color: #1A1814;
+      opacity: 0.85;
+      margin-bottom: 1.5rem;
+    }
+
+    .finitud-note {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.875rem;
+      letter-spacing: 0.05em;
+      color: #8B6F4E;
+    }
+
+    /* MÓDULOS GRID */
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      animation: fadeInUp 0.9s ease-out forwards;
+      opacity: 0;
+    }
+
+    .module-card {
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(26, 24, 20, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .module-card:hover {
+      padding-left: 0.75rem;
+      background: rgba(139, 111, 78, 0.02);
+    }
+
+    .module-card-header {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .module-card-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 600;
+      flex-shrink: 0;
+      color: #8B6F4E;
+    }
+
+    .module-card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.125rem;
+      color: #1A1814;
+    }
+
+    .module-card-desc {
+      font-size: 0.875rem;
+      color: #1A1814;
+      opacity: 0.6;
+      margin-left: 1.5rem;
+    }
+
+    /* CTA SECTION */
+    .cta-section {
+      border-top: 1px solid rgba(26, 24, 20, 0.1);
+      padding: 7rem 5%;
+    }
+
+    .cta-content {
+      max-width: 1400px;
+      margin-left: auto;
+      margin-right: auto;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .cta-text {
+      grid-column: span 6;
+      animation: fadeInUp 0.9s ease-out forwards;
+      opacity: 0;
+    }
+
+    .cta-text .section-label {
+      margin-bottom: 2rem;
+    }
+
+    .cta-text h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 2.25rem;
+      margin-bottom: 2rem;
+      color: #1A1814;
+    }
+
+    .cta-text p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #1A1814;
+      opacity: 0.8;
+      margin-bottom: 3rem;
+    }
+
+    .features-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      font-size: 0.875rem;
+      color: #1A1814;
+      opacity: 0.7;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .feature-icon {
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+
+    .cta-button-container {
+      grid-column: span 6;
+      display: flex;
+      justify-content: center;
+      animation: fadeInUp 0.9s ease-out 0.15s forwards;
+      opacity: 0;
+    }
+
+    .cta-button {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.5rem 2.5rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.875rem;
+      letter-spacing: 0.05em;
+      background-color: #8B6F4E;
+      color: #F7F4EF;
+      border: 2px solid #8B6F4E;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      text-transform: uppercase;
+    }
+
+    .cta-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(139, 111, 78, 0.1);
+      transition: left 0.4s ease;
+      z-index: -1;
+    }
+
+    .cta-button:hover {
+      background-color: #F7F4EF;
+      color: #8B6F4E;
+    }
+
+    .cta-button:hover::before {
+      left: 0;
+    }
+
+    .cta-button-text {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .cta-arrow {
+      transition: transform 0.3s ease;
+    }
+
+    .cta-button:hover .cta-arrow {
+      transform: translateX(0.5rem);
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid rgba(26, 24, 20, 0.1);
+      padding: 4rem 5%;
+      max-width: 1400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .footer-col {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .footer-col.right {
+      text-align: right;
+    }
+
+    @media (max-width: 768px) {
+      .footer-col.right {
+        text-align: left;
+      }
+    }
+
+    .footer-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      margin-bottom: 1rem;
+      color: #8B6F4E;
+      text-transform: uppercase;
+    }
+
+    .footer-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.125rem;
+      margin-top: 0.5rem;
+      color: #1A1814;
+    }
+
+    .footer-link {
+      font-size: 0.75rem;
+      margin-top: 0.75rem;
+      color: #1A1814;
+      opacity: 0.5;
+    }
+
+    /* ANIMATIONS */
     @keyframes fadeInUp {
       from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(30px);
       }
       to {
         opacity: 1;
         transform: translateY(0);
       }
     }
-    
-    .parallax {
-      transform: translateY(calc(var(--scroll) * 0.5px));
+
+    /* HIDDEN TEXT FOR TRANSLATION */
+    [data-lang] {
+      display: none;
     }
-  `}</style>
 
-  {/* HERO SECTION */}
-  <section 
-    className="min-h-screen flex flex-col justify-center px-[5%] py-20"
-    style={{ maxWidth: '1400px', marginLeft: 'auto', marginRight: 'auto' }}
-  >
-    <div className="grid grid-cols-12 gap-8 items-center">
-      <div className="col-span-12 lg:col-span-7">
-        <div className={`fade-in ${isVisible ? '' : 'opacity-0'}`}>
-          <p className="font-mono text-sm tracking-widest mb-6" style={{ color: '#8B6F4E' }}>
-            SELF LOVE CLUB
+    [data-lang].active {
+      display: inline;
+    }
+
+    @media (max-width: 768px) {
+      .col-span-6, .col-span-5, .col-span-7 {
+        grid-column: span 12;
+      }
+
+      .cta-content {
+        grid-template-columns: 1fr;
+      }
+
+      .cta-text, .cta-button-container {
+        grid-column: span 12;
+      }
+
+      .section-title {
+        font-size: 1.75rem;
+      }
+
+      .hero-title {
+        font-size: 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- LANGUAGE TOGGLE -->
+  <div class="language-toggle">
+    <button class="lang-btn active" data-lang="es" onclick="switchLanguage('es')">ES</button>
+    <div class="lang-separator"></div>
+    <button class="lang-btn" data-lang="en" onclick="switchLanguage('en')">EN</button>
+  </div>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="container">
+      <div class="grid-12">
+        <div class="col-span-7">
+          <p class="label-mono">
+            <span data-text="heroLabel" data-lang="es" class="active">SELF LOVE CLUB — NIVEL 02</span>
+            <span data-text="heroLabel" data-lang="en">SELF LOVE CLUB — LEVEL 02</span>
           </p>
-          
-          <h1 className="hero-title mb-8 fade-in fade-in-delay-1" style={{ color: '#1A1814' }}>
-            Análisis de sistemas para la experiencia humana
+          <h1 class="hero-title">
+            <span data-text="heroTitle" data-lang="es" class="active">El Protocolo de la Claridad</span>
+            <span data-text="heroTitle" data-lang="en">The Clarity Protocol</span>
           </h1>
-          
-          <p 
-            className="fade-in fade-in-delay-2 text-lg leading-relaxed"
-            style={{ color: '#1A1814', maxWidth: '550px', lineHeight: '1.7' }}
-          >
-            Un protocolo de 10 módulos que aplica marcos de economía, termodinámica y arquitectura de sistemas a las decisiones cotidianas. Sin narrativa de transformación. Solo claridad.
+          <p class="hero-subtitle">
+            <span data-text="heroSubtitle" data-lang="es" class="active">Un sistema de 10 módulos que aplica economía, termodinámica y arquitectura de sistemas a las decisiones cotidianas. Sin promesas de transformación. Solo marcos operativos que explican por qué decides lo que decides.</span>
+            <span data-text="heroSubtitle" data-lang="en">A 10-module system applying economics, thermodynamics, and systems architecture to everyday decisions. No transformation promises. Only operational frameworks that explain why you decide what you decide.</span>
           </p>
           
-          <div className="mt-12 flex items-center gap-4 fade-in fade-in-delay-3">
-            <div className="font-mono text-xs tracking-widest" style={{ color: '#8B6F4E' }}>
-              MÓDULO 01 DE 10
+          <div class="price-section">
+            <div class="price-label">
+              <span data-text="priceLabel" data-lang="es" class="active">PRECIO DE ACCESO</span>
+              <span data-text="priceLabel" data-lang="en">ACCESS PRICE</span>
             </div>
-            <div style={{ width: '60px', height: '1px', backgroundColor: '#8B6F4E' }}></div>
+            <div class="price-display">
+              <span class="price-amount">$49</span>
+              <span class="price-note">
+                <span data-text="priceNote" data-lang="es" class="active">acceso de por vida</span>
+                <span data-text="priceNote" data-lang="en">lifetime access</span>
+              </span>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* DOSSIER MOCKUP */}
-      <div className="col-span-12 lg:col-span-5 flex justify-center items-center min-h-[500px]">
-        <div 
-          className="relative w-full max-w-sm fade-in fade-in-delay-1"
-          style={{ perspective: '1000px' }}
-        >
-          {/* Dossier Card */}
-          <div 
-            className="relative"
-            style={{
-              width: '100%',
-              aspectRatio: '3 / 4',
-              backgroundColor: '#C4A882',
-              boxShadow: '0 20px 50px rgba(26, 24, 20, 0.15)',
-              transform: `translateY(${scrollY * 0.1}px)`,
-              transition: 'transform 0.1s ease-out'
-            }}
-          >
-            {/* Kraft texture overlay */}
-            <div 
-              className="absolute inset-0"
-              style={{
-                backgroundImage: 'radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%)',
-                mixBlendMode: 'overlay'
-              }}
-            ></div>
+        <div class="col-span-5 dossier-container">
+          <div class="dossier">
+            <div class="dossier-header">
+              <p class="dossier-label">PROTOCOLO</p>
+              <p class="dossier-title">
+                <span data-text="dossierTitle" data-lang="es" class="active">Claridad y toma de decisiones en entornos modernos</span>
+                <span data-text="dossierTitle" data-lang="en">Clarity and decision-making in modern environments</span>
+              </p>
+            </div>
 
-            {/* Content inside dossier */}
-            <div className="p-12 h-full flex flex-col justify-between">
-              {/* Header */}
-              <div>
-                <p className="font-mono text-xs tracking-widest mb-8" style={{ color: 'rgba(26, 24, 20, 0.6)' }}>
-                  PROTOCOLO
-                </p>
-                <p className="font-mono text-xs mb-12" style={{ color: 'rgba(26, 24, 20, 0.8)', lineHeight: '1.6' }}>
-                  Claridad y toma de<br />
-                  decisiones en<br />
-                  entornos modernos
-                </p>
+            <div class="dossier-modules">
+              <div class="module-line">
+                <span class="module-num">01</span>
+                <div class="module-line-divider"></div>
               </div>
-
-              {/* Central visual — módulos numerados */}
-              <div className="space-y-3">
-                {[1, 2, 3].map((i) => (
-                  <div key={i} className="flex items-center gap-3">
-                    <div 
-                      className="font-mono text-xs font-semibold"
-                      style={{ color: 'rgba(26, 24, 20, 0.7)' }}
-                    >
-                      {String(i).padStart(2, '0')}
-                    </div>
-                    <div 
-                      style={{
-                        flex: 1,
-                        height: '1px',
-                        backgroundColor: 'rgba(26, 24, 20, 0.3)'
-                      }}
-                    ></div>
-                  </div>
-                ))}
-                <div className="font-mono text-xs" style={{ color: 'rgba(26, 24, 20, 0.5)' }}>
-                  ... 7 más
-                </div>
+              <div class="module-line">
+                <span class="module-num">02</span>
+                <div class="module-line-divider"></div>
               </div>
-
-              {/* Footer with clip */}
-              <div className="text-right">
-                <p className="font-mono text-xs tracking-widest" style={{ color: 'rgba(26, 24, 20, 0.5)' }}>
-                  01/10
-                </p>
+              <div class="module-line">
+                <span class="module-num">03</span>
+                <div class="module-line-divider"></div>
+              </div>
+              <div class="modules-more">
+                <span data-text="modulesMore" data-lang="es" class="active">+ 7 módulos adicionales</span>
+                <span data-text="modulesMore" data-lang="en">+ 7 additional modules</span>
               </div>
             </div>
 
-            {/* Metallic clip */}
-            <div 
-              className="absolute top-4 left-1/2 transform -translate-x-1/2"
-              style={{
-                width: '30px',
-                height: '40px',
-                backgroundColor: '#8B6F4E',
-                borderRadius: '2px 2px 8px 8px',
-                boxShadow: 'inset -2px 0 4px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)',
-              }}
-            ></div>
+            <div class="dossier-footer">
+              <span class="dossier-footer-text">01/10</span>
+              <span class="dossier-footer-text">SELF LOVE CLUB</span>
+            </div>
+
+            <div class="dossier-clip"></div>
+            <div class="dossier-shadow"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- QUÉ ES SECTION -->
+  <section>
+    <div class="container">
+      <div class="grid-12">
+        <div class="col-span-5">
+          <p class="section-label">
+            <span data-text="proposalLabel" data-lang="es" class="active">LA PROPUESTA</span>
+            <span data-text="proposalLabel" data-lang="en">THE PROPOSAL</span>
+          </p>
+          <h2 class="section-title">
+            <span data-text="proposalTitle" data-lang="es" class="active">No es coaching</span>
+            <span data-text="proposalTitle" data-lang="en">It's not coaching</span>
+          </h2>
+          <p class="section-text">
+            <span data-text="proposalText" data-lang="es" class="active">El Protocolo no vende transformación personal ni despertar. Entrega marcos verificables. Sistemas de análisis que funcionan igual como funciona la economía: por incentivos, restricciones y retorno sobre energía.</span>
+            <span data-text="proposalText" data-lang="en">The Protocol doesn't sell personal transformation. It delivers verifiable frameworks. Analysis systems that work like economics: through incentives, constraints, and return on energy.</span>
+          </p>
+        </div>
+
+        <div class="col-span-7">
+          <p class="section-label">
+            <span data-text="structureLabel" data-lang="es" class="active">CAPAS DEL PROTOCOLO</span>
+            <span data-text="structureLabel" data-lang="en">PROTOCOL LAYERS</span>
+          </p>
+          
+          <div class="layer-item" style="animation-delay: 0.1s;">
+            <div class="layer-header">
+              <span class="layer-num">01</span>
+              <div class="layer-content">
+                <h3>
+                  <span data-text="layer1Title" data-lang="es" class="active">Prólogo Estructural</span>
+                  <span data-text="layer1Title" data-lang="en">Structural Prologue</span>
+                </h3>
+                <p>
+                  <span data-text="layer1Desc" data-lang="es" class="active">Los principios de economía, sistemas y termodinámica que explican la toma de decisiones humana. Sin poesía.</span>
+                  <span data-text="layer1Desc" data-lang="en">The principles of economics, systems, and thermodynamics that explain human decision-making. No poetry.</span>
+                </p>
+              </div>
+            </div>
           </div>
 
-          {/* Shadow underneath */}
-          <div 
-            className="absolute -bottom-4 left-0 right-0 h-4 blur-xl"
-            style={{ backgroundColor: 'rgba(26, 24, 20, 0.1)' }}
-          ></div>
+          <div class="layer-item" style="animation-delay: 0.2s;">
+            <div class="layer-header">
+              <span class="layer-num">02</span>
+              <div class="layer-content">
+                <h3>
+                  <span data-text="layer2Title" data-lang="es" class="active">10 Módulos Operativos</span>
+                  <span data-text="layer2Title" data-lang="en">10 Operational Modules</span>
+                </h3>
+                <p>
+                  <span data-text="layer2Desc" data-lang="es" class="active">Arbitraje emocional, liquidez cognitiva, arquitectura del silencio, retorno sobre energía, y 6 marcos adicionales. Cada uno aplicable desde el primer encuentro.</span>
+                  <span data-text="layer2Desc" data-lang="en">Emotional arbitrage, cognitive liquidity, architecture of silence, return on energy, and 6 additional frameworks. Each applicable from first encounter.</span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="layer-item" style="animation-delay: 0.3s;">
+            <div class="layer-header">
+              <span class="layer-num">03</span>
+              <div class="layer-content">
+                <h3>
+                  <span data-text="layer3Title" data-lang="es" class="active">Epílogo Operativo</span>
+                  <span data-text="layer3Title" data-lang="en">Operational Epilogue</span>
+                </h3>
+                <p>
+                  <span data-text="layer3Desc" data-lang="es" class="active">Una plantilla de auditoría para que analices tus propias variables de decisión. El protocolo no termina en la lectura.</span>
+                  <span data-text="layer3Desc" data-lang="en">An audit template to analyze your own decision variables. The protocol doesn't end at reading.</span>
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  {/* WHITESPACE DIVIDER */}
-  <div style={{ height: '150px' }}></div>
+  <div class="divider"></div>
 
-  {/* ARQUITECTURA DE 3 CAPAS */}
-  <section 
-    className="px-[5%] py-20"
-    style={{ maxWidth: '1400px', marginLeft: 'auto', marginRight: 'auto' }}
-  >
-    <div className="grid grid-cols-12 gap-12">
-      <div className="col-span-12">
-        <p className="font-mono text-sm tracking-widest mb-16" style={{ color: '#8B6F4E' }}>
-          ESTRUCTURA DEL PROTOCOLO
+  <!-- FINITUD SECTION -->
+  <section style="display: flex; justify-content: center; padding: 6rem 5%;">
+    <div style="max-width: 950px; width: 100%;">
+      <div class="finitud-box">
+        <p class="section-label">
+          <span data-text="finitudLabel" data-lang="es" class="active">POR QUÉ FUNCIONA LA FINITUD</span>
+          <span data-text="finitudLabel" data-lang="en">WHY FINITENESS WORKS</span>
         </p>
-      </div>
-
-      {/* Layer 1 */}
-      <div className="col-span-12 md:col-span-4">
-        <div className="mb-8">
-          <p className="font-mono text-xs tracking-widest mb-4" style={{ color: '#8B6F4E' }}>
-            CAPA 01
-          </p>
-          <p className="font-cormorant text-3xl mb-4" style={{ color: '#1A1814' }}>
-            La Promesa
-          </p>
-        </div>
-        <p 
-          className="text-sm leading-relaxed"
-          style={{ color: '#1A1814', opacity: 0.8, lineHeight: '1.7' }}
-        >
-          No transformación personal. Claridad operativa: cómo los principios de sistemas y economía explican tus decisiones cotidianas.
+        <h3 class="section-title">
+          <span data-text="finitudTitle" data-lang="es" class="active">Autoridad silenciosa es finitud</span>
+          <span data-text="finitudTitle" data-lang="en">Silent authority is finiteness</span>
+        </h3>
+        <p class="finitud-text">
+          <span data-text="finitudText" data-lang="es" class="active">Un sistema con principio, cuerpo y cierre tiene densidad de valor. 10 módulos cerrados comunica que el trabajo está completo. No es suscripción perpetua a contenido infinito. Es adquisición de capital intelectual.</span>
+          <span data-text="finitudText" data-lang="en">A system with beginning, body, and closure has value density. 10 closed modules communicate that work is complete. It's not perpetual subscription to infinite content. It's acquisition of intellectual capital.</span>
         </p>
-      </div>
-
-      {/* Layer 2 */}
-      <div className="col-span-12 md:col-span-4">
-        <div className="mb-8">
-          <p className="font-mono text-xs tracking-widest mb-4" style={{ color: '#8B6F4E' }}>
-            CAPA 02
-          </p>
-          <p className="font-cormorant text-3xl mb-4" style={{ color: '#1A1814' }}>
-            Los 10 Módulos
-          </p>
-        </div>
-        <p 
-          className="text-sm leading-relaxed"
-          style={{ color: '#1A1814', opacity: 0.8, lineHeight: '1.7' }}
-        >
-          Arbitraje emocional, liquidez cognitiva, arquitectura del silencio, retorno sobre energía, y 6 marcos adicionales. Cada uno operativo desde el primer encuentro.
-        </p>
-      </div>
-
-      {/* Layer 3 */}
-      <div className="col-span-12 md:col-span-4">
-        <div className="mb-8">
-          <p className="font-mono text-xs tracking-widest mb-4" style={{ color: '#8B6F4E' }}>
-            CAPA 03
-          </p>
-          <p className="font-cormorant text-3xl mb-4" style={{ color: '#1A1814' }}>
-            Epílogo Operativo
-          </p>
-        </div>
-        <p 
-          className="text-sm leading-relaxed"
-          style={{ color: '#1A1814', opacity: 0.8, lineHeight: '1.7' }}
-        >
-          Una plantilla integrada para auditar tus propias variables de decisión. El protocolo no termina en la lectura.
+        <p class="finitud-note">
+          <span data-text="finitudNote" data-lang="es" class="active">Retorno sobre energía: tiempo acotado. Marcos extraíbles. Aplicables. Repetibles.</span>
+          <span data-text="finitudNote" data-lang="en">Return on energy: bounded time. Extractable frameworks. Applicable. Repeatable.</span>
         </p>
       </div>
     </div>
   </section>
 
-  {/* WHITESPACE DIVIDER */}
-  <div style={{ height: '120px' }}></div>
+  <div class="divider"></div>
 
-  {/* FINITUD COMO SEÑAL */}
-  <section 
-    className="px-[5%] py-20"
-    style={{ maxWidth: '900px', marginLeft: 'auto', marginRight: 'auto' }}
-  >
-    <div className="grid grid-cols-12 gap-8">
-      <div className="col-span-12">
-        <div 
-          className="p-12 border-l-4"
-          style={{
-            borderColor: '#8B6F4E',
-            backgroundColor: 'rgba(139, 111, 78, 0.03)'
-          }}
-        >
-          <p className="font-mono text-xs tracking-widest mb-6" style={{ color: '#8B6F4E' }}>
-            POR QUÉ NO ES UN PODCAST INFINITO
+  <!-- MÓDULOS SECTION -->
+  <section>
+    <div class="container">
+      <p class="section-label">
+        <span data-text="modulesLabel" data-lang="es" class="active">LOS 10 MÓDULOS</span>
+        <span data-text="modulesLabel" data-lang="en">THE 10 MODULES</span>
+      </p>
+      <div class="modules-grid">
+        <div class="module-card" style="animation-delay: 0.08s;">
+          <div class="module-card-header">
+            <span class="module-card-num">01</span>
+            <span class="module-card-title">
+              <span data-text="mod1" data-lang="es" class="active">Arbitraje Emocional</span>
+              <span data-text="mod1" data-lang="en">Emotional Arbitrage</span>
+            </span>
+          </div>
+          <p class="module-card-desc">
+            <span data-text="mod1Desc" data-lang="es" class="active">Cómo la economía explica tus reacciones emocionales</span>
+            <span data-text="mod1Desc" data-lang="en">How economics explains your emotional reactions</span>
           </p>
-          
-          <h3 className="font-cormorant text-3xl mb-8" style={{ color: '#1A1814' }}>
-            La finitud como señal de autoridad
-          </h3>
-          
-          <p 
-            className="text-base leading-relaxed mb-6"
-            style={{ color: '#1A1814', opacity: 0.8, lineHeight: '1.8' }}
-          >
-            Un sistema con principio, cuerpo y fin tiene densidad de valor. Ten 10 módulos cerrados comunica que el trabajo está completo. No es un suscripción perpetua a contenido infinito. Es una adquisición de capital intelectual verificado.
+        </div>
+        <div class="module-card" style="animation-delay: 0.16s;">
+          <div class="module-card-header">
+            <span class="module-card-num">02</span>
+            <span class="module-card-title">
+              <span data-text="mod2" data-lang="es" class="active">Liquidez Cognitiva</span>
+              <span data-text="mod2" data-lang="en">Cognitive Liquidity</span>
+            </span>
+          </div>
+          <p class="module-card-desc">
+            <span data-text="mod2Desc" data-lang="es" class="active">Convertir atención en decisión</span>
+            <span data-text="mod2Desc" data-lang="en">Converting attention into decision</span>
           </p>
-          
-          <p 
-            className="text-sm"
-            style={{ color: '#1A1814', opacity: 0.6 }}
-          >
-            Retorno sobre energía: invieres tiempo acotado. Extraes reglas. Las aplicas. Repetís.
+        </div>
+        <div class="module-card" style="animation-delay: 0.24s;">
+          <div class="module-card-header">
+            <span class="module-card-num">03</span>
+            <span class="module-card-title">
+              <span data-text="mod3" data-lang="es" class="active">Arquitectura del Silencio</span>
+              <span data-text="mod3" data-lang="en">Architecture of Silence</span>
+            </span>
+          </div>
+          <p class="module-card-desc">
+            <span data-text="mod3Desc" data-lang="es" class="active">El espacio negativo en decisiones</span>
+            <span data-text="mod3Desc" data-lang="en">Negative space in decisions</span>
+          </p>
+        </div>
+        <div class="module-card" style="animation-delay: 0.32s;">
+          <div class="module-card-header">
+            <span class="module-card-num">04</span>
+            <span class="module-card-title">
+              <span data-text="mod4" data-lang="es" class="active">Retorno sobre Energía</span>
+              <span data-text="mod4" data-lang="en">Return on Energy</span>
+            </span>
+          </div>
+          <p class="module-card-desc">
+            <span data-text="mod4Desc" data-lang="es" class="active">Medir el costo real de tus elecciones</span>
+            <span data-text="mod4Desc" data-lang="en">Measuring the real cost of your choices</span>
+          </p>
+        </div>
+        <div class="module-card" style="animation-delay: 0.4s;">
+          <div class="module-card-header">
+            <span class="module-card-num">05</span>
+            <span class="module-card-title">
+              <span data-text="mod5" data-lang="es" class="active">Umbral de Tolerancia</span>
+              <span data-text="mod5" data-lang="en">Tolerance Threshold</span>
+            </span>
+          </div>
+          <p class="module-card-desc">
+            <span data-text="mod5Desc" data-lang="es" class="active">Dónde empieza y termina tu capacidad</span>
+            <span data-text="mod5Desc" data-lang="en">Where your capacity begins and ends</span>
+          </p>
+        </div>
+        <div class="module-card" style="animation-delay: 0.48s;">
+          <div class="module-card-header">
+            <span class="module-card-num">06</span>
+            <span class="module-card-title">
+              <span data-text="mod6" data-lang="es" class="active">Fricción Estratégica</span>
+              <span data-text="mod6" data-lang="en">Strategic Friction</span>
+            </span>
+          </div>
+          <p class="module-card-desc">
+            <span data-text="mod6Desc" data-lang="es" class="active">Cómo la dificultad es información</span>
+            <span data-text="mod6Desc" data-lang="en">How difficulty is information</span>
+          </p>
+        </div>
+        <div class="module-card" style="animation-delay: 0.56s;">
+          <div class="module-card-header">
+            <span class="module-card-num">07</span>
+            <span class="module-card-title">
+              <span data-text="mod7" data-lang="es" class="active">Variables Controlables</span>
+              <span data-text="mod7" data-lang="en">Controllable Variables</span>
+            </span>
+          </div>
+          <p class="module-card-desc">
+            <span data-text="mod7Desc" data-lang="es" class="active">Qué puedes cambiar, qué no</span>
+            <span data-text="mod7Desc" data-lang="en">What you can change, what you can't</span>
+          </p>
+        </div>
+        <div class="module-card" style="animation-delay: 0.64s;">
+          <div class="module-card-header">
+            <span class="module-card-num">08</span>
+            <span class="module-card-title">
+              <span data-text="mod8" data-lang="es" class="active">Ciclos de Decisión</span>
+              <span data-text="mod8" data-lang="en">Decision Cycles</span>
+            </span>
+          </div>
+          <p class="module-card-desc">
+            <span data-text="mod8Desc" data-lang="es" class="active">Patrones que se repiten en ti</span>
+            <span data-text="mod8Desc" data-lang="en">Patterns that repeat in you</span>
+          </p>
+        </div>
+        <div class="module-card" style="animation-delay: 0.72s;">
+          <div class="module-card-header">
+            <span class="module-card-num">09</span>
+            <span class="module-card-title">
+              <span data-text="mod9" data-lang="es" class="active">Costo de Oportunidad Real</span>
+              <span data-text="mod9" data-lang="en">Real Opportunity Cost</span>
+            </span>
+          </div>
+          <p class="module-card-desc">
+            <span data-text="mod9Desc" data-lang="es" class="active">Lo que realmente pierdes en cada "sí"</span>
+            <span data-text="mod9Desc" data-lang="en">What you really lose in each "yes"</span>
+          </p>
+        </div>
+        <div class="module-card" style="animation-delay: 0.8s;">
+          <div class="module-card-header">
+            <span class="module-card-num">10</span>
+            <span class="module-card-title">
+              <span data-text="mod10" data-lang="es" class="active">Protocolo Personalizado</span>
+              <span data-text="mod10" data-lang="en">Personalized Protocol</span>
+            </span>
+          </div>
+          <p class="module-card-desc">
+            <span data-text="mod10Desc" data-lang="es" class="active">Tu mapa de variables únicas</span>
+            <span data-text="mod10Desc" data-lang="en">Your unique variables map</span>
           </p>
         </div>
       </div>
     </div>
   </section>
 
-  {/* WHITESPACE DIVIDER */}
-  <div style={{ height: '150px' }}></div>
+  <div class="divider"></div>
 
-  {/* CTA SECTION */}
-  <section 
-    className="px-[5%] py-20 border-t"
-    style={{
-      borderColor: 'rgba(26, 24, 20, 0.1)',
-      maxWidth: '1400px',
-      marginLeft: 'auto',
-      marginRight: 'auto'
-    }}
-  >
-    <div className="grid grid-cols-12 gap-8 items-center">
-      <div className="col-span-12 md:col-span-6">
-        <p className="font-mono text-xs tracking-widest mb-6" style={{ color: '#8B6F4E' }}>
-          ACCESO AL PROTOCOLO
+  <!-- CTA SECTION -->
+  <section class="cta-section">
+    <div class="cta-content">
+      <div class="cta-text">
+        <p class="section-label">
+          <span data-text="ctaLabel" data-lang="es" class="active">ACCESO AHORA</span>
+          <span data-text="ctaLabel" data-lang="en">ACCESS NOW</span>
         </p>
-        <h2 className="font-cormorant text-4xl mb-6" style={{ color: '#1A1814' }}>
-          Nivel 02: El Protocolo Completo
+        <h2>
+          <span data-text="ctaTitle" data-lang="es" class="active">$49 de acceso de por vida</span>
+          <span data-text="ctaTitle" data-lang="en">$49 lifetime access</span>
         </h2>
-        <p 
-          className="text-base leading-relaxed"
-          style={{ color: '#1A1814', opacity: 0.8, lineHeight: '1.7' }}
-        >
-          Acceso a los 10 módulos, Epílogo Operativo, y plantillas de auditoría. Disponible en formato Audible (voz sintetizada en español) y Manual PDF interactivo.
+        <p>
+          <span data-text="ctaDesc" data-lang="es" class="active">Los 10 módulos completos en formato Audible (voz sintetizada, español) y Manual PDF interactivo. Más plantillas de auditoría y actualización de por vida.</span>
+          <span data-text="ctaDesc" data-lang="en">All 10 modules in Audible format (synthesized voice, Spanish) and interactive PDF manual. Plus audit templates and lifetime updates.</span>
         </p>
+        
+        <div class="features-list">
+          <div class="feature-item">
+            <span class="feature-icon">📚</span>
+            <span>
+              <span data-text="feat1" data-lang="es" class="active">10 módulos + Epílogo Operativo</span>
+              <span data-text="feat1" data-lang="en">10 modules + Operational Epilogue</span>
+            </span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">🎧</span>
+            <span>
+              <span data-text="feat2" data-lang="es" class="active">Audible sintetizado en español</span>
+              <span data-text="feat2" data-lang="en">Synthesized Audible in Spanish</span>
+            </span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">📄</span>
+            <span>
+              <span data-text="feat3" data-lang="es" class="active">Manual PDF interactivo + plantillas</span>
+              <span data-text="feat3" data-lang="en">Interactive PDF manual + templates</span>
+            </span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">♾️</span>
+            <span>
+              <span data-text="feat4" data-lang="es" class="active">Acceso de por vida + actualizaciones</span>
+              <span data-text="feat4" data-lang="en">Lifetime access + updates</span>
+            </span>
+          </div>
+        </div>
       </div>
 
-      <div className="col-span-12 md:col-span-6 flex justify-center md:justify-end">
-        <button
-          className="group flex items-center gap-3 px-8 py-4 rounded-sm font-mono text-sm tracking-widest transition-all duration-300"
-          style={{
-            backgroundColor: '#8B6F4E',
-            color: '#F7F4EF',
-            border: '1px solid #8B6F4E'
-          }}
-          onMouseEnter={(e) => {
-            e.target.style.backgroundColor = '#F7F4EF';
-            e.target.style.color = '#8B6F4E';
-          }}
-          onMouseLeave={(e) => {
-            e.target.style.backgroundColor = '#8B6F4E';
-            e.target.style.color = '#F7F4EF';
-          }}
-        >
-          <Lock size={16} />
-          Acceder a Nivel 02
-          <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+      <div class="cta-button-container">
+        <button class="cta-button" onclick="handleCTA()">
+          <span class="cta-button-text">
+            <span>🔒</span>
+            <span>
+              <span data-text="btnText" data-lang="es" class="active">Acceder a El Protocolo</span>
+              <span data-text="btnText" data-lang="en">Access The Protocol</span>
+            </span>
+            <span class="cta-arrow">→</span>
+          </span>
         </button>
       </div>
     </div>
   </section>
 
-  {/* FOOTER */}
-  <footer 
-    className="px-[5%] py-20 border-t"
-    style={{
-      borderColor: 'rgba(26, 24, 20, 0.1)',
-      maxWidth: '1400px',
-      marginLeft: 'auto',
-      marginRight: 'auto'
-    }}
-  >
-    <div className="grid grid-cols-12 gap-8">
-      <div className="col-span-12 md:col-span-6">
-        <p className="font-mono text-xs tracking-widest" style={{ color: '#8B6F4E' }}>
-          SELF LOVE CLUB
-        </p>
-        <p className="font-cormorant text-lg mt-2" style={{ color: '#1A1814' }}>
-          Andres Ramírez
-        </p>
-        <p className="text-xs mt-4" style={{ color: '#1A1814', opacity: 0.5 }}>
-          andresramirez.pro
-        </p>
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <p class="footer-label">SELF LOVE CLUB</p>
+        <p class="footer-name">Andres Ramírez</p>
+        <p class="footer-link">andresramirez.pro</p>
       </div>
-      
-      <div className="col-span-12 md:col-span-6 text-right">
-        <p className="font-mono text-xs" style={{ color: '#1A1814', opacity: 0.5 }}>
-          © 2026 Self Love Club. All systems documented.
+      <div class="footer-col right">
+        <p class="footer-link">
+          <span data-text="copyright" data-lang="es" class="active">© 2026 Self Love Club<br>El Protocolo de la Claridad</span>
+          <span data-text="copyright" data-lang="en">© 2026 Self Love Club<br>The Clarity Protocol</span>
         </p>
       </div>
     </div>
   </footer>
-</div>
-```
 
-);
-}
+  <script>
+    // Initialize language from localStorage
+    function initLanguage() {
+      const savedLang = localStorage.getItem('protocol-language') || 'es';
+      switchLanguage(savedLang);
+    }
+
+    // Switch language
+    function switchLanguage(lang) {
+      // Update localStorage
+      localStorage.setItem('protocol-language', lang);
+
+      // Update button states
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      document.querySelector(`[data-lang="${lang}"].lang-btn`).classList.add('active');
+
+      // Update visible text
+      document.querySelectorAll('[data-lang]').forEach(el => {
+        el.classList.remove('active');
+      });
+      document.querySelectorAll(`[data-lang="${lang}"]`).forEach(el => {
+        el.classList.add('active');
+      });
+
+      // Update document language attribute
+      document.documentElement.lang = lang;
+    }
+
+    // Parallax scroll effect on dossier
+    const dossier = document.querySelector('.dossier');
+    if (dossier) {
+      window.addEventListener('scroll', () => {
+        const scrollY = window.scrollY;
+        dossier.style.transform = `translateY(${scrollY * 0.08}px) rotateY(${scrollY * 0.02}deg)`;
+      });
+    }
+
+    // CTA Button handler
+    function handleCTA() {
+      // Aquí va tu URL de pago/acceso
+      alert('Redirigiendo a acceso del protocolo...');
+      // window.location.href = 'https://tu-url-de-pago.com';
+    }
+
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', initLanguage);
+  </script>
+</body>
+</html>
