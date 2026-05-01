@@ -136,22 +136,18 @@
         <aside class="modules-panel">
             <span class="section-label" id="label-modules">Módulos</span>
             <button class="module-btn active" onclick="selectModule('clarity', this)">
-                <h4 id="m1-title">01. Protocolo de Claridad</h4>
-                <p id="m1-desc">Analiza y refina tu pensamiento</p>
-            </button>
-            <button class="module-btn" onclick="selectModule('field-note', this)">
-                <h4 id="m2-title">02. Nota de Campo</h4>
-                <p id="m2-desc">Ensayo premium sobre tema</p>
+                <h4 id="m1-title">01. Clarity Protocol</h4>
+                <p id="m1-desc">Analyze and refine your thinking</p>
             </button>
             <button class="module-btn" onclick="selectModule('hygiene', this)">
-                <h4 id="m3-title">03. Higiene Decisional</h4>
-                <p id="m3-desc">Evalúa riesgos y sesgos</p>
+                <h4 id="m2-title">02. Decision Hygiene</h4>
+                <p id="m2-desc">Evaluate risks and biases</p>
             </button>
         </aside>
 
         <main class="workspace">
             <div class="workspace-header" style="margin-bottom: 2rem;">
-                <h2 id="workspace-title">Protocolo de Claridad</h2>
+                <h2 id="workspace-title">Clarity Protocol</h2>
                 <p id="workspace-desc">Análisis estructurado de intención y debilidades lógicas.</p>
             </div>
 
@@ -207,11 +203,9 @@
                 toneLabel: "TONO:",
                 modeSoft: "SUAVE",
                 modeBrutal: "BRUTAL",
-                workspaceDesc: "Análisis estructurado de intención y debilidades lógicas.",
                 modules: {
-                    clarity: { title: "01. Protocolo de Claridad", desc: "Analiza y refina tu pensamiento" },
-                    'field-note': { title: "02. Nota de Campo", desc: "Ensayo premium sobre tema" },
-                    hygiene: { title: "03. Higiene Decisional", desc: "Evalúa riesgos y sesgos" }
+                    clarity: { title: "01. Protocolo de Claridad", desc: "Analiza y refina tu pensamiento", workTitle: "Protocolo de Claridad", workDesc: "Análisis estructurado de intención y debilidades lógicas." },
+                    hygiene: { title: "02. Higiene Decisional", desc: "Evalúa riesgos y sesgos", workTitle: "Higiene Decisional", workDesc: "Evaluación de riesgos, sesgos y umbrales decisionales." }
                 }
             },
             en: {
@@ -224,11 +218,9 @@
                 toneLabel: "TONE:",
                 modeSoft: "SOFT",
                 modeBrutal: "BRUTAL",
-                workspaceDesc: "Structured analysis of intention and logical weaknesses.",
                 modules: {
-                    clarity: { title: "01. Clarity Protocol", desc: "Analyze and refine your thinking" },
-                    'field-note': { title: "02. Field Note", desc: "Premium essay on topic" },
-                    hygiene: { title: "03. Decision Hygiene", desc: "Evaluate risks and biases" }
+                    clarity: { title: "01. Clarity Protocol", desc: "Analyze and refine your thinking", workTitle: "Clarity Protocol", workDesc: "Structured analysis of intention and logical weaknesses." },
+                    hygiene: { title: "02. Decision Hygiene", desc: "Evaluate risks and biases", workTitle: "Decision Hygiene", workDesc: "Risk, bias and decision threshold evaluation." }
                 }
             }
         };
@@ -250,19 +242,15 @@
             document.getElementById('label-modules').textContent = ui.labelModules;
             document.getElementById('btn-analyze').textContent = ui.btnAnalyze;
             document.getElementById('label-tone').textContent = ui.toneLabel;
-            document.getElementById('workspace-title').textContent = mod.workTitle || mod.title;
-            document.getElementById('workspace-desc').textContent = ui.workspaceDesc;
-            document.getElementById('user-input').placeholder = currentLanguage === 'es' 
-                ? "Ej: Siento que mi ambición está dañando mi relación..." 
-                : "e.g., I feel my ambition is hurting my relationship...";
 
-            // ←←← NUEVO: ACTUALIZA TODOS LOS MÓDULOS DEL SIDEBAR
+            document.getElementById('workspace-title').textContent = mod.workTitle;
+            document.getElementById('workspace-desc').textContent = mod.workDesc;
+
+            // Actualiza los botones del sidebar
             document.getElementById('m1-title').textContent = ui.modules.clarity.title;
             document.getElementById('m1-desc').textContent = ui.modules.clarity.desc;
-            document.getElementById('m2-title').textContent = ui.modules['field-note'].title;
-            document.getElementById('m2-desc').textContent = ui.modules['field-note'].desc;
-            document.getElementById('m3-title').textContent = ui.modules.hygiene.title;
-            document.getElementById('m3-desc').textContent = ui.modules.hygiene.desc;
+            document.getElementById('m2-title').textContent = ui.modules.hygiene.title;
+            document.getElementById('m2-desc').textContent = ui.modules.hygiene.desc;
 
             updateModeButton();
         }
@@ -304,7 +292,8 @@
                     body: JSON.stringify({
                         text: text,
                         language: currentLanguage,
-                        responseMode: currentResponseMode
+                        responseMode: currentResponseMode,
+                        module: currentModule   // ← NUEVO: ahora envía el módulo
                     })
                 });
 
