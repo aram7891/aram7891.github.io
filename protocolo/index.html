@@ -1,1 +1,2016 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protocolo de Claridad | Self Love Club</title>
 
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital@0;1&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #F7F4EF;
+            color: #1A1814;
+            font-family: 'Instrument Sans', sans-serif;
+            line-height: 1.7;
+            font-weight: 400;
+        }
+        
+        /* Typography */
+        h1, h2, h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            color: #1A1814;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            letter-spacing: -0.02em;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            margin-top: 2rem;
+        }
+        
+        h3 {
+            font-size: 1.3rem;
+            margin-top: 1.5rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+        
+        .meta {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.85rem;
+            color: #8B6F4E;
+            letter-spacing: 0.05em;
+        }
+        
+        /* Layout */
+        .container {
+            max-width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        header {
+            background-color: #F7F4EF;
+            border-bottom: 1px solid #C4A882;
+            padding: 3rem 5%;
+            margin-bottom: 2rem;
+        }
+        
+        .header-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        header h1 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-family: 'Instrument Sans', sans-serif;
+            font-size: 1.1rem;
+            color: #8B6F4E;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tagline {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.9rem;
+            color: #8B6F4E;
+            letter-spacing: 0.05em;
+        }
+        
+        main {
+            flex: 1;
+            padding: 0 5%;
+            margin-bottom: 3rem;
+        }
+        
+        .content-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        /* Navigation */
+        .nav-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .module-selector {
+            padding: 0.8rem 1.5rem;
+            border: 1px solid #8B6F4E;
+            background-color: #F7F4EF;
+            color: #1A1814;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .module-selector:hover {
+            background-color: #8B6F4E;
+            color: #F7F4EF;
+        }
+        
+        button {
+            padding: 0.8rem 1.5rem;
+            border: 1px solid #1A1814;
+            background-color: #F7F4EF;
+            color: #1A1814;
+            font-family: 'Instrument Sans', sans-serif;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        button:hover {
+            background-color: #1A1814;
+            color: #F7F4EF;
+        }
+        
+        .btn-secondary {
+            border-color: #8B6F4E;
+            color: #8B6F4E;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #8B6F4E;
+            color: #F7F4EF;
+        }
+        
+        .btn-danger {
+            border-color: #8B6F4E;
+            color: #8B6F4E;
+        }
+        
+        /* Module Display */
+        .module {
+            display: none;
+        }
+        
+        .module.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .module-header {
+            margin-bottom: 2.5rem;
+        }
+        
+        .module-number {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.85rem;
+            color: #8B6F4E;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+        
+        .frase-clave {
+            background-color: #F7F4EF;
+            border-left: 3px solid #8B6F4E;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: #1A1814;
+        }
+        
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.5rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .content-text {
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        
+        .micro-glosario {
+            background-color: #F7F4EF;
+            border-left: 3px solid #C4A882;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .micro-glosario dt {
+            font-weight: 600;
+            margin-top: 0.8rem;
+            margin-bottom: 0.3rem;
+            color: #1A1814;
+        }
+        
+        .micro-glosario dd {
+            margin-left: 0;
+            color: #1A1814;
+            font-size: 0.95rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        .preguntas-finales {
+            background-color: #F7F4EF;
+            border-left: 3px solid #8B6F4E;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .preguntas-finales h3 {
+            margin-top: 0;
+        }
+        
+        .preguntas-finales ol {
+            margin-left: 1.5rem;
+        }
+        
+        .preguntas-finales li {
+            margin-bottom: 1rem;
+        }
+        
+        /* Textarea for Notes */
+        .notes-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background-color: #F7F4EF;
+            border: 1px solid #C4A882;
+        }
+        
+        .notes-section label {
+            display: block;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.85rem;
+            color: #8B6F4E;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+        }
+        
+        
+        textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 1rem;
+            border: 1px solid #C4A882;
+            background-color: #FFFFFF;
+            color: #1A1814;
+            font-family: 'Instrument Sans', sans-serif;
+            font-size: 0.95rem;
+            resize: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            line-height: 1.6;
+        }
+        
+        textarea::placeholder {
+            color: rgba(196, 168, 130, 0.5);
+            font-style: italic;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: #886F4E;
+            box-shadow: inset 0 0 0 2px rgba(139, 111, 78, 0.1);
+        }
+        
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: #1A1814;
+            color: #F7F4EF;
+            padding: 1rem 1.5rem;
+            border-radius: 2px;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.85rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Footer */
+        footer {
+            border-top: 1px solid #C4A882;
+            padding: 2rem 5%;
+            background-color: #F7F4EF;
+            margin-top: auto;
+        }
+        
+        .footer-content {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .footer-meta {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            color: #8B6F4E;
+        }
+        
+        .progress-bar {
+            height: 3px;
+            background-color: #C4A882;
+            margin-bottom: 2rem;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: #8B6F4E;
+            transition: width 0.3s ease;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                padding: 2rem 4%;
+            }
+            
+            main {
+                padding: 0 4%;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .nav-controls {
+                gap: 0.8rem;
+            }
+            
+            .module-selector,
+            button {
+                padding: 0.7rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+            }
+            
+            header, footer, .nav-controls {
+                display: none;
+            }
+            
+            .module {
+                display: block !important;
+                page-break-after: always;
+                margin-bottom: 4rem;
+            }
+        }
+    </style>
+
+    <!-- MODALES -->
+    <div id="settingsModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Configuración</h3>
+            <button id="clearAllBtn" class="btn-danger">Limpiar todo el contenido</button>
+            <p style="font-size: 0.85rem; color: #8B6F4E; margin-top: 1rem;">
+                ⚠️ Esta acción eliminará TODO lo que has escrito.
+            </p>
+        </div>
+    </div>
+
+    <style>
+        .modal {
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+        
+        .modal-content {
+            background-color: #F7F4EF;
+            margin: 15% auto;
+            padding: 2rem;
+            border: 1px solid #C4A882;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 4px;
+        }
+        
+        .close-modal {
+            color: #8B6F4E;
+            float: right;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close-modal:hover {
+            color: #1A1814;
+        }
+        
+        .btn-danger {
+            background-color: #8B6F4E;
+            color: #F7F4EF;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            font-family: 'Instrument Sans', sans-serif;
+            border-radius: 2px;
+        }
+        
+        .btn-danger:hover {
+            background-color: #6B4F38;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="module-number">PROTOCOLO DE CLARIDAD</div>
+                <h1>Self Love Club</h1>
+                <p class="subtitle">Una guía para decidir mejor, vivir más claro y dejar de reaccionar</p>
+            </div>
+        </header>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        
+        <main role="main">
+            <div class="content-wrapper" id="pdf-content">
+                <div class="nav-controls" data-html2canvas-ignore="true">
+                    <select class="module-selector" id="moduleSelect">
+                        <option value="0">Módulo 00 — Prólogo</option>
+                        <option value="1">Módulo 01 — Autoconocimiento</option>
+                        <option value="2">Módulo 02 — Arbitraje Emocional</option>
+                        <option value="3">Módulo 03 — Liquidez Cognitiva</option>
+                        <option value="4">Módulo 04 — Arquitectura del Silencio</option>
+                        <option value="5">Módulo 05 — Kinetic Clarity</option>
+                        <option value="6">Módulo 06 — Señal vs Ruido</option>
+                        <option value="7">Módulo 07 — Costo de Oportunidad</option>
+                        <option value="8">Módulo 08 — Capacidad Interpretativa</option>
+                        <option value="9">Módulo 09 — Claridad como Ventaja</option>
+                        <option value="10">Módulo 10 — Epílogo Operativo</option>
+                        </select>
+                    <button id="exportBtn" class="btn-secondary" aria-label="Exportar protocolo a PDF">Exportar PDF</button>
+                    <button id="clearBtn" class="btn-danger" aria-label="Limpiar todas las notas y datos guardados">Limpiar Todo</button>
+                </div>
+                
+                <div class="module active" data-module="0">
+                    <div class="module-header">
+                        <div class="module-number">MÓDULO 00</div>
+                        <h2>Prólogo — Instrucciones de uso del protocolo</h2>
+                    </div>
+                    
+                    <div class="frase-clave">
+                        <p>"El protocolo comienza cuando dejas de esperar permiso para cambiar."</p>
+                    </div>
+                    
+                    <div class="section-title">Resumen</div>
+                    <div class="content-text">
+                        <p>Este no es un libro de autoayuda. No te va a prometer transformación mágica ni decirte que simplemente "ames tu vulnerabilidad". Es un sistema donde cada módulo prepara el terreno para el siguiente. Requiere que respetes el orden, que tomes notas reales, que respondas preguntas incómodas.</p>
+                    </div>
+                    
+                    <div class="section-title">Por qué lees esto</div>
+                    <div class="content-text">
+                        <p>No lees esto porque tu vida está rota.</p>
+                        <p>Lees esto porque funciona, pero no como desearías. Tomas decisiones. Algunas salen bien. Muchas te dejan con un sabor raro: la sensación de que pudiste hacerlo mejor, pero algo en ti —tu velocidad mental, tu activación emocional, tu propensión a exagerar lo pequeño— te bloquea.</p>
+                        <p>O quizás es lo opuesto: eres alguien que se paraliza. Analizas demasiado. Esperas certeza que nunca llega. Pospones lo incómodo. Construyes narrativas elaboradas sobre por qué no puedes cambiar aún.</p>
+                        <p>De cualquier forma, los patrones se repiten.</p>
+                    </div>
+                    
+                    <div class="section-title">Qué es este protocolo</div>
+                    <div class="content-text">
+                        <p>Es un sistema donde cada parte prepara la siguiente. Los primeros módulos construyen los fundamentos: cómo reconoces cuándo estás activado, cómo separas tu ego de tus decisiones, cómo te regulás sin dramatizar.</p>
+                        <p>Los módulos intermedios aplican eso a la realidad: cómo tomas decisiones cuando todo sigue moviéndose, cómo lees correctamente en la era de información abundante, cómo reconoces que el "fracaso" a veces es solo progreso incómodo.</p>
+                        <p>El último módulo te muestra cómo todo esto se integra en un patrón de vida que simplemente funciona más.</p>
+                    </div>
+                    
+                    <div class="section-title">Cómo leer esto</div>
+                    <div class="content-text">
+                        <p>Respeta el orden. No porque sea misterioso, sino porque es diseño.</p>
+                        <p>Lee un módulo por semana. No más. La comprensión no es velocidad. Este protocolo espera que hagas preguntas incómodas mientras lees.</p>
+                        <p>Toma notas. No pasivas. Cada módulo termina con preguntas. Respóndelas como si alguien que importa te estuviera observando. Porque te estás observando.</p>
+                        <p>Al final encontrarás una hoja de ruta para los próximos 90 días. Úsala como espejo, no como lista de tareas. Tu vida va a resistirse a cambiar. Los patrones viejos tienen inercia. Eso es normal.</p>
+                    </div>
+                    
+                    <div class="section-title">Antes de empezar</div>
+                    <div class="content-text">
+                        <p>Esto no es para todos.</p>
+                        <p>Si vienes buscando que alguien te diga que todo está bien tal como estás, que simplemente "ames tu caoticidad", que celebres tu ansiedad como "sensibilidad profunda", cierra esto. No va a pasarte.</p>
+                        <p>Si vienes buscando un atajo, un hack, una fórmula mágica para saltarte el trabajo de reconstruirte, también te ahorras el tiempo.</p>
+                        <p>Si vienes porque algo en ti sabe que hay un nivel diferente de funcionamiento disponible —donde tomas decisiones más claras, donde no te saboteas, donde tu energía se gasta en lo que realmente importa— entonces sigue leyendo.</p>
+                    </div>
+                    
+                    <div class="section-title">Puntos prácticos</div>
+                    <div class="content-text">
+                        <ul style="margin-left: 1.5rem;">
+                            <li>Lee en orden. Los módulos son secuenciales.</li>
+                            <li>Una sesión por semana. La lentitud permite comprensión real.</li>
+                            <li>Escribe tus respuestas a las preguntas finales. La escritura fuerza claridad.</li>
+                            <li>No busques transformación inmediata. Busca patrones que cambien silenciosamente.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="section-title">Conclusión</div>
+                    <div class="content-text">
+                        <p>El protocolo no promete una vida sin problemas. Te promete una mente menos secuestrable por ellos.</p>
+                    </div>
+                    
+                    <div class="micro-glosario">
+                        <h3 style="margin-top: 0;">Micro-Glosario</h3>
+                        <dl>
+                            <dt>Protocolo</dt>
+                            <dd>Un sistema donde cada parte prepara la siguiente. No es una colección de consejos sueltos.</dd>
+                            <dt>Regulación</dt>
+                            <dd>Modular tu respuesta emocional sin reprimir la emoción ni dejarte secuestrar por ella.</dd>
+                            <dt>Patrón</dt>
+                            <dd>Lo que repites inconscientemente, lo que hace que termines en el mismo lugar.</dd>
+                        </dl>
+                    </div>
+                    
+                    <div class="preguntas-finales">
+                        <h3>Preguntas finales</h3>
+                        <ol>
+                            <li>¿Qué patrón mío se repite más consistentemente?</li>
+                            <li>¿Qué me hace creer que esta vez podría ser diferente?</li>
+                            <li>¿Estoy dispuesto a hacer esto lentamente, o necesito resultados inmediatos?</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="notes-section">
+                        <label for="notes0">Tus notas y reflexiones</label>
+                        <textarea id="notes0" aria-label="Notas para el módulo 0" placeholder="Escribe aquí tus respuestas a las preguntas finales y reflexiones personales..."></textarea>
+                    </div>
+                </div>
+                
+                <div class="module" data-module="1">
+                    <div class="module-header">
+                        <div class="module-number">MÓDULO 01</div>
+                        <h2>El Autoconocimiento como tu mayor recurso personal</h2>
+                    </div>
+                    
+                    <div class="frase-clave">
+                        <p>"El autoconocimiento no es introspección lujosa. Es la forma más concreta de proteger tu vida."</p>
+                    </div>
+                    
+                    <div class="section-title">Resumen</div>
+                    <div class="content-text">
+                        <p>La mayoría de tus decisiones malas no vienen de falta de información. Vienen de no saber cómo estás realmente: qué te activa, qué te paraliza, cuándo estás operando desde el miedo versus desde la claridad. El autoconocimiento es la capacidad de verte a ti mismo con honestidad brutal, sin excusas elegantes.</p>
+                    </div>
+                    
+                    <div class="section-title">El problema que resuelve</div>
+                    <div class="content-text">
+                        <p>Tomas decisiones desde la intuición, pero a menudo tu intuición está contaminada. Está contaminada por:</p>
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li><strong>Tu miedo:</strong> Que confundes con prudencia.</li>
+                            <li><strong>Tu necesidad de aprobación:</strong> Que confundes con empatía.</li>
+                            <li><strong>Tu falta de límites:</strong> Que confundes con generosidad.</li>
+                            <li><strong>Tu propia rigidez:</strong> Que confundes con coherencia.</li>
+                        </ul>
+                        <p>Sin autoconocimiento, no ves estas distorsiones. Las crees. Y repites el mismo patrón esperando resultado diferente.</p>
+                    </div>
+                    
+                    <div class="section-title">El Efecto Iceberg</div>
+                    <div class="content-text">
+                        <p>Lo que ves de ti es solo la punta. Debajo está:</p>
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li>Cómo respondes cuando alguien te cuestiona</li>
+                            <li>Qué emociones reprimes versus cuáles explotan</li>
+                            <li>Cuándo te desconectas versus cuándo estás presente</li>
+                            <li>Dónde generas fricción sin darte cuenta</li>
+                            <li>Qué te activa más: la vergüenza, la incompetencia, el abandono, el aburrimiento</li>
+                        </ul>
+                        <p>La mayoría vive operando solo con la punta visible. Repiten errores. Se preguntan por qué.</p>
+                    </div>
+                    
+                    <div class="section-title">El Filtro de Decisiones</div>
+                    <div class="content-text">
+                        <p>El autoconocimiento funciona como un filtro. Sin él:</p>
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li>Tomas decisiones desde la reactividad</li>
+                            <li>Confundes urgencia con importancia</li>
+                            <li>Exageras lo pequeño y minimizas lo grande</li>
+                            <li>Saboteas tus propios objetivos</li>
+                            <li>Generas conflictos sin entender por qué</li>
+                        </ul>
+                        <p>Con autoconocimiento:</p>
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li>Ves el patrón antes de caer en él</li>
+                            <li>Tomas decisiones desde la claridad, no desde el pánico</li>
+                            <li>Reconoces cuándo tu ego está metido en la decisión</li>
+                            <li>Eres predecible para ti mismo</li>
+                            <li>Atraes personas y oportunidades más alineadas</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="section-title">El Costo de no conocerte</div>
+                    <div class="content-text">
+                        <p>Cada vez que reaccionas sin autoconocimiento, pagas un precio:</p>
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li>Relaciones inestables porque otros no saben quién eres realmente</li>
+                            <li>Decisiones que tienes que corregir después</li>
+                            <li>Energía desperdiciada en conflictos evitables</li>
+                            <li>Una reputación que dice más de tu inconsistencia que de tu talento</li>
+                            <li>Una vida que siente como si sucediera a ti, no que tú estés construyendo</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="section-title">Cómo empezar</div>
+                    <div class="content-text">
+                        <p><strong>Preguntas que revelan autoconocimiento:</strong></p>
+                        <ol style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li>¿Cuándo miento más consistentemente?</li>
+                            <li>¿A quién no puedo decirle que no?</li>
+                            <li>¿Qué me hace sentir incompetente?</li>
+                            <li>¿Cuándo cruzo mis propios límites sin notarlo?</li>
+                            <li>¿Qué decisión repito esperando resultado diferente?</li>
+                        </ol>
+                        <p>No necesitas respuestas bonitas. Necesitas respuestas honestas.</p>
+                    </div>
+                    
+                    <div class="section-title">Puntos prácticos</div>
+                    <div class="content-text">
+                        <ul style="margin-left: 1.5rem;">
+                            <li>Observa sin juzgar. El autoconocimiento empieza con mirar, no con cambiar.</li>
+                            <li>Registra patrones por una semana. ¿Cuándo reaccionas igual? ¿Quién o qué te lo dispara?</li>
+                            <li>Pregunta a alguien de confianza: "¿Qué ves en mí que yo no veo?" Su respuesta te incomoda porque es verdad.</li>
+                            <li>No confundas autoconocimiento con autocrítica. Uno te libera. El otro te encierra más.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="section-title">Conclusión</div>
+                    <div class="content-text">
+                        <p>El autoconocimiento no es para personas que quieren sentirse mejor consigo mismas. Es para personas que quieren vivir mejor. Es el primer acto de responsabilidad real.</p>
+                    </div>
+                    
+                    <div class="micro-glosario">
+                        <h3 style="margin-top: 0;">Micro-Glosario</h3>
+                        <dl>
+                            <dt>Autoconocimiento</dt>
+                            <dd>Saber cómo funcionas: qué te activa, qué te paraliza, cuándo estás claro versus cuando estás operando desde el miedo.</dd>
+                            <dt>Patrón reactivo</dt>
+                            <dd>Lo que haces automáticamente sin decidir. Leer un mensaje y responder furioso. Sentir rechazo y desaparecer. Cometer error y asumirlo todo.</dd>
+                            <dt>Filtro de decisiones</dt>
+                            <dd>Tu capacidad de procesar información sin que la emoción distorsione tu juicio.</dd>
+                            <dt>Reactividad</dt>
+                            <dd>Responder desde el estímulo inmediato en lugar de desde tu elección consciente.</dd>
+                        </dl>
+                    </div>
+                    
+                    <div class="preguntas-finales">
+                        <h3>Preguntas finales</h3>
+                        <ol>
+                            <li>¿En qué área de tu vida eres más reactivo (relaciones, trabajo, dinero)?</li>
+                            <li>¿Cuál es el patrón que más dolor te causa y que más repites?</li>
+                            <li>¿Qué verdad sobre ti has estado evitando ver?</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="notes-section">
+                        <label for="notes1">Tus notas y reflexiones</label>
+                        <textarea id="notes1" aria-label="Notas para el módulo 1" placeholder="Escribe aquí tus respuestas a las preguntas finales y reflexiones personales..."></textarea>
+                    </div>
+                </div>
+                
+                <div class="module" data-module="2">
+                    <div class="module-header">
+                        <div class="module-number">MÓDULO 02</div>
+                        <h2>Arbitraje Emocional — Cómo aprovechar tu regulación para tomar mejores decisiones</h2>
+                    </div>
+                    
+                    <div class="frase-clave">
+                        <p>"El arbitraje emocional es tu ventaja definitiva: convertir el pánico ajeno en beneficio personal."</p>
+                    </div>
+                    
+                    <div class="section-title">Resumen</div>
+                    <div class="content-text">
+                        <p>Cuando todo el mundo reacciona desde el miedo, la urgencia, el pánico, tú puedes elegir quedarte claro. Esa diferencia es un arbitraje: capturas valor donde otros pierden la cabeza. No se trata de ser frío. Se trata de no dejar que la emoción ajena o propia contamine tu juicio.</p>
+                    </div>
+                    
+                    <div class="section-title">El Concepto</div>
+                    <div class="content-text">
+                        <p>Arbitraje emocional es la capacidad de mantener la cabeza clara mientras otros operan bajo ruido emocional.</p>
+                        <p><strong>Ejemplo:</strong> Alguien te envía un mensaje agresivo. Casi todos responden desde el enojo. Tú pausa. Lees el mensaje de nuevo. Reconoces que su enojo probable viene de ansiedad, no de ti. Responder desde claridad en lugar de desde defensiva cambia todo: deescala, resuelve, mantiene tu paz.</p>
+                        <p><strong>Otro ejemplo:</strong> Una decisión grande aparece. Tienes 48 horas. Todos a tu alrededor presionan. Tú duermes. Decides desde claridad en lugar de desde urgencia. Tu decisión es mejor. Más lenta. Más acertada.</p>
+                    </div>
+                    
+                    <div class="section-title">Cómo funciona</div>
+                    <div class="content-text">
+                        <p>Tiene cuatro partes:</p>
+                        <ol style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li><strong>Ves la ventaja:</strong> La mayoría de las personas reaccionan impulsivamente. Eso crea oportunidades para quien no reacciona.</li>
+                            <li><strong>Aplicas un filtro:</strong> Un filtro interno que elimina la distorsión emocional. Ves los datos sin el ruido.</li>
+                            <li><strong>Tomas la decisión:</strong> Basada en lo que realmente está pasando, no en cómo te sientes.</li>
+                            <li><strong>Capturas el valor:</strong> Todos perdieron oportunidad por reactividad. Tú no.</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="section-title">El Costo de la Reactividad</div>
+                    <div class="content-text">
+                        <p>Cada vez que reaccionas sin calibrar, pagas:</p>
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li>Te desgastas innecesariamente</li>
+                            <li>Tomas decisiones que después tienes que corregir</li>
+                            <li>Pierdes oportunidades</li>
+                            <li>Destruyes tu propia confianza y paz</li>
+                            <li>Generas conflictos que eran evitables</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="section-title">El Flujo de Valor</div>
+                    <div class="content-text">
+                        <p><strong>Flujo reactivo:</strong> Datos → Ruido emocional → Decisión impulsiva → Pérdida de claridad y energía</p>
+                        <p><strong>Flujo regulado:</strong> Datos → Filtro de autoconciencia → Decisión sobria → Ganas claridad y libertad</p>
+                    </div>
+                    
+                    <div class="section-title">Lo que ganas cuando te regulás</div>
+                    <div class="content-text">
+                        <ul style="margin-left: 1.5rem;">
+                            <li>Tomas decisiones más rápidas y acertadas (porque no estás procesando ruido)</li>
+                            <li>Conservas energía (no la gastas en dramatización)</li>
+                            <li>Construyes relaciones más estables (porque otros saben qué esperar de ti)</li>
+                            <li>Dejas de sabotearte con reacciones que después lamentas</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="section-title">Cómo empezar a practicarlo</div>
+                    <div class="content-text">
+                        <ol style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li><strong>Mindfulness simple:</strong> Notar cuándo te activas. No cambiar nada aún. Solo observar: "Se activó mi defensa. Se activó mi vergüenza. Se activó mi ansiedad."</li>
+                            <li><strong>Técnicas de regulación en el momento:</strong> Pausa. Respira. Espera 15 minutos antes de responder.</li>
+                            <li><strong>Pregúntate:</strong> "¿Esto es realidad o es mi activación hablando?"</li>
+                            <li><strong>Mide tu progreso:</strong> No por cómo te sientes. Por cómo respondes. Menos reacciones, más decisiones.</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="section-title">Puntos prácticos</div>
+                    <div class="content-text">
+                        <ul style="margin-left: 1.5rem;">
+                            <li>Cuando sientas urgencia, espera. La mayoría de urgencias son falsas.</li>
+                            <li>Antes de responder algo importante, duerme. Tu cerebro procesa mejor de noche.</li>
+                            <li>Separa el hecho de tu narrativa sobre el hecho. "Fui rechazado" es diferente de "Soy rechazable".</li>
+                            <li>No intentes no sentir. Siente y decide diferente.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="section-title">Conclusión</div>
+                    <div class="content-text">
+                        <p>La autorregulación no es una habilidad blanda. Es la forma más concreta de proteger tu vida y tu paz. Cuando dominas el arbitraje emocional, dejas de ser víctima del ruido ajeno y del tuyo propio. Transformas la volatilidad en oportunidad personal.</p>
+                    </div>
+                    
+                    <div class="micro-glosario">
+                        <h3 style="margin-top: 0;">Micro-Glosario</h3>
+                        <dl>
+                            <dt>Arbitraje emocional</dt>
+                            <dd>Mantener claridad mientras otros reaccionan emocionalmente, capturando así valor que otros pierden.</dd>
+                            <dt>Reactividad</dt>
+                            <dd>Responder desde el estímulo inmediato en lugar de desde tu elección consciente.</dd>
+                            <dt>Regulación</dt>
+                            <dd>Modular tu emoción sin reprimirla, manteniendo tu capacidad de elegir.</dd>
+                            <dt>Filtro</dt>
+                            <dd>La capacidad mental de ver los datos sin la distorsión emocional.</dd>
+                        </dl>
+                    </div>
+                    
+                    <div class="preguntas-finales">
+                        <h3>Preguntas finales</h3>
+                        <ol>
+                            <li>¿En qué situación reaccionas más consistentemente (mensajes de expareja, crítica del jefe, rechazo)?</li>
+                            <li>¿Si esperaras 24 horas, cuántas reacciones cambiarían de contenido?</li>
+                            <li>¿Cuántas veces has lamentado algo que dijiste/hiciste en los últimos 30 días?</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="notes-section">
+                        <label for="notes2">Tus notas y reflexiones</label>
+                        <textarea id="notes2" aria-label="Notas para el módulo 2" placeholder="Escribe aquí tus respuestas a las preguntas finales y reflexiones personales..."></textarea>
+                    </div>
+                </div>
+                
+                <div class="module" data-module="3">
+                    <div class="module-header">
+                        <div class="module-number">MÓDULO 03</div>
+                        <h2>Liquidez Cognitiva — Separando tu identidad de tus decisiones en momentos de alto riesgo</h2>
+                    </div>
+                    
+                    <div class="frase-clave">
+                        <p>"La liquidez cognitiva no es debilidad; es la máxima expresión de fuerza interpretativa en entornos volátiles."</p>
+                    </div>
+                    
+                    <div class="section-title">Resumen</div>
+                    <div class="content-text">
+                        <p>Cuando fusionas tu identidad ("yo soy esto") con una decisión o una forma de hacer las cosas, te vuelves rígido. Cualquier cambio se siente como traición existencial. La liquidez cognitiva es la capacidad de separar quién eres de lo que decides, para poder pivotar sin que te duela el ego.</p>
+                    </div>
+                    
+                    <div class="section-title">El Problema de la Fusión</div>
+                    <div class="content-text">
+                        <p><strong>Ejemplo:</strong> Empezaste un negocio. Te identificas como "emprendedor". La información dice que ese modelo no funciona. Pero cambiar el modelo significa admitir que te equivocaste. Y si te equivocaste en esto, ¿qué más está mal? El ego se defiende. Proteges la decisión antigua. Pierdes la oportunidad de pivotar.</p>
+                        <p><strong>Otro ejemplo:</strong> Has estado en una relación 5 años. Tu identidad es "pareja leal". La relación es tóxica. Tu amiga te lo dice. Defiendes la relación porque defendiendo la relación defiendes tu identidad como "leal". Te quedas en algo que te daña porque la alternativa es decir "me equivoqué".</p>
+                    </div>
+                    
+                    <div class="section-title">Sin liquidez cognitiva</div>
+                    <div class="content-text">
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li>Retrasas respuestas que necesitas dar</li>
+                            <li>Pierdes oportunidades</li>
+                            <li>Te quedas atascado en cosas que ya no sirven</li>
+                            <li>Te sientes amenazado por datos que contradicen tu posición</li>
+                        </ul>
+                        <p><strong>Con liquidez cognitiva:</strong></p>
+                        <ul style="margin-left: 1.5rem;">
+                            <li>Ves la información sin defensiva</li>
+                            <li>Cambias rápido cuando es necesario</li>
+                            <li>Construyes identidades más flexibles</li>
+                            <li>Tu valor no depende de una sola cosa</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="section-title">El Modelo de Flujo</div>
+                    <div class="content-text">
+                        <p><strong>Flujo rígido:</strong> Señal de la vida → Filtro del ego → Defensa → Respuesta congelada</p>
+                        <p><strong>Flujo con liquidez:</strong> Señal de la vida → Evaluación neutral → Análisis claro → Respuesta adaptativa</p>
+                    </div>
+                    
+                    <div class="section-title">Cómo desarrollar esta liquidez</div>
+                    <div class="content-text">
+                        <ol style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li><strong>Reconoces cuándo el ego está metido:</strong> "Estoy defendiendo esto porque amenaza mi identidad, no porque sea la mejor opción."</li>
+                            <li><strong>Creas distancia psicológica:</strong> Entre tú y la estrategia/relación/hábito. "Yo no soy mi decisión. Yo soy la persona que puede cambiar de decisión."</li>
+                            <li><strong>Practicas flexibilidad:</strong> Lee el argumento opuesto sin atacarlo. Pregúntate qué verdad contiene.</li>
+                            <li><strong>Usas regulación emocional:</strong> Para no sentir el cambio como traición, sino como evolución.</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="section-title">Puntos prácticos</div>
+                    <div class="content-text">
+                        <ul style="margin-left: 1.5rem;">
+                            <li>Separa tus decisiones pasadas de tu valor presente. Una mala decisión no hace de ti una mala persona.</li>
+                            <li>Practica decir "me equivoqué" sin agregar explicaciones defensivas.</li>
+                            <li>Busca activamente información que contradiga lo que crees. Si no te incomoda, no estás aprendiendo.</li>
+                            <li>Tu flexibilidad es tu fortaleza, no tu debilidad.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="section-title">Conclusión</div>
+                    <div class="content-text">
+                        <p>Tu identidad no son tus posiciones fijas. Tu identidad es tu capacidad de moverte, ajustar y seguir creando una vida que valga la pena. Separar quién eres de lo que decides es una de las habilidades más liberadoras que puedes entrenar.</p>
+                    </div>
+                    
+                    <div class="micro-glosario">
+                        <h3 style="margin-top: 0;">Micro-Glosario</h3>
+                        <dl>
+                            <dt>Liquidez cognitiva</dt>
+                            <dd>Capacidad de cambiar de opinión, estrategia o dirección sin que amenace tu sentido de quién eres.</dd>
+                            <dt>Fusión identidad-decisión</dt>
+                            <dd>Confundir lo que decidiste con quién eres. "Estoy equivocado en esto" se convierte en "Yo soy un error".</dd>
+                            <dt>Rigidez</dt>
+                            <dd>La tendencia a mantener una posición aunque los datos sugieran cambiarla, porque cambiarla amenaza tu ego.</dd>
+                            <dt>Pivote</dt>
+                            <dd>Cambiar de dirección rápidamente basado en nueva información, sin dramatización.</dd>
+                        </dl>
+                    </div>
+                    
+                    <div class="preguntas-finales">
+                        <h3>Preguntas finales</h3>
+                        <ol>
+                            <li>¿En qué área de tu vida estás más rígido (relación, carrera, hábitos, creencias)?</li>
+                            <li>¿Qué decisión antigua estás defendiendo aunque sabes que no funciona?</li>
+                            <li>Si supieras que puedes cambiar de opinión sin ser "débil", ¿qué cambiarías?</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="notes-section">
+                        <label for="notes3">Tus notas y reflexiones</label>
+                        <textarea id="notes3" aria-label="Notas para el módulo 3" placeholder="Escribe aquí tus respuestas a las preguntas finales y reflexiones personales..."></textarea>
+                    </div>
+                </div>
+                
+                <div class="module" data-module="4">
+                    <div class="module-header">
+                        <div class="module-number">MÓDULO 04</div>
+                        <h2>La Arquitectura del Silencio — Cómo las cosas no dichas distorsionan la realidad</h2>
+                    </div>
+                    
+                    <div class="frase-clave">
+                        <p>"El silencio no es paz. Es un depredador que camina lentamente."</p>
+                    </div>
+                    
+                    <div class="section-title">Resumen</div>
+                    <div class="content-text">
+                        <p>Cuando algo importante no se comunica, la realidad se deforma. El silencio genera vacío. Tu mente llena el vacío con narrativas catastróficas. Luego actúas basado en esas narrativas. Crean conflictos reales a partir de supuestos falsos. El antídoto no es más ruido. Es nombrar.</p>
+                    </div>
+                    
+                    <div class="section-title">El Silencio No Está Vacío</div>
+                    <div class="content-text">
+                        <p>Todo sistema funciona mediante señales. Cuando las señales están ausentes, el sistema no se detiene. Se distorsiona.</p>
+                        <p>Una reunión sin disensión parece eficiente. Pero eficiente no significa que todos estén alineados. Significa que alguien está guardándose algo.</p>
+                        <p>Una relación sin conversaciones difíciles parece pacífica. Pero la paz falsa es más destructiva que el conflicto honesto. Genera deuda emocional que crece con intereses compuestos.</p>
+                    </div>
+                    
+                    <div class="section-title">El Efecto de Distorsión</div>
+                    <div class="content-text">
+                        <p>El verdadero peligro del silencio no es la ignorancia. Es la interpretación. Cuando el vacío existe, tu mente lo llena.</p>
+                        <p>Una jefa no responde un email. Interpretas que estás en problemas. Interpretas que no le importas. Interpretas que vas a ser despedida. Todas narrativas. Cero evidencia. Pero actúas desde ahí. Te vuelves defensivo. Rendes menos. Creas el conflicto que temías.</p>
+                        <p>Un pareja está callada. Interpretas que está enojada. O que ya no te ama. O que está con alguien más. Tu ansiedad crece. Haces preguntas acusatorias. Ella se vuelve defensiva. Crean el conflicto que el silencio inició.</p>
+                    </div>
+                    
+                    <div class="section-title">Sin puntos de referencia claros</div>
+                    <div class="content-text">
+                        <ol style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li><strong>Pérdida de proporción:</strong> Los pequeños problemas se convierten en crisis existenciales.</li>
+                            <li><strong>Inflación narrativa:</strong> Tu psique elige el escenario más aterrador.</li>
+                            <li><strong>Escalada reactiva:</strong> Gastas energía gestionando la ansiedad derivada de la duda, en lugar de gestionar el problema real.</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="section-title">El Antídoto: Nombrar</div>
+                    <div class="content-text">
+                        <p>El acto de nombrar es un acto de regulación. No es agresión. Es alineación.</p>
+                        <p>Nombrar significa:</p>
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li><strong>Observación:</strong> Ver los hechos sin dramatismo.</li>
+                            <li><strong>Designación:</strong> Llamar a las cosas por su nombre.</li>
+                            <li><strong>Acción proporcional:</strong> Actuar sin sobre-reaccionar.</li>
+                        </ul>
+                        <p><strong>Ejemplo:</strong> "Noté que no respondiste mi mensaje. Me preocupa. ¿Está todo bien?"</p>
+                        <p>Eso es nombrar. No es atacar. Es crear claridad.</p>
+                    </div>
+                    
+                    <div class="section-title">Puntos prácticos</div>
+                    <div class="content-text">
+                        <ul style="margin-left: 1.5rem;">
+                            <li>Si sientes ansiedad con alguien, pregunta. La mayoría de tus narrativas catastróficas son falsas.</li>
+                            <li>No esperes a que el conflicto estalle. Nombra la tensión cuando es pequeña.</li>
+                            <li>En conversaciones difíciles, comienza con observación: "Noté que…" en lugar de "Siempre…" o "Nunca…".</li>
+                            <li>El silencio sobre problemas pequeños crea grietas grandes.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="section-title">Conclusión</div>
+                    <div class="content-text">
+                        <p>El silencio ofrece una falsa sensación de seguridad a corto plazo, pero actúa como un depredador de claridad a largo plazo. Nombrar no es debilidad. Es el acto más fuerte que puedes hacer en una relación. Es alineación.</p>
+                    </div>
+                    
+                    <div class="micro-glosario">
+                        <h3 style="margin-top: 0;">Micro-Glosario</h3>
+                        <dl>
+                            <dt>Silencio</dt>
+                            <dd>La ausencia de comunicación sobre algo importante que ambos notan.</dd>
+                            <dt>Distorsión narrativa</dt>
+                            <dd>Las historias que tu mente crea para llenar vacíos de información.</dd>
+                            <dt>Nombrar</dt>
+                            <dd>Comunicar lo que observas sin dramatización. Crear claridad.</dd>
+                            <dt>Deuda emocional</dt>
+                            <dd>El resentimiento que crece cuando algo importante no se comunica.</dd>
+                        </dl>
+                    </div>
+                    
+                    <div class="preguntas-finales">
+                        <h3>Preguntas finales</h3>
+                        <ol>
+                            <li>¿Hay un silencio importante en tu vida ahora (relación, trabajo, familia)?</li>
+                            <li>¿Qué narrativa has construido sobre ese silencio?</li>
+                            <li>¿Qué pasaría si nombras la realidad en lugar de el supuesto?</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="notes-section">
+                        <label for="notes4">Tus notas y reflexiones</label>
+                        <textarea id="notes4" aria-label="Notas para el módulo 4" placeholder="Escribe aquí tus respuestas a las preguntas finales y reflexiones personales..."></textarea>
+                    </div>
+                </div>
+                
+                <div class="module" data-module="5">
+                    <div class="module-header">
+                        <div class="module-number">MÓDULO 05</div>
+                        <h2>Kinetic Clarity — Cómo decidir sin detenerte cuando todo sigue moviéndose</h2>
+                    </div>
+                    
+                    <div class="frase-clave">
+                        <p>"La claridad no se obtiene deteniéndote; se sostiene mientras avanzas."</p>
+                    </div>
+                    
+                    <div class="section-title">Resumen</div>
+                    <div class="content-text">
+                        <p>En la vida real casi nunca puedes parar el mundo para pensar con calma. Todo sigue corriendo: mensajes, obligaciones, emociones, imprevistos. Kinetic Clarity es la capacidad de mantener proporción y sobriedad mientras sigues moviéndote. La pregunta que importa es: ¿cómo no exagerar lo pequeño cuando todo se siente urgente?</p>
+                    </div>
+                    
+                    <div class="section-title">El Problema de la Micro-Exageración</div>
+                    <div class="content-text">
+                        <p>Tu mente está cableada para amplificar lo inmediato. Cuando la vida va rápido, cualquier cosa pequeña se infla:</p>
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li>Un mensaje ambiguo se siente como amenaza personal</li>
+                            <li>Un retraso se lee como fracaso</li>
+                            <li>Un comentario neutro se convierte en juicio</li>
+                        </ul>
+                        <p>La velocidad distorsiona la proporción. Lo urgente tapa lo importante. La activación emocional reemplaza al análisis claro.</p>
+                    </div>
+                    
+                    <div class="section-title">La Falacia de "Me Detengo y Luego Decido"</div>
+                    <div class="content-text">
+                        <p>En la práctica, detenerte muchas veces empeora las cosas. Genera más rumiación, más ansiedad. Convierte un detalle en un drama. La claridad que crees que vas a encontrar al parar suele ser una ilusión. La claridad real se construye mientras sigues caminando.</p>
+                    </div>
+                    
+                    <div class="section-title">Cómo Funciona la Claridad en Movimiento</div>
+                    <div class="content-text">
+                        <p>Kinetic Clarity actúa como un estabilizador interno en tres capas:</p>
+                        <ol style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li><strong>Proporción:</strong> No todo merece el mismo peso. Pregunta útil: "¿Esto realmente cambia mi realidad o solo altera mi estado interno?"</li>
+                            <li><strong>Jerarquía:</strong> Ordenas las cosas por impacto real, no por cuánto gritan.</li>
+                            <li><strong>Ritmo:</strong> No se trata de ir más rápido, sino de mantener estabilidad mientras te mueves. Un paso sobrio vale más que diez pasos nerviosos.</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="section-title">El Impuesto de la Sobrerreacción</div>
+                    <div class="content-text">
+                        <p>Cada vez que exageras algo pequeño pagas un costo silencioso:</p>
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li>Pierdes velocidad</li>
+                            <li>Te cansas mentalmente</li>
+                            <li>Te desvías del foco</li>
+                            <li>Acumulas ruido emocional</li>
+                        </ul>
+                        <p>Ese impuesto se cobra compuesto.</p>
+                    </div>
+                    
+                    <div class="section-title">El Modelo de Flujo</div>
+                    <div class="content-text">
+                        <p>No necesitas pausa. Necesitas un filtro rápido:</p>
+                        <ol style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li>¿Es real o es solo activación?</li>
+                            <li>¿Tiene impacto real en los próximos 7 a 90 días?</li>
+                            <li>¿Requiere mi acción ahora o puede esperar?</li>
+                        </ol>
+                        <p>Si no pasa el filtro, lo dejas ir sin culpa. Si pasa, actúas sin dramatizar.</p>
+                    </div>
+                    
+                    <div class="section-title">La Regulación como Estabilizador Dinámico</div>
+                    <div class="content-text">
+                        <p>La regulación no es eliminar emociones. Es no dejar que la emoción dicte la proporción de las cosas.</p>
+                        <p><strong>Tú regulado:</strong></p>
+                        <ul style="margin-left: 1.5rem;">
+                            <li>No conviertes lo pequeño en drama</li>
+                            <li>No te congelas cuando algo grande aparece</li>
+                            <li>No confundes urgencia con importancia</li>
+                            <li>No paras tu vida entera para procesar ruido</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="section-title">Puntos prácticos</div>
+                    <div class="content-text">
+                        <ul style="margin-left: 1.5rem;">
+                            <li>Micro-pausas de 3 segundos para recalibrar sin detenerte.</li>
+                            <li>Usar lenguaje preciso en lugar de cargado. ("Esto salió diferente" vs "Fue un desastre")</li>
+                            <li>Tomar la acción mínima viable sin sobreinvertir energía en lo trivial.</li>
+                            <li>El movimiento mismo es lo que te estabiliza. No esperes calma para actuar. Actúa y cálmate en el proceso.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="section-title">Conclusión</div>
+                    <div class="content-text">
+                        <p>La claridad no es un destino al que llegas. Es un ritmo que mantienes. Kinetic Clarity cambia la pregunta: ya no es "¿cómo me detengo para pensar mejor?", sino "¿cómo sostengo la proporción mientras sigo avanzando?".</p>
+                    </div>
+                    
+                    <div class="micro-glosario">
+                        <h3 style="margin-top: 0;">Micro-Glosario</h3>
+                        <dl>
+                            <dt>Micro-exageración</dt>
+                            <dd>Distorsión donde algo pequeño se siente como amenaza, fracaso o urgencia.</dd>
+                            <dt>Activación</dt>
+                            <dd>Respuesta emocional inmediata que altera la proporción y desplaza el análisis.</dd>
+                            <dt>Proporción</dt>
+                            <dd>Darle a cada cosa el peso real que tiene en tu vida.</dd>
+                            <dt>Jerarquía</dt>
+                            <dd>Ordenar tus acciones por impacto, no por intensidad emocional.</dd>
+                            <dt>Ritmo</dt>
+                            <dd>Constancia en movimiento que evita la reactividad.</dd>
+                            <dt>Kinetic</dt>
+                            <dd>Relativo al movimiento. Claridad que se sostiene mientras actúas, no mientras paras.</dd>
+                        </dl>
+                    </div>
+                    
+                    <div class="preguntas-finales">
+                        <h3>Preguntas finales</h3>
+                        <ol>
+                            <li>¿Cuál es la micro-exageración más común que haces? (Un mensaje genera ansiedad, un error te deprime, una crítica te paraliza)</li>
+                            <li>¿Cuántas veces en la última semana has pausado innecesariamente, generando más rumiación?</li>
+                            <li>¿Cómo sabrías si estás siendo proporcional en algo que te está pasando ahora?</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="notes-section">
+                        <label for="notes5">Tus notas y reflexiones</label>
+                        <textarea id="notes5" aria-label="Notas para el módulo 5" placeholder="Escribe aquí tus respuestas a las preguntas finales y reflexiones personales..."></textarea>
+                    </div>
+                </div>
+
+                <div class="module" data-module="6">
+                    <div class="module-header">
+                        <div class="module-number">MÓDULO 06</div>
+                        <h2>Señal vs Ruido — Cómo distinguir información útil de activación innecesaria</h2>
+                    </div>
+                    
+                    <div class="frase-clave">
+                        <p>"El ruido grita. La señal whispers. El arte es notar."</p>
+                    </div>
+                    
+                    <div class="section-title">Resumen</div>
+                    <div class="content-text">
+                        <p>Vivimos en un entorno de ruido máximo. Cada plataforma está optimizada para capturar tu atención, activarte, mantener tu ansiedad alta. En ese caos, la verdadera información (señal) es rara. Aprender a distinguir una de otro es la habilidad de sobrevivencia moderna. No se trata de ignorar todo. Se trata de ser quirúrgico con dónde pones atención.</p>
+                    </div>
+                    
+                    <div class="section-title">La Crisis de la Atención</div>
+                    <div class="content-text">
+                        <p>Estás recibiendo información constantemente:</p>
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li>Mensajes sobre crisis globales</li>
+                            <li>Comparaciones con la vida de otros</li>
+                            <li>Alertas sobre amenazas vagas pero urgentes</li>
+                            <li>Opiniones presentadas como hechos</li>
+                            <li>La culpa de no estar "informado"</li>
+                        </ul>
+                        <p>La mayoría es ruido. Tu cerebro no puede distinguir. Se activa ante todo. Se fatiga. Tomas peores decisiones porque tu atención está fraccionada.</p>
+                    </div>
+                    
+                    <div class="section-title">Ruido vs Señal</div>
+                    <div class="content-text">
+                        <p><strong>Ruido:</strong></p>
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li>Te activa sin claridad</li>
+                            <li>Es diseñado para capturar atención</li>
+                            <li>Crea urgencia sin contexto</li>
+                            <li>No requiere acción</li>
+                            <li>Se repite constantemente</li>
+                            <li>Te deja con ansiedad vaga</li>
+                        </ul>
+                        <p><strong>Señal:</strong></p>
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li>Te da información accionable</li>
+                            <li>Es específica a tu contexto</li>
+                            <li>Tiene impacto claro en tu vida</li>
+                            <li>Requiere decisión o acción</li>
+                            <li>Aparece una vez, luego puedes actuar</li>
+                            <li>Te deja más claro, no más ansioso</li>
+                        </ul>
+                        <p><strong>Ejemplo:</strong> "Mercado en caída" es ruido. "Tu portafolio está sobrepesado en acciones volátiles y tú tienes horizonte de 5 años" es señal.</p>
+                    </div>
+                    
+                    <div class="section-title">Puntos de Corte</div>
+                    <div class="content-text">
+                        <p>Para cada fuente de información, pregúntate:</p>
+                        <ol style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li>¿Puedo actuar sobre esto? (Si no, es ruido.)</li>
+                            <li>¿Me afecta directamente? (Si es sobre una crisis en el otro lado del mundo, probablemente no.)</li>
+                            <li>¿Esta información cambia mi decisión? (Si no, ¿por qué estoy leyéndola?)</li>
+                            <li>¿Quién se beneficia si me mantengo ansioso sobre esto? (Mira quién la vende.)</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="section-title">Cómo Entrenar el Filtro</div>
+                    <div class="content-text">
+                        <ol style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li><strong>Sé curiosamente escéptico:</strong> Antes de creer, pregunta "¿Quién publicó esto? ¿Qué ganan?"</li>
+                            <li><strong>Busca fuentes originales:</strong> No el artículo sobre el artículo. El dato original.</li>
+                            <li><strong>Nota cuándo te activas:</strong> Esa activación es una pista. ¿Es genuina preocupación o ruido diseñado para capturar?</li>
+                            <li><strong>Protege tu atención como tu bien más valioso:</strong> Porque lo es.</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="section-title">El Costo de Vivir en Ruido</div>
+                    <div class="content-text">
+                        <p>Vivir constantemente expuesto a ruido:</p>
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li>Degrada tu capacidad de discernimiento</li>
+                            <li>Te mantiene en estado de baja activación</li>
+                            <li>Consume energía mental</li>
+                            <li>Te hace reactivo</li>
+                            <li>Te aleja de las decisiones reales que necesitas tomar</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="section-title">Puntos prácticos</div>
+                    <div class="content-text">
+                        <ul style="margin-left: 1.5rem;">
+                            <li>Elige 2-3 fuentes confiables. Ignora el resto.</li>
+                            <li>Ten un horario para revisar noticias. No todo el día.</li>
+                            <li>Si te sientes ansioso sin razón clara, pregúntate qué información consumiste.</li>
+                            <li>La falta de información sobre crisis lejanas no te hace irresponsable. Te hace sabio.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="section-title">Conclusión</div>
+                    <div class="content-text">
+                        <p>La información es abundante. La señal es rara. Tu trabajo no es estar "informado" sobre todo. Es estar claro sobre lo que te afecta. El ruido es gratis. La claridad la proteges.</p>
+                    </div>
+                    
+                    <div class="micro-glosario">
+                        <h3 style="margin-top: 0;">Micro-Glosario</h3>
+                        <dl>
+                            <dt>Ruido</dt>
+                            <dd>Información diseñada para capturar atención sin valor accionable.</dd>
+                            <dt>Señal</dt>
+                            <dd>Información específica que te permite tomar una decisión mejor.</dd>
+                            <dt>Activación</dt>
+                            <dd>La sensación de urgencia o ansiedad que el ruido genera.</dd>
+                            <dt>Discernimiento</dt>
+                            <dd>La capacidad de distinguir qué merece tu atención.</dd>
+                        </dl>
+                    </div>
+                    
+                    <div class="preguntas-finales">
+                        <h3>Preguntas finales</h3>
+                        <ol>
+                            <li>¿Qué fuente de ruido te consume más energía sin cambiar tus decisiones?</li>
+                            <li>Si dejaras de estar "informado" sobre ella, ¿qué cambiaría en tu vida real?</li>
+                            <li>¿Cuál es la información VERDADERA que necesitas pero estás ignorando porque estás saturado de ruido?</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="notes-section">
+                        <label for="notes6">Tus notas y reflexiones</label>
+                        <textarea id="notes6" aria-label="Notas para el módulo 6" placeholder="Escribe aquí tus respuestas a las preguntas finales y reflexiones personales..."></textarea>
+                    </div>
+                </div>
+                
+                <div class="module" data-module="7">
+                    <div class="module-header">
+                        <div class="module-number">MÓDULO 07</div>
+                        <h2>El Costo de Oportunidad de Complacer a Otros — Por qué decir sí a todo es decir no a ti mismo</h2>
+                    </div>
+                    
+                    <div class="frase-clave">
+                        <p>"Cada vez que dices sí a lo que no quieres, estás diciendo no a lo que sí quieres."</p>
+                    </div>
+                    
+                    <div class="section-title">Resumen</div>
+                    <div class="content-text">
+                        <p>La mayoría de las personas que tienen problemas con límites no carecen de buenos límites. No tienen límites. No porque sean débiles. Porque nunca aprendieron que decir que no es acto de claridad, no de crueldad. Cada sí que das desde culpa es un no que das a tu propia vida.</p>
+                    </div>
+                    
+                    <div class="section-title">El Patrón</div>
+                    <div class="content-text">
+                        <p>Alguien pide algo. Tú sientes:</p>
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li>Culpa si dices que no</li>
+                            <li>Obligación de arreglarlo</li>
+                            <li>Miedo a que se enojen</li>
+                            <li>Necesidad de ser "buena persona"</li>
+                        </ul>
+                        <p>Entonces dices que sí. Luego resientes. Luego haces el trabajo mal. Luego te culpas por haber hecho el trabajo mal.</p>
+                        <p>Todos pierden. Especialmente tú.</p>
+                    </div>
+                    
+                    <div class="section-title">El Costo Real</div>
+                    <div class="content-text">
+                        <p>Cada sí que das desde complacencia te cuesta:</p>
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li>Tiempo que no es tuyo</li>
+                            <li>Energía que necesitas para tus cosas</li>
+                            <li>Resentimiento silencioso</li>
+                            <li>Una vida que se siente como "sí, claro" en lugar de "esto es mío"</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="section-title">La Ficción del Altruismo</div>
+                    <div class="content-text">
+                        <p>Te crees altruista por decir que sí a todo. Pero el altruismo requiere elección. Si dices que sí porque no puedes decir que no, no es altruismo. Es complacencia.</p>
+                        <p><strong>El verdadero altruismo:</strong></p>
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li>Es elegido libremente</li>
+                            <li>No genera resentimiento</li>
+                            <li>Te mantiene íntegro</li>
+                            <li>Viene desde la abundancia, no desde la escasez de límites</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="section-title">Cómo Funciona el "No"</div>
+                    <div class="content-text">
+                        <p><strong>Un "no" claro:</strong></p>
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li>Honra tu tiempo</li>
+                            <li>Respeta al otro (porque no prometes lo que no vas a dar)</li>
+                            <li>Abre espacio para lo que realmente importa</li>
+                            <li>Construye respeto, no resentimiento</li>
+                        </ul>
+                        <p><strong>Ejemplo:</strong> "No puedo tomar eso ahora. Tengo que enfocarme en mis prioridades. ¿Hay alguien más que pueda ayudarte?"</p>
+                        <p>Eso es claro. Empático. Y protege tu vida.</p>
+                    </div>
+                    
+                    <div class="section-title">El Costo de Oportunidad</div>
+                    <div class="content-text">
+                        <p>Cada hora que gastas en lo que alguien más quiere es una hora que NO estás:</p>
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li>Construyendo lo tuyo</li>
+                            <li>Descansando</li>
+                            <li>Con gente que amas</li>
+                            <li>En lo que realmente quieres hacer</li>
+                        </ul>
+                        <p>Eso tiene un costo. El costo de oportunidad. Y casi nunca lo calculas.</p>
+                    </div>
+                    
+                    <div class="section-title">Puntos prácticos</div>
+                    <div class="content-text">
+                        <ul style="margin-left: 1.5rem;">
+                            <li>Practica decir "no" a pequeñas cosas primero.</li>
+                            <li>El "no" no requiere explicación. "No puedo" es suficiente.</li>
+                            <li>Si sientes culpa al decir que no, esa culpa es información. Explórala. Probablemente no es justificada.</li>
+                            <li>Los límites no son crueldad. Son claridad.</li>
+                            <li>Si alguien se enoja porque dijiste que no, ese es su problema, no el tuyo.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="section-title">Conclusión</div>
+                    <div class="content-text">
+                        <p>Cada sí que das a lo que no quieres es un no silencioso a lo que sí quieres. La vida se construye con los "no" que proteges, no con los "sí" que das por culpa.</p>
+                    </div>
+                    
+                    <div class="micro-glosario">
+                        <h3 style="margin-top: 0;">Micro-Glosario</h3>
+                        <dl>
+                            <dt>Límite</dt>
+                            <dd>La línea que dices "hasta aquí y no más".</dd>
+                            <dt>Complacencia</dt>
+                            <dd>Decir que sí desde culpa, miedo o necesidad de aprobación.</dd>
+                            <dt>Costo de oportunidad</dt>
+                            <dd>Lo que sacrificas por estar haciendo lo que alguien más quiere.</dd>
+                            <dt>Resentimiento</dt>
+                            <dd>La rabia silenciosa que crece cuando tu tiempo no es tuyo.</dd>
+                        </dl>
+                    </div>
+                    
+                    <div class="preguntas-finales">
+                        <h3>Preguntas finales</h3>
+                        <ol>
+                            <li>¿A quién le dices que sí cuando quieres decir que no?</li>
+                            <li>¿Cuál sería el impacto si protegieras una hora a la semana solo para ti?</li>
+                            <li>¿Qué persona se enoja si estableces límites? ¿Por qué su rabia te controla?</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="notes-section">
+                        <label for="notes7">Tus notas y reflexiones</label>
+                        <textarea id="notes7" aria-label="Notas para el módulo 7" placeholder="Escribe aquí tus respuestas a las preguntas finales y reflexiones personales..."></textarea>
+                    </div>
+                </div>
+                
+                <div class="module" data-module="8">
+                    <div class="module-header">
+                        <div class="module-number">MÓDULO 08</div>
+                        <h2>La Capacidad Interpretativa en la Era de la IA — Por qué el significado es más valioso que la información</h2>
+                    </div>
+                    
+                    <div class="frase-clave">
+                        <p>"Cuando el procesamiento se vuelve abundante, el valor migra hacia la interpretación."</p>
+                    </div>
+                    
+                    <div class="section-title">Resumen</div>
+                    <div class="content-text">
+                        <p>La IA ya hace rápido y bien muchas cosas que antes solo los humanos podíamos hacer: resumir, traducir, clasificar, generar. Eso cambia la ecuación completamente. Si procesar ya no es escaso, ¿qué capacidad humana se vuelve más valiosa? La respuesta es la interpretación: la capacidad de asignarle el significado correcto a la información, la jerarquía adecuada, la dirección útil.</p>
+                    </div>
+                    
+                    <div class="section-title">El Error de Medir Inteligencia por Velocidad</div>
+                    <div class="content-text">
+                        <p>Durante años premiamos:</p>
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li>Responder rápido</li>
+                            <li>Recordar mucho</li>
+                            <li>Producir sin parar</li>
+                        </ul>
+                        <p>La IA hace eso mejor. Y más barato. Eso cambio el juego.</p>
+                    </div>
+                    
+                    <div class="section-title">Lo Que la IA Hace Bien</div>
+                    <div class="content-text">
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li>Reconoce patrones</li>
+                            <li>Sintetiza información</li>
+                            <li>Genera opciones</li>
+                            <li>Escala</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="section-title">Lo Que NO Resuelve</div>
+                    <div class="content-text">
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li>¿Esto es relevante para mí ahora?</li>
+                            <li>¿Qué riesgo está oculto aquí?</li>
+                            <li>¿Qué variable humana falta?</li>
+                            <li>¿Qué decisión me conviene realmente a largo plazo?</li>
+                        </ul>
+                        <p>Esas preguntas requieren juicio. Contexto. Sabiduría.</p>
+                    </div>
+                    
+                    <div class="section-title">La Mecánica de la Capacidad Interpretativa</div>
+                    <div class="content-text">
+                        <p>Opera en tres niveles:</p>
+                        <ol style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li><strong>Contexto:</strong> La misma información cambia según tu momento y objetivo.</li>
+                            <li><strong>Jerarquía:</strong> No todo dato merece el mismo peso.</li>
+                            <li><strong>Significado:</strong> Entender no solo qué pasa, sino qué implica para tu vida.</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="section-title">El Nuevo Riesgo: Dependencia Cognitiva</div>
+                    <div class="content-text">
+                        <p>Es fácil confundir que la IA habla con fluidez con que tiene razón. Aparece:</p>
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li>Dependencia cognitiva (renuncias a tu propio pensamiento)</li>
+                            <li>Pereza analítica (esperas que te lo den todo procesado)</li>
+                            <li>Falsa certeza (confundes probabilidad con verdad)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="section-title">Cómo Entrenarla</div>
+                    <div class="content-text">
+                        <ol style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li><strong>Hacer preguntas mejores:</strong> No "¿Qué debo hacer?" sino "¿Qué estoy ignorando?"</li>
+                            <li><strong>Tolerar ambigüedad:</strong> Un rato. No todo debe resolverse al instante.</li>
+                            <li><strong>Contrastar perspectivas opuestas:</strong> Si solo lees lo que confirma tu creencia, no estás interpretando. Estás confirmando.</li>
+                            <li><strong>Detectar incentivos ocultos:</strong> ¿Quién se beneficia si crees esto?</li>
+                            <li><strong>Separar señal de narrativa:</strong> Los datos dicen una cosa. La historia dice otra.</li>
+                            <li><strong>Escribir tus propias conclusiones:</strong> Aunque sean imperfectas. El acto de escribir te obliga a claridad.</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="section-title">Puntos prácticos</div>
+                    <div class="content-text">
+                        <ul style="margin-left: 1.5rem;">
+                            <li>No confundas acceso a información con comprensión.</li>
+                            <li>Cuando recibas una respuesta procesada (de IA o de cualquiera), pregúntate: "¿Qué me falta? ¿Qué no estoy viendo?"</li>
+                            <li>Invierte más tiempo en hacer preguntas mejores que en procesar respuestas rápidas.</li>
+                            <li>La interpretación correcta vale más que la información perfecta.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="section-title">Conclusión</div>
+                    <div class="content-text">
+                        <p>No compitas con las máquinas en lo que ellas hacen mejor. Desarrolla lo profundamente tuyo: juicio proporcional, ética aplicada, sensibilidad contextual, creatividad integradora. La pregunta ya no es si la IA puede hacer más cosas. Es: ¿qué capacidades mías se vuelven más valiosas cuando las máquinas hacen muchas cosas bien?</p>
+                        <p>La respuesta está en interpretar mejor.</p>
+                    </div>
+                    
+                    <div class="micro-glosario">
+                        <h3 style="margin-top: 0;">Micro-Glosario</h3>
+                        <dl>
+                            <dt>Capacidad interpretativa</dt>
+                            <dd>Convertir información en juicio útil para tu vida.</dd>
+                            <dt>Jerarquía cognitiva</dt>
+                            <dd>Darle a cada variable el peso correcto.</dd>
+                            <dt>Dependencia cognitiva</dt>
+                            <dd>Renunciar a tu propio pensamiento por comodidad externa.</dd>
+                            <dt>Juicio prudente</dt>
+                            <dd>Decisión sólida bajo incertidumbre.</dd>
+                            <dt>Contexto</dt>
+                            <dd>El conjunto de factores que hacen que la misma información signifique cosas diferentes para personas diferentes.</dd>
+                        </dl>
+                    </div>
+                    
+                    <div class="preguntas-finales">
+                        <h3>Preguntas finales</h3>
+                        <ol>
+                            <li>¿En qué área de tu vida delegas tu interpretación a otros (expertos, redes sociales, tendencias)?</li>
+                            <li>¿Cuándo fue la última vez que cambiaste de opinión basado en nueva información?</li>
+                            <li>¿Qué pregunta importante has estado delegando en lugar de responderla tú mismo?</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="notes-section">
+                        <label for="notes8">Tus notas y reflexiones</label>
+                        <textarea id="notes8" aria-label="Notas para el módulo 8" placeholder="Escribe aquí tus respuestas a las preguntas finales y reflexiones personales..."></textarea>
+                    </div>
+                </div>
+                
+                <div class="module" data-module="9">
+                    <div class="module-header">
+                        <div class="module-number">MÓDULO 09</div>
+                        <h2>La Claridad como Ventaja Estratégica y Humana — Cómo cambia tu vida cuando dejas de reaccionar</h2>
+                    </div>
+                    
+                    <div class="frase-clave">
+                        <p>"La claridad rara vez impresiona en el momento. Pero corrige trayectorias enteras."</p>
+                    </div>
+                    
+                    <div class="section-title">Resumen</div>
+                    <div class="content-text">
+                        <p>Muchos problemas no vienen de falta de talento. Vienen de exceso de reacción. Respondes demasiado rápido. Dramatizas demasiado pronto. Decides desde la activación o el cansancio. La claridad es la capacidad de percibir con proporción, decidir sin distorsión y actuar sin entregar el control a cada estímulo.</p>
+                    </div>
+                    
+                    <div class="section-title">La Economía de la Reactividad</div>
+                    <div class="content-text">
+                        <p><strong>La reactividad te da alivio rápido:</strong></p>
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li>Descargas tensión</li>
+                            <li>Sientes que tienes control</li>
+                            <li>Evitas incomodidad momentáneamente</li>
+                        </ul>
+                        <p><strong>Pero genera costos lentos:</strong></p>
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li>Errores</li>
+                            <li>Relaciones inestables</li>
+                            <li>Energía desperdiciada</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="section-title">Lo Que Cambia Cuando Dejas de Reaccionar</div>
+                    <div class="content-text">
+                        <p>Aparecen beneficios silenciosos pero poderosos:</p>
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li>Menos errores</li>
+                            <li>Relaciones más limpias</li>
+                            <li>Más energía</li>
+                            <li>Mejor reputación</li>
+                            <li>Decisiones que se acumulan a tu favor</li>
+                            <li>Autoestima más sólida</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="section-title">La Mecánica de la Claridad</div>
+                    <div class="content-text">
+                        <p>Tres capas:</p>
+                        <ol style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li><strong>Proporción:</strong> Nada recibe más peso del que merece.</li>
+                            <li><strong>Discernimiento:</strong> Separar hecho de narrativa emocional.</li>
+                            <li><strong>Acción limpia:</strong> Responder sin dramatización innecesaria.</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="section-title">El Impuesto de Vivir Reactivo</div>
+                    <div class="content-text">
+                        <p>Desgaste mental, vínculos rotos, oportunidades perdidas, imagen impredecible, ciclos que se repiten. Muchas veces llamamos "mala suerte" a lo que es solo reactividad repetida.</p>
+                    </div>
+                    
+                    <div class="section-title">Trayectoria vs Momento</div>
+                    <div class="content-text">
+                        <p>Deja de evaluar tus decisiones por cómo te sientes hoy. Evalúalas por la trayectoria que construyen.</p>
+                        <p><strong>Preguntas clave:</strong></p>
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li>¿Esto me mejora o solo me calma?</li>
+                            <li>¿Esto merece mi energía real?</li>
+                            <li>¿Estoy eligiendo o estoy reaccionando?</li>
+                            <li>¿Qué versión de mí refuerza esta acción?</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="section-title">La Disciplina Sobria</div>
+                    <div class="content-text">
+                        <p>La claridad se construye con prácticas pequeñas y repetidas:</p>
+                        <ol style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li>Pausar antes de responder</li>
+                            <li>Dormir antes de decidir cosas importantes</li>
+                            <li>Decir no temprano</li>
+                            <li>Proteger tu atención</li>
+                            <li>Revisar tus patrones semanalmente</li>
+                            <li>Repetir lo correcto aunque no te emocione</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="section-title">Lo Que Ganas Cuando Vives Más Claro</div>
+                    <div class="content-text">
+                        <p>En un mundo hiperreactivo, tú destacas sin hacer ruido:</p>
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li>No te incendias fácil</li>
+                            <li>No persigues cada estímulo</li>
+                            <li>No negocias tu paz por urgencias ajenas</li>
+                            <li>Mientras otros reaccionan, tú avanzas</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="section-title">Puntos prácticos</div>
+                    <div class="content-text">
+                        <ul style="margin-left: 1.5rem;">
+                            <li>Nota cuándo reaccionas. Sin juzgar. Solo observa.</li>
+                            <li>Espera 24 horas antes de decisiones importantes.</li>
+                            <li>Pregúntate: "¿Esto sigue siendo importante mañana?"</li>
+                            <li>La coherencia atrae. La reactividad repele.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="section-title">Conclusión</div>
+                    <div class="content-text">
+                        <p>La claridad no te promete una vida sin problemas. Te promete una mente menos secuestrable por ellos. La pregunta cambia: de "¿cómo me siento ahora?" a "¿qué trayectoria estoy construyendo con mis respuestas diarias?".</p>
+                        <p>Cuando dejas de reaccionar automáticamente, tus días cambian. Cuando lo repites el tiempo suficiente, cambia tu vida.</p>
+                    </div>
+                    
+                    <div class="micro-glosario">
+                        <h3 style="margin-top: 0;">Micro-Glosario</h3>
+                        <dl>
+                            <dt>Claridad</dt>
+                            <dd>Percepción proporcional que mejora tus decisiones.</dd>
+                            <dt>Reactividad</dt>
+                            <dd>Responder desde el estímulo inmediato en vez de desde elección consciente.</dd>
+                            <dt>Trayectoria</dt>
+                            <dd>Dirección acumulada que crean tus hábitos repetidos.</dd>
+                            <dt>Acción limpia</dt>
+                            <dd>Respuesta firme sin ruido innecesario.</dd>
+                            <dt>Efecto compuesto conductual</dt>
+                            <dd>Beneficio acumulado de pequeñas decisiones sobrias.</dd>
+                        </dl>
+                    </div>
+                    
+                    <div class="preguntas-finales">
+                        <h3>Preguntas finales</h3>
+                        <ol>
+                            <li>¿Cuál es tu patrón reactivo más consistente?</li>
+                            <li>Si detuvieras ESE patrón en particular, ¿cómo cambiaría tu vida?</li>
+                            <li>¿Qué necesitas para creer que el cambio lento es cambio real?</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="notes-section">
+                        <label for="notes9">Tus notas y reflexiones</label>
+                        <textarea id="notes9" aria-label="Notas para el módulo 9" placeholder="Escribe aquí tus respuestas a las preguntas finales y reflexiones personales..."></textarea>
+                    </div>
+                </div>
+                
+                <div class="module" data-module="10">
+                    <div class="module-header">
+                        <div class="module-number">MÓDULO 10</div>
+                        <h2>Epílogo Operativo — Los próximos 90 días</h2>
+                    </div>
+                    
+                    <div class="frase-clave">
+                        <p>"El protocolo no termina aquí. Esto es lo que comienza aquí."</p>
+                    </div>
+                    
+                    <div class="section-title">Resumen</div>
+                    <div class="content-text">
+                        <p>Acabas de leer que la claridad se construye con prácticas pequeñas repetidas. Ahora viene la parte incómoda: hacer el trabajo. Los próximos 90 días no van a ser una transformación mágica. Van a ser incómodos. Tu mente va a buscar excusas para volver a los patrones viejos. El drama que usabas para sentirte vivo va a hacer falta. Pero si lo haces, algo cambia.</p>
+                    </div>
+                    
+                    <div class="section-title">Semanas 1-4: Observa sin cambiar nada aún</div>
+                    <div class="content-text">
+                        <p><strong>El objetivo:</strong> Notar. Nada más.</p>
+                        <p>Elige DOS situaciones donde típicamente te activas:</p>
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li>Cuando recibes un mensaje ambiguo</li>
+                            <li>Cuando algo sale diferente a lo esperado</li>
+                            <li>Cuando alguien te cuestiona</li>
+                            <li>Cuando estás cansado y necesitas decir que no</li>
+                        </ul>
+                        <p>Cada vez que suceda, pausa 3 segundos. Observa:</p>
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li>¿Qué está pasando en mi cuerpo?</li>
+                            <li>¿Estoy exagerando esto?</li>
+                            <li>¿Qué narrativa estoy construyendo?</li>
+                        </ul>
+                        <p>No cambies nada. Solo observa. Esto no se trata de ser "positivo". Se trata de ser honesto.</p>
+                        <p>Toma una nota al final del día. Una sola frase. "Hoy me activé con X. Mi primer impulso fue Y. La realidad era Z."</p>
+                    </div>
+                    
+                    <div class="section-title">Semanas 5-8: Introduce micro-prácticas</div>
+                    <div class="content-text">
+                        <p>Ahora que reconoces el patrón, pequeñas intervenciones:</p>
+                        <p><strong>En decisiones pequeñas:</strong> Antes de responder un mensaje que te irritó, espera 15 minutos. Relee lo que escribiste. Borra el 30% que es puro ruido emocional. Envía el resto.</p>
+                        <p><strong>En conversaciones difíciles:</strong> Duerme una noche antes de abordar algo importante. Tu cerebro necesita reposición. Las decisiones tomadas a las 9 PM desde la activación se arrepienten a las 9 AM.</p>
+                        <p><strong>En tu atención:</strong> Protege una hora diaria donde no abres redes ni chequeas mensajes. Tu mente necesita silencio para procesarse a sí misma.</p>
+                        <p><strong>En tu lenguaje:</strong> Cuando quieras describir algo que te pasó, usa palabras precisas. No "fue un desastre" sino "salió diferente a lo esperado". La precisión cambia cómo tu cerebro procesa la experiencia.</p>
+                    </div>
+                    
+                    <div class="section-title">Semanas 9-12: Consolida los patrones</div>
+                    <div class="content-text">
+                        <p>Para este punto, uno o dos de los cambios ya debería sentirse automático. No "fácil", pero automático.</p>
+                        <p><strong>La pregunta central:</strong> ¿Quién soy cuando NO estoy activado?</p>
+                        <p>No es una pregunta poética. Es práctica. Cuando estás regulado, ¿qué tipo de decisiones tomas? ¿Qué tipo de conversaciones tienes? ¿Cómo te tratas?</p>
+                        <p>Cultiva eso. Repítelo sin esperar sentirte inspirado. La consistencia construye la trayectoria.</p>
+                        <p><strong>Las señales de que está funcionando:</strong></p>
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            <li>Cometes menos errores por pánico</li>
+                            <li>Dices que no sin justificaciones de 5 párrafos</li>
+                            <li>Las personas te describen como "calmado" o "claro", no como "intenso"</li>
+                            <li>Te cansas menos mentalmente</li>
+                            <li>Los problemas viejos empiezan a perder peso</li>
+                        </ul>
+                        <p>No te va a emocionar. Se va a sentir normal. Eso es exactamente el punto.</p>
+                    </div>
+                    
+                    <div class="section-title">Después de 90 días</div>
+                    <div class="content-text">
+                        <p>No termina aquí. Esto es lo que comienza aquí.</p>
+                        <p>Tu vida va a querer volver a los patrones viejos cuando baje la guardia. Eso es normal. No es fracaso. Es fricción.</p>
+                        <p>La pregunta entonces no es "¿lo hice bien?". Es "¿qué versión de mí estoy construyendo con las decisiones diarias?".</p>
+                        <p>Sigue siendo claro. Sigue siendo sobrio. Sigue siendo dueño de tu atención.</p>
+                        <p>Y cuando sientas que la confusión vuelve, vuelve a este protocolo. No como libro que ya leíste. Como brújula que aún funciona.</p>
+                    </div>
+                    
+                    <div class="preguntas-finales">
+                        <h3>Preguntas finales</h3>
+                        <ol>
+                            <li>¿Cuál de los 9 módulos anteriores se te presenta como el mayor desafío?</li>
+                            <li>¿Qué patrón específico vas a comprometerte a observar estas próximas 4 semanas?</li>
+                            <li>¿Quién vas a necesitar en tu vida para mantener la consistencia, y cómo les pides apoyo?</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="notes-section">
+                        <label for="notes10">Tus notas y reflexiones</label>
+                        <textarea id="notes10" aria-label="Notas para el módulo 10" placeholder="Escribe aquí tus respuestas a las preguntas finales y reflexiones personales..."></textarea>
+                    </div>
+                </div>
+                
+                
+                    
+                    <div class="notes-section">
+                        <label for="notes">Tus notas y reflexiones finales</label>
+                        <textarea id="notes" aria-label="Notas para el módulo " placeholder="Espacio para tus reflexiones finales después de completar todo el protocolo..."></textarea>
+                    </div>
+                </div>
+                
+            </div>
+        </main>
+        
+        <footer>
+            <div class="footer-content">
+                <div class="footer-meta">PROTOCOLO DE CLARIDAD — Self Love Club (COMPLETO)</div>
+                <div class="footer-meta" id="autoSaveStatus">Cambios guardados</div>
+            </div>
+        </footer>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // ============================================
+        // CONFIGURACIÓN Y ESTADO
+        // ============================================
+        const MODULES = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+        const STORAGE_PREFIX = 'protocolo_claridad_';
+        let currentModule = '0';
+        let unsavedChanges = false;
+        let autoSaveTimer = null;
+        
+        // ============================================
+        // ELEMENTOS DEL DOM
+        // ============================================
+        const moduleSelect = document.getElementById('moduleSelect');
+        const modules = document.querySelectorAll('.module');
+        const exportBtn = document.getElementById('exportBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const toast = document.getElementById('toast');
+        const progressFill = document.getElementById('progressFill');
+        const autoSaveStatus = document.getElementById('autoSaveStatus');
+        
+        // ============================================
+        // INICIALIZACIÓN
+        // ============================================
+        window.addEventListener('DOMContentLoaded', () => {
+            loadAllNotes();
+            attachEventListeners();
+            updateProgressBar();
+        });
+        
+        // ============================================
+        // EVENT LISTENERS
+        // ============================================
+        function attachEventListeners() {
+            // Cambio de módulo
+            moduleSelect.addEventListener('change', (e) => {
+                currentModule = e.target.value;
+                showModule(currentModule);
+                updateProgressBar();
+            });
+            
+            // Todas las textareas guardan en tiempo real
+            const textareas = document.querySelectorAll('textarea');
+            textareas.forEach((textarea) => {
+                const moduleNum = textarea.id.replace('notes', '');
+                
+                textarea.addEventListener('input', (e) => {
+                    unsavedChanges = true;
+                    saveNote(moduleNum, e.target.value);
+                    debounceAutoSave();
+                });
+            });
+            
+            // Exportar PDF
+            exportBtn.addEventListener('click', exportToPDF);
+            
+            // Limpiar todo
+            clearBtn.addEventListener('click', clearAllData);
+            
+            // Prevención de cierre
+            window.addEventListener('beforeunload', (e) => {
+                if (unsavedChanges) {
+                    e.preventDefault();
+                    e.returnValue = '';
+                }
+            });
+        }
+        
+        // ============================================
+        // GESTIÓN DE MÓDULOS
+        // ============================================
+        function showModule(moduleNum) {
+            modules.forEach(mod => {
+                mod.classList.remove('active');
+            });
+            const activeModule = document.querySelector(`[data-module="${moduleNum}"]`);
+            if (activeModule) {
+                activeModule.classList.add('active');
+            }
+        }
+        
+        // ============================================
+        // PERSISTENCIA - LOCALSTORAGE
+        // ============================================
+        
+        function safeLocalStorageSet(key, value) {
+            try {
+                localStorage.setItem(key, value);
+                return true;
+            } catch (e) {
+                console.error('Error al guardar en localStorage:', e);
+                showToast('Error: No se pudo guardar. Verifique si está en modo incógnito.', 4000);
+                return false;
+            }
+        }
+
+        function safeLocalStorageGet(key) {
+            try {
+                return localStorage.getItem(key);
+            } catch (e) {
+                console.error('Error al leer de localStorage:', e);
+                return null;
+            }
+        }
+    \n        function saveNote(moduleNum, content) {
+                if (content.length > 10000) {
+                    showToast('Nota demasiado larga (máx 10,000 caracteres)', 3000);
+                    return;
+                }
+    
+            const key = `${STORAGE_PREFIX}notes_${moduleNum}`;
+            safeLocalStorageSet(key, content);
+            unsavedChanges = false;
+            autoSaveStatus.textContent = 'Cambios guardados';
+        }
+        
+        function loadNote(moduleNum) {
+            const key = `${STORAGE_PREFIX}notes_${moduleNum}`;
+            const content = safeLocalStorageGet(key);
+            return content || '';
+        }
+        
+        function loadAllNotes() {
+            MODULES.forEach(moduleNum => {
+                const textarea = document.getElementById(`notes${moduleNum}`) || document.getElementById(`notes`);
+                if (textarea) {
+                    textarea.value = loadNote(moduleNum);
+                }
+            });
+        }
+        
+        // ============================================
+        // DEBOUNCE PARA AUTO-SAVE
+        // ============================================
+        function debounceAutoSave() {
+            clearTimeout(autoSaveTimer);
+            autoSaveStatus.textContent = 'Guardando...';
+            autoSaveTimer = setTimeout(() => {
+                showToast('Cambios guardados', 2000);
+                autoSaveStatus.textContent = 'Cambios guardados';
+            }, 1500);
+        }
+        
+        // ============================================
+        // TOAST NOTIFICATION
+        // ============================================
+        function showToast(message, duration = 2000) {
+            toast.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, duration);
+        }
+        
+        // ============================================
+        // EXPORT PDF
+        // ============================================
+        function exportToPDF() {
+            const element = document.querySelector('.content-wrapper');
+            const opt = {
+                margin: 15,
+                filename: 'Protocolo_de_Claridad_SLC_Completo.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
+            };
+            
+            // Para que exporte todo y no solo la pestaña activa
+            modules.forEach(mod => mod.style.display = 'block');
+            
+            html2pdf().set(opt).from(element).save().then(() => {
+                // Restaurar la vista por pestañas después de exportar
+                modules.forEach(mod => mod.style.display = '');
+                showModule(currentModule);
+                showToast('PDF exportado correctamente', 3000);
+            });
+        }
+        
+        // ============================================
+        // CLEAR ALL DATA
+        // ============================================
+        function clearAllData() {
+            const confirmed = confirm(
+                '¿Está seguro de que desea borrar todos sus notas y cambios? Esta acción no se puede deshacer.'
+            );
+            
+            if (confirmed) {
+                MODULES.forEach(moduleNum => {
+                    const key = `${STORAGE_PREFIX}notes_${moduleNum}`;
+                    try { localStorage.removeItem(key); } catch(e) {}
+                    const textarea = document.getElementById(`notes${moduleNum}`) || document.getElementById(`notes`);
+                    if (textarea) {
+                        textarea.value = '';
+                    }
+                });
+                
+                unsavedChanges = false;
+                showToast('Todos los datos han sido eliminados', 3000);
+            }
+        }
+        
+        // ============================================
+        // PROGRESS BAR
+        // ============================================
+        function updateProgressBar() {
+            const currentIndex = MODULES.indexOf(currentModule);
+            const progress = ((currentIndex + 1) / MODULES.length) * 100;
+            progressFill.style.width = progress + '%';
+        }
+        
+        // ============================================
+        // CARGAR PRIMER MÓDULO
+        // ============================================
+        showModule('0');
+    </script>
+
+    <script>
+    // Auto-resize textareas
+    function autoResizeTextarea(elem) {
+        elem.style.height = 'auto';
+        elem.style.height = (elem.scrollHeight) + 'px';
+    }
+    
+    document.querySelectorAll('textarea').forEach(elem => {
+        elem.addEventListener('input', function() {
+            autoResizeTextarea(this);
+        });
+        // Resize al cargar
+        autoResizeTextarea(elem);
+    });
+    </script>
+</body>
+</html>
