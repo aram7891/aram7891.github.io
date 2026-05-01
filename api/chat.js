@@ -5,7 +5,7 @@ const client = new OpenAI({
 });
 
 const SYSTEM_PROMPTS = {
-    clarity: {   // ← Módulo 1: más técnico y relajado
+    clarity: {
         soft: {
             es: `Eres un analista estratégico silencioso y preciso. Entrega claridad técnica y relajada. 
 Define el problema real en una oración clara. 
@@ -35,7 +35,7 @@ Fourth paragraph: the real consequence if they don't act.
 Short, direct language, zero formality.`
         }
     },
-    hygiene: {   // ← Módulo 2: más preciso y quirúrgico
+    hygiene: {
         soft: {
             es: `Eres un auditor de decisiones preciso y técnico. Evalúa riesgos, sesgos y umbrales. 
 Identifica los sesgos o riesgos ocultos en la decisión. 
@@ -78,8 +78,13 @@ export default async function handler(req, res) {
     try {
         const { text, language, responseMode, module } = req.body;
         
+        // Seguridad adicional
+        if (!text || typeof text !== 'string' || text.length > 8000) {
+            return res.status(400).json({ success: false, error: "Texto inválido o demasiado largo" });
+        }
+        
         const mode = responseMode === 'brutal' ? 'brutal' : 'soft';
-        const mod = module || 'clarity';                    // por si no llega el módulo
+        const mod = module || 'clarity';
         const lang = language === 'en' ? 'en' : 'es';
 
         const systemPrompt = SYSTEM_PROMPTS[mod][mode][lang];
