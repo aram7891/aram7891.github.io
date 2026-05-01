@@ -295,7 +295,7 @@
             const output = document.getElementById('output');
             const errorDiv = document.getElementById('error-debug');
             errorDiv.style.display = 'none';
-            output.innerHTML = `<em>${currentLanguage === 'es' ? 'Procesando con IA...' : 'Processing with AI...'}</em>`;
+            output.innerHTML = `<em>${currentLanguage === 'es' ? 'Procesando data...' : 'Processing data...'}</em>`;
 
             try {
                 const response = await fetch('/api/chat', {
