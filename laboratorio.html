@@ -14,7 +14,7 @@
             --ink: #1A1814;
             --amber: #8B6F4E;
             --sand: #C4A882;
-            --clarity-blue: #0047AB; /* Azul estratégico incorporado */
+            --clarity-blue: #0047AB;
             --thin-line: 1px solid rgba(26, 24, 20, 0.1);
         }
         body {
@@ -28,7 +28,6 @@
             min-height: 100vh;
         }
 
-        /* BARRA DE NAVEGACIÓN SUPERIOR (EL PUENTE) */
         .top-bridge {
             padding: 1rem 5%;
             display: flex;
@@ -48,7 +47,6 @@
         }
         .back-link:hover { color: var(--clarity-blue); }
 
-        /* HEADER EDITORIAL */
         .header {
             padding: 3rem 5% 2rem 5%;
             display: flex;
@@ -56,7 +54,7 @@
             align-items: flex-end;
         }
         .header-left h1 {
-            font-family: 'Cormorant Gramond', serif;
+            font-family: 'Cormorant Garamond', serif;
             font-style: italic;
             font-size: 2.8rem;
             font-weight: 300;
@@ -78,7 +76,6 @@
 
         .main-content { display: flex; flex: 1; min-height: 70vh; border-top: var(--thin-line); border-bottom: var(--thin-line); }
 
-        /* SIDEBAR */
         .modules-panel { width: 25%; border-right: var(--thin-line); padding: 3rem 3%; }
         .section-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--sand); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 2rem; display: block; }
         .module-btn {
@@ -88,7 +85,6 @@
         .module-btn.active { background: white; border: var(--thin-line); border-left: 3px solid var(--clarity-blue); }
         .module-btn.active h4 { font-style: italic; color: var(--clarity-blue); }
 
-        /* WORKSPACE */
         .workspace { flex: 1; padding: 4rem 8%; display: flex; flex-direction: column; background: white; }
         .textarea-wrapper textarea {
             width: 100%; min-height: 250px; padding: 2rem; font-family: 'Instrument Sans', sans-serif;
@@ -97,7 +93,6 @@
         .btn-primary { background: var(--ink); color: var(--parchment); border: none; padding: 0.8rem 2.5rem; font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 1px; cursor: pointer; }
         .btn-primary:hover { background: var(--clarity-blue); }
 
-        /* FOOTER DE MARCA */
         .footer {
             padding: 4rem 5%;
             background: white;
@@ -140,15 +135,15 @@
     <div class="main-content">
         <aside class="modules-panel">
             <span class="section-label" id="label-modules">Módulos</span>
-            <button class="module-btn active" onclick="selectModule('clarity')">
+            <button class="module-btn active" onclick="selectModule('clarity', this)">
                 <h4 id="m1-title">01. Protocolo de Claridad</h4>
                 <p id="m1-desc">Analiza y refina tu pensamiento</p>
             </button>
-            <button class="module-btn" onclick="selectModule('field-note')">
+            <button class="module-btn" onclick="selectModule('field-note', this)">
                 <h4 id="m2-title">02. Nota de Campo</h4>
                 <p id="m2-desc">Ensayo premium sobre tema</p>
             </button>
-            <button class="module-btn" onclick="selectModule('hygiene')">
+            <button class="module-btn" onclick="selectModule('hygiene', this)">
                 <h4 id="m3-title">03. Higiene Decisional</h4>
                 <p id="m3-desc">Evalúa riesgos y sesgos</p>
             </button>
@@ -175,6 +170,9 @@
             <div id="output" style="margin-top: 3rem; font-family: 'Cormorant Garamond'; font-size: 1.3rem; border-top: var(--thin-line); padding-top: 2rem;">
                 ...
             </div>
+
+            <!-- 🔥 PANEL DE ERRORES ULTRA CLARO (solo tú lo ves) -->
+            <div id="error-debug" style="display: none; margin-top: 2rem; padding: 1.5rem; background: #fff0f0; border: 3px solid #c00; border-radius: 12px; font-family: 'DM Mono', monospace; font-size: 13px; line-height: 1.5; color: #300;"></div>
         </main>
     </div>
 
@@ -194,8 +192,6 @@
     </footer>
 
     <script>
-        // La lógica de traducción y selección de módulos se mantiene idéntica
-        // pero ahora incluye las actualizaciones de los nuevos elementos del footer y el bridge.
         let currentLanguage = 'es';
         let currentModule = 'clarity';
         let currentResponseMode = 'soft';
@@ -208,6 +204,9 @@
                 labelModules: "Módulos",
                 btnAnalyze: "ANALIZAR",
                 ready: "Listo para analizar.",
+                toneLabel: "TONO:",
+                modeSoft: "SUAVE",
+                modeBrutal: "BRUTAL",
                 modules: {
                     clarity: { title: "01. Protocolo de Claridad", desc: "Analiza y refina tu pensamiento", workTitle: "Protocolo de Claridad", placeholder: "Ej: Siento que mi ambición está dañando mi relación..." },
                     'field-note': { title: "02. Nota de Campo", desc: "Ensayo premium sobre tema", workTitle: "Nota de Campo", placeholder: "Ej: La fricción entre disciplina y salud mental..." },
@@ -221,6 +220,9 @@
                 labelModules: "Modules",
                 btnAnalyze: "ANALYZE",
                 ready: "Ready to analyze.",
+                toneLabel: "TONE:",
+                modeSoft: "SOFT",
+                modeBrutal: "BRUTAL",
                 modules: {
                     clarity: { title: "01. Clarity Protocol", desc: "Analyze and refine your thinking", workTitle: "Clarity Protocol", placeholder: "e.g., I feel my ambition is hurting my relationship..." },
                     'field-note': { title: "02. Field Note", desc: "Premium essay on topic", workTitle: "Field Note", placeholder: "e.g., Friction between discipline and mental health..." },
@@ -245,33 +247,86 @@
             document.getElementById('main-subtitle').textContent = ui.mainSubtitle;
             document.getElementById('label-modules').textContent = ui.labelModules;
             document.getElementById('btn-analyze').textContent = ui.btnAnalyze;
+            document.getElementById('label-tone').textContent = ui.toneLabel;
             
             document.getElementById('workspace-title').textContent = mod.workTitle;
             document.getElementById('user-input').placeholder = mod.placeholder;
             document.getElementById('output').textContent = ui.ready;
+
+            updateModeButton();
         }
 
-        function selectModule(module) {
+        function updateModeButton() {
+            const btn = document.getElementById('mode-toggle');
+            const ui = i18n[currentLanguage];
+            btn.textContent = currentResponseMode === 'soft' ? ui.modeSoft : ui.modeBrutal;
+        }
+
+        function selectModule(module, btnElement) {
             currentModule = module;
             updateUI();
             document.querySelectorAll('.module-btn').forEach(b => b.classList.remove('active'));
-            event.currentTarget.classList.add('active');
+            if (btnElement) btnElement.classList.add('active');
         }
 
         function toggleTone() {
             currentResponseMode = currentResponseMode === 'soft' ? 'brutal' : 'soft';
-            document.getElementById('mode-toggle').textContent = currentResponseMode.toUpperCase();
-            document.getElementById('mode-toggle').style.background = currentResponseMode === 'brutal' ? 'var(--ink)' : '#EEEBE6';
-            document.getElementById('mode-toggle').style.color = currentResponseMode === 'brutal' ? 'white' : 'var(--ink)';
+            updateModeButton();
+            
+            const btn = document.getElementById('mode-toggle');
+            btn.style.background = currentResponseMode === 'brutal' ? 'var(--ink)' : '#EEEBE6';
+            btn.style.color = currentResponseMode === 'brutal' ? 'white' : 'var(--ink)';
         }
 
         async function analyzeText() {
-            const text = document.getElementById('user-input').value;
-            if(!text) return;
-            document.getElementById('output').textContent = currentLanguage === 'es' ? "Procesando..." : "Processing...";
-            // Aquí sigue tu lógica de fetch original...
+            const text = document.getElementById('user-input').value.trim();
+            if (!text) return;
+
+            const output = document.getElementById('output');
+            const errorDiv = document.getElementById('error-debug');
+            errorDiv.style.display = 'none';
+            output.innerHTML = `<em>${currentLanguage === 'es' ? 'Procesando con IA...' : 'Processing with AI...'}</em>`;
+
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        text: text,
+                        language: currentLanguage,
+                        responseMode: currentResponseMode
+                    })
+                });
+
+                let data;
+                try {
+                    data = await response.json();
+                } catch (e) {
+                    throw new Error('El servidor no devolvió una respuesta válida');
+                }
+
+                if (!response.ok || !data.success) {
+                    throw new Error(data.error || `Error del servidor (${response.status})`);
+                }
+
+                output.innerHTML = `<p style="white-space: pre-wrap; line-height: 1.7;">${data.response}</p>`;
+
+            } catch (err) {
+                console.error(err);
+                
+                const ui = i18n[currentLanguage];
+                errorDiv.innerHTML = `
+                    <strong>🚨 ERROR DETECTADO EN EL LABORATORIO</strong><br><br>
+                    ${err.message}<br><br>
+                    <small>🔍 Copia este mensaje completo si me lo quieres mandar. Te dice exactamente qué falló (API key, conexión, rate limit, etc.)</small>
+                `;
+                errorDiv.style.display = 'block';
+                
+                output.innerHTML = `<span style="color:#c00;">${currentLanguage === 'es' ? '❌ Error al conectar con OpenAI' : '❌ OpenAI connection error'}</span>`;
+            }
         }
 
+        // Inicializar
         updateUI();
     </script>
 </body>
