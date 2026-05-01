@@ -27,7 +27,6 @@
             flex-direction: column;
             min-height: 100vh;
         }
-
         .top-bridge {
             padding: 1rem 5%;
             display: flex;
@@ -46,7 +45,6 @@
             transition: color 0.3s;
         }
         .back-link:hover { color: var(--clarity-blue); }
-
         .header {
             padding: 3rem 5% 2rem 5%;
             display: flex;
@@ -73,9 +71,7 @@
             font-size: 12px; color: var(--sand); cursor: pointer; padding: 0.5rem;
         }
         .lang-toggle button.active { color: var(--clarity-blue); font-weight: 600; border-bottom: 1px solid var(--clarity-blue); }
-
         .main-content { display: flex; flex: 1; min-height: 70vh; border-top: var(--thin-line); border-bottom: var(--thin-line); }
-
         .modules-panel { width: 25%; border-right: var(--thin-line); padding: 3rem 3%; }
         .section-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--sand); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 2rem; display: block; }
         .module-btn {
@@ -84,7 +80,6 @@
         }
         .module-btn.active { background: white; border: var(--thin-line); border-left: 3px solid var(--clarity-blue); }
         .module-btn.active h4 { font-style: italic; color: var(--clarity-blue); }
-
         .workspace { flex: 1; padding: 4rem 8%; display: flex; flex-direction: column; background: white; }
         .textarea-wrapper textarea {
             width: 100%; min-height: 250px; padding: 2rem; font-family: 'Instrument Sans', sans-serif;
@@ -92,7 +87,6 @@
         }
         .btn-primary { background: var(--ink); color: var(--parchment); border: none; padding: 0.8rem 2.5rem; font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 1px; cursor: pointer; }
         .btn-primary:hover { background: var(--clarity-blue); }
-
         .footer {
             padding: 4rem 5%;
             background: white;
@@ -108,20 +102,31 @@
         .footer-links { display: flex; gap: 2rem; }
         .footer-links a { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--ink); text-decoration: none; border-bottom: 1px solid transparent; transition: 0.3s; }
         .footer-links a:hover { border-bottom-color: var(--clarity-blue); color: var(--clarity-blue); }
-
         @media (max-width: 900px) {
             .main-content { flex-direction: column; }
             .modules-panel { width: 100%; border-right: none; }
         }
+        .spinner {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--clarity-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
     <nav class="top-bridge">
-        <a href="https://andresramirez.pro" class="back-link">← Volver a AndresRamirez.pro</a>
-        <div class="lang-toggle">
-            <button id="lang-es" class="active" onclick="setLanguage('es')">ES</button>
-            <button id="lang-en" onclick="setLanguage('en')">EN</button>
+        <a href="https://andresramirez.pro" class="back-link" aria-label="Volver a AndresRamirez.pro">← Volver a AndresRamirez.pro</a>
+        <div class="lang-toggle" role="tablist">
+            <button id="lang-es" class="active" onclick="setLanguage('es')" aria-label="Cambiar a español">ES</button>
+            <button id="lang-en" onclick="setLanguage('en')" aria-label="Change to English">EN</button>
         </div>
     </nav>
 
@@ -135,39 +140,41 @@
     <div class="main-content">
         <aside class="modules-panel">
             <span class="section-label" id="label-modules">Módulos</span>
-            <button class="module-btn active" onclick="selectModule('clarity', this)">
+            <button class="module-btn active" onclick="selectModule('clarity', this)" aria-label="Seleccionar Protocolo de Claridad">
                 <h4 id="m1-title">01. Clarity Protocol</h4>
                 <p id="m1-desc">Analyze and refine your thinking</p>
             </button>
-            <button class="module-btn" onclick="selectModule('hygiene', this)">
+            <button class="module-btn" onclick="selectModule('hygiene', this)" aria-label="Seleccionar Decision Hygiene">
                 <h4 id="m2-title">02. Decision Hygiene</h4>
                 <p id="m2-desc">Evaluate risks and biases</p>
             </button>
         </aside>
 
-        <main class="workspace">
+        <main class="workspace" role="main">
             <div class="workspace-header" style="margin-bottom: 2rem;">
                 <h2 id="workspace-title">Clarity Protocol</h2>
                 <p id="workspace-desc">Análisis estructurado de intención y debilidades lógicas.</p>
             </div>
 
             <div class="textarea-wrapper">
-                <textarea id="user-input" placeholder=""></textarea>
+                <textarea id="user-input" placeholder="" aria-label="Texto para analizar" rows="8"></textarea>
             </div>
 
             <div style="margin-top: 2rem; display: flex; justify-content: space-between; align-items: center;">
                 <div style="display: flex; align-items: center; gap: 1rem;">
                     <span style="font-size: 11px; color: var(--sand); font-family: 'DM Mono';" id="label-tone">TONO:</span>
-                    <button class="btn-primary" style="padding: 0.5rem 1.5rem; background: #EEEBE6; color: var(--ink);" id="mode-toggle" onclick="toggleTone()">SUAVE</button>
+                    <button class="btn-primary" style="padding: 0.5rem 1.5rem; background: #EEEBE6; color: var(--ink);" 
+                            id="mode-toggle" onclick="toggleTone()" aria-label="Cambiar entre modo suave y brutal">SUAVE</button>
                 </div>
-                <button class="btn-primary" onclick="analyzeText()" id="btn-analyze">ANALIZAR</button>
+                <button class="btn-primary" onclick="analyzeText()" id="btn-analyze" 
+                        aria-label="Analizar texto con IA">ANALIZAR</button>
             </div>
 
-            <div id="output" style="margin-top: 3rem; font-family: 'Cormorant Garamond'; font-size: 1.3rem; border-top: var(--thin-line); padding-top: 2rem;">
+            <div id="output" style="margin-top: 3rem; font-family: 'Cormorant Garamond'; font-size: 1.3rem; border-top: var(--thin-line); padding-top: 2rem;" 
+                 aria-live="polite">
                 ...
             </div>
 
-            <!-- 🔥 PANEL DE ERRORES ULTRA CLARO -->
             <div id="error-debug" style="display: none; margin-top: 2rem; padding: 1.5rem; background: #fff0f0; border: 3px solid #c00; border-radius: 12px; font-family: 'DM Mono', monospace; font-size: 13px; line-height: 1.5; color: #300;"></div>
         </main>
     </div>
@@ -204,8 +211,8 @@
                 modeSoft: "SUAVE",
                 modeBrutal: "BRUTAL",
                 modules: {
-                    clarity: { title: "01. Protocolo de Claridad", desc: "Analiza y refina tu pensamiento", workTitle: "Protocolo de Claridad", workDesc: "Análisis estructurado de intención y debilidades lógicas." },
-                    hygiene: { title: "02. Higiene Decisional", desc: "Evalúa riesgos y sesgos", workTitle: "Higiene Decisional", workDesc: "Evaluación de riesgos, sesgos y umbrales decisionales." }
+                    clarity: { title: "01. Clarity Protocol", desc: "Analyze and refine your thinking", workTitle: "Protocolo de Claridad", workDesc: "Análisis estructurado de intención y debilidades lógicas." },
+                    hygiene: { title: "02. Decision Hygiene", desc: "Evaluate risks and biases", workTitle: "Higiene Decisional", workDesc: "Evaluación de riesgos, sesgos y umbrales decisionales." }
                 }
             },
             en: {
@@ -246,7 +253,6 @@
             document.getElementById('workspace-title').textContent = mod.workTitle;
             document.getElementById('workspace-desc').textContent = mod.workDesc;
 
-            // Actualiza los botones del sidebar
             document.getElementById('m1-title').textContent = ui.modules.clarity.title;
             document.getElementById('m1-desc').textContent = ui.modules.clarity.desc;
             document.getElementById('m2-title').textContent = ui.modules.hygiene.title;
@@ -278,12 +284,23 @@
 
         async function analyzeText() {
             const text = document.getElementById('user-input').value.trim();
-            if (!text) return;
-
+            const btn = document.getElementById('btn-analyze');
             const output = document.getElementById('output');
             const errorDiv = document.getElementById('error-debug');
+
+            if (!text) {
+                output.innerHTML = `<span style="color:#c00;">Por favor escribe algo para analizar.</span>`;
+                return;
+            }
+            if (text.length > 8000) {
+                output.innerHTML = `<span style="color:#c00;">El texto es demasiado largo (máximo 8000 caracteres).</span>`;
+                return;
+            }
+
             errorDiv.style.display = 'none';
-            output.innerHTML = `<em>${currentLanguage === 'es' ? 'Procesando data...' : 'Processing data...'}</em>`;
+            btn.disabled = true;
+            btn.innerHTML = `<span class="spinner"></span> ANALIZANDO...`;
+            output.innerHTML = `<em>${currentLanguage === 'es' ? 'Procesando con IA...' : 'Processing with AI...'}</em>`;
 
             try {
                 const response = await fetch('/api/chat', {
@@ -293,7 +310,7 @@
                         text: text,
                         language: currentLanguage,
                         responseMode: currentResponseMode,
-                        module: currentModule   // ← NUEVO: ahora envía el módulo
+                        module: currentModule
                     })
                 });
 
@@ -308,7 +325,6 @@
 
             } catch (err) {
                 console.error(err);
-                const ui = i18n[currentLanguage];
                 errorDiv.innerHTML = `
                     <strong>🚨 ERROR DETECTADO EN EL LABORATORIO</strong><br><br>
                     ${err.message}<br><br>
@@ -316,10 +332,12 @@
                 `;
                 errorDiv.style.display = 'block';
                 output.innerHTML = `<span style="color:#c00;">${currentLanguage === 'es' ? '❌ Error al conectar con OpenAI' : '❌ OpenAI connection error'}</span>`;
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = currentLanguage === 'es' ? 'ANALIZAR' : 'ANALYZE';
             }
         }
 
-        // Inicializar
         updateUI();
     </script>
 </body>
