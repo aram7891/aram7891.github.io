@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -14,644 +15,514 @@
             --ink: #1A1814;
             --amber: #8B6F4E;
             --sand: #C4A882;
-            --clarity-blue: #0047AB;
-            --thin-line: 1px solid rgba(26, 24, 20, 0.1);
-        }
-        body {
-            background-color: var(--parchment);
-            color: var(--ink);
-            font-family: 'Instrument Sans', sans-serif;
-            font-size: 15px;
-            line-height: 1.6;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            --blue: #0047AB;
+            --line: 1px solid rgba(26,24,20,0.1);
         }
 
-        /* ── NAV ── */
-        .top-bridge {
-            padding: 1rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: var(--thin-line);
-            background: white;
-        }
-        .back-link {
-            font-family: 'DM Mono', monospace;
-            font-size: 11px;
-            color: var(--sand);
-            text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: color 0.3s;
-        }
-        .back-link:hover { color: var(--clarity-blue); }
+```
+    html, body { height: 100%; }
 
-        /* ── HEADER ── */
-        .header {
-            padding: 3rem 5% 2rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-        }
-        .header-left h1 {
-            font-family: 'Cormorant Garamond', serif;
-            font-style: italic;
-            font-size: 2.8rem;
-            font-weight: 300;
-            line-height: 1;
-            margin-bottom: 0.5rem;
-        }
-        .header-left p {
-            font-size: 12px;
-            color: var(--amber);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-weight: 500;
-        }
-        .lang-toggle button {
-            background: none; border: none; font-family: 'DM Mono', monospace;
-            font-size: 12px; color: var(--sand); cursor: pointer; padding: 0.5rem;
-            transition: color 0.2s;
-        }
-        .lang-toggle button.active { color: var(--clarity-blue); font-weight: 600; border-bottom: 1px solid var(--clarity-blue); }
+    body {
+        background: var(--parchment);
+        color: var(--ink);
+        font-family: 'Instrument Sans', sans-serif;
+        font-size: 14px;
+        line-height: 1.6;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        overflow: hidden;
+    }
 
-        /* ── LAYOUT ── */
-        .main-content { display: flex; flex: 1; min-height: 70vh; border-top: var(--thin-line); border-bottom: var(--thin-line); }
-        .modules-panel { width: 25%; border-right: var(--thin-line); padding: 3rem 3%; }
-        .section-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--sand); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 2rem; display: block; }
+    /* ── TOP BAR ── */
+    .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.65rem 4%;
+        background: white;
+        border-bottom: var(--line);
+        flex-shrink: 0;
+    }
+    .topbar-left { display: flex; align-items: center; gap: 2rem; }
+    .back-link {
+        font-family: 'DM Mono', monospace; font-size: 10px;
+        color: var(--sand); text-decoration: none;
+        text-transform: uppercase; letter-spacing: 1px; transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--blue); }
+    .brand-title {
+        font-family: 'Cormorant Garamond', serif;
+        font-style: italic; font-size: 1.25rem; font-weight: 300;
+    }
+    .brand-sub {
+        font-family: 'DM Mono', monospace; font-size: 9px;
+        color: var(--amber); text-transform: uppercase; letter-spacing: 1.5px;
+    }
+    .lang-toggle button {
+        background: none; border: none; font-family: 'DM Mono', monospace;
+        font-size: 11px; color: var(--sand); cursor: pointer; padding: 0.3rem 0.5rem;
+    }
+    .lang-toggle button.active { color: var(--blue); font-weight: 600; border-bottom: 1px solid var(--blue); }
 
-        /* ── MODULE BUTTONS ── */
-        .module-btn {
-            display: block; width: 100%; padding: 1.5rem; margin-bottom: 1rem;
-            background: transparent; border: 1px solid transparent; cursor: pointer;
-            text-align: left; transition: all 0.35s;
-        }
-        .module-btn h4 {
-            font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500;
-            letter-spacing: 0.5px; margin-bottom: 0.4rem; transition: color 0.3s;
-        }
-        .module-btn p { font-size: 12px; color: var(--sand); line-height: 1.4; }
-        .module-btn.active {
-            background: white; border: var(--thin-line);
-            border-left: 3px solid var(--clarity-blue);
-        }
-        .module-btn.active h4 { font-style: italic; color: var(--clarity-blue); }
+    /* ── MODULE TABS ── */
+    .module-tabs {
+        display: flex;
+        border-bottom: var(--line);
+        background: var(--parchment);
+        flex-shrink: 0;
+    }
+    .tab-btn {
+        padding: 0.75rem 2.5rem;
+        background: none; border: none;
+        border-bottom: 2px solid transparent;
+        cursor: pointer;
+        text-align: left;
+        transition: all 0.22s;
+    }
+    .tab-btn .t-num {
+        font-family: 'DM Mono', monospace; font-size: 9px;
+        color: var(--sand); letter-spacing: 2px; display: block; margin-bottom: 0.1rem;
+    }
+    .tab-btn .t-name {
+        font-family: 'DM Mono', monospace; font-size: 11px;
+        color: var(--sand); letter-spacing: 0.5px; display: block;
+    }
+    .tab-btn .t-desc {
+        font-family: 'Instrument Sans', sans-serif; font-size: 10px;
+        color: var(--sand); display: block; margin-top: 0.15rem;
+    }
+    .tab-btn.active { background: white; border-bottom: 2px solid var(--blue); }
+    .tab-btn.active .t-num,
+    .tab-btn.active .t-name { color: var(--blue); }
+    .tab-btn.active .t-desc { color: var(--amber); }
+    .tab-btn:hover:not(.active) { background: rgba(255,255,255,0.5); }
 
-        /* module hint — shown below buttons */
-        .module-hint {
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: var(--thin-line);
-        }
-        .module-hint .hint-label {
-            font-family: 'DM Mono', monospace;
-            font-size: 9px;
-            color: var(--sand);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 0.8rem;
-            display: block;
-        }
-        .module-hint p {
-            font-family: 'Cormorant Garamond', serif;
-            font-style: italic;
-            font-size: 1rem;
-            color: var(--amber);
-            line-height: 1.5;
-        }
+    /* ── WORKSPACE ── */
+    .workspace {
+        display: flex;
+        flex: 1;
+        overflow: hidden;
+    }
 
-        /* ── WORKSPACE ── */
-        .workspace { flex: 1; padding: 4rem 8%; display: flex; flex-direction: column; background: white; }
-        .workspace-header { margin-bottom: 2rem; }
-        .workspace-header h2 {
-            font-family: 'Cormorant Garamond', serif;
-            font-style: italic;
-            font-size: 1.8rem;
-            font-weight: 300;
-            margin-bottom: 0.3rem;
-        }
-        .workspace-header p { font-size: 12px; color: var(--amber); text-transform: uppercase; letter-spacing: 1px; }
+    /* ── LEFT PANEL ── */
+    .input-panel {
+        width: 46%;
+        display: flex;
+        flex-direction: column;
+        padding: 1.8rem 3% 1.4rem 4%;
+        border-right: var(--line);
+        background: white;
+    }
+    .panel-label {
+        font-family: 'DM Mono', monospace; font-size: 9px;
+        color: var(--sand); text-transform: uppercase; letter-spacing: 2px;
+        margin-bottom: 0.8rem;
+        display: flex; justify-content: space-between;
+    }
+    .char-count {
+        font-family: 'DM Mono', monospace; font-size: 9px; color: var(--sand);
+    }
+    .char-count.warn { color: var(--amber); }
+    .char-count.danger { color: #c00; }
 
-        /* ── TEXTAREA ── */
-        .textarea-wrapper { position: relative; }
-        .textarea-wrapper textarea {
-            width: 100%; min-height: 250px; padding: 2rem;
-            font-family: 'Instrument Sans', sans-serif;
-            background: var(--parchment); border: var(--thin-line);
-            resize: none; font-size: 15px; outline: none;
-            color: var(--ink); line-height: 1.7;
-            transition: border-color 0.3s;
-        }
-        .textarea-wrapper textarea::placeholder {
-            color: var(--sand);
-            font-style: italic;
-            font-size: 14px;
-            line-height: 1.7;
-        }
-        .textarea-wrapper textarea:focus { border-color: rgba(0,71,171,0.25); }
+    textarea {
+        flex: 1; width: 100%;
+        padding: 1.2rem;
+        font-family: 'Instrument Sans', sans-serif;
+        font-size: 14px; line-height: 1.75;
+        background: var(--parchment); border: var(--line);
+        resize: none; outline: none; color: var(--ink);
+        transition: border-color 0.3s;
+    }
+    textarea::placeholder {
+        color: var(--sand); font-style: italic; font-size: 13px; line-height: 1.7;
+    }
+    textarea:focus { border-color: rgba(0,71,171,0.2); }
 
-        /* char counter */
-        .char-counter {
-            font-family: 'DM Mono', monospace;
-            font-size: 10px;
-            color: var(--sand);
-            text-align: right;
-            margin-top: 0.5rem;
-            letter-spacing: 0.5px;
-            transition: color 0.3s;
-        }
-        .char-counter.warn { color: var(--amber); }
-        .char-counter.danger { color: #c00; }
+    .input-controls {
+        display: flex; justify-content: space-between;
+        align-items: center; margin-top: 0.9rem; gap: 1rem;
+    }
+    .tone-wrap { display: flex; flex-direction: column; gap: 0.3rem; }
+    .tone-row { display: flex; align-items: center; gap: 0.8rem; }
+    .tone-lbl {
+        font-family: 'DM Mono', monospace; font-size: 10px;
+        color: var(--sand); letter-spacing: 1px;
+    }
+    .tone-desc {
+        font-family: 'DM Mono', monospace; font-size: 9px; color: var(--sand);
+    }
+    .btn-tone {
+        font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1px;
+        padding: 0.3rem 1rem; background: #EEEBE6; color: var(--ink);
+        border: none; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-tone.brutal { background: var(--ink); color: white; }
 
-        /* shortcut hint */
-        .shortcut-hint {
-            font-family: 'DM Mono', monospace;
-            font-size: 10px;
-            color: var(--sand);
-            opacity: 0.7;
-            letter-spacing: 0.5px;
-        }
+    .analyze-wrap { display: flex; flex-direction: column; align-items: flex-end; gap: 0.2rem; }
+    .btn-analyze {
+        font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 1.5px;
+        padding: 0.65rem 1.8rem; background: var(--ink); color: var(--parchment);
+        border: none; cursor: pointer; transition: background 0.22s; white-space: nowrap;
+    }
+    .btn-analyze:hover { background: var(--blue); }
+    .btn-analyze:disabled { opacity: 0.4; cursor: not-allowed; }
+    .shortcut-hint {
+        font-family: 'DM Mono', monospace; font-size: 9px; color: var(--sand);
+    }
 
-        /* ── CONTROLS ── */
-        .controls-row {
-            margin-top: 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 1rem;
-        }
-        .tone-block { display: flex; flex-direction: column; gap: 0.5rem; }
-        .tone-top { display: flex; align-items: center; gap: 1rem; }
-        .tone-desc {
-            font-family: 'DM Mono', monospace;
-            font-size: 10px;
-            color: var(--sand);
-            letter-spacing: 0.5px;
-            max-width: 220px;
-            line-height: 1.4;
-        }
+    /* ── RIGHT PANEL ── */
+    .output-panel {
+        flex: 1; display: flex; flex-direction: column;
+        padding: 1.8rem 4% 1.4rem 3%;
+        background: var(--parchment);
+        overflow-y: auto;
+    }
+    .output-lbl {
+        font-family: 'DM Mono', monospace; font-size: 9px;
+        color: var(--sand); text-transform: uppercase; letter-spacing: 2px;
+        margin-bottom: 1.2rem; flex-shrink: 0;
+    }
+    #output { flex: 1; }
 
-        .btn-primary {
-            background: var(--ink); color: var(--parchment); border: none;
-            padding: 0.8rem 2.5rem; font-family: 'DM Mono', monospace;
-            font-size: 12px; letter-spacing: 1px; cursor: pointer;
-            transition: background 0.3s;
-        }
-        .btn-primary:hover { background: var(--clarity-blue); }
-        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+    /* empty */
+    .out-empty {
+        height: 100%; display: flex; flex-direction: column;
+        justify-content: center; gap: 1rem;
+    }
+    .out-empty .dots { display: flex; gap: 6px; }
+    .out-empty .dot {
+        width: 5px; height: 5px; border-radius: 50%;
+        background: var(--sand); opacity: 0.25;
+    }
+    .out-empty p {
+        font-family: 'Cormorant Garamond', serif; font-style: italic;
+        font-size: 1.1rem; color: rgba(26,24,20,0.27);
+        line-height: 1.65; max-width: 340px;
+    }
 
-        .btn-tone {
-            padding: 0.5rem 1.5rem;
-            background: #EEEBE6;
-            color: var(--ink);
-            font-size: 11px;
-        }
-        .btn-tone.brutal {
-            background: var(--ink);
-            color: white;
-        }
+    /* processing */
+    .out-processing {
+        display: flex; align-items: center; gap: 0.8rem;
+        font-family: 'Cormorant Garamond', serif; font-style: italic;
+        font-size: 1rem; color: var(--sand); padding: 2rem 0;
+    }
+    .spinner {
+        width: 13px; height: 13px; flex-shrink: 0;
+        border: 2px solid rgba(196,168,130,0.3);
+        border-top: 2px solid var(--sand);
+        border-radius: 50%;
+        animation: spin 0.85s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-        .controls-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem; }
+    /* result */
+    .out-result { animation: fadeUp 0.35s ease; }
+    @keyframes fadeUp {
+        from { opacity:0; transform:translateY(6px); }
+        to   { opacity:1; transform:translateY(0); }
+    }
+    .result-meta {
+        font-family: 'DM Mono', monospace; font-size: 9px;
+        color: var(--sand); letter-spacing: 1.5px; text-transform: uppercase;
+        padding-bottom: 0.8rem; border-bottom: var(--line); margin-bottom: 1.2rem;
+    }
+    .result-body {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.2rem; line-height: 1.85; color: var(--ink);
+        white-space: pre-wrap;
+    }
 
-        /* ── OUTPUT ── */
-        #output {
-            margin-top: 3rem;
-            border-top: var(--thin-line);
-            padding-top: 2rem;
-            min-height: 60px;
-            animation: fadeIn 0.4s ease;
-        }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    /* error */
+    .out-error {
+        font-family: 'DM Mono', monospace; font-size: 11px; color: #c00;
+        padding: 1rem; background: #fff0f0; border-left: 3px solid #c00;
+    }
 
-        .output-empty {
-            display: flex;
-            flex-direction: column;
-            gap: 0.6rem;
-        }
-        .output-empty .empty-label {
-            font-family: 'DM Mono', monospace;
-            font-size: 10px;
-            color: var(--sand);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        .output-empty p {
-            font-family: 'Cormorant Garamond', serif;
-            font-style: italic;
-            font-size: 1.2rem;
-            color: rgba(26,24,20,0.3);
-            line-height: 1.6;
-            max-width: 480px;
-        }
+    /* ── FOOTER ── */
+    .footer {
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 0.65rem 4%; background: white; border-top: var(--line); flex-shrink: 0;
+    }
+    .footer-brand { display: flex; align-items: center; gap: 1rem; }
+    .footer-brand img { width: 26px; height: 26px; border-radius: 50%; object-fit: cover; filter: grayscale(100%); }
+    .f-name { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.95rem; }
+    .f-role { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--sand); text-transform: uppercase; letter-spacing: 1px; }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--ink); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--blue); }
 
-        .output-result {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.25rem;
-            line-height: 1.8;
-            white-space: pre-wrap;
-        }
-        .output-result .result-label {
-            font-family: 'DM Mono', monospace;
-            font-size: 9px;
-            color: var(--sand);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 1.2rem;
-            display: block;
-        }
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+        body { overflow: auto; height: auto; }
+        .workspace { flex-direction: column; overflow: visible; }
+        .input-panel { width: 100%; border-right: none; border-bottom: var(--line); min-height: 60vh; }
+        .output-panel { min-height: 50vh; }
+        .tab-btn { padding: 0.6rem 1.2rem; }
+        .tab-btn .t-desc { display: none; }
+    }
+</style>
+```
 
-        /* ── ERROR ── */
-        #error-debug {
-            display: none; margin-top: 2rem; padding: 1.5rem;
-            background: #fff0f0; border: 2px solid #c00;
-            font-family: 'DM Mono', monospace; font-size: 12px;
-            line-height: 1.5; color: #300;
-        }
-
-        /* ── FOOTER ── */
-        .footer {
-            padding: 4rem 5%;
-            background: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: var(--thin-line);
-        }
-        .footer-brand { display: flex; align-items: center; gap: 1.5rem; }
-        .footer-brand img { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; filter: grayscale(100%); }
-        .footer-info h5 { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.2rem; font-weight: 400; }
-        .footer-info p { font-size: 11px; color: var(--sand); text-transform: uppercase; letter-spacing: 1px; }
-        .footer-links { display: flex; gap: 2rem; }
-        .footer-links a { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--ink); text-decoration: none; border-bottom: 1px solid transparent; transition: 0.3s; }
-        .footer-links a:hover { border-bottom-color: var(--clarity-blue); color: var(--clarity-blue); }
-
-        /* ── SPINNER ── */
-        .spinner {
-            display: inline-block; width: 14px; height: 14px;
-            border: 2px solid rgba(247,244,239,0.4);
-            border-top: 2px solid white;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            vertical-align: middle; margin-right: 8px;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* ── RESPONSIVE ── */
-        @media (max-width: 900px) {
-            .main-content { flex-direction: column; }
-            .modules-panel { width: 100%; border-right: none; border-bottom: var(--thin-line); padding: 2rem 5%; }
-            .module-hint { display: none; }
-            .workspace { padding: 2.5rem 5%; }
-            .controls-row { flex-direction: column; }
-            .controls-right { align-items: flex-start; }
-        }
-    </style>
 </head>
 <body>
 
-    <nav class="top-bridge">
-        <a href="https://andresramirez.pro" class="back-link" id="back-link">← Volver a AndresRamirez.pro</a>
-        <div class="lang-toggle" role="tablist">
-            <button id="lang-es" class="active" onclick="setLanguage('es')">ES</button>
-            <button id="lang-en" onclick="setLanguage('en')">EN</button>
+```
+<!-- NAV -->
+<nav class="topbar">
+    <div class="topbar-left">
+        <a href="https://andresramirez.pro" class="back-link" id="back-link">← Volver</a>
+        <div>
+            <div class="brand-title" id="main-title">Laboratorio de Claridad</div>
+            <div class="brand-sub" id="main-subtitle">Arquitectura mental para decisiones complejas</div>
         </div>
-    </nav>
+    </div>
+    <div class="lang-toggle">
+        <button id="lang-es" class="active" onclick="setLanguage('es')">ES</button>
+        <button id="lang-en" onclick="setLanguage('en')">EN</button>
+    </div>
+</nav>
 
-    <header class="header">
-        <div class="header-left">
-            <h1 id="main-title">Laboratorio de Claridad</h1>
-            <p id="main-subtitle">Arquitectura mental para decisiones complejas</p>
+<!-- MODULE TABS -->
+<div class="module-tabs">
+    <button class="tab-btn active" onclick="selectModule('clarity', this)">
+        <span class="t-num">01</span>
+        <span class="t-name" id="tab-clarity-name">Clarity Protocol</span>
+        <span class="t-desc" id="tab-clarity-desc">Analiza y refina tu pensamiento</span>
+    </button>
+    <button class="tab-btn" onclick="selectModule('hygiene', this)">
+        <span class="t-num">02</span>
+        <span class="t-name" id="tab-hygiene-name">Decision Hygiene</span>
+        <span class="t-desc" id="tab-hygiene-desc">Evalúa riesgos y sesgos</span>
+    </button>
+</div>
+
+<!-- WORKSPACE -->
+<div class="workspace">
+
+    <!-- INPUT -->
+    <div class="input-panel">
+        <div class="panel-label">
+            <span id="label-input">Situación a analizar</span>
+            <span class="char-count" id="char-count">0 / 8000</span>
         </div>
-    </header>
 
-    <div class="main-content">
-        <aside class="modules-panel">
-            <span class="section-label" id="label-modules">Módulos</span>
-            <button class="module-btn active" onclick="selectModule('clarity', this)">
-                <h4 id="m1-title">01. Clarity Protocol</h4>
-                <p id="m1-desc">Analiza y refina tu pensamiento</p>
-            </button>
-            <button class="module-btn" onclick="selectModule('hygiene', this)">
-                <h4 id="m2-title">02. Decision Hygiene</h4>
-                <p id="m2-desc">Evalúa riesgos y sesgos</p>
-            </button>
+        <textarea
+            id="user-input"
+            oninput="updateCount()"
+            onkeydown="handleKey(event)"
+        ></textarea>
 
-            <div class="module-hint">
-                <span class="hint-label" id="hint-label">Protocolo activo</span>
-                <p id="hint-text">Para cuando tienes la decisión en la cabeza pero no puedes verla con claridad.</p>
-            </div>
-        </aside>
-
-        <main class="workspace" role="main">
-            <div class="workspace-header">
-                <h2 id="workspace-title">Clarity Protocol</h2>
-                <p id="workspace-desc">Análisis estructurado de intención y debilidades lógicas</p>
-            </div>
-
-            <div class="textarea-wrapper">
-                <textarea
-                    id="user-input"
-                    rows="10"
-                    aria-label="Texto para analizar"
-                    oninput="updateCharCounter()"
-                    onkeydown="handleKeydown(event)"
-                ></textarea>
-            </div>
-
-            <div class="char-counter" id="char-counter">0 / 8000</div>
-
-            <div class="controls-row">
-                <div class="tone-block">
-                    <div class="tone-top">
-                        <span style="font-size: 11px; color: var(--sand); font-family: 'DM Mono';" id="label-tone">TONO:</span>
-                        <button class="btn-primary btn-tone" id="mode-toggle" onclick="toggleTone()">SUAVE</button>
-                    </div>
-                    <span class="tone-desc" id="tone-desc">Exploración empática — observa patrones sin juzgar.</span>
+        <div class="input-controls">
+            <div class="tone-wrap">
+                <div class="tone-row">
+                    <span class="tone-lbl" id="label-tone">TONO:</span>
+                    <button class="btn-tone" id="btn-tone" onclick="toggleTone()">SUAVE</button>
                 </div>
-
-                <div class="controls-right">
-                    <button class="btn-primary" onclick="analyzeText()" id="btn-analyze">ANALIZAR</button>
-                    <span class="shortcut-hint" id="shortcut-hint">⌘ + Enter</span>
-                </div>
+                <span class="tone-desc" id="tone-desc">Exploración empática, sin juicios.</span>
             </div>
-
-            <div id="output">
-                <div class="output-empty">
-                    <span class="empty-label" id="output-label">Salida del protocolo</span>
-                    <p id="output-placeholder-text">El análisis aparecerá aquí. Describe tu situación con el mayor detalle posible — la calidad del input determina la calidad del protocolo.</p>
-                </div>
+            <div class="analyze-wrap">
+                <button class="btn-analyze" id="btn-analyze" onclick="analyzeText()">ANALIZAR</button>
+                <span class="shortcut-hint" id="shortcut">⌘ + Enter</span>
             </div>
-
-            <div id="error-debug"></div>
-        </main>
+        </div>
     </div>
 
-    <footer class="footer">
-        <div class="footer-brand">
-            <img src="/assets/images/andres-ramirez-portrait.jpg" alt="Andrés Ramírez">
-            <div class="footer-info">
-                <h5>Andrés Ramírez</h5>
-                <p>Clarity Strategist</p>
+    <!-- OUTPUT -->
+    <div class="output-panel">
+        <div class="output-lbl" id="label-output">Respuesta del protocolo</div>
+        <div id="output">
+            <div class="out-empty">
+                <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+                <p id="empty-text">El análisis aparecerá aquí. Describe tu situación con detalle — la calidad del input determina la calidad del protocolo.</p>
             </div>
         </div>
-        <div class="footer-links">
-            <a href="https://threads.net/@aram7891" target="_blank">THREADS</a>
-            <a href="https://instagram.com/selfloveclubusa" target="_blank">INSTAGRAM</a>
-            <a href="https://andresramirez.pro">PORTAFOLIO</a>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-brand">
+        <img src="/assets/images/andres-ramirez-portrait.jpg" alt="Andrés Ramírez">
+        <div>
+            <div class="f-name">Andrés Ramírez</div>
+            <div class="f-role">Clarity Strategist</div>
         </div>
-    </footer>
+    </div>
+    <div class="footer-links">
+        <a href="https://threads.net/@aram7891" target="_blank">THREADS</a>
+        <a href="https://instagram.com/selfloveclubusa" target="_blank">INSTAGRAM</a>
+        <a href="https://andresramirez.pro">PORTAFOLIO</a>
+    </div>
+</footer>
 
-    <script>
-        let currentLanguage = 'es';
-        let currentModule = 'clarity';
-        let currentResponseMode = 'soft';
+<script>
+    let lang = 'es', module = 'clarity', tone = 'soft';
 
-        const i18n = {
-            es: {
-                back: "← Volver a AndresRamirez.pro",
-                mainTitle: "Laboratorio de Claridad",
-                mainSubtitle: "Arquitectura mental para decisiones complejas",
-                labelModules: "Módulos",
-                btnAnalyze: "ANALIZAR",
-                btnAnalyzing: "ANALIZANDO...",
-                toneLabel: "TONO:",
-                modeSoft: "SUAVE",
-                modeBrutal: "BRUTAL",
-                toneDescSoft: "Exploración empática — observa patrones sin juzgar.",
-                toneDescBrutal: "Diagnóstico directo — sin rodeos, sin filtros.",
-                hintLabel: "Protocolo activo",
-                shortcut: "⌘ + Enter",
-                outputLabel: "Salida del protocolo",
-                outputEmpty: "El análisis aparecerá aquí. Describe tu situación con el mayor detalle posible — la calidad del input determina la calidad del protocolo.",
-                outputProcessing: "Procesando con IA...",
-                errEmpty: "Escribe algo para que el protocolo pueda analizar.",
-                errLong: "Texto demasiado largo. Máximo 8,000 caracteres.",
-                errConnect: "❌ Error al conectar. Intenta de nuevo.",
-                modules: {
-                    clarity: {
-                        title: "01. Clarity Protocol",
-                        desc: "Analiza y refina tu pensamiento",
-                        workTitle: "Clarity Protocol",
-                        workDesc: "Análisis estructurado de intención y debilidades lógicas",
-                        hint: "Para cuando tienes la decisión en la cabeza pero no puedes verla con claridad.",
-                        placeholder: "Quiero dejar mi trabajo estable para lanzar mi negocio, pero tengo deudas y una familia que depende de mí. He estado posponiendo esta decisión por dos años. No sé si estoy siendo responsable o si simplemente tengo miedo de fallar. El salario actual me alcanza, pero siento que el tiempo que le doy a ese trabajo es tiempo que le robo a algo que sí me importa..."
-                    },
-                    hygiene: {
-                        title: "02. Decision Hygiene",
-                        desc: "Evalúa riesgos y sesgos",
-                        workTitle: "Decision Hygiene",
-                        workDesc: "Evaluación de riesgos, sesgos y umbrales decisionales",
-                        hint: "Para cuando la lógica suena bien pero algo no cuadra.",
-                        placeholder: "Estoy considerando invertir mis ahorros de emergencia en cripto porque todos en mi círculo lo están haciendo y los retornos del último trimestre parecen seguros. Mi socio dice que si no entramos ahora perdemos el momento. Siento urgencia pero también incomodidad que no sé nombrar. Los números convencen, pero algo no se siente bien..."
-                    }
-                }
-            },
-            en: {
-                back: "← BACK TO ANDRESRAMIREZ.PRO",
-                mainTitle: "Clarity Lab",
-                mainSubtitle: "Mental architecture for complex decisions",
-                labelModules: "MODULES",
-                btnAnalyze: "ANALYZE",
-                btnAnalyzing: "ANALYZING...",
-                toneLabel: "TONE:",
-                modeSoft: "SOFT",
-                modeBrutal: "BRUTAL",
-                toneDescSoft: "Empathic exploration — observes patterns without judgment.",
-                toneDescBrutal: "Direct diagnosis — no filters, no padding.",
-                hintLabel: "Active protocol",
-                shortcut: "⌘ + Enter",
-                outputLabel: "Protocol output",
-                outputEmpty: "Analysis will appear here. Describe your situation in as much detail as possible — the quality of the input determines the quality of the protocol.",
-                outputProcessing: "Processing with AI...",
-                errEmpty: "Write something for the protocol to analyze.",
-                errLong: "Text too long. Maximum 8,000 characters.",
-                errConnect: "❌ Connection error. Please try again.",
-                modules: {
-                    clarity: {
-                        title: "01. Clarity Protocol",
-                        desc: "Analyze and refine your thinking",
-                        workTitle: "Clarity Protocol",
-                        workDesc: "Structured analysis of intention and logical weaknesses",
-                        hint: "For when the decision is in your head but you can't see it clearly.",
-                        placeholder: "I want to leave my stable job to launch my business, but I have debt and a family depending on me. I've been postponing this decision for two years. I don't know if I'm being responsible or if I'm simply afraid to fail. My current salary covers expenses, but the time I give that job feels like time stolen from something that actually matters..."
-                    },
-                    hygiene: {
-                        title: "02. Decision Hygiene",
-                        desc: "Evaluate risks and biases",
-                        workTitle: "Decision Hygiene",
-                        workDesc: "Risk, bias and decision threshold evaluation",
-                        hint: "For when the logic sounds right but something doesn't add up.",
-                        placeholder: "I'm considering investing my emergency savings in crypto because everyone in my circle is doing it and last quarter's returns seem reliable. My partner says if we don't enter now we'll miss the window. I feel urgency but also discomfort I can't name. The numbers convince me, but something doesn't feel right..."
-                    }
+    const T = {
+        es: {
+            back:"← Volver", title:"Laboratorio de Claridad",
+            subtitle:"Arquitectura mental para decisiones complejas",
+            labelInput:"Situación a analizar", labelOutput:"Respuesta del protocolo",
+            labelTone:"TONO:", soft:"SUAVE", brutal:"BRUTAL",
+            softDesc:"Exploración empática, sin juicios.",
+            brutalDesc:"Diagnóstico directo, sin filtros.",
+            analyze:"ANALIZAR", analyzing:"ANALIZANDO...",
+            shortcut:"⌘ + Enter", processing:"Procesando con IA...",
+            empty:"El análisis aparecerá aquí. Describe tu situación con detalle — la calidad del input determina la calidad del protocolo.",
+            errEmpty:"Escribe algo para analizar.",
+            errLong:"Máximo 8,000 caracteres.",
+            errConn:"Error de conexión. Intenta de nuevo.",
+            modules:{
+                clarity:{
+                    name:"Clarity Protocol", desc:"Analiza y refina tu pensamiento",
+                    ph:"Quiero dejar mi trabajo estable para lanzar mi negocio, pero tengo deudas y una familia que depende de mí. He estado posponiendo esta decisión por dos años. No sé si estoy siendo responsable o si simplemente tengo miedo de fallar. El salario actual me alcanza, pero siento que el tiempo que le doy a ese trabajo es tiempo que le robo a algo que sí me importa..."
+                },
+                hygiene:{
+                    name:"Decision Hygiene", desc:"Evalúa riesgos y sesgos",
+                    ph:"Estoy considerando invertir mis ahorros de emergencia en cripto porque todos en mi círculo lo están haciendo y los retornos del último trimestre parecen seguros. Mi socio dice que si no entramos ahora perdemos el momento. Siento urgencia pero también incomodidad que no sé nombrar. Los números convencen, pero algo no se siente bien..."
                 }
             }
-        };
-
-        /* ── LANGUAGE ── */
-        function setLanguage(lang) {
-            currentLanguage = lang;
-            document.getElementById('lang-es').classList.toggle('active', lang === 'es');
-            document.getElementById('lang-en').classList.toggle('active', lang === 'en');
-            updateUI();
-        }
-
-        /* ── MODULE SELECTION ── */
-        function selectModule(module, btnElement) {
-            currentModule = module;
-            document.querySelectorAll('.module-btn').forEach(b => b.classList.remove('active'));
-            if (btnElement) btnElement.classList.add('active');
-            updateUI();
-            // Reset output to empty state when switching modules
-            renderEmptyOutput();
-            document.getElementById('user-input').value = '';
-            updateCharCounter();
-        }
-
-        /* ── TONE ── */
-        function toggleTone() {
-            currentResponseMode = currentResponseMode === 'soft' ? 'brutal' : 'soft';
-            updateToneUI();
-        }
-
-        function updateToneUI() {
-            const ui = i18n[currentLanguage];
-            const btn = document.getElementById('mode-toggle');
-            const desc = document.getElementById('tone-desc');
-            const isBrutal = currentResponseMode === 'brutal';
-            btn.textContent = isBrutal ? ui.modeBrutal : ui.modeSoft;
-            btn.classList.toggle('brutal', isBrutal);
-            desc.textContent = isBrutal ? ui.toneDescBrutal : ui.toneDescSoft;
-        }
-
-        /* ── CHAR COUNTER ── */
-        function updateCharCounter() {
-            const count = document.getElementById('user-input').value.length;
-            const counter = document.getElementById('char-counter');
-            counter.textContent = `${count.toLocaleString()} / 8,000`;
-            counter.classList.remove('warn', 'danger');
-            if (count > 7000) counter.classList.add('danger');
-            else if (count > 5500) counter.classList.add('warn');
-        }
-
-        /* ── KEYBOARD SHORTCUT ── */
-        function handleKeydown(e) {
-            if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
-                e.preventDefault();
-                analyzeText();
+        },
+        en: {
+            back:"← Back", title:"Clarity Lab",
+            subtitle:"Mental architecture for complex decisions",
+            labelInput:"Situation to analyze", labelOutput:"Protocol response",
+            labelTone:"TONE:", soft:"SOFT", brutal:"BRUTAL",
+            softDesc:"Empathic exploration, no judgment.",
+            brutalDesc:"Direct diagnosis, no filters.",
+            analyze:"ANALYZE", analyzing:"ANALYZING...",
+            shortcut:"⌘ + Enter", processing:"Processing with AI...",
+            empty:"Analysis will appear here. Describe your situation in detail — the quality of the input determines the quality of the protocol.",
+            errEmpty:"Write something to analyze.",
+            errLong:"Maximum 8,000 characters.",
+            errConn:"Connection error. Please try again.",
+            modules:{
+                clarity:{
+                    name:"Clarity Protocol", desc:"Analyze and refine your thinking",
+                    ph:"I want to leave my stable job to launch my business, but I have debt and a family depending on me. I've been postponing this decision for two years. I don't know if I'm being responsible or simply afraid to fail. My salary covers expenses, but the time I give that job feels like time stolen from something that actually matters..."
+                },
+                hygiene:{
+                    name:"Decision Hygiene", desc:"Evaluate risks and biases",
+                    ph:"I'm considering investing my emergency savings in crypto because everyone in my circle is doing it and last quarter's returns seem reliable. My partner says if we don't enter now we'll miss the window. I feel urgency but also discomfort I can't name. The numbers convince me, but something doesn't feel right..."
+                }
             }
         }
+    };
 
-        /* ── RENDER EMPTY OUTPUT ── */
-        function renderEmptyOutput() {
-            const ui = i18n[currentLanguage];
-            document.getElementById('output').innerHTML = `
-                <div class="output-empty">
-                    <span class="empty-label" id="output-label">${ui.outputLabel}</span>
-                    <p id="output-placeholder-text">${ui.outputEmpty}</p>
+    function setLanguage(l){
+        lang=l;
+        document.getElementById('lang-es').classList.toggle('active',l==='es');
+        document.getElementById('lang-en').classList.toggle('active',l==='en');
+        render();
+    }
+
+    function selectModule(m,btn){
+        module=m;
+        document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('user-input').value='';
+        updateCount();
+        render();
+        showEmpty();
+    }
+
+    function toggleTone(){
+        tone=tone==='soft'?'brutal':'soft';
+        renderTone();
+    }
+
+    function renderTone(){
+        const ui=T[lang];
+        const isBrutal=tone==='brutal';
+        const btn=document.getElementById('btn-tone');
+        btn.textContent=isBrutal?ui.brutal:ui.soft;
+        btn.classList.toggle('brutal',isBrutal);
+        document.getElementById('tone-desc').textContent=isBrutal?ui.brutalDesc:ui.softDesc;
+    }
+
+    function updateCount(){
+        const n=document.getElementById('user-input').value.length;
+        const el=document.getElementById('char-count');
+        el.textContent=`${n.toLocaleString()} / 8,000`;
+        el.classList.remove('warn','danger');
+        if(n>7000)el.classList.add('danger');
+        else if(n>5500)el.classList.add('warn');
+    }
+
+    function handleKey(e){
+        if((e.metaKey||e.ctrlKey)&&e.key==='Enter'){e.preventDefault();analyzeText();}
+    }
+
+    function showEmpty(){
+        document.getElementById('output').innerHTML=`
+            <div class="out-empty">
+                <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+                <p>${T[lang].empty}</p>
+            </div>`;
+    }
+
+    function render(){
+        const ui=T[lang]; const mod=ui.modules[module];
+        document.getElementById('back-link').textContent=ui.back;
+        document.getElementById('main-title').textContent=ui.title;
+        document.getElementById('main-subtitle').textContent=ui.subtitle;
+        document.getElementById('label-input').textContent=ui.labelInput;
+        document.getElementById('label-output').textContent=ui.labelOutput;
+        document.getElementById('label-tone').textContent=ui.labelTone;
+        document.getElementById('btn-analyze').textContent=ui.analyze;
+        document.getElementById('shortcut').textContent=ui.shortcut;
+        document.getElementById('tab-clarity-name').textContent=ui.modules.clarity.name;
+        document.getElementById('tab-clarity-desc').textContent=ui.modules.clarity.desc;
+        document.getElementById('tab-hygiene-name').textContent=ui.modules.hygiene.name;
+        document.getElementById('tab-hygiene-desc').textContent=ui.modules.hygiene.desc;
+        document.getElementById('user-input').placeholder=mod.ph;
+        renderTone();
+        if(document.querySelector('.out-empty')) showEmpty();
+    }
+
+    async function analyzeText(){
+        const text=document.getElementById('user-input').value.trim();
+        const btn=document.getElementById('btn-analyze');
+        const output=document.getElementById('output');
+        const ui=T[lang];
+
+        if(!text){output.innerHTML=`<div class="out-error">${ui.errEmpty}</div>`;return;}
+        if(text.length>8000){output.innerHTML=`<div class="out-error">${ui.errLong}</div>`;return;}
+
+        btn.disabled=true;
+        btn.innerHTML=`<span class="spinner" style="display:inline-block;border-color:rgba(247,244,239,0.3);border-top-color:white;"></span> ${ui.analyzing}`;
+        output.innerHTML=`<div class="out-processing"><div class="spinner"></div>${ui.processing}</div>`;
+
+        try{
+            const res=await fetch('/api/chat',{
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({text,language:lang,responseMode:tone,module})
+            });
+            let data;
+            try{data=await res.json();}catch{throw new Error('Respuesta inválida del servidor.');}
+            if(!res.ok||!data.success)throw new Error(data.error||`Error ${res.status}`);
+
+            const modName=T[lang].modules[module].name.toUpperCase();
+            const toneTag=tone==='soft'?ui.soft:ui.brutal;
+            output.innerHTML=`
+                <div class="out-result">
+                    <div class="result-meta">${modName} · ${toneTag}</div>
+                    <div class="result-body">${data.response}</div>
                 </div>`;
+        }catch(err){
+            output.innerHTML=`<div class="out-error">${ui.errConn}<br><small style="opacity:0.6">${err.message}</small></div>`;
+        }finally{
+            btn.disabled=false;
+            btn.textContent=ui.analyze;
         }
+    }
 
-        /* ── MAIN UPDATE ── */
-        function updateUI() {
-            const ui = i18n[currentLanguage];
-            const mod = ui.modules[currentModule];
+    render();
+</script>
+```
 
-            document.getElementById('back-link').textContent = ui.back;
-            document.getElementById('main-title').textContent = ui.mainTitle;
-            document.getElementById('main-subtitle').textContent = ui.mainSubtitle;
-            document.getElementById('label-modules').textContent = ui.labelModules;
-            document.getElementById('btn-analyze').textContent = ui.btnAnalyze;
-            document.getElementById('label-tone').textContent = ui.toneLabel;
-            document.getElementById('hint-label').textContent = ui.hintLabel;
-            document.getElementById('hint-text').textContent = mod.hint;
-            document.getElementById('shortcut-hint').textContent = ui.shortcut;
-
-            document.getElementById('workspace-title').textContent = mod.workTitle;
-            document.getElementById('workspace-desc').textContent = mod.workDesc;
-
-            document.getElementById('m1-title').textContent = ui.modules.clarity.title;
-            document.getElementById('m1-desc').textContent = ui.modules.clarity.desc;
-            document.getElementById('m2-title').textContent = ui.modules.hygiene.title;
-            document.getElementById('m2-desc').textContent = ui.modules.hygiene.desc;
-
-            // Placeholder
-            document.getElementById('user-input').placeholder = mod.placeholder;
-
-            updateToneUI();
-
-            // Update output empty state if still in empty state
-            const outputEl = document.getElementById('output');
-            if (outputEl.querySelector('.output-empty')) renderEmptyOutput();
-        }
-
-        /* ── ANALYZE ── */
-        async function analyzeText() {
-            const text = document.getElementById('user-input').value.trim();
-            const btn = document.getElementById('btn-analyze');
-            const output = document.getElementById('output');
-            const errorDiv = document.getElementById('error-debug');
-            const ui = i18n[currentLanguage];
-
-            errorDiv.style.display = 'none';
-            errorDiv.innerHTML = '';
-
-            if (!text) {
-                output.innerHTML = `<span style="color:#c00; font-family:'DM Mono'; font-size:12px;">${ui.errEmpty}</span>`;
-                return;
-            }
-            if (text.length > 8000) {
-                output.innerHTML = `<span style="color:#c00; font-family:'DM Mono'; font-size:12px;">${ui.errLong}</span>`;
-                return;
-            }
-
-            btn.disabled = true;
-            btn.innerHTML = `<span class="spinner"></span>${ui.btnAnalyzing}`;
-            output.innerHTML = `<em style="font-family:'Cormorant Garamond'; font-style:italic; color:var(--sand); font-size:1.1rem;">${ui.outputProcessing}</em>`;
-
-            try {
-                const response = await fetch('/api/chat', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        text,
-                        language: currentLanguage,
-                        responseMode: currentResponseMode,
-                        module: currentModule
-                    })
-                });
-
-                let data;
-                try { data = await response.json(); } catch (e) { throw new Error('El servidor no devolvió una respuesta válida.'); }
-
-                if (!response.ok || !data.success) {
-                    throw new Error(data.error || `Error del servidor (${response.status})`);
-                }
-
-                const moduleName = i18n[currentLanguage].modules[currentModule].workTitle.toUpperCase();
-                output.innerHTML = `
-                    <div class="output-result">
-                        <span class="result-label">${moduleName} — ${currentResponseMode === 'soft' ? ui.modeSoft : ui.modeBrutal}</span>
-                        ${data.response}
-                    </div>`;
-
-            } catch (err) {
-                console.error(err);
-                errorDiv.innerHTML = `
-                    <strong>🚨 ERROR EN EL LABORATORIO</strong><br><br>
-                    ${err.message}<br><br>
-                    <small>Copia este mensaje completo si necesitas reportarlo.</small>`;
-                errorDiv.style.display = 'block';
-                output.innerHTML = `<span style="color:#c00; font-family:'DM Mono'; font-size:12px;">${ui.errConnect}</span>`;
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = ui.btnAnalyze;
-            }
-        }
-
-        // Init
-        updateUI();
-    </script>
 </body>
 </html>
