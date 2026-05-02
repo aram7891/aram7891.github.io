@@ -1,799 +1,476 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grand Essay Processor | Self Love Club</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital@0;1&family=Instrument+Sans:wght@300;400;500;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-        :root {
-            --parchment: #F7F4EF;
-            --ink: #1A1814;
-            --amber: #8B6F4E;
-            --sand: #C4A882;
-        }
+<title>Self Love Club — Protocol Formatter</title>
 
-        body {
-            background: var(--parchment);
-            color: var(--ink);
-            font-family: 'Instrument Sans', sans-serif;
-            line-height: 1.6;
-            font-size: 16px;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300;1,400&family=DM+Mono:wght@300&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
+<style>
+:root {
+  --parchment:#F7F4EF;
+  --ink:#1A1814;
+  --amber:#8B6F4E;
+  --sand:#C4A882;
+}
 
-        /* HEADER */
-        header {
-            margin-bottom: 3rem;
-            padding-bottom: 2rem;
-            border-bottom: 2px solid var(--sand);
-        }
+* { box-sizing: border-box; }
 
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1.5rem;
-        }
+body {
+  margin:0;
+  background:var(--parchment);
+  color:var(--ink);
+  font-family:'Instrument Sans', sans-serif;
+}
 
-        h1 {
-            font-family: 'Cormorant Garamond', serif;
-            font-style: italic;
-            font-size: 3rem;
-            color: var(--ink);
-            margin-bottom: 0.5rem;
-        }
+/* NAV */
+nav {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 28px;
+  border-bottom:1px solid rgba(196,168,130,.3);
+}
 
-        .subtitle {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.85rem;
-            color: var(--amber);
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-        }
+.brand small {
+  font-size:10px;
+  letter-spacing:3px;
+  color:var(--amber);
+  text-transform:uppercase;
+}
 
-        /* MAIN LAYOUT */
-        .main-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
+.brand h1 {
+  margin:3px 0 0;
+  font-size:18px;
+  font-weight:400;
+}
 
-        .panel {
-            background: white;
-            border: 2px solid var(--sand);
-            padding: 2rem;
-            border-radius: 2px;
-        }
+.auth-section {
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
 
-        .panel-title {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.9rem;
-            color: var(--amber);
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            margin-bottom: 1.5rem;
-            font-weight: 500;
-        }
+.api-input {
+  padding:8px 14px;
+  border:1px solid var(--amber);
+  background:transparent;
+  color:var(--ink);
+  font-size:12px;
+  font-family:'DM Mono', monospace;
+  width:280px;
+}
 
-        /* API KEY INPUT */
-        .api-key-section {
-            margin-bottom: 2rem;
-            padding: 1.5rem;
-            background: var(--sand);
-            opacity: 0.1;
-            border-radius: 2px;
-        }
+.api-input::placeholder {
+  color:rgba(26,24,20,.3);
+}
 
-        input[type="password"],
-        input[type="text"],
-        textarea,
-        select {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid var(--sand);
-            background: var(--parchment);
-            color: var(--ink);
-            font-family: 'DM Mono', monospace;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-            border-radius: 2px;
-        }
+.api-input:focus {
+  outline:none;
+  background:rgba(139,111,78,.08);
+}
 
-        input[type="password"]:focus,
-        input[type="text"]:focus,
-        textarea:focus,
-        select:focus {
-            outline: none;
-            border-color: var(--amber);
-            background: white;
-        }
+/* BUTTONS */
+.btn {
+  border:1px solid var(--amber);
+  padding:6px 14px;
+  font-size:10px;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  cursor:pointer;
+  background:transparent;
+  color:var(--amber);
+  font-family:'Instrument Sans', sans-serif;
+  transition:all .2s ease;
+}
 
-        textarea {
-            resize: vertical;
-            min-height: 150px;
-            font-family: 'Instrument Sans', sans-serif;
-            line-height: 1.8;
-        }
+.btn:hover {
+  background:rgba(139,111,78,.08);
+}
 
-        /* BOTONES */
-        button {
-            padding: 0.9rem 1.8rem;
-            background: var(--ink);
-            color: var(--parchment);
-            border: none;
-            font-family: 'DM Mono', monospace;
-            font-size: 0.85rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            cursor: pointer;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-            margin-right: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
+.btn.active {
+  background:var(--amber);
+  color:white;
+}
 
-        button:hover {
-            background: var(--amber);
-            color: white;
-        }
+.btn.primary {
+  background:var(--amber);
+  color:white;
+  width:100%;
+  padding:14px;
+}
 
-        button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
+.btn.primary:hover {
+  opacity:.9;
+}
 
-        button.secondary {
-            background: transparent;
-            border: 2px solid var(--amber);
-            color: var(--amber);
-        }
+.btn:disabled {
+  opacity:.4;
+  cursor:not-allowed;
+}
 
-        button.secondary:hover {
-            background: var(--amber);
-            color: white;
-        }
+.status {
+  font-size:10px;
+  color:var(--sand);
+  letter-spacing:1px;
+}
 
-        /* FILE INPUT */
-        .file-input-wrapper {
-            position: relative;
-            display: inline-block;
-            width: 100%;
-            margin-bottom: 1rem;
-        }
+/* LAYOUT */
+main {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  height:calc(100vh - 70px);
+}
 
-        .file-input-wrapper input[type="file"] {
-            display: none;
-        }
+/* EDITOR */
+textarea {
+  width:100%;
+  height:100%;
+  border:none;
+  outline:none;
+  padding:30px;
+  font-family:'DM Mono', monospace;
+  background:transparent;
+  line-height:1.8;
+  resize:none;
+  font-size:13px;
+}
 
-        .file-input-label {
-            display: block;
-            padding: 1rem;
-            background: var(--parchment);
-            border: 2px dashed var(--sand);
-            text-align: center;
-            cursor: pointer;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-            font-family: 'DM Mono', monospace;
-            font-size: 0.85rem;
-            color: var(--amber);
-        }
+textarea::placeholder {
+  opacity:.3;
+}
 
-        .file-input-label:hover {
-            border-color: var(--amber);
-            background: white;
-        }
+/* PREVIEW */
+.preview {
+  overflow-y:auto;
+  padding:60px 0;
+  background:rgba(196,168,130,.05);
+}
 
-        /* STATUS */
-        .status {
-            margin: 1rem 0;
-            padding: 1rem;
-            border-radius: 2px;
-            font-size: 0.9rem;
-            display: none;
-        }
+.article {
+  max-width:540px;
+  margin:auto;
+  padding:0 20px;
+}
 
-        .status.visible {
-            display: block;
-        }
+/* TYPOGRAPHY */
+h1.title {
+  font-family:'Cormorant Garamond', serif;
+  font-style:italic;
+  font-weight:300;
+  font-size:42px;
+  line-height:1.1;
+}
 
-        .status.info {
-            background: #e3f2fd;
-            color: #1565c0;
-            border: 1px solid #90caf9;
-        }
+.subtitle {
+  color:var(--amber);
+  font-size:14px;
+}
 
-        .status.success {
-            background: #f1f8e9;
-            color: #33691e;
-            border: 1px solid #c5e1a5;
-        }
+p {
+  line-height:1.9;
+  font-size:15px;
+  font-weight:300;
+}
 
-        .status.error {
-            background: #ffebee;
-            color: #b71c1c;
-            border: 1px solid #ef9a9a;
-        }
+blockquote {
+  border-left:2px solid var(--amber);
+  padding-left:25px;
+  font-style:italic;
+  font-size:19px;
+  opacity:.9;
+}
 
-        /* OUTPUTS */
-        .outputs-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-top: 3rem;
-        }
+.concept {
+  background:rgba(196,168,130,.15);
+  padding:20px;
+  border-radius:6px;
+  font-family:'DM Mono', monospace;
+  font-size:13px;
+}
 
-        .output-card {
-            border: 2px solid var(--sand);
-            padding: 1.5rem;
-            background: white;
-            border-radius: 2px;
-        }
+/* FEEDBACK */
+.warning {
+  margin-bottom:40px;
+  padding:15px;
+  background:#c0392b08;
+  border:1px solid #c0392b40;
+  font-size:12px;
+}
 
-        .output-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-style: italic;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--ink);
-        }
+.error {
+  padding:15px;
+  background:#e74c3c20;
+  border:1px solid #e74c3c;
+  color:#c0392b;
+  margin-bottom:20px;
+  border-radius:2px;
+  font-size:12px;
+}
 
-        .output-content {
-            font-family: 'Instrument Sans', sans-serif;
-            font-size: 0.9rem;
-            line-height: 1.7;
-            max-height: 300px;
-            overflow-y: auto;
-            margin-bottom: 1rem;
-            padding: 1rem;
-            background: var(--parchment);
-            border-radius: 2px;
-            color: var(--ink);
-        }
+.loading {
+  opacity:.5;
+  text-align:center;
+  margin-top:120px;
+}
 
-        .output-actions {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
+/* MICRO UX */
+.fade {
+  animation:fade .4s ease;
+}
 
-        button.download {
-            flex: 1;
-            padding: 0.7rem;
-            font-size: 0.8rem;
-        }
+@keyframes fade {
+  from { opacity:0; transform:translateY(6px);}
+  to { opacity:1; transform:translateY(0);}
+}
 
-        /* PROGRESS */
-        .progress-bar {
-            width: 100%;
-            height: 4px;
-            background: var(--sand);
-            border-radius: 2px;
-            overflow: hidden;
-            margin: 1rem 0;
-            display: none;
-        }
+.spin {
+  animation:spin 1.5s linear infinite;
+}
 
-        .progress-bar.visible {
-            display: block;
-        }
+@keyframes spin {
+  to { transform:rotate(360deg); }
+}
 
-        .progress-fill {
-            height: 100%;
-            background: var(--amber);
-            width: 0%;
-            transition: width 0.3s ease;
-        }
+@media (max-width:1024px) {
+  main {
+    grid-template-columns:1fr;
+  }
+  
+  nav {
+    flex-direction:column;
+    gap:12px;
+  }
+  
+  .auth-section {
+    flex-direction:column;
+    width:100%;
+  }
+  
+  .api-input {
+    width:100%;
+  }
+}
+</style>
 
-        /* RESPONSIVE */
-        @media (max-width: 1024px) {
-            .main-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .outputs-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .word-count {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.85rem;
-            color: var(--amber);
-            margin-top: 0.5rem;
-        }
-    </style>
 </head>
+
 <body>
-    <div class="container">
-        <!-- HEADER -->
-        <header>
-            <div class="header-content">
-                <div>
-                    <p class="subtitle">Self Love Club</p>
-                    <h1>Grand Essay Processor</h1>
-                </div>
-                <div style="text-align: right;">
-                    <p class="subtitle">v1.0</p>
-                    <p style="font-size: 0.9rem; color: var(--sand); margin-top: 0.5rem;">
-                        Transformación de Ensayos<br>
-                        Visual • Auténtico • TTS
-                    </p>
-                </div>
-            </div>
-        </header>
 
-        <!-- MAIN CONTENT -->
-        <div class="main-grid">
-            <!-- LEFT PANEL: INPUT -->
-            <div class="panel">
-                <div class="panel-title">Entrada de Datos</div>
+<nav>
+  <div class="brand">
+    <small>Self Love Club</small>
+    <h1>Protocol Formatter</h1>
+  </div>
 
-                <!-- API KEY -->
-                <div class="api-key-section">
-                    <label style="font-family: 'DM Mono', monospace; font-size: 0.85rem; color: var(--amber); text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 0.5rem;">
-                        🔐 API Key (Anthropic)
-                    </label>
-                    <input type="password" id="apiKey" placeholder="sk-ant-v0-xxxxxxxxxxxxxx" />
-                    <small style="color: var(--sand); display: block; font-size: 0.8rem;">
-                        Tu clave se usa SOLO en esta sesión, no se guarda.
-                    </small>
-                </div>
+  <div class="auth-section">
+    <input type="password" class="api-input" id="apiKey" placeholder="Anthropic API key...">
+    <span class="status" id="authStatus">✗ No autenticado</span>
+  </div>
 
-                <!-- FILE UPLOAD -->
-                <div class="file-input-wrapper">
-                    <label for="fileInput" class="file-input-label">
-                        📄 Arrastra tu ensayo (TXT o PDF) o haz clic aquí
-                    </label>
-                    <input type="file" id="fileInput" accept=".txt,.pdf" />
-                </div>
+  <div>
+    <button class="btn active" id="splitBtn">Split</button>
+    <button class="btn" id="previewBtn">Preview</button>
+  </div>
+</nav>
 
-                <!-- MANUAL INPUT -->
-                <label style="font-family: 'DM Mono', monospace; font-size: 0.85rem; color: var(--amber); text-transform: uppercase; letter-spacing: 0.1em;">
-                    O Pega el Texto Aquí
-                </label>
-                <textarea id="essayInput" placeholder="Pega tu ensayo aquí..."></textarea>
-                <div class="word-count">
-                    <span id="wordCount">0</span> palabras
-                </div>
+<main id="layout">
 
-                <!-- METADATA -->
-                <div style="margin-bottom: 1rem;">
-                    <label style="font-family: 'DM Mono', monospace; font-size: 0.85rem; color: var(--amber); text-transform: uppercase; letter-spacing: 0.1em;">
-                        Título del Ensayo
-                    </label>
-                    <input type="text" id="essayTitle" placeholder="Ej: Arbitraje Emocional" />
-                </div>
+  <!-- EDITOR -->
 
-                <div style="margin-bottom: 1rem;">
-                    <label style="font-family: 'DM Mono', monospace; font-size: 0.85rem; color: var(--amber); text-transform: uppercase; letter-spacing: 0.1em;">
-                        Tipo de Contenido
-                    </label>
-                    <select id="contentType">
-                        <option value="ensayo">Ensayo / Artículo</option>
-                        <option value="protocolo">Módulo de Protocolo</option>
-                        <option value="guia">Guía / Tutorial</option>
-                        <option value="otro">Otro</option>
-                    </select>
-                </div>
-
-                <!-- ACTIONS -->
-                <button id="processBtn" onclick="processEssay()">
-                    ⚡ Procesar Ensayo
-                </button>
-                <button class="secondary" onclick="clearAll()">
-                    ✕ Limpiar
-                </button>
-
-                <!-- STATUS -->
-                <div id="status" class="status"></div>
-                <div id="progressBar" class="progress-bar">
-                    <div class="progress-fill"></div>
-                </div>
-            </div>
-
-            <!-- RIGHT PANEL: PREVIEW -->
-            <div class="panel">
-                <div class="panel-title">Vista Previa (Formato Visual)</div>
-                <div id="preview" style="min-height: 400px; font-size: 0.9rem; line-height: 1.8; color: var(--ink); padding: 1rem; background: var(--parchment); border-radius: 2px; max-height: 500px; overflow-y: auto;">
-                    <p style="color: var(--sand); text-align: center; margin-top: 100px;">
-                        Carga un ensayo para ver la vista previa...
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <!-- OUTPUTS -->
-        <div id="outputsSection" class="hidden">
-            <h2 style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 2rem; margin-bottom: 2rem; color: var(--ink);">
-                Tus 3 Versiones Procesadas
-            </h2>
-
-            <div class="outputs-grid">
-                <!-- V1: VISUAL -->
-                <div class="output-card">
-                    <div class="output-title">v1: Formato Visual</div>
-                    <p style="font-size: 0.85rem; color: var(--sand); margin-bottom: 1rem; font-family: 'DM Mono', monospace;">
-                        Documento elegante y estructurado
-                    </p>
-                    <div id="output-visual" class="output-content"></div>
-                    <div class="output-actions">
-                        <button class="download" onclick="downloadOutput('visual', 'html')">📄 HTML</button>
-                        <button class="download" onclick="downloadOutput('visual', 'pdf')">📋 PDF</button>
-                    </div>
-                </div>
-
-                <!-- V2: AUTÉNTICO -->
-                <div class="output-card">
-                    <div class="output-title">v2: Formato Auténtico</div>
-                    <p style="font-size: 0.85rem; color: var(--sand); margin-bottom: 1rem; font-family: 'DM Mono', monospace;">
-                        Reescrito para pasar detectores IA
-                    </p>
-                    <div id="output-authentic" class="output-content"></div>
-                    <div class="output-actions">
-                        <button class="download" onclick="downloadOutput('authentic', 'html')">📄 HTML</button>
-                        <button class="download" onclick="downloadOutput('authentic', 'pdf')">📋 PDF</button>
-                    </div>
-                </div>
-
-                <!-- V3: TTS -->
-                <div class="output-card">
-                    <div class="output-title">v3: Formato TTS</div>
-                    <p style="font-size: 0.85rem; color: var(--sand); margin-bottom: 1rem; font-family: 'DM Mono', monospace;">
-                        Optimizado para síntesis de voz
-                    </p>
-                    <div id="output-tts" class="output-content"></div>
-                    <div class="output-actions">
-                        <button class="download" onclick="downloadOutput('tts', 'txt')">📝 TXT</button>
-                        <button class="download" onclick="downloadOutput('tts', 'srt')">🎬 SRT</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <section>
+    <textarea id="input" placeholder="Pega el ensayo en bruto aquí..."></textarea>
+    <div style="padding:20px;">
+      <button class="btn primary" id="runBtn" disabled>Aplicar protocolo</button>
     </div>
+  </section>
 
-    <script>
-        // STATE
-        let essayData = {
-            title: '',
-            content: '',
-            contentType: 'ensayo',
-            visual: '',
-            authentic: '',
-            tts: ''
-        };
+  <!-- PREVIEW -->
 
-        // FILE UPLOAD
-        document.getElementById('fileInput').addEventListener('change', async (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
+  <section class="preview">
+    <div class="article" id="output">
+      <div style="opacity:.2;text-align:center;margin-top:120px;">
+        ✧<br/>ESPERANDO SEÑAL
+      </div>
+    </div>
+  </section>
 
-            showStatus('Leyendo archivo...', 'info');
-            try {
-                let text = '';
-                
-                if (file.type === 'text/plain') {
-                    text = await file.text();
-                } else if (file.type === 'application/pdf') {
-                    text = await extractPDFText(file);
-                } else {
-                    showStatus('Formato no soportado. Usa TXT o PDF.', 'error');
-                    return;
-                }
+</main>
 
-                document.getElementById('essayInput').value = text;
-                updateWordCount();
-                showStatus('Archivo cargado exitosamente', 'success');
-            } catch (error) {
-                showStatus('Error al leer archivo: ' + error.message, 'error');
-            }
-        });
+<script>
+const forbidden = ["viaje","despertar","magia","mágico","mágica"];
 
-        // EXTRACT PDF TEXT
-        async function extractPDFText(file) {
-            const pdf = await pdfjsLib.getDocument(await file.arrayBuffer()).promise;
-            let text = '';
-            for (let i = 1; i <= pdf.numPages; i++) {
-                const page = await pdf.getPage(i);
-                const content = await page.getTextContent();
-                text += content.items.map(item => item.str).join(' ') + '\n';
-            }
-            return text;
-        }
+const apiKeyInput = document.getElementById("apiKey");
+const authStatus = document.getElementById("authStatus");
+const runBtn = document.getElementById("runBtn");
+const input = document.getElementById("input");
+const output = document.getElementById("output");
 
-        // WORD COUNT
-        document.getElementById('essayInput').addEventListener('input', updateWordCount);
-        
-        function updateWordCount() {
-            const text = document.getElementById('essayInput').value;
-            const words = text.trim().split(/\s+/).filter(Boolean).length;
-            document.getElementById('wordCount').innerText = words;
-        }
+// Monitorear API key
+apiKeyInput.addEventListener("change", ()=>{
+  updateAuthStatus();
+});
 
-        // PROCESS ESSAY
-        async function processEssay() {
-            const apiKey = document.getElementById('apiKey').value;
-            const content = document.getElementById('essayInput').value;
-            const title = document.getElementById('essayTitle').value || 'Sin Título';
-            const contentType = document.getElementById('contentType').value;
+apiKeyInput.addEventListener("input", ()=>{
+  updateAuthStatus();
+});
 
-            if (!apiKey) {
-                showStatus('⚠️ Ingresa tu API Key de Anthropic', 'error');
-                return;
-            }
+function updateAuthStatus(){
+  const key = apiKeyInput.value.trim();
+  if(key.length > 20 && key.startsWith("sk-")) {
+    authStatus.textContent = "✓ Autenticado";
+    authStatus.style.color = "var(--amber)";
+    runBtn.disabled = false;
+  } else {
+    authStatus.textContent = "✗ No autenticado";
+    authStatus.style.color = "var(--sand)";
+    runBtn.disabled = true;
+  }
+}
 
-            if (!content.trim()) {
-                showStatus('⚠️ Ingresa el contenido del ensayo', 'error');
-                return;
-            }
+// Main function
+runBtn.onclick = async () => {
+  const text = input.value.trim();
+  const apiKey = apiKeyInput.value.trim();
+  
+  if(!text) {
+    output.innerHTML = '<div class="error">Ingresa texto para procesar</div>';
+    return;
+  }
+  
+  if(!apiKey.startsWith("sk-")) {
+    output.innerHTML = '<div class="error">API key inválida</div>';
+    return;
+  }
 
-            essayData = { title, content, contentType, visual: '', authentic: '', tts: '' };
+  output.innerHTML = '<div class="loading"><div class="spin">⚡</div><br/>Procesando con Anthropic...</div>';
+  
+  try {
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": apiKey,
+        "anthropic-version": "2023-06-01"
+      },
+      body: JSON.stringify({
+        model: "claude-opus-4-1",
+        max_tokens: 2000,
+        messages: [
+          {
+            role: "user",
+            content: `Eres un editor de ensayos para "Self Love Club", un proyecto que usa economía, arquitectura de sistemas y termodinámica para explicar decisiones humanas.
 
-            const processBtn = document.getElementById('processBtn');
-            processBtn.disabled = true;
-            showStatus('Procesando...', 'info');
-            showProgress(0);
+Analiza este ensayo y retorna SOLO un JSON válido (sin markdown, sin explicación) con esta estructura:
 
-            try {
-                // V1: VISUAL
-                showStatus('Procesando V1: Formato Visual...', 'info');
-                essayData.visual = await generateVisualFormat(apiKey, content, title);
-                showProgress(33);
-                updatePreview(essayData.visual);
+{
+  "title": "Título del ensayo",
+  "subtitle": "Subtítulo o descripción breve",
+  "wordCount": 1500,
+  "forbiddenWords": ["palabra1", "palabra2"],
+  "sections": [
+    {"type": "paragraph", "content": "..."},
+    {"type": "quote", "content": "..."},
+    {"type": "concept", "content": "..."}
+  ]
+}
 
-                // V2: AUTHENTIC
-                showStatus('Procesando V2: Formato Auténtico...', 'info');
-                essayData.authentic = await generateAuthenticFormat(apiKey, essayData.visual);
-                showProgress(66);
-
-                // V3: TTS
-                showStatus('Procesando V3: Formato TTS...', 'info');
-                essayData.tts = await generateTTSFormat(apiKey, content, title);
-                showProgress(100);
-
-                showStatus('✅ Procesamiento completado', 'success');
-                displayOutputs();
-
-            } catch (error) {
-                showStatus('Error: ' + error.message, 'error');
-            } finally {
-                processBtn.disabled = false;
-                hideProgress();
-            }
-        }
-
-        // GENERATE VISUAL FORMAT
-        async function generateVisualFormat(apiKey, content, title) {
-            const prompt = `Transforma este ensayo en un documento elegante, estructurado y listo para ser publicado. 
-
-INSTRUCCIONES:
-1. Mantén EXACTAMENTE el mismo contenido y longitud
-2. Estructura con títulos claros (usa ##, ###)
-3. Usa párrafos cortos y puntuales
-4. Crea una jerarquía visual clara
-5. Agrega saltos de sección donde sea necesario
-6. NO agregues ni elimines información
-7. Formato: Markdown estructurado
+REGLAS CRÍTICAS:
+1. Si encuentras estas palabras, inclúyelas en forbiddenWords: viaje, despertar, magia, mágico, mágica
+2. Estructura el contenido en secciones con tipos: "paragraph", "quote", "concept"
+3. Las quotes deben ser frases destacadas del texto
+4. Los concepts deben ser explicaciones técnicas o variables clave
+5. Mantén el tono académico y riguroso
+6. Retorna SOLO el JSON, nada más
 
 ENSAYO:
-"""
-${content}
-"""
+${text}`
+          }
+        ]
+      })
+    });
 
-SALIDA: Solo el contenido formateado en Markdown, listo para publicar.`;
+    if(!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error?.message || "Error en la API de Anthropic");
+    }
 
-            return await callClaude(apiKey, prompt);
-        }
+    const data = await response.json();
+    const content = data.content[0].text;
+    
+    // Parse JSON
+    let parsed;
+    try {
+      parsed = JSON.parse(content);
+    } catch(e) {
+      // Intenta limpiar markdown si lo hay
+      const cleaned = content.replace(/```json\n?|\n?```/g, '').trim();
+      parsed = JSON.parse(cleaned);
+    }
+    
+    render(parsed);
+    
+  } catch(err) {
+    output.innerHTML = `<div class="error">⚠ Error: ${err.message}</div>`;
+    console.error(err);
+  }
+};
 
-        // GENERATE AUTHENTIC FORMAT
-        async function generateAuthenticFormat(apiKey, visualContent) {
-            const prompt = `Reescribe este documento para que parezca 100% auténtico y humano, de modo que ningún detector de IA lo marque como generado.
+function render(data){
 
-INSTRUCCIONES:
-1. Mantén EXACTAMENTE la misma longitud y contenido
-2. Cambia la estructura de oraciones (varía largo y corto)
-3. Agrega conectores naturales y pausas
-4. Introduce pequeñas imperfecciones naturales del lenguaje
-5. Mantén la voz del autor (nunca cambies el tono)
-6. NO cambies el significado de nada
-7. Aumenta la variabilidad: algunos párrafos cortos, otros largos
-8. Formato: Markdown con la misma estructura
+  let html = "";
 
-CONTENIDO ORIGINAL:
-"""
-${visualContent}
-"""
+  if(data.forbiddenWords && data.forbiddenWords.length){
+    html += `
+    <div class="warning">
+      ⚠ Palabras prohibidas detectadas: <strong>${data.forbiddenWords.join(", ")}</strong>
+    </div>`;
+  }
 
-SALIDA: Solo el contenido reescrito, sin explicaciones.`;
+  html += `
+    <h1 class="title">${data.title || "Sin título"}</h1>
+    <div class="subtitle">${data.subtitle || ""}</div>
+    <div style="height:1px;background:var(--sand);width:30px;margin:40px 0;"></div>
+  `;
 
-            return await callClaude(apiKey, prompt);
-        }
+  if(data.sections && Array.isArray(data.sections)){
+    data.sections.forEach(s=>{
+      if(s.type==="quote"){
+        html += `<blockquote>${s.content}</blockquote>`;
+      } else if(s.type==="concept"){
+        html += `<div class="concept">${s.content}</div>`;
+      } else {
+        html += `<p>${s.content}</p>`;
+      }
+    });
+  }
 
-        // GENERATE TTS FORMAT
-        async function generateTTSFormat(apiKey, content, title) {
-            const prompt = `Transforma este ensayo en un formato optimizado para síntesis de voz (TTS).
+  html += `
+    <div style="margin-top:60px;font-size:10px;color:var(--sand);display:flex;justify-content:space-between;">
+      <span>andresramirez.pro</span>
+      <span>${data.wordCount || 0} palabras</span>
+    </div>
+  `;
 
-INSTRUCCIONES:
-1. Elimina la puntuación problemática (solo mantén puntos, comas, signos de interrogación)
-2. Escribe las números en palabras (100 → cien)
-3. Expande las abreviaciones (ej., "Sr." → "Señor")
-4. Crea párrafos cortos separados por líneas en blanco
-5. Mantén EXACTAMENTE el contenido
-6. Nada de emojis, símbolos especiales o caracteres problemáticos
-7. Usa puntuación clara para que la IA sepa dónde hacer pausas
-8. Formato: Texto plano limpio, sin Markdown
+  output.innerHTML = html;
+  output.classList.add("fade");
+}
 
-ENSAYO:
-"""
-${content}
-"""
+/* VIEW SWITCH */
+document.getElementById("previewBtn").onclick = ()=>{
+  document.getElementById("layout").style.gridTemplateColumns="0 1fr";
+};
 
-SALIDA: Solo el texto limpio, optimizado para TTS.`;
+document.getElementById("splitBtn").onclick = ()=>{
+  document.getElementById("layout").style.gridTemplateColumns="1fr 1fr";
+};
 
-            return await callClaude(apiKey, prompt);
-        }
+// Inicializar
+updateAuthStatus();
+</script>
 
-        // CALL CLAUDE API
-        async function callClaude(apiKey, prompt) {
-            const response = await fetch('https://api.anthropic.com/v1/messages', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-api-key': apiKey,
-                    'anthropic-version': '2023-06-01'
-                },
-                body: JSON.stringify({
-                    model: 'claude-opus-4-1',
-                    max_tokens: 4000,
-                    messages: [{
-                        role: 'user',
-                        content: prompt
-                    }]
-                })
-            });
-
-            if (!response.ok) {
-                const error = await response.json();
-                throw new Error(error.error.message || 'Error en API');
-            }
-
-            const data = await response.json();
-            return data.content[0].text;
-        }
-
-        // UI HELPERS
-        function showStatus(message, type) {
-            const status = document.getElementById('status');
-            status.textContent = message;
-            status.className = `status visible ${type}`;
-        }
-
-        function showProgress(percent) {
-            const bar = document.getElementById('progressBar');
-            bar.classList.add('visible');
-            bar.querySelector('.progress-fill').style.width = percent + '%';
-        }
-
-        function hideProgress() {
-            document.getElementById('progressBar').classList.remove('visible');
-        }
-
-        function updatePreview(content) {
-            document.getElementById('preview').innerHTML = `<div style="white-space: pre-wrap;">${escapeHtml(content.substring(0, 500))}...</div>`;
-        }
-
-        function displayOutputs() {
-            document.getElementById('outputsSection').classList.remove('hidden');
-            document.getElementById('output-visual').textContent = essayData.visual.substring(0, 1000) + '...';
-            document.getElementById('output-authentic').textContent = essayData.authentic.substring(0, 1000) + '...';
-            document.getElementById('output-tts').textContent = essayData.tts.substring(0, 1000) + '...';
-        }
-
-        function downloadOutput(version, format) {
-            let content = essayData[version];
-            let filename = `${essayData.title.replace(/\s+/g, '-')}-${version}`;
-            let mimeType = 'text/plain';
-
-            switch(format) {
-                case 'html':
-                    content = `<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>${essayData.title}</title>
-</head>
-<body style="font-family: Georgia; max-width: 800px; margin: 2rem auto; line-height: 1.8;">
-    ${markdownToHtml(content)}
-</body>
-</html>`;
-                    filename += '.html';
-                    mimeType = 'text/html';
-                    break;
-                case 'pdf':
-                    filename += '.pdf';
-                    mimeType = 'application/pdf';
-                    // Nota: Para PDF real necesitarías librería como jsPDF
-                    alert('PDF export requiere librería adicional. Descargando como HTML en su lugar.');
-                    format = 'html';
-                    break;
-                case 'srt':
-                    content = generateSRT(content);
-                    filename += '.srt';
-                    break;
-                default:
-                    filename += '.txt';
-            }
-
-            const blob = new Blob([content], { type: mimeType });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-
-        function markdownToHtml(markdown) {
-            return markdown
-                .replace(/^### (.*?)$/gm, '<h3>$1</h3>')
-                .replace(/^## (.*?)$/gm, '<h2>$1</h2>')
-                .replace(/^# (.*?)$/gm, '<h1>$1</h1>')
-                .replace(/^(.*?)$/gm, (match) => match.trim() ? `<p>${match}</p>` : '')
-                .replace(/\n\n/g, '');
-        }
-
-        function generateSRT(content) {
-            const sentences = content.match(/[^.!?]+[.!?]+/g) || [];
-            let srt = '';
-            sentences.forEach((sent, i) => {
-                const startTime = formatTime(i * 5);
-                const endTime = formatTime((i + 1) * 5);
-                srt += `${i + 1}\n${startTime} --> ${endTime}\n${sent.trim()}\n\n`;
-            });
-            return srt;
-        }
-
-        function formatTime(seconds) {
-            const h = Math.floor(seconds / 3600);
-            const m = Math.floor((seconds % 3600) / 60);
-            const s = seconds % 60;
-            return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')},000`;
-        }
-
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        function clearAll() {
-            document.getElementById('apiKey').value = '';
-            document.getElementById('essayInput').value = '';
-            document.getElementById('essayTitle').value = '';
-            document.getElementById('preview').innerHTML = '<p style="color: var(--sand); text-align: center; margin-top: 100px;">Carga un ensayo para ver la vista previa...</p>';
-            document.getElementById('outputsSection').classList.add('hidden');
-            document.getElementById('status').classList.remove('visible');
-        }
-    </script>
 </body>
 </html>
