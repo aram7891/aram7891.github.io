@@ -1,262 +1,218 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+import React, { useState, useRef } from "react";
 
-<title>Self Love Club — Protocol Formatter</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300;1,400&family=DM+Mono:wght@300&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-
-<style>
-:root {
-  --parchment:#F7F4EF;
-  --ink:#1A1814;
-  --amber:#8B6F4E;
-  --sand:#C4A882;
-}
-
-* { box-sizing: border-box; }
-
-body {
-  margin:0;
-  background:var(--parchment);
-  color:var(--ink);
-  font-family:'Instrument Sans', sans-serif;
-}
-
-/* NAV */
-nav {
-  display:flex;
-  justify-content:space-between;
-  padding:18px 28px;
-  border-bottom:1px solid rgba(196,168,130,.3);
-}
-
-.brand small {
-  font-size:10px;
-  letter-spacing:3px;
-  color:var(--amber);
-  text-transform:uppercase;
-}
-
-.brand h1 {
-  margin:3px 0 0;
-  font-size:18px;
-  font-weight:400;
-}
-
-/* BUTTONS */
-.btn {
-  border:1px solid var(--amber);
-  padding:6px 14px;
-  font-size:10px;
-  letter-spacing:1.5px;
-  text-transform:uppercase;
-  cursor:pointer;
-  background:transparent;
-  color:var(--amber);
-}
-
-.btn.active {
-  background:var(--amber);
-  color:white;
-}
-
-.btn.primary {
-  background:var(--amber);
-  color:white;
-  width:100%;
-  padding:14px;
-}
-
-/* LAYOUT */
-main {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  height:calc(100vh - 70px);
-}
-
-/* EDITOR */
-textarea {
-  width:100%;
-  height:100%;
-  border:none;
-  outline:none;
-  padding:30px;
-  font-family:'DM Mono', monospace;
-  background:transparent;
-  line-height:1.8;
-}
-
-/* PREVIEW */
-.preview {
-  overflow-y:auto;
-  padding:60px 0;
-  background:rgba(196,168,130,.05);
-}
-
-.article {
-  max-width:540px;
-  margin:auto;
-  padding:0 20px;
-}
-
-/* TYPOGRAPHY */
-h1.title {
-  font-family:'Cormorant Garamond', serif;
-  font-style:italic;
-  font-weight:300;
-  font-size:42px;
-  line-height:1.1;
-}
-
-.subtitle {
-  color:var(--amber);
-  font-size:14px;
-}
-
-p {
-  line-height:1.9;
-  font-size:15px;
-  font-weight:300;
-}
-
-blockquote {
-  border-left:2px solid var(--amber);
-  padding-left:25px;
-  font-style:italic;
-  font-size:19px;
-  opacity:.9;
-}
-
-.concept {
-  background:rgba(196,168,130,.15);
-  padding:20px;
-  border-radius:6px;
-  font-family:'DM Mono', monospace;
-  font-size:13px;
-}
-
-/* MICRO UX */
-textarea::placeholder {
-  opacity:.3;
-}
-
-.fade {
-  animation:fade .4s ease;
-}
-
-@keyframes fade {
-  from { opacity:0; transform:translateY(6px);}
-  to { opacity:1; transform:translateY(0);}
-}
-</style>
-</head>
-
-<body>
-
-<nav>
-  <div class="brand">
-    <small>Self Love Club</small>
-    <h1>Protocol Formatter</h1>
-  </div>
-  
-  <div>
-    <button class="btn active" id="splitBtn">Split</button>
-    <button class="btn" id="previewBtn">Preview</button>
-  </div>
-</nav>
-
-<main id="layout">
-  
-  <!-- EDITOR -->
-  <section>
-    <textarea id="input" placeholder="Pega el ensayo en bruto aquí..."></textarea>
-    <div style="padding:20px;">
-      <button class="btn primary" id="runBtn">Aplicar protocolo</button>
-    </div>
-  </section>
-
-  <!-- PREVIEW -->
-  <section class="preview">
-    <div class="article fade" id="output">
-      <div style="opacity:.2;text-align:center;margin-top:120px;">
-        ✧<br/>ESPERANDO SEÑAL
-      </div>
-    </div>
-  </section>
-
-</main>
-
-<script>
-const API_URL = "/api/format-essay";
-
-const forbidden = ["viaje","despertar","magia","mágico","mágica"];
-
-document.getElementById("runBtn").onclick = async () => {
-  const text = input.value.trim();
-  if(!text) return;
-
-  output.innerHTML = "Procesando...";
-  
-  const res = await fetch(API_URL,{
-    method:"POST",
-    headers:{ "Content-Type":"application/json" },
-    body:JSON.stringify({ text })
-  });
-
-  const data = await res.json();
-
-  render(data);
+// Configuración de Estética Self Love Club
+const PALETTE = {
+  parchment: "#F7F4EF",
+  ink: "#1A1814",
+  amber: "#8B6F4E",
+  sand: "#C4A882",
 };
 
-function render(data){
+const FORBIDDEN_WORDS = ["viaje", "despertar", "magia", "mágico", "mágica", "journey", "awaken", "magic"];
 
-  let html = "";
+const PREFERRED = {
+  viaje: "protocolo", despertar: "umbral", magia: "variable",
+  mágico: "operativo", mágica: "operativa", journey: "protocol",
+  awaken: "threshold", magic: "variable"
+};
 
-  if(data.forbiddenWords?.length){
-    html += `
-    <div style="margin-bottom:40px;padding:15px;background:#c0392b08;border:1px solid #c0392b40;">
-      ⚠ ${data.forbiddenWords.join(", ")}
-    </div>`;
+// Prompt optimizado para asegurar que el JSON sea compatible con la UI
+const SYSTEM_PROMPT = `Eres un editor especializado en Self Love Club, una marca que aplica economía, arquitectura de sistemas y termodinámica al desempeño humano.
+Analiza el ensayo y devuelve un JSON con:
+{
+  "title": "título principal",
+  "subtitle": "tagline estratégico",
+  "sections": [{ "type": "intro|body|quote|concept", "heading": "opcional", "content": "texto" }],
+  "forbiddenWords": ["lista de palabras prohibidas encontradas"],
+  "wordCount": número
+}
+Palabras prohibidas: ${FORBIDDEN_WORDS.join(", ")}.`;
+
+export default function App() {
+  const [raw, setRaw] = useState("");
+  const [parsed, setParsed] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [view, setView] = useState("split");
+  const previewRef = useRef(null);
+
+  async function handleFormat() {
+    if (!raw.trim()) return;
+    setLoading(true);
+    setError(null);
+
+    try {
+      // Endpoint que deberás crear en tu carpeta /api/
+      const response = await fetch("/api/format-essay", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          text: raw,
+          systemPrompt: SYSTEM_PROMPT 
+        }),
+      });
+
+      if (!response.ok) throw new Error("Error en la respuesta del servidor");
+
+      const data = await response.json();
+      setParsed(data);
+      setView("split");
+    } catch (e) {
+      console.error("Error crítico:", e);
+      setError("Error de conexión. Verifica que la API Route /api/format-essay exista en tu repositorio.");
+    } finally {
+      setLoading(false);
+    }
   }
 
-  html += `
-    <h1 class="title">${data.title}</h1>
-    <div class="subtitle">${data.subtitle}</div>
-    <div style="height:1px;background:var(--sand);width:30px;margin:40px 0;"></div>
-  `;
+  function handlePrint() {
+    const content = previewRef.current?.innerHTML;
+    if (!content) return;
+    const win = window.open("", "_blank");
+    win.document.write(`<!DOCTYPE html><html><head>
+      <meta charset="UTF-8">
+      <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300;1,400&family=DM+Mono:wght@300&display=swap" rel="stylesheet">
+      <style>
+        @page { margin: 20mm 22mm; }
+        body { background: #F7F4EF; color: #1A1814; font-family: 'Cormorant Garamond', Georgia, serif; padding: 30px; }
+        h1 { font-style: italic; font-weight: 300; font-size: 32pt; }
+        blockquote { border-left: 2px solid #8B6F4E; padding-left: 20px; font-style: italic; opacity: 0.8; }
+        .concept { background: #C4A88220; padding: 15px; border-radius: 4px; font-family: 'DM Mono', monospace; font-size: 10pt; }
+      </style>
+      </head><body>${content}</body></html>`);
+    win.document.close();
+    win.print();
+  }
 
-  data.sections.forEach(s=>{
-    if(s.type==="quote"){
-      html += `<blockquote>${s.content}</blockquote>`;
-    } else if(s.type==="concept"){
-      html += `<div class="concept">${s.content}</div>`;
-    } else {
-      html += `<p>${s.content}</p>`;
-    }
-  });
+  return (
+    <div style={{ fontFamily: "'Instrument Sans', sans-serif", background: PALETTE.parchment, minHeight: "100vh", color: PALETTE.ink, display: "flex", flexDirection: "column" }}>
+      
+      {/* Navbar Minimalista */}
+      <nav style={{ borderBottom: `1px solid ${PALETTE.sand}40`, padding: "16px 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <div>
+          <div style={{ fontSize: 10, letterSpacing: 3, textTransform: "uppercase", color: PALETTE.amber, fontWeight: 300 }}>Self Love Club</div>
+          <div style={{ fontSize: 18, fontWeight: 400, letterSpacing: "-0.02em" }}>Protocol Formatter</div>
+        </div>
+        <div style={{ display: "flex", gap: 8 }}>
+          <button onClick={() => setView("input")} style={btnStyle(view === "input")}>Texto</button>
+          <button onClick={() => setView("preview")} style={btnStyle(view === "preview")}>Preview</button>
+          {parsed && <button onClick={handlePrint} style={{ ...btnStyle(false), background: PALETTE.ink, color: "white", border: "none" }}>Exportar PDF</button>}
+        </div>
+      </nav>
 
-  html += `
-    <div style="margin-top:60px;font-size:10px;color:var(--sand);display:flex;justify-content:space-between;">
-      <span>andresramirez.pro</span>
-      <span>${data.wordCount} palabras</span>
+      {/* Workspace */}
+      <main style={{ display: "grid", gridTemplateColumns: view === "preview" ? "0 1fr" : view === "input" ? "1fr 0" : "1fr 1fr", flex: 1, overflow: "hidden" }}>
+        
+        {/* Editor Side */}
+        <section style={{ display: "flex", flexDirection: "column", borderRight: `1px solid ${PALETTE.sand}40` }}>
+          <textarea
+            value={raw}
+            onChange={(e) => setRaw(e.target.value)}
+            placeholder="Pega el ensayo en bruto aquí..."
+            style={{ flex: 1, border: "none", outline: "none", padding: 30, background: "transparent", fontSize: 14, lineHeight: 1.8, fontFamily: "'DM Mono', monospace" }}
+          />
+          <div style={{ padding: 20, borderTop: `1px solid ${PALETTE.sand}40` }}>
+            <button onClick={handleFormat} disabled={loading || !raw.trim()} style={{ 
+              width: "100%", padding: 14, background: loading ? PALETTE.sand : PALETTE.amber, 
+              color: "white", border: "none", borderRadius: 4, cursor: "pointer", 
+              fontSize: 11, letterSpacing: 2, fontWeight: 500 
+            }}>
+              {loading ? "SISTEMATIZANDO..." : "APLICAR PROTOCOLO DE CLARIDAD"}
+            </button>
+          </div>
+        </section>
+
+        {/* Preview Side */}
+        <section style={{ overflowY: "auto", padding: "60px 0", background: `${PALETTE.sand}05` }}>
+          {error && <div style={{ color: "#c0392b", textAlign: "center", fontSize: 12 }}>{error}</div>}
+          
+          {parsed ? (
+            <div ref={previewRef} style={{ maxWidth: 540, margin: "0 auto", padding: "0 20px" }}>
+               {parsed.forbiddenWords?.length > 0 && (
+                <div style={{ marginBottom: 40, padding: "15px 20px", background: "#c0392b08", border: "1px solid #c0392b40", borderRadius: 6, fontSize: 12 }}>
+                  <strong style={{ color: "#c0392b" }}>⚠ VOCABULARIO PROHIBIDO:</strong>
+                  <div style={{ marginTop: 8, opacity: 0.8 }}>
+                    {parsed.forbiddenWords.map(w => (
+                      <span key={w} style={{ marginRight: 10 }}><s>{w}</s> → {PREFERRED[w.toLowerCase()] || "revisar"}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <header style={{ marginBottom: 50 }}>
+                <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: "italic", fontWeight: 300, fontSize: 42, lineHeight: 1.1, marginBottom: 15 }}>
+                  {parsed.title}
+                </h1>
+                <p style={{ fontFamily: "'Instrument Sans', sans-serif", color: PALETTE.amber, fontSize: 14, letterSpacing: 0.5 }}>
+                  {parsed.subtitle}
+                </p>
+              </header>
+
+              <div style={{ width: 30, height: 1, background: PALETTE.sand, marginBottom: 40 }} />
+
+              {parsed.sections?.map((sec, idx) => (
+                <div key={idx} style={{ marginBottom: 35 }}>
+                  {sec.heading && <h2 style={{ fontSize: 18, fontWeight: 500, marginBottom: 12, letterSpacing: "-0.01em" }}>{sec.heading}</h2>}
+                  
+                  {sec.type === "quote" ? (
+                    <blockquote style={{ margin: "30px 0", borderLeft: `2px solid ${PALETTE.amber}`, paddingLeft: 25, fontStyle: "italic", fontSize: 19, color: PALETTE.ink, opacity: 0.9, lineHeight: 1.6 }}>
+                      {sec.content}
+                    </blockquote>
+                  ) : sec.type === "concept" ? (
+                    <div className="concept" style={{ background: `${PALETTE.sand}15`, padding: "20px 25px", borderRadius: 6, margin: "20px 0" }}>
+                      <p style={{ margin: 0, fontSize: 13, lineHeight: 1.7, fontFamily: "'DM Mono', monospace" }}>{sec.content}</p>
+                    </div>
+                  ) : (
+                    <p style={{ lineHeight: 1.9, fontSize: 15, fontWeight: 300, color: PALETTE.ink }}>{sec.content}</p>
+                  )}
+                </div>
+              ))}
+
+              <footer style={{ marginTop: 80, borderTop: `1px solid ${PALETTE.sand}30`, paddingTop: 20, display: "flex", justifyContent: "space-between", fontSize: 10, color: PALETTE.sand, letterSpacing: 1 }}>
+                <span>andresramirez.pro</span>
+                <span>{parsed.wordCount} PALABRAS</span>
+              </footer>
+            </div>
+          ) : (
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "100%", opacity: 0.2, gap: 10 }}>
+              <div style={{ fontSize: 24 }}>✧</div>
+              <div style={{ fontSize: 10, letterSpacing: 3 }}>ESPERANDO SEÑAL</div>
+            </div>
+          )}
+        </section>
+      </main>
+
+      {/* Footer de Identidad Preservada */}
+      <footer style={{ padding: "20px 24px", borderTop: `1px solid ${PALETTE.sand}40`, display: "flex", alignItems: "center", gap: 15, background: PALETTE.parchment }}>
+        <img 
+          src="/assets/images/andres-ramirez-portrait.jpg" 
+          alt="Andrés Ramírez" 
+          style={{ width: 48, height: 48, borderRadius: "50%", objectFit: "cover", border: `1px solid ${PALETTE.sand}` }}
+          onError={(e) => { e.target.src = "https://ui-avatars.com/api/?name=Andres+Ramirez&background=8B6F4E&color=F7F4EF"; }}
+        />
+        <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+          <span style={{ fontWeight: 600, fontSize: 13, color: PALETTE.ink }}>Andrés Ramírez</span>
+          <div style={{ fontSize: 11, fontFamily: "'DM Mono', monospace" }}>
+            <a href="https://threads.net/@aram7891" target="_blank" rel="noreferrer" style={{ color: PALETTE.amber, textDecoration: "none", marginRight: 15 }}>THREADS: @aram7891</a>
+            <a href="https://instagram.com/selfloveclubusa" target="_blank" rel="noreferrer" style={{ color: PALETTE.amber, textDecoration: "none" }}>IG: @selfloveclubusa</a>
+          </div>
+        </div>
+      </footer>
     </div>
-  `;
-
-  output.innerHTML = html;
+  );
 }
 
-/* VIEW SWITCH */
-previewBtn.onclick = ()=>{
-  layout.style.gridTemplateColumns="0 1fr";
-};
-
-splitBtn.onclick = ()=>{
-  layout.style.gridTemplateColumns="1fr 1fr";
-};
-</script>
-
-</body>
-</html>
+function btnStyle(active) {
+  return {
+    padding: "6px 14px",
+    fontSize: 10,
+    letterSpacing: 1.5,
+    background: active ? PALETTE.amber : "transparent",
+    color: active ? "white" : PALETTE.amber,
+    border: `1px solid ${PALETTE.amber}`,
+    borderRadius: 4,
+    cursor: "pointer",
+    textTransform: "uppercase",
+    transition: "all 0.2s ease"
+  };
+}
