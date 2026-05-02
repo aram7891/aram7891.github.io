@@ -27,6 +27,8 @@
             flex-direction: column;
             min-height: 100vh;
         }
+
+        /* ── NAV ── */
         .top-bridge {
             padding: 1rem 5%;
             display: flex;
@@ -45,6 +47,8 @@
             transition: color 0.3s;
         }
         .back-link:hover { color: var(--clarity-blue); }
+
+        /* ── HEADER ── */
         .header {
             padding: 3rem 5% 2rem 5%;
             display: flex;
@@ -69,24 +73,204 @@
         .lang-toggle button {
             background: none; border: none; font-family: 'DM Mono', monospace;
             font-size: 12px; color: var(--sand); cursor: pointer; padding: 0.5rem;
+            transition: color 0.2s;
         }
         .lang-toggle button.active { color: var(--clarity-blue); font-weight: 600; border-bottom: 1px solid var(--clarity-blue); }
+
+        /* ── LAYOUT ── */
         .main-content { display: flex; flex: 1; min-height: 70vh; border-top: var(--thin-line); border-bottom: var(--thin-line); }
         .modules-panel { width: 25%; border-right: var(--thin-line); padding: 3rem 3%; }
         .section-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--sand); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 2rem; display: block; }
+
+        /* ── MODULE BUTTONS ── */
         .module-btn {
             display: block; width: 100%; padding: 1.5rem; margin-bottom: 1rem;
-            background: transparent; border: 1px solid transparent; cursor: pointer; text-align: left; transition: all 0.4s;
+            background: transparent; border: 1px solid transparent; cursor: pointer;
+            text-align: left; transition: all 0.35s;
         }
-        .module-btn.active { background: white; border: var(--thin-line); border-left: 3px solid var(--clarity-blue); }
+        .module-btn h4 {
+            font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500;
+            letter-spacing: 0.5px; margin-bottom: 0.4rem; transition: color 0.3s;
+        }
+        .module-btn p { font-size: 12px; color: var(--sand); line-height: 1.4; }
+        .module-btn.active {
+            background: white; border: var(--thin-line);
+            border-left: 3px solid var(--clarity-blue);
+        }
         .module-btn.active h4 { font-style: italic; color: var(--clarity-blue); }
-        .workspace { flex: 1; padding: 4rem 8%; display: flex; flex-direction: column; background: white; }
-        .textarea-wrapper textarea {
-            width: 100%; min-height: 250px; padding: 2rem; font-family: 'Instrument Sans', sans-serif;
-            background: var(--parchment); border: var(--thin-line); resize: none; font-size: 16px; outline: none;
+
+        /* module hint — shown below buttons */
+        .module-hint {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: var(--thin-line);
         }
-        .btn-primary { background: var(--ink); color: var(--parchment); border: none; padding: 0.8rem 2.5rem; font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 1px; cursor: pointer; }
+        .module-hint .hint-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 9px;
+            color: var(--sand);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.8rem;
+            display: block;
+        }
+        .module-hint p {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1rem;
+            color: var(--amber);
+            line-height: 1.5;
+        }
+
+        /* ── WORKSPACE ── */
+        .workspace { flex: 1; padding: 4rem 8%; display: flex; flex-direction: column; background: white; }
+        .workspace-header { margin-bottom: 2rem; }
+        .workspace-header h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.8rem;
+            font-weight: 300;
+            margin-bottom: 0.3rem;
+        }
+        .workspace-header p { font-size: 12px; color: var(--amber); text-transform: uppercase; letter-spacing: 1px; }
+
+        /* ── TEXTAREA ── */
+        .textarea-wrapper { position: relative; }
+        .textarea-wrapper textarea {
+            width: 100%; min-height: 250px; padding: 2rem;
+            font-family: 'Instrument Sans', sans-serif;
+            background: var(--parchment); border: var(--thin-line);
+            resize: none; font-size: 15px; outline: none;
+            color: var(--ink); line-height: 1.7;
+            transition: border-color 0.3s;
+        }
+        .textarea-wrapper textarea::placeholder {
+            color: var(--sand);
+            font-style: italic;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+        .textarea-wrapper textarea:focus { border-color: rgba(0,71,171,0.25); }
+
+        /* char counter */
+        .char-counter {
+            font-family: 'DM Mono', monospace;
+            font-size: 10px;
+            color: var(--sand);
+            text-align: right;
+            margin-top: 0.5rem;
+            letter-spacing: 0.5px;
+            transition: color 0.3s;
+        }
+        .char-counter.warn { color: var(--amber); }
+        .char-counter.danger { color: #c00; }
+
+        /* shortcut hint */
+        .shortcut-hint {
+            font-family: 'DM Mono', monospace;
+            font-size: 10px;
+            color: var(--sand);
+            opacity: 0.7;
+            letter-spacing: 0.5px;
+        }
+
+        /* ── CONTROLS ── */
+        .controls-row {
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        .tone-block { display: flex; flex-direction: column; gap: 0.5rem; }
+        .tone-top { display: flex; align-items: center; gap: 1rem; }
+        .tone-desc {
+            font-family: 'DM Mono', monospace;
+            font-size: 10px;
+            color: var(--sand);
+            letter-spacing: 0.5px;
+            max-width: 220px;
+            line-height: 1.4;
+        }
+
+        .btn-primary {
+            background: var(--ink); color: var(--parchment); border: none;
+            padding: 0.8rem 2.5rem; font-family: 'DM Mono', monospace;
+            font-size: 12px; letter-spacing: 1px; cursor: pointer;
+            transition: background 0.3s;
+        }
         .btn-primary:hover { background: var(--clarity-blue); }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .btn-tone {
+            padding: 0.5rem 1.5rem;
+            background: #EEEBE6;
+            color: var(--ink);
+            font-size: 11px;
+        }
+        .btn-tone.brutal {
+            background: var(--ink);
+            color: white;
+        }
+
+        .controls-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem; }
+
+        /* ── OUTPUT ── */
+        #output {
+            margin-top: 3rem;
+            border-top: var(--thin-line);
+            padding-top: 2rem;
+            min-height: 60px;
+            animation: fadeIn 0.4s ease;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+        .output-empty {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+        .output-empty .empty-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 10px;
+            color: var(--sand);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .output-empty p {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.2rem;
+            color: rgba(26,24,20,0.3);
+            line-height: 1.6;
+            max-width: 480px;
+        }
+
+        .output-result {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.25rem;
+            line-height: 1.8;
+            white-space: pre-wrap;
+        }
+        .output-result .result-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 9px;
+            color: var(--sand);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1.2rem;
+            display: block;
+        }
+
+        /* ── ERROR ── */
+        #error-debug {
+            display: none; margin-top: 2rem; padding: 1.5rem;
+            background: #fff0f0; border: 2px solid #c00;
+            font-family: 'DM Mono', monospace; font-size: 12px;
+            line-height: 1.5; color: #300;
+        }
+
+        /* ── FOOTER ── */
         .footer {
             padding: 4rem 5%;
             background: white;
@@ -102,31 +286,36 @@
         .footer-links { display: flex; gap: 2rem; }
         .footer-links a { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--ink); text-decoration: none; border-bottom: 1px solid transparent; transition: 0.3s; }
         .footer-links a:hover { border-bottom-color: var(--clarity-blue); color: var(--clarity-blue); }
-        @media (max-width: 900px) {
-            .main-content { flex-direction: column; }
-            .modules-panel { width: 100%; border-right: none; }
-        }
+
+        /* ── SPINNER ── */
         .spinner {
-            display: inline-block;
-            width: 18px;
-            height: 18px;
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid var(--clarity-blue);
+            display: inline-block; width: 14px; height: 14px;
+            border: 2px solid rgba(247,244,239,0.4);
+            border-top: 2px solid white;
             border-radius: 50%;
-            animation: spin 1s linear infinite;
-            vertical-align: middle;
-            margin-right: 8px;
+            animation: spin 0.8s linear infinite;
+            vertical-align: middle; margin-right: 8px;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 900px) {
+            .main-content { flex-direction: column; }
+            .modules-panel { width: 100%; border-right: none; border-bottom: var(--thin-line); padding: 2rem 5%; }
+            .module-hint { display: none; }
+            .workspace { padding: 2.5rem 5%; }
+            .controls-row { flex-direction: column; }
+            .controls-right { align-items: flex-start; }
+        }
     </style>
 </head>
 <body>
 
     <nav class="top-bridge">
-        <a href="https://andresramirez.pro" class="back-link" aria-label="Volver a AndresRamirez.pro">← Volver a AndresRamirez.pro</a>
+        <a href="https://andresramirez.pro" class="back-link" id="back-link">← Volver a AndresRamirez.pro</a>
         <div class="lang-toggle" role="tablist">
-            <button id="lang-es" class="active" onclick="setLanguage('es')" aria-label="Cambiar a español">ES</button>
-            <button id="lang-en" onclick="setLanguage('en')" aria-label="Change to English">EN</button>
+            <button id="lang-es" class="active" onclick="setLanguage('es')">ES</button>
+            <button id="lang-en" onclick="setLanguage('en')">EN</button>
         </div>
     </nav>
 
@@ -140,42 +329,62 @@
     <div class="main-content">
         <aside class="modules-panel">
             <span class="section-label" id="label-modules">Módulos</span>
-            <button class="module-btn active" onclick="selectModule('clarity', this)" aria-label="Seleccionar Protocolo de Claridad">
+            <button class="module-btn active" onclick="selectModule('clarity', this)">
                 <h4 id="m1-title">01. Clarity Protocol</h4>
-                <p id="m1-desc">Analyze and refine your thinking</p>
+                <p id="m1-desc">Analiza y refina tu pensamiento</p>
             </button>
-            <button class="module-btn" onclick="selectModule('hygiene', this)" aria-label="Seleccionar Decision Hygiene">
+            <button class="module-btn" onclick="selectModule('hygiene', this)">
                 <h4 id="m2-title">02. Decision Hygiene</h4>
-                <p id="m2-desc">Evaluate risks and biases</p>
+                <p id="m2-desc">Evalúa riesgos y sesgos</p>
             </button>
+
+            <div class="module-hint">
+                <span class="hint-label" id="hint-label">Protocolo activo</span>
+                <p id="hint-text">Para cuando tienes la decisión en la cabeza pero no puedes verla con claridad.</p>
+            </div>
         </aside>
 
         <main class="workspace" role="main">
-            <div class="workspace-header" style="margin-bottom: 2rem;">
+            <div class="workspace-header">
                 <h2 id="workspace-title">Clarity Protocol</h2>
-                <p id="workspace-desc">Análisis estructurado de intención y debilidades lógicas.</p>
+                <p id="workspace-desc">Análisis estructurado de intención y debilidades lógicas</p>
             </div>
 
             <div class="textarea-wrapper">
-                <textarea id="user-input" placeholder="" aria-label="Texto para analizar" rows="8"></textarea>
+                <textarea
+                    id="user-input"
+                    rows="10"
+                    aria-label="Texto para analizar"
+                    oninput="updateCharCounter()"
+                    onkeydown="handleKeydown(event)"
+                ></textarea>
             </div>
 
-            <div style="margin-top: 2rem; display: flex; justify-content: space-between; align-items: center;">
-                <div style="display: flex; align-items: center; gap: 1rem;">
-                    <span style="font-size: 11px; color: var(--sand); font-family: 'DM Mono';" id="label-tone">TONO:</span>
-                    <button class="btn-primary" style="padding: 0.5rem 1.5rem; background: #EEEBE6; color: var(--ink);" 
-                            id="mode-toggle" onclick="toggleTone()" aria-label="Cambiar entre modo suave y brutal">SUAVE</button>
+            <div class="char-counter" id="char-counter">0 / 8000</div>
+
+            <div class="controls-row">
+                <div class="tone-block">
+                    <div class="tone-top">
+                        <span style="font-size: 11px; color: var(--sand); font-family: 'DM Mono';" id="label-tone">TONO:</span>
+                        <button class="btn-primary btn-tone" id="mode-toggle" onclick="toggleTone()">SUAVE</button>
+                    </div>
+                    <span class="tone-desc" id="tone-desc">Exploración empática — observa patrones sin juzgar.</span>
                 </div>
-                <button class="btn-primary" onclick="analyzeText()" id="btn-analyze" 
-                        aria-label="Analizar texto con IA">ANALIZAR</button>
+
+                <div class="controls-right">
+                    <button class="btn-primary" onclick="analyzeText()" id="btn-analyze">ANALIZAR</button>
+                    <span class="shortcut-hint" id="shortcut-hint">⌘ + Enter</span>
+                </div>
             </div>
 
-            <div id="output" style="margin-top: 3rem; font-family: 'Cormorant Garamond'; font-size: 1.3rem; border-top: var(--thin-line); padding-top: 2rem;" 
-                 aria-live="polite">
-                ...
+            <div id="output">
+                <div class="output-empty">
+                    <span class="empty-label" id="output-label">Salida del protocolo</span>
+                    <p id="output-placeholder-text">El análisis aparecerá aquí. Describe tu situación con el mayor detalle posible — la calidad del input determina la calidad del protocolo.</p>
+                </div>
             </div>
 
-            <div id="error-debug" style="display: none; margin-top: 2rem; padding: 1.5rem; background: #fff0f0; border: 3px solid #c00; border-radius: 12px; font-family: 'DM Mono', monospace; font-size: 13px; line-height: 1.5; color: #300;"></div>
+            <div id="error-debug"></div>
         </main>
     </div>
 
@@ -206,32 +415,81 @@
                 mainSubtitle: "Arquitectura mental para decisiones complejas",
                 labelModules: "Módulos",
                 btnAnalyze: "ANALIZAR",
-                ready: "Listo para analizar.",
+                btnAnalyzing: "ANALIZANDO...",
                 toneLabel: "TONO:",
                 modeSoft: "SUAVE",
                 modeBrutal: "BRUTAL",
+                toneDescSoft: "Exploración empática — observa patrones sin juzgar.",
+                toneDescBrutal: "Diagnóstico directo — sin rodeos, sin filtros.",
+                hintLabel: "Protocolo activo",
+                shortcut: "⌘ + Enter",
+                outputLabel: "Salida del protocolo",
+                outputEmpty: "El análisis aparecerá aquí. Describe tu situación con el mayor detalle posible — la calidad del input determina la calidad del protocolo.",
+                outputProcessing: "Procesando con IA...",
+                errEmpty: "Escribe algo para que el protocolo pueda analizar.",
+                errLong: "Texto demasiado largo. Máximo 8,000 caracteres.",
+                errConnect: "❌ Error al conectar. Intenta de nuevo.",
                 modules: {
-                    clarity: { title: "01. Clarity Protocol", desc: "Analyze and refine your thinking", workTitle: "Protocolo de Claridad", workDesc: "Análisis estructurado de intención y debilidades lógicas." },
-                    hygiene: { title: "02. Decision Hygiene", desc: "Evaluate risks and biases", workTitle: "Higiene Decisional", workDesc: "Evaluación de riesgos, sesgos y umbrales decisionales." }
+                    clarity: {
+                        title: "01. Clarity Protocol",
+                        desc: "Analiza y refina tu pensamiento",
+                        workTitle: "Clarity Protocol",
+                        workDesc: "Análisis estructurado de intención y debilidades lógicas",
+                        hint: "Para cuando tienes la decisión en la cabeza pero no puedes verla con claridad.",
+                        placeholder: "Quiero dejar mi trabajo estable para lanzar mi negocio, pero tengo deudas y una familia que depende de mí. He estado posponiendo esta decisión por dos años. No sé si estoy siendo responsable o si simplemente tengo miedo de fallar. El salario actual me alcanza, pero siento que el tiempo que le doy a ese trabajo es tiempo que le robo a algo que sí me importa..."
+                    },
+                    hygiene: {
+                        title: "02. Decision Hygiene",
+                        desc: "Evalúa riesgos y sesgos",
+                        workTitle: "Decision Hygiene",
+                        workDesc: "Evaluación de riesgos, sesgos y umbrales decisionales",
+                        hint: "Para cuando la lógica suena bien pero algo no cuadra.",
+                        placeholder: "Estoy considerando invertir mis ahorros de emergencia en cripto porque todos en mi círculo lo están haciendo y los retornos del último trimestre parecen seguros. Mi socio dice que si no entramos ahora perdemos el momento. Siento urgencia pero también incomodidad que no sé nombrar. Los números convencen, pero algo no se siente bien..."
+                    }
                 }
             },
             en: {
                 back: "← BACK TO ANDRESRAMIREZ.PRO",
                 mainTitle: "Clarity Lab",
-                mainSubtitle: "MENTAL ARCHITECTURE FOR COMPLEX DECISIONS",
+                mainSubtitle: "Mental architecture for complex decisions",
                 labelModules: "MODULES",
                 btnAnalyze: "ANALYZE",
-                ready: "Ready to analyze.",
+                btnAnalyzing: "ANALYZING...",
                 toneLabel: "TONE:",
                 modeSoft: "SOFT",
                 modeBrutal: "BRUTAL",
+                toneDescSoft: "Empathic exploration — observes patterns without judgment.",
+                toneDescBrutal: "Direct diagnosis — no filters, no padding.",
+                hintLabel: "Active protocol",
+                shortcut: "⌘ + Enter",
+                outputLabel: "Protocol output",
+                outputEmpty: "Analysis will appear here. Describe your situation in as much detail as possible — the quality of the input determines the quality of the protocol.",
+                outputProcessing: "Processing with AI...",
+                errEmpty: "Write something for the protocol to analyze.",
+                errLong: "Text too long. Maximum 8,000 characters.",
+                errConnect: "❌ Connection error. Please try again.",
                 modules: {
-                    clarity: { title: "01. Clarity Protocol", desc: "Analyze and refine your thinking", workTitle: "Clarity Protocol", workDesc: "Structured analysis of intention and logical weaknesses." },
-                    hygiene: { title: "02. Decision Hygiene", desc: "Evaluate risks and biases", workTitle: "Decision Hygiene", workDesc: "Risk, bias and decision threshold evaluation." }
+                    clarity: {
+                        title: "01. Clarity Protocol",
+                        desc: "Analyze and refine your thinking",
+                        workTitle: "Clarity Protocol",
+                        workDesc: "Structured analysis of intention and logical weaknesses",
+                        hint: "For when the decision is in your head but you can't see it clearly.",
+                        placeholder: "I want to leave my stable job to launch my business, but I have debt and a family depending on me. I've been postponing this decision for two years. I don't know if I'm being responsible or if I'm simply afraid to fail. My current salary covers expenses, but the time I give that job feels like time stolen from something that actually matters..."
+                    },
+                    hygiene: {
+                        title: "02. Decision Hygiene",
+                        desc: "Evaluate risks and biases",
+                        workTitle: "Decision Hygiene",
+                        workDesc: "Risk, bias and decision threshold evaluation",
+                        hint: "For when the logic sounds right but something doesn't add up.",
+                        placeholder: "I'm considering investing my emergency savings in crypto because everyone in my circle is doing it and last quarter's returns seem reliable. My partner says if we don't enter now we'll miss the window. I feel urgency but also discomfort I can't name. The numbers convince me, but something doesn't feel right..."
+                    }
                 }
             }
         };
 
+        /* ── LANGUAGE ── */
         function setLanguage(lang) {
             currentLanguage = lang;
             document.getElementById('lang-es').classList.toggle('active', lang === 'es');
@@ -239,16 +497,76 @@
             updateUI();
         }
 
+        /* ── MODULE SELECTION ── */
+        function selectModule(module, btnElement) {
+            currentModule = module;
+            document.querySelectorAll('.module-btn').forEach(b => b.classList.remove('active'));
+            if (btnElement) btnElement.classList.add('active');
+            updateUI();
+            // Reset output to empty state when switching modules
+            renderEmptyOutput();
+            document.getElementById('user-input').value = '';
+            updateCharCounter();
+        }
+
+        /* ── TONE ── */
+        function toggleTone() {
+            currentResponseMode = currentResponseMode === 'soft' ? 'brutal' : 'soft';
+            updateToneUI();
+        }
+
+        function updateToneUI() {
+            const ui = i18n[currentLanguage];
+            const btn = document.getElementById('mode-toggle');
+            const desc = document.getElementById('tone-desc');
+            const isBrutal = currentResponseMode === 'brutal';
+            btn.textContent = isBrutal ? ui.modeBrutal : ui.modeSoft;
+            btn.classList.toggle('brutal', isBrutal);
+            desc.textContent = isBrutal ? ui.toneDescBrutal : ui.toneDescSoft;
+        }
+
+        /* ── CHAR COUNTER ── */
+        function updateCharCounter() {
+            const count = document.getElementById('user-input').value.length;
+            const counter = document.getElementById('char-counter');
+            counter.textContent = `${count.toLocaleString()} / 8,000`;
+            counter.classList.remove('warn', 'danger');
+            if (count > 7000) counter.classList.add('danger');
+            else if (count > 5500) counter.classList.add('warn');
+        }
+
+        /* ── KEYBOARD SHORTCUT ── */
+        function handleKeydown(e) {
+            if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+                e.preventDefault();
+                analyzeText();
+            }
+        }
+
+        /* ── RENDER EMPTY OUTPUT ── */
+        function renderEmptyOutput() {
+            const ui = i18n[currentLanguage];
+            document.getElementById('output').innerHTML = `
+                <div class="output-empty">
+                    <span class="empty-label" id="output-label">${ui.outputLabel}</span>
+                    <p id="output-placeholder-text">${ui.outputEmpty}</p>
+                </div>`;
+        }
+
+        /* ── MAIN UPDATE ── */
         function updateUI() {
             const ui = i18n[currentLanguage];
             const mod = ui.modules[currentModule];
-            
-            document.querySelector('.back-link').textContent = ui.back;
+
+            document.getElementById('back-link').textContent = ui.back;
             document.getElementById('main-title').textContent = ui.mainTitle;
             document.getElementById('main-subtitle').textContent = ui.mainSubtitle;
             document.getElementById('label-modules').textContent = ui.labelModules;
             document.getElementById('btn-analyze').textContent = ui.btnAnalyze;
             document.getElementById('label-tone').textContent = ui.toneLabel;
+            document.getElementById('hint-label').textContent = ui.hintLabel;
+            document.getElementById('hint-text').textContent = mod.hint;
+            document.getElementById('shortcut-hint').textContent = ui.shortcut;
 
             document.getElementById('workspace-title').textContent = mod.workTitle;
             document.getElementById('workspace-desc').textContent = mod.workDesc;
@@ -258,56 +576,46 @@
             document.getElementById('m2-title').textContent = ui.modules.hygiene.title;
             document.getElementById('m2-desc').textContent = ui.modules.hygiene.desc;
 
-            updateModeButton();
+            // Placeholder
+            document.getElementById('user-input').placeholder = mod.placeholder;
+
+            updateToneUI();
+
+            // Update output empty state if still in empty state
+            const outputEl = document.getElementById('output');
+            if (outputEl.querySelector('.output-empty')) renderEmptyOutput();
         }
 
-        function updateModeButton() {
-            const btn = document.getElementById('mode-toggle');
-            const ui = i18n[currentLanguage];
-            btn.textContent = currentResponseMode === 'soft' ? ui.modeSoft : ui.modeBrutal;
-        }
-
-        function selectModule(module, btnElement) {
-            currentModule = module;
-            updateUI();
-            document.querySelectorAll('.module-btn').forEach(b => b.classList.remove('active'));
-            if (btnElement) btnElement.classList.add('active');
-        }
-
-        function toggleTone() {
-            currentResponseMode = currentResponseMode === 'soft' ? 'brutal' : 'soft';
-            updateModeButton();
-            const btn = document.getElementById('mode-toggle');
-            btn.style.background = currentResponseMode === 'brutal' ? 'var(--ink)' : '#EEEBE6';
-            btn.style.color = currentResponseMode === 'brutal' ? 'white' : 'var(--ink)';
-        }
-
+        /* ── ANALYZE ── */
         async function analyzeText() {
             const text = document.getElementById('user-input').value.trim();
             const btn = document.getElementById('btn-analyze');
             const output = document.getElementById('output');
             const errorDiv = document.getElementById('error-debug');
+            const ui = i18n[currentLanguage];
+
+            errorDiv.style.display = 'none';
+            errorDiv.innerHTML = '';
 
             if (!text) {
-                output.innerHTML = `<span style="color:#c00;">Por favor escribe algo para analizar.</span>`;
+                output.innerHTML = `<span style="color:#c00; font-family:'DM Mono'; font-size:12px;">${ui.errEmpty}</span>`;
                 return;
             }
             if (text.length > 8000) {
-                output.innerHTML = `<span style="color:#c00;">El texto es demasiado largo (máximo 8000 caracteres).</span>`;
+                output.innerHTML = `<span style="color:#c00; font-family:'DM Mono'; font-size:12px;">${ui.errLong}</span>`;
                 return;
             }
 
-            errorDiv.style.display = 'none';
             btn.disabled = true;
-            btn.innerHTML = `<span class="spinner"></span> ANALIZANDO...`;
-            output.innerHTML = `<em>${currentLanguage === 'es' ? 'Procesando con IA...' : 'Processing with AI...'}</em>`;
+            btn.innerHTML = `<span class="spinner"></span>${ui.btnAnalyzing}`;
+            output.innerHTML = `<em style="font-family:'Cormorant Garamond'; font-style:italic; color:var(--sand); font-size:1.1rem;">${ui.outputProcessing}</em>`;
 
             try {
                 const response = await fetch('/api/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        text: text,
+                        text,
                         language: currentLanguage,
                         responseMode: currentResponseMode,
                         module: currentModule
@@ -315,29 +623,34 @@
                 });
 
                 let data;
-                try { data = await response.json(); } catch (e) { throw new Error('El servidor no devolvió una respuesta válida'); }
+                try { data = await response.json(); } catch (e) { throw new Error('El servidor no devolvió una respuesta válida.'); }
 
                 if (!response.ok || !data.success) {
                     throw new Error(data.error || `Error del servidor (${response.status})`);
                 }
 
-                output.innerHTML = `<p style="white-space: pre-wrap; line-height: 1.7;">${data.response}</p>`;
+                const moduleName = i18n[currentLanguage].modules[currentModule].workTitle.toUpperCase();
+                output.innerHTML = `
+                    <div class="output-result">
+                        <span class="result-label">${moduleName} — ${currentResponseMode === 'soft' ? ui.modeSoft : ui.modeBrutal}</span>
+                        ${data.response}
+                    </div>`;
 
             } catch (err) {
                 console.error(err);
                 errorDiv.innerHTML = `
-                    <strong>🚨 ERROR DETECTADO EN EL LABORATORIO</strong><br><br>
+                    <strong>🚨 ERROR EN EL LABORATORIO</strong><br><br>
                     ${err.message}<br><br>
-                    <small>🔍 Copia este mensaje completo si me lo quieres mandar.</small>
-                `;
+                    <small>Copia este mensaje completo si necesitas reportarlo.</small>`;
                 errorDiv.style.display = 'block';
-                output.innerHTML = `<span style="color:#c00;">${currentLanguage === 'es' ? '❌ Error al conectar con OpenAI' : '❌ OpenAI connection error'}</span>`;
+                output.innerHTML = `<span style="color:#c00; font-family:'DM Mono'; font-size:12px;">${ui.errConnect}</span>`;
             } finally {
                 btn.disabled = false;
-                btn.innerHTML = currentLanguage === 'es' ? 'ANALIZAR' : 'ANALYZE';
+                btn.innerHTML = ui.btnAnalyze;
             }
         }
 
+        // Init
         updateUI();
     </script>
 </body>
