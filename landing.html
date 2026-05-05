@@ -1,332 +1,1097 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>El Protocolo de la Claridad — Self Love Club</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Instrument+Sans:wght@400;500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-  <style>
-    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-    :root{--p:#F7F4EF;--ink:#1A1814;--amber:#8B6F4E;--sand:#C4A882;--line:1px solid rgba(26,24,20,0.1);--la:1px solid rgba(139,111,78,0.18)}
-    html{scroll-behavior:smooth}
-    body{background:var(--p);color:var(--ink);font-family:'Instrument Sans',sans-serif;font-size:15px;line-height:1.6}
-    .lang-bar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:.85rem 5%;background:rgba(247,244,239,.96);border-bottom:var(--line);backdrop-filter:blur(14px)}
-    .lang-brand{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2.5px;color:var(--amber);text-transform:uppercase}
-    .lang-btns{display:flex;gap:.3rem}
-    .lang-btn{font-family:'DM Mono',monospace;font-size:11px;background:none;border:none;color:var(--sand);cursor:pointer;padding:.3rem .6rem;transition:color .2s}
-    .lang-btn.active{color:var(--amber);border-bottom:1px solid var(--amber)}
-    .hero{min-height:100vh;padding-top:52px;display:grid;grid-template-columns:55% 45%}
-    .hero-left{display:flex;flex-direction:column;justify-content:center;padding:5rem 7% 4rem 8%}
-    .eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--amber);text-transform:uppercase;margin-bottom:2rem;display:flex;align-items:center;gap:1rem}
-    .eyebrow::after{content:'';flex:1;max-width:60px;height:1px;background:var(--sand);opacity:.35}
-    h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(2.4rem,4.5vw,3.6rem);font-weight:300;line-height:1.08;letter-spacing:-.02em;margin-bottom:1.8rem}
-    h1 em{font-style:normal;color:var(--amber)}
-    .hero-desc{font-size:14px;line-height:1.9;color:var(--ink);opacity:.72;max-width:440px;margin-bottom:3rem}
-    .buy-block{display:flex;flex-direction:column;gap:1.1rem}
-    .price-row{display:flex;align-items:baseline;gap:1.2rem}
-    .price-num{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:3rem;font-weight:300;color:var(--ink)}
-    .price-meta{display:flex;flex-direction:column;gap:.15rem}
-    .price-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--amber);text-transform:uppercase}
-    .price-note{font-family:'DM Mono',monospace;font-size:10px;color:var(--sand)}
-    .btn-buy{display:inline-flex;align-items:center;gap:1.2rem;padding:.95rem 2.2rem;background:var(--ink);color:var(--p);font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;border:1px solid var(--ink);cursor:pointer;transition:all .3s;max-width:fit-content}
-    .btn-buy:hover{background:transparent;color:var(--ink)}
-    .btn-buy .arr,.btn-buy-inv .arr{transition:transform .25s}
-    .btn-buy:hover .arr,.btn-buy-inv:hover .arr{transform:translateX(4px)}
-    .access-note{font-family:'DM Mono',monospace;font-size:10px;color:var(--sand);letter-spacing:.3px}
-    .hero-right{position:relative;overflow:hidden;border-left:var(--line)}
-    .hero-right img{width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block}
-    .hero-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(247,244,239,.1) 0%,transparent 30%);pointer-events:none}
-    .hero-badge{position:absolute;bottom:2.5rem;left:2rem;background:rgba(247,244,239,.93);padding:.9rem 1.3rem;backdrop-filter:blur(8px);border-left:3px solid var(--amber)}
-    .badge-sub{font-family:'DM Mono',monospace;font-size:9px;color:var(--amber);letter-spacing:2px;text-transform:uppercase;margin-bottom:.2rem}
-    .badge-main{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:var(--ink)}
-    .rule{height:1px;background:rgba(26,24,20,.08);margin:0 5%}
-    .sec{padding:5rem 8%;max-width:1300px;margin:0 auto}
-    .sec-white{padding:5rem 8%;background:white}
-    .sec-white .inner{max-width:1300px;margin:0 auto}
-    .sec-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--amber);text-transform:uppercase;margin-bottom:2.5rem;display:flex;align-items:center;gap:1rem}
-    .sec-label::after{content:'';width:40px;height:1px;background:var(--sand);opacity:.35}
-    h2{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:2rem;font-weight:300;color:var(--ink);margin-bottom:1rem;line-height:1.2}
-    .sec-body{font-size:14px;line-height:1.9;color:var(--ink);opacity:.72;max-width:560px}
-    .includes-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:3rem;border-top:var(--line)}
-    .inc-item{padding:1.6rem 0;border-bottom:var(--line);display:flex;gap:1.2rem;align-items:flex-start;transition:background .2s}
-    .inc-item:hover{background:rgba(139,111,78,.02)}
-    .inc-item:nth-child(odd){padding-right:3rem;border-right:var(--line)}
-    .inc-item:nth-child(even){padding-left:3rem}
-    .inc-marker{width:4px;height:4px;border-radius:50%;background:var(--amber);flex-shrink:0;margin-top:.55rem}
-    .inc-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;margin-bottom:.25rem}
-    .inc-desc{font-size:11px;color:var(--ink);opacity:.5;font-family:'DM Mono',monospace;letter-spacing:.2px;line-height:1.5}
-    .modules-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:var(--line);border-left:var(--line);margin-top:3rem}
-    .mod-card{padding:1.4rem 1.6rem;border-right:var(--line);border-bottom:var(--line);display:flex;gap:1.2rem;align-items:flex-start;transition:background .2s;cursor:default}
-    .mod-card:hover{background:rgba(139,111,78,.025)}
-    .mod-num{font-family:'DM Mono',monospace;font-size:9px;color:var(--amber);letter-spacing:1px;flex-shrink:0;padding-top:.25rem;min-width:28px}
-    .mod-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;margin-bottom:.2rem}
-    .mod-desc{font-size:11px;color:var(--ink);opacity:.48;font-family:'DM Mono',monospace;line-height:1.4}
-    .finitud-sec{padding:6rem 8%}
-    .finitud-inner{max-width:860px;margin:0 auto;border-left:3px solid var(--amber);padding:3.5rem 4rem;background:rgba(139,111,78,.02)}
-    .finitud-text{font-size:1rem;line-height:1.95;color:var(--ink);opacity:.78;margin-bottom:1.5rem}
-    .finitud-note{font-family:'DM Mono',monospace;font-size:11px;color:var(--amber);letter-spacing:.5px;line-height:1.6}
-    .author-sec{display:grid;grid-template-columns:1fr 1fr;border-top:var(--line)}
-    .author-img{position:relative;overflow:hidden;min-height:520px}
-    .author-img img{width:100%;height:100%;object-fit:cover;object-position:center 18%}
-    .author-img-ov{position:absolute;inset:0;background:linear-gradient(to left,rgba(247,244,239,.1) 0%,transparent 50%)}
-    .author-body{display:flex;flex-direction:column;justify-content:center;padding:5rem 7% 5rem 6%;border-left:var(--line)}
-    .author-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:2rem;font-weight:300;margin-bottom:.4rem}
-    .author-role{font-family:'DM Mono',monospace;font-size:9px;color:var(--amber);letter-spacing:3px;text-transform:uppercase;margin-bottom:2rem}
-    .author-bio{font-size:14px;line-height:1.9;color:var(--ink);opacity:.72;margin-bottom:2.5rem}
-    .author-tags{display:flex;flex-wrap:wrap;gap:.5rem}
-    .tag{font-family:'DM Mono',monospace;font-size:10px;padding:.3rem .85rem;border:var(--la);color:var(--amber);letter-spacing:.3px}
-    .cta-bottom{padding:6rem 8%;background:var(--ink);color:var(--p);display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.8rem}
-    .cta-bottom .sec-label{color:rgba(196,168,130,.5);margin-bottom:0;justify-content:center}
-    .cta-bottom .sec-label::after{display:none}
-    .cta-bottom h2{color:var(--p);font-size:2.4rem;margin-bottom:0}
-    .cta-bottom .hero-desc{color:rgba(247,244,239,.6);margin-bottom:0;max-width:460px}
-    .cta-bottom .price-num{color:var(--p)}
-    .cta-bottom .price-label{color:var(--sand);opacity:.7}
-    .cta-bottom .price-note{color:rgba(247,244,239,.35)}
-    .btn-buy-inv{display:inline-flex;align-items:center;gap:1.2rem;padding:.95rem 2.6rem;background:var(--p);color:var(--ink);font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;border:1px solid var(--p);cursor:pointer;transition:all .3s}
-    .btn-buy-inv:hover{background:var(--sand);border-color:var(--sand);color:var(--p)}
-    .cta-bottom .access-note{color:rgba(247,244,239,.3)}
-    footer{padding:2.5rem 8%;background:white;display:flex;justify-content:space-between;align-items:center;border-top:var(--line);flex-wrap:wrap;gap:1rem}
-    .f-brand{font-family:'DM Mono',monospace;font-size:10px;color:var(--amber);letter-spacing:2px;text-transform:uppercase;margin-bottom:.2rem}
-    .f-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem}
-    .footer-links{display:flex;gap:2rem}
-    .footer-links a{font-family:'DM Mono',monospace;font-size:10px;color:var(--ink);text-decoration:none;opacity:.45;transition:opacity .2s}
-    .footer-links a:hover{opacity:1;color:var(--amber)}
-    [data-lang]{display:none}
-    [data-lang].active{display:inline}
-    @media(max-width:900px){
-      .hero{grid-template-columns:1fr}
-      .hero-right{min-height:65vw;border-left:none;border-top:var(--line)}
-      .hero-left{padding:4rem 5% 3rem}
-      .includes-grid{grid-template-columns:1fr}
-      .inc-item:nth-child(odd){border-right:none;padding-right:0}
-      .inc-item:nth-child(even){padding-left:0}
-      .modules-grid{grid-template-columns:1fr}
-      .author-sec{grid-template-columns:1fr}
-      .author-img{min-height:65vw}
-      .author-body{padding:3rem 5%;border-left:none;border-top:var(--line)}
-      .finitud-inner{padding:2.5rem 2rem}
-      .sec{padding:4rem 5%}
-      .sec-white{padding:4rem 5%}
-      footer{padding:2.5rem 5%}
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Clarity Protocol — Self Love Club</title>
+<meta name="description" content="A closed system of 10 modules applying economics, human behavior, and systems architecture to decision design. Andrés Ramírez." />
 
-    /* ── PRINT ── */
-    @page { margin: 20mm; }
-    @media print {
-      .lang-bar, footer { display: none !important; }
-      .hero { min-height: auto; padding-top: 0; }
-      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Instrument+Sans:wght@400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
 
-    @media (max-width: 900px) {
-      .hero-right { min-height: 65vw; }
-      .hero-overlay { background: linear-gradient(to top, rgba(247,244,239,0.3) 0%, transparent 40%); }
-      .author-img-ov { background: linear-gradient(to top, rgba(247,244,239,0.2) 0%, transparent 40%); }
-      .hero-badge { bottom: 1rem; left: 1rem; }
-    }
-  </style>
+<script src="https://assets.gumroad.com/js/gumroad.js"></script>
+
+<style>
+  :root {
+    --parchment: #F7F4EF;
+    --ink:       #1A1814;
+    --amber:     #8B6F4E;
+    --sand:      #C4A882;
+    --rule:      rgba(26,24,20,0.14);
+    --rule-strong: rgba(26,24,20,0.28);
+    --font-display: "Cormorant Garamond", "Times New Roman", serif;
+    --font-body:    "Instrument Sans", -apple-system, sans-serif;
+    --font-mono:    "DM Mono", "Courier New", monospace;
+    --max:    1180px;
+    --gutter: 6vw;
+  }
+
+  *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--parchment);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.65;
+    letter-spacing: 0.005em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  ::selection { background: var(--ink); color: var(--parchment); }
+  a { color: inherit; text-decoration: none; }
+
+  /* I18N TOGGLE */
+  [data-lang] { display: none; }
+  [data-lang].active { display: inline; }
+
+  .container { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+  .meta {
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+    opacity: 0.6;
+  }
+  .section { padding: 12vh 0; border-top: 1px solid var(--rule); }
+  .section:first-of-type { border-top: 0; }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(247,244,239,0.92);
+    border-bottom: 1px solid var(--rule);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  .nav-inner {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px var(--gutter); max-width: var(--max); margin: 0 auto; gap: 16px;
+  }
+  .nav-brand {
+    font-family: var(--font-mono);
+    font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+  }
+  .nav-brand em {
+    font-family: var(--font-display);
+    font-style: italic; text-transform: none; letter-spacing: 0;
+    font-size: 14px; color: var(--amber);
+  }
+  .nav-right { display: flex; align-items: center; gap: 18px; }
+
+  .lang-btns { display: flex; border: 1px solid var(--rule-strong); }
+  .lang-btn {
+    background: none; border: 0; cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 10px; letter-spacing: 0.18em;
+    padding: 7px 11px; color: var(--ink); opacity: 0.5;
+    transition: all .25s;
+  }
+  .lang-btn + .lang-btn { border-left: 1px solid var(--rule-strong); }
+  .lang-btn.active { background: var(--ink); color: var(--parchment); opacity: 1; }
+  .lang-btn:hover:not(.active) { opacity: 1; }
+
+  .nav-cta {
+    font-family: var(--font-mono);
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    padding: 9px 18px; border: 1px solid var(--ink);
+    transition: all .25s ease;
+  }
+  .nav-cta:hover { background: var(--ink); color: var(--parchment); }
+
+  @media (max-width: 540px) {
+    .nav-brand { font-size: 9px; letter-spacing: 0.18em; }
+    .nav-brand em { font-size: 12px; }
+    .nav-cta { padding: 8px 12px; font-size: 10px; }
+    .lang-btn { padding: 7px 9px; }
+    .nav-right { gap: 10px; }
+  }
+
+  /* HERO */
+  .hero {
+    padding: 14vh var(--gutter);
+    position: relative; border-top: 0;
+    max-width: var(--max); margin: 0 auto;
+  }
+  .hero-meta {
+    display: flex; justify-content: space-between;
+    margin-bottom: 8vh; padding-bottom: 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .hero-num {
+    font-family: var(--font-display); font-style: italic;
+    font-size: clamp(120px, 22vw, 280px);
+    line-height: 0.85;
+    color: var(--sand); opacity: 0.55;
+    letter-spacing: -0.04em;
+    position: absolute; right: var(--gutter); top: 18vh;
+    pointer-events: none; user-select: none; z-index: 0;
+  }
+  .hero-content { position: relative; z-index: 1; }
+  .hero h1 {
+    font-family: var(--font-display); font-weight: 400;
+    font-size: clamp(44px, 7.5vw, 96px);
+    line-height: 1.02; letter-spacing: -0.025em;
+    margin: 4vh 0 5vh; max-width: 14ch;
+  }
+  .hero h1 em { font-style: italic; color: var(--amber); }
+  .hero-sub {
+    font-size: clamp(17px, 1.6vw, 21px);
+    line-height: 1.55; max-width: 52ch;
+    margin-bottom: 6vh; color: var(--ink); opacity: 0.82;
+  }
+  .hero-actions { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-block;
+    background: var(--ink); color: var(--parchment);
+    font-family: var(--font-mono);
+    font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase;
+    padding: 18px 36px;
+    transition: all .3s ease;
+    border: 1px solid var(--ink); cursor: pointer;
+  }
+  .btn-primary:hover { background: transparent; color: var(--ink); }
+  .price-tag {
+    font-family: var(--font-mono);
+    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+    opacity: 0.55;
+  }
+
+  /* SECTION HEADERS */
+  .sec-label { display: flex; align-items: baseline; gap: 18px; margin-bottom: 6vh; }
+  .sec-label .num {
+    font-family: var(--font-mono);
+    font-size: 11px; letter-spacing: 0.22em; color: var(--amber);
+  }
+  .sec-label .name {
+    font-family: var(--font-mono);
+    font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+    opacity: 0.7;
+  }
+  .sec-h {
+    font-family: var(--font-display); font-weight: 400;
+    font-size: clamp(34px, 4.6vw, 58px);
+    line-height: 1.08; letter-spacing: -0.02em;
+    max-width: 22ch; margin-bottom: 5vh;
+  }
+  .sec-h em { font-style: italic; color: var(--amber); }
+  .sec-body { font-size: 17px; line-height: 1.7; max-width: 58ch; opacity: 0.85; }
+  .sec-body p + p { margin-top: 1.4em; }
+
+  /* PROBLEM */
+  .problem-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 8vw; align-items: start; }
+  @media (max-width: 800px) { .problem-grid { grid-template-columns: 1fr; gap: 4vh; } }
+  .problem-statements { display: flex; flex-direction: column; gap: 4vh; }
+  .problem-item { padding-left: 22px; border-left: 1px solid var(--rule-strong); }
+  .problem-item p {
+    font-family: var(--font-display);
+    font-style: italic; font-weight: 400;
+    font-size: clamp(20px, 2vw, 26px);
+    line-height: 1.35;
+  }
+  .problem-item .meta { display: block; margin-bottom: 8px; }
+
+  /* SHIFT */
+  .shift { padding: 18vh 0; }
+  .shift .sec-label { margin-bottom: 8vh; }
+  .shift-statement {
+    font-family: var(--font-display); font-weight: 400; font-style: italic;
+    font-size: clamp(38px, 6.2vw, 86px);
+    line-height: 1.05; letter-spacing: -0.02em;
+    max-width: 18ch;
+  }
+  .shift-statement .accent { color: var(--amber); font-style: italic; }
+  .shift-tail { margin-top: 6vh; max-width: 52ch; font-size: 17px; line-height: 1.65; opacity: 0.78; }
+
+  /* SYSTEM */
+  .system-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8vw; align-items: start; }
+  @media (max-width: 800px) { .system-grid { grid-template-columns: 1fr; gap: 5vh; } }
+  .system-defs { border-top: 1px solid var(--rule); }
+  .system-def {
+    padding: 24px 0; border-bottom: 1px solid var(--rule);
+    display: grid; grid-template-columns: 80px 1fr; gap: 18px; align-items: baseline;
+  }
+  .system-def .key {
+    font-family: var(--font-mono);
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--amber);
+  }
+  .system-def .val {
+    font-family: var(--font-display); font-style: italic;
+    font-size: 22px; line-height: 1.3;
+  }
+  .system-def .note {
+    font-family: var(--font-body);
+    font-size: 14px; opacity: 0.7; margin-top: 6px; line-height: 1.5;
+  }
+
+  /* MODULES */
+  .modules { border-top: 1px solid var(--ink); }
+  .module {
+    display: grid; grid-template-columns: 80px 1fr auto;
+    gap: 24px; padding: 24px 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: baseline; transition: padding .3s ease;
+  }
+  .module:hover { padding-left: 12px; }
+  .module .num {
+    font-family: var(--font-mono); font-weight: 300;
+    font-size: 14px; letter-spacing: 0.05em; color: var(--amber);
+  }
+  .module .title {
+    font-family: var(--font-display); font-weight: 400; font-style: italic;
+    font-size: clamp(20px, 2vw, 26px); line-height: 1.25;
+  }
+  .module .desc { font-size: 14px; opacity: 0.65; margin-top: 4px; line-height: 1.5; font-style: normal; }
+  .module .tag {
+    font-family: var(--font-mono);
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    opacity: 0.4;
+  }
+  @media (max-width: 600px) {
+    .module { grid-template-columns: 50px 1fr; }
+    .module .tag { display: none; }
+  }
+
+  .deliverables {
+    margin-top: 10vh;
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink);
+  }
+  @media (max-width: 700px) { .deliverables { grid-template-columns: 1fr; } }
+  .deliverable { padding: 32px 28px; border-right: 1px solid var(--rule); }
+  .deliverable:last-child { border-right: 0; }
+  @media (max-width: 700px) {
+    .deliverable { border-right: 0; border-bottom: 1px solid var(--rule); }
+    .deliverable:last-child { border-bottom: 0; }
+  }
+  .deliverable .num {
+    font-family: var(--font-mono);
+    font-size: 11px; letter-spacing: 0.2em; color: var(--amber);
+    display: block; margin-bottom: 14px;
+  }
+  .deliverable .name {
+    font-family: var(--font-display); font-style: italic;
+    font-size: 22px; line-height: 1.25; margin-bottom: 10px;
+  }
+  .deliverable .detail { font-size: 13px; line-height: 1.55; opacity: 0.7; }
+
+  /* AUTHOR */
+  .author { background: #ECE6DC; padding: 14vh 0; }
+  .author-grid {
+    display: grid; grid-template-columns: 1.1fr 1fr;
+    gap: 6vw; align-items: end;
+    max-width: var(--max); margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+  @media (max-width: 800px) { .author-grid { grid-template-columns: 1fr; } }
+  .author-image { position: relative; }
+  .author-image img { display: block; width: 100%; height: auto; }
+  .author-image .img-meta {
+    position: absolute; bottom: 24px; left: 24px;
+    background: var(--parchment); padding: 10px 14px;
+    font-family: var(--font-mono);
+    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+  }
+  .author-text { padding-bottom: 4vh; }
+  .author-text .sec-label { margin-bottom: 4vh; }
+  .author-text h3 {
+    font-family: var(--font-display); font-weight: 400;
+    font-size: clamp(34px, 4vw, 52px);
+    line-height: 1.08; margin-bottom: 4vh; letter-spacing: -0.02em;
+  }
+  .author-text h3 em { font-style: italic; color: var(--amber); }
+  .author-text p { font-size: 16px; line-height: 1.7; opacity: 0.82; max-width: 42ch; }
+  .author-text p + p { margin-top: 1.2em; }
+  .author-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4vh; }
+  .author-tag {
+    font-family: var(--font-mono);
+    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    padding: 6px 12px; border: 1px solid var(--rule-strong);
+  }
+
+  /* TRANSFORMATION */
+  .transformation { padding: 14vh 0; }
+  .trans-list { margin-top: 4vh; }
+  .trans-item {
+    display: grid; grid-template-columns: 60px 1fr;
+    gap: 28px; padding: 32px 0;
+    border-top: 1px solid var(--rule); align-items: baseline;
+  }
+  .trans-item:last-child { border-bottom: 1px solid var(--rule); }
+  .trans-item .num {
+    font-family: var(--font-mono);
+    font-size: 11px; letter-spacing: 0.2em; color: var(--amber);
+  }
+  .trans-item p {
+    font-family: var(--font-display); font-style: italic; font-weight: 400;
+    font-size: clamp(20px, 2.2vw, 28px);
+    line-height: 1.35; max-width: 32ch;
+  }
+
+  /* FINAL CTA */
+  .final { background: var(--ink); color: var(--parchment); padding: 18vh 0; }
+  .final .meta { color: var(--sand); opacity: 1; }
+  .final h2 {
+    font-family: var(--font-display); font-style: italic; font-weight: 400;
+    font-size: clamp(40px, 6vw, 80px);
+    line-height: 1.05; letter-spacing: -0.02em;
+    margin: 5vh 0 6vh; max-width: 16ch;
+  }
+  .final h2 em { color: var(--sand); font-style: italic; }
+  .final-meta {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    margin-bottom: 8vh;
+    border-top: 1px solid rgba(247,244,239,0.18);
+    border-bottom: 1px solid rgba(247,244,239,0.18);
+  }
+  @media (max-width: 700px) { .final-meta { grid-template-columns: 1fr; } }
+  .final-meta div {
+    padding: 24px 20px 24px 0;
+    border-right: 1px solid rgba(247,244,239,0.14);
+  }
+  .final-meta div:last-child { border-right: 0; }
+  @media (max-width: 700px) {
+    .final-meta div { border-right: 0; border-bottom: 1px solid rgba(247,244,239,0.14); padding: 20px 0; }
+    .final-meta div:last-child { border-bottom: 0; }
+  }
+  .final-meta .k {
+    font-family: var(--font-mono);
+    font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--sand); margin-bottom: 8px;
+  }
+  .final-meta .v { font-family: var(--font-display); font-style: italic; font-size: 24px; }
+  .final .btn-primary {
+    background: var(--parchment); color: var(--ink); border-color: var(--parchment);
+  }
+  .final .btn-primary:hover { background: transparent; color: var(--parchment); }
+
+  /* FOOTER */
+  footer { padding: 40px var(--gutter); border-top: 1px solid var(--rule); background: var(--parchment); }
+  .footer-inner {
+    max-width: var(--max); margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 20px;
+  }
+  .footer-inner .meta { opacity: 0.5; }
+  .footer-links { display: flex; gap: 22px; }
+  .footer-links a {
+    font-family: var(--font-mono);
+    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    opacity: 0.55; transition: opacity .25s, color .25s;
+  }
+  .footer-links a:hover { opacity: 1; color: var(--amber); }
+
+  /* REVEAL */
+  .reveal {
+    opacity: 0; transform: translateY(18px);
+    transition: opacity 1.1s cubic-bezier(0.2, 0.7, 0.2, 1), transform 1.1s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    html { scroll-behavior: auto; }
+  }
+
+  /* PRINT */
+  @page { margin: 20mm; }
+  @media print {
+    .nav, footer { display: none !important; }
+    .reveal { opacity: 1; transform: none; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+
 </head>
 <body>
 
-<nav class="lang-bar">
-  <span class="lang-brand">Self Love Club</span>
-  <div class="lang-btns">
-    <button class="lang-btn active" onclick="setLang('es')">ES</button>
-    <button class="lang-btn" onclick="setLang('en')">EN</button>
+<!-- NAV -->
+
+<nav class="nav">
+  <div class="nav-inner">
+    <span class="nav-brand">Self&nbsp;Love&nbsp;Club · <em>Protocolo</em></span>
+    <div class="nav-right">
+      <div class="lang-btns" role="group" aria-label="Language">
+        <button class="lang-btn active" type="button" onclick="setLang('es')">ES</button>
+        <button class="lang-btn" type="button" onclick="setLang('en')">EN</button>
+      </div>
+      <a class="nav-cta" href="#cta">
+        <span data-lang="es" class="active">Acceder</span>
+        <span data-lang="en">Access</span>
+      </a>
+    </div>
   </div>
 </nav>
 
-<section class="hero">
-  <div class="hero-left">
-    <p class="eyebrow">
-      <span data-lang="es" class="active">Self Love Club &mdash; Nivel 02</span>
-      <span data-lang="en">Self Love Club &mdash; Level 02</span>
-    </p>
-    <h1>
-      <span data-lang="es" class="active">El Protocolo<br>de la <em>Claridad</em></span>
-      <span data-lang="en">The Clarity<br><em>Protocol</em></span>
+<!-- 1 · HERO -->
+
+<header class="hero">
+  <div class="hero-meta">
+    <span class="meta">
+      <span data-lang="es" class="active">Self Love Club · Nivel 02</span>
+      <span data-lang="en">Self Love Club · Level 02</span>
+    </span>
+    <span class="meta">MMXXVI</span>
+  </div>
+
+  <div class="hero-num">00</div>
+
+  <div class="hero-content">
+    <span class="meta reveal">The Clarity Protocol</span>
+    <h1 class="reveal">
+      <span data-lang="es" class="active">No es coaching.<br>Es <em>arquitectura</em><br>de decisiones.</span>
+      <span data-lang="en">Not coaching.<br><em>Decision</em><br>architecture.</span>
     </h1>
-    <p class="hero-desc">
-      <span data-lang="es" class="active">Un sistema de 10 m&oacute;dulos que aplica econom&iacute;a, termodin&aacute;mica y arquitectura de sistemas a las decisiones cotidianas. Sin promesas. Solo marcos operativos que explican por qu&eacute; decides lo que decides.</span>
-      <span data-lang="en">A 10-module system applying economics, thermodynamics, and systems architecture to everyday decisions. No promises. Only operational frameworks that explain why you decide what you decide.</span>
+    <p class="hero-sub reveal">
+      <span data-lang="es" class="active">Un sistema cerrado de 10 módulos que aplica economía, comportamiento humano y arquitectura de sistemas al diseño de decisiones cotidianas.</span>
+      <span data-lang="en">A closed system of 10 modules applying economics, human behavior, and systems architecture to the design of everyday decisions.</span>
     </p>
-    <div class="buy-block">
-      <div class="price-row">
-        <span class="price-num">$49</span>
-        <div class="price-meta">
-          <span class="price-label"><span data-lang="es" class="active">Precio de acceso</span><span data-lang="en">Access price</span></span>
-          <span class="price-note"><span data-lang="es" class="active">acceso de por vida &middot; un solo pago</span><span data-lang="en">lifetime access &middot; one-time payment</span></span>
-        </div>
-      </div>
-      <button class="btn-buy" onclick="handleBuy()">
+    <div class="hero-actions reveal">
+      <a class="btn-primary" href="https://andresramirez.gumroad.com/l/clarity-protocol">
         <span data-lang="es" class="active">Acceder al Protocolo</span>
         <span data-lang="en">Access the Protocol</span>
-        <span class="arr">&rarr;</span>
-      </button>
-      <span class="access-note">
-        <span data-lang="es" class="active">Descarga inmediata &middot; Acceso permanente</span>
-        <span data-lang="en">Instant download &middot; Permanent access</span>
+      </a>
+      <span class="price-tag">
+        <span data-lang="es" class="active">$49 · Acceso de por vida</span>
+        <span data-lang="en">$49 · Lifetime access</span>
       </span>
     </div>
   </div>
-  <div class="hero-right">
-    <img src="/assets/images/andres-ramirez-portrait1.jpg" alt="Andr&eacute;s Ram&iacute;rez &mdash; Clarity Strategist" alt="El Protocolo de la Claridad">
-    <div class="hero-overlay"></div>
-    <div class="hero-badge">
-      <div class="badge-sub"><span data-lang="es" class="active">Formato</span><span data-lang="en">Format</span></div>
-      <div class="badge-main"><span data-lang="es" class="active">Documento interactivo &middot; PDF exportable</span><span data-lang="en">Interactive document &middot; Exportable PDF</span></div>
+</header>
+
+<!-- 2 · PROBLEM -->
+
+<section class="section">
+  <div class="container">
+    <div class="sec-label reveal">
+      <span class="num">01</span>
+      <span class="name">
+        <span data-lang="es" class="active">El problema</span>
+        <span data-lang="en">The problem</span>
+      </span>
+    </div>
+    <div class="problem-grid">
+      <h2 class="sec-h reveal">
+        <span data-lang="es" class="active">Decides reaccionando.<br>No por <em>arquitectura.</em></span>
+        <span data-lang="en">You decide by reacting.<br>Not by <em>architecture.</em></span>
+      </h2>
+      <div class="problem-statements">
+        <div class="problem-item reveal">
+          <span class="meta">
+            <span data-lang="es" class="active">Variable 01</span>
+            <span data-lang="en">Variable 01</span>
+          </span>
+          <p>
+            <span data-lang="es" class="active">El ruido informacional excede tu capacidad de filtrado.</span>
+            <span data-lang="en">Information noise exceeds your filtering capacity.</span>
+          </p>
+        </div>
+        <div class="problem-item reveal">
+          <span class="meta">
+            <span data-lang="es" class="active">Variable 02</span>
+            <span data-lang="en">Variable 02</span>
+          </span>
+          <p>
+            <span data-lang="es" class="active">Operas sin marcos propios. Tomas decisiones de alta consecuencia con criterios prestados.</span>
+            <span data-lang="en">You operate without your own frameworks. You make high-consequence decisions on borrowed criteria.</span>
+          </p>
+        </div>
+        <div class="problem-item reveal">
+          <span class="meta">
+            <span data-lang="es" class="active">Variable 03</span>
+            <span data-lang="en">Variable 03</span>
+          </span>
+          <p>
+            <span data-lang="es" class="active">Acumulas contenido. No acumulas claridad.</span>
+            <span data-lang="en">You accumulate content. You don't accumulate clarity.</span>
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<div class="rule"></div>
+<!-- 3 · SHIFT -->
 
-<div class="sec">
-  <p class="sec-label"><span data-lang="es" class="active">La propuesta</span><span data-lang="en">The proposal</span></p>
-  <h2><span data-lang="es" class="active">No es coaching.<br>Es arquitectura de decisiones.</span><span data-lang="en">Not coaching.<br>Decision architecture.</span></h2>
-  <p class="sec-body">
-    <span data-lang="es" class="active">El Protocolo entrega marcos verificables, no consejos. Sistemas de an&aacute;lisis construidos sobre incentivos, restricciones y retorno sobre energ&iacute;a. Cada m&oacute;dulo es aplicable desde el primer encuentro. El protocolo no termina en la lectura.</span>
-    <span data-lang="en">The Protocol delivers verifiable frameworks, not advice. Analysis systems built on incentives, constraints, and return on energy. Each module is applicable from first encounter. The protocol doesn't end at reading.</span>
-  </p>
-  <div class="includes-grid">
-    <div class="inc-item">
-      <div class="inc-marker"></div>
-      <div>
-        <div class="inc-name"><span data-lang="es" class="active">Documento interactivo</span><span data-lang="en">Interactive document</span></div>
-        <div class="inc-desc"><span data-lang="es" class="active">10 m&oacute;dulos con campos de escritura propios por secci&oacute;n</span><span data-lang="en">10 modules with writing fields per section</span></div>
-      </div>
+<section class="section shift">
+  <div class="container">
+    <div class="sec-label reveal">
+      <span class="num">02</span>
+      <span class="name">
+        <span data-lang="es" class="active">El cambio de marco</span>
+        <span data-lang="en">The reframe</span>
+      </span>
     </div>
-    <div class="inc-item">
-      <div class="inc-marker"></div>
-      <div>
-        <div class="inc-name"><span data-lang="es" class="active">Exportaci&oacute;n a PDF</span><span data-lang="en">PDF export</span></div>
-        <div class="inc-desc"><span data-lang="es" class="active">Tu protocolo con tus respuestas, descargable en cualquier momento</span><span data-lang="en">Your protocol with your answers, downloadable anytime</span></div>
-      </div>
-    </div>
-    <div class="inc-item">
-      <div class="inc-marker"></div>
-      <div>
-        <div class="inc-name"><span data-lang="es" class="active">Glosario operativo</span><span data-lang="en">Operational glossary</span></div>
-        <div class="inc-desc"><span data-lang="es" class="active">Definiciones t&eacute;cnicas de cada variable en cada m&oacute;dulo</span><span data-lang="en">Technical definitions of each variable per module</span></div>
-      </div>
-    </div>
-    <div class="inc-item">
-      <div class="inc-marker"></div>
-      <div>
-        <div class="inc-name"><span data-lang="es" class="active">Acceso de por vida</span><span data-lang="en">Lifetime access</span></div>
-        <div class="inc-desc"><span data-lang="es" class="active">Actualizaciones del protocolo sin costo adicional</span><span data-lang="en">Protocol updates at no additional cost</span></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="rule"></div>
-
-<div class="sec-white">
-  <div class="inner">
-    <p class="sec-label"><span data-lang="es" class="active">Los 10 m&oacute;dulos</span><span data-lang="en">The 10 modules</span></p>
-    <h2><span data-lang="es" class="active">Marcos operativos, no consejos.</span><span data-lang="en">Operational frameworks, not advice.</span></h2>
-    <div class="modules-grid">
-      <div class="mod-card"><span class="mod-num">00</span><div><div class="mod-title"><span data-lang="es" class="active">Pr&oacute;logo Estructural</span><span data-lang="en">Structural Prologue</span></div><div class="mod-desc"><span data-lang="es" class="active">Instrucciones de uso del protocolo</span><span data-lang="en">Protocol instructions and framework</span></div></div></div>
-      <div class="mod-card"><span class="mod-num">01</span><div><div class="mod-title"><span data-lang="es" class="active">Autoconocimiento</span><span data-lang="en">Self-Knowledge</span></div><div class="mod-desc"><span data-lang="es" class="active">Variables propias como punto de partida anal&iacute;tico</span><span data-lang="en">Personal variables as analytical starting point</span></div></div></div>
-      <div class="mod-card"><span class="mod-num">02</span><div><div class="mod-title"><span data-lang="es" class="active">Arbitraje Emocional</span><span data-lang="en">Emotional Arbitrage</span></div><div class="mod-desc"><span data-lang="es" class="active">Claridad mientras otros reaccionan</span><span data-lang="en">Clarity while others react</span></div></div></div>
-      <div class="mod-card"><span class="mod-num">03</span><div><div class="mod-title"><span data-lang="es" class="active">Liquidez Cognitiva</span><span data-lang="en">Cognitive Liquidity</span></div><div class="mod-desc"><span data-lang="es" class="active">Separar identidad de decisi&oacute;n en entornos de alto riesgo</span><span data-lang="en">Separating identity from decision under pressure</span></div></div></div>
-      <div class="mod-card"><span class="mod-num">04</span><div><div class="mod-title"><span data-lang="es" class="active">Arquitectura del Silencio</span><span data-lang="en">Architecture of Silence</span></div><div class="mod-desc"><span data-lang="es" class="active">El espacio negativo como variable de decisi&oacute;n</span><span data-lang="en">Negative space as a decision variable</span></div></div></div>
-      <div class="mod-card"><span class="mod-num">05</span><div><div class="mod-title">Kinetic Clarity</div><div class="mod-desc"><span data-lang="es" class="active">El cuerpo como sistema de informaci&oacute;n</span><span data-lang="en">The body as an information system</span></div></div></div>
-      <div class="mod-card"><span class="mod-num">06</span><div><div class="mod-title"><span data-lang="es" class="active">Se&ntilde;al vs Ruido</span><span data-lang="en">Signal vs Noise</span></div><div class="mod-desc"><span data-lang="es" class="active">Filtrar datos relevantes de distracci&oacute;n cognitiva</span><span data-lang="en">Filtering relevant data from cognitive distortion</span></div></div></div>
-      <div class="mod-card"><span class="mod-num">07</span><div><div class="mod-title"><span data-lang="es" class="active">Costo de Oportunidad</span><span data-lang="en">Opportunity Cost</span></div><div class="mod-desc"><span data-lang="es" class="active">Lo que realmente pierdes en cada variable de elecci&oacute;n</span><span data-lang="en">What you actually lose in each choice variable</span></div></div></div>
-      <div class="mod-card"><span class="mod-num">08</span><div><div class="mod-title"><span data-lang="es" class="active">Capacidad Interpretativa</span><span data-lang="en">Interpretive Capacity</span></div><div class="mod-desc"><span data-lang="es" class="active">Leer contexto sin proyecci&oacute;n ni sesgo</span><span data-lang="en">Reading context without projection or bias</span></div></div></div>
-      <div class="mod-card"><span class="mod-num">09</span><div><div class="mod-title"><span data-lang="es" class="active">Claridad como Ventaja</span><span data-lang="en">Clarity as Advantage</span></div><div class="mod-desc"><span data-lang="es" class="active">Convertir el protocolo en diferencial operativo</span><span data-lang="en">Converting the protocol into an operational edge</span></div></div></div>
-      <div class="mod-card"><span class="mod-num">10</span><div><div class="mod-title"><span data-lang="es" class="active">Ep&iacute;logo Operativo</span><span data-lang="en">Operational Epilogue</span></div><div class="mod-desc"><span data-lang="es" class="active">Tu mapa de variables propias. El protocolo no termina aqu&iacute;.</span><span data-lang="en">Your personal variable map. The protocol doesn't end here.</span></div></div></div>
-    </div>
-  </div>
-</div>
-
-<div class="finitud-sec">
-  <div class="finitud-inner">
-    <p class="sec-label"><span data-lang="es" class="active">Por qu&eacute; funciona</span><span data-lang="en">Why it works</span></p>
-    <h2><span data-lang="es" class="active">Autoridad silenciosa es finitud</span><span data-lang="en">Silent authority is finiteness</span></h2>
-    <p class="finitud-text">
-      <span data-lang="es" class="active">Un sistema con principio, cuerpo y cierre tiene densidad de valor. 10 m&oacute;dulos cerrados comunica que el trabajo est&aacute; completo. No es suscripci&oacute;n perpetua a contenido infinito. Es adquisici&oacute;n de capital intelectual con retorno medible.</span>
-      <span data-lang="en">A system with beginning, body, and closure has value density. 10 closed modules communicate that the work is complete. Not a perpetual subscription to infinite content. It's intellectual capital acquisition with measurable return.</span>
-    </p>
-    <p class="finitud-note">
-      <span data-lang="es" class="active">Retorno sobre energ&iacute;a: tiempo acotado &middot; marcos extra&iacute;bles &middot; aplicables &middot; repetibles.</span>
-      <span data-lang="en">Return on energy: bounded time &middot; extractable frameworks &middot; applicable &middot; repeatable.</span>
+    <h2 class="shift-statement reveal">
+      <span data-lang="es" class="active">La claridad no es un estado.<br><span class="accent">Es un sistema.</span></span>
+      <span data-lang="en">Clarity is not a state.<br><span class="accent">It's a system.</span></span>
+    </h2>
+    <p class="shift-tail reveal">
+      <span data-lang="es" class="active">Un sistema con principio, cuerpo y cierre tiene densidad de valor. Lo opuesto al ruido no es más información: es arquitectura. Diez módulos cerrados pesan más que mil horas de contenido infinito.</span>
+      <span data-lang="en">A system with beginning, body, and closure has density of value. The opposite of noise isn't more information — it's architecture. Ten closed modules carry more weight than a thousand hours of infinite content.</span>
     </p>
   </div>
-</div>
+</section>
 
-<section class="author-sec">
-  <div class="author-img">
-    <img src="/assets/images/andres-ramirez-portrait1.jpg" alt="Andr&eacute;s Ram&iacute;rez" alt="Andr&eacute;s Ram&iacute;rez">
-    <div class="author-img-ov"></div>
-  </div>
-  <div class="author-body">
-    <p class="sec-label"><span data-lang="es" class="active">El autor</span><span data-lang="en">The author</span></p>
-    <h2 class="author-name">Andr&eacute;s Ram&iacute;rez</h2>
-    <p class="author-role">Economist &middot; Clarity Strategist &middot; Personal Trainer</p>
-    <p class="author-bio">
-      <span data-lang="es" class="active">Economista, entrenador personal y estratega de claridad. Su trabajo estudia la intersecci&oacute;n entre toma de decisiones, arquitectura de sistemas y comportamiento humano en entornos de alta presi&oacute;n. El Protocolo es la destilaci&oacute;n de ese trabajo: marcos construidos sobre principios verificables, no sobre intuici&oacute;n.</span>
-      <span data-lang="en">Economist, personal trainer, and clarity strategist. His work studies the intersection of decision-making, systems architecture, and human behavior under pressure. The Protocol is the distillation of that work: frameworks built on verifiable principles, not intuition.</span>
-    </p>
-    <div class="author-tags">
-      <span class="tag">Econom&iacute;a conductual</span>
-      <span class="tag">Arquitectura de sistemas</span>
-      <span class="tag">Self Love Club</span>
-      <span class="tag">andresramirez.pro</span>
+<!-- 4 · SYSTEM -->
+
+<section class="section">
+  <div class="container">
+    <div class="sec-label reveal">
+      <span class="num">03</span>
+      <span class="name">
+        <span data-lang="es" class="active">Qué es el sistema</span>
+        <span data-lang="en">What it is</span>
+      </span>
+    </div>
+    <div class="system-grid">
+      <div>
+        <h2 class="sec-h reveal">
+          <span data-lang="es" class="active">Un protocolo, no <em>un curso.</em></span>
+          <span data-lang="en">A protocol. <em>Not a course.</em></span>
+        </h2>
+        <div class="sec-body reveal">
+          <p>
+            <span data-lang="es" class="active">The Clarity Protocol es un sistema cerrado de diez módulos que aplica economía, comportamiento humano y arquitectura de sistemas al diseño de decisiones.</span>
+            <span data-lang="en">The Clarity Protocol is a closed system of ten modules applying economics, human behavior, and systems architecture to decision design.</span>
+          </p>
+          <p>
+            <span data-lang="es" class="active">Cada módulo entrega una frase clave, un resumen analítico, puntos operativos, una conclusión, un micro-glosario y tres preguntas reflexivas con espacio de escritura.</span>
+            <span data-lang="en">Each module delivers a key phrase, an analytical summary, operational points, a conclusion, a micro-glossary, and three reflective questions with writing space.</span>
+          </p>
+        </div>
+      </div>
+      <div class="system-defs reveal">
+        <div class="system-def">
+          <span class="key">Fmt 01</span>
+          <div>
+            <span class="val">
+              <span data-lang="es" class="active">Documento interactivo</span>
+              <span data-lang="en">Interactive document</span>
+            </span>
+            <p class="note">
+              <span data-lang="es" class="active">Módulos con espacio de escritura propio.</span>
+              <span data-lang="en">Modules with their own writing space.</span>
+            </p>
+          </div>
+        </div>
+        <div class="system-def">
+          <span class="key">Fmt 02</span>
+          <div>
+            <span class="val">
+              <span data-lang="es" class="active">Tracker de progreso</span>
+              <span data-lang="en">Progress tracker</span>
+            </span>
+            <p class="note">
+              <span data-lang="es" class="active">Seguimiento módulo a módulo dentro del protocolo.</span>
+              <span data-lang="en">Module-by-module tracking within the protocol.</span>
+            </p>
+          </div>
+        </div>
+        <div class="system-def">
+          <span class="key">Fmt 03</span>
+          <div>
+            <span class="val">
+              <span data-lang="es" class="active">PDF exportable</span>
+              <span data-lang="en">Exportable PDF</span>
+            </span>
+            <p class="note">
+              <span data-lang="es" class="active">El protocolo completo, para imprimir.</span>
+              <span data-lang="en">The complete protocol, ready to print.</span>
+            </p>
+          </div>
+        </div>
+        <div class="system-def">
+          <span class="key">Fmt 04</span>
+          <div>
+            <span class="val">
+              <span data-lang="es" class="active">Glosario operativo</span>
+              <span data-lang="en">Operational glossary</span>
+            </span>
+            <p class="note">
+              <span data-lang="es" class="active">Definiciones técnicas de cada variable.</span>
+              <span data-lang="en">Technical definitions for each variable.</span>
+            </p>
+          </div>
+        </div>
+        <div class="system-def">
+          <span class="key">Fmt 05</span>
+          <div>
+            <span class="val">
+              <span data-lang="es" class="active">Marcos extraíbles</span>
+              <span data-lang="en">Extractable frameworks</span>
+            </span>
+            <p class="note">
+              <span data-lang="es" class="active">Aplicables a cualquier contexto de decisión.</span>
+              <span data-lang="en">Applicable to any decision context.</span>
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="cta-bottom">
-  <p class="sec-label"><span data-lang="es" class="active">Acceso ahora</span><span data-lang="en">Access now</span></p>
-  <h2><span data-lang="es" class="active">$49 &mdash; Acceso de por vida</span><span data-lang="en">$49 &mdash; Lifetime access</span></h2>
-  <p class="hero-desc">
-    <span data-lang="es" class="active">10 m&oacute;dulos completos. Documento interactivo con campos de escritura propios y exportaci&oacute;n a PDF. Un solo pago. Sin suscripci&oacute;n.</span>
-    <span data-lang="en">10 complete modules. Interactive document with personal writing fields and PDF export. One payment. No subscription.</span>
-  </p>
-  <div class="price-row" style="justify-content:center">
-    <span class="price-num">$49</span>
-    <div class="price-meta">
-      <span class="price-label"><span data-lang="es" class="active">Precio de acceso</span><span data-lang="en">Access price</span></span>
-      <span class="price-note"><span data-lang="es" class="active">un solo pago &middot; acceso permanente</span><span data-lang="en">one-time payment &middot; permanent access</span></span>
+<!-- 5 · MODULES -->
+
+<section class="section">
+  <div class="container">
+    <div class="sec-label reveal">
+      <span class="num">04</span>
+      <span class="name">
+        <span data-lang="es" class="active">Los 10 módulos</span>
+        <span data-lang="en">The 10 modules</span>
+      </span>
+    </div>
+    <h2 class="sec-h reveal">
+      <span data-lang="es" class="active">Tu mapa de variables <em>propias.</em></span>
+      <span data-lang="en">Your map of <em>personal variables.</em></span>
+    </h2>
+
+```
+<div class="modules reveal">
+  <div class="module">
+    <span class="num">00</span>
+    <div>
+      <span class="title">
+        <span data-lang="es" class="active">Prólogo Estructural</span>
+        <span data-lang="en">Structural Prologue</span>
+      </span>
+      <p class="desc">
+        <span data-lang="es" class="active">Instrucciones de uso del protocolo.</span>
+        <span data-lang="en">Protocol instructions and framework.</span>
+      </p>
+    </div>
+    <span class="tag">
+      <span data-lang="es" class="active">Apertura</span>
+      <span data-lang="en">Opening</span>
+    </span>
+  </div>
+
+  <div class="module">
+    <span class="num">01</span>
+    <div>
+      <span class="title">
+        <span data-lang="es" class="active">Autoconocimiento</span>
+        <span data-lang="en">Self-Knowledge</span>
+      </span>
+      <p class="desc">
+        <span data-lang="es" class="active">Variables propias como punto de partida analítico.</span>
+        <span data-lang="en">Personal variables as analytical starting point.</span>
+      </p>
+    </div>
+    <span class="tag">
+      <span data-lang="es" class="active">Núcleo</span>
+      <span data-lang="en">Core</span>
+    </span>
+  </div>
+
+  <div class="module">
+    <span class="num">02</span>
+    <div>
+      <span class="title">
+        <span data-lang="es" class="active">Arbitraje Emocional</span>
+        <span data-lang="en">Emotional Arbitrage</span>
+      </span>
+      <p class="desc">
+        <span data-lang="es" class="active">Claridad mientras otros reaccionan.</span>
+        <span data-lang="en">Clarity while others react.</span>
+      </p>
+    </div>
+    <span class="tag">
+      <span data-lang="es" class="active">Núcleo</span>
+      <span data-lang="en">Core</span>
+    </span>
+  </div>
+
+  <div class="module">
+    <span class="num">03</span>
+    <div>
+      <span class="title">
+        <span data-lang="es" class="active">Liquidez Cognitiva</span>
+        <span data-lang="en">Cognitive Liquidity</span>
+      </span>
+      <p class="desc">
+        <span data-lang="es" class="active">Separar identidad de decisión en entornos de alto riesgo.</span>
+        <span data-lang="en">Separating identity from decision under pressure.</span>
+      </p>
+    </div>
+    <span class="tag">
+      <span data-lang="es" class="active">Núcleo</span>
+      <span data-lang="en">Core</span>
+    </span>
+  </div>
+
+  <div class="module">
+    <span class="num">04</span>
+    <div>
+      <span class="title">
+        <span data-lang="es" class="active">Arquitectura del Silencio</span>
+        <span data-lang="en">Architecture of Silence</span>
+      </span>
+      <p class="desc">
+        <span data-lang="es" class="active">El espacio negativo como variable de decisión.</span>
+        <span data-lang="en">Negative space as a decision variable.</span>
+      </p>
+    </div>
+    <span class="tag">
+      <span data-lang="es" class="active">Núcleo</span>
+      <span data-lang="en">Core</span>
+    </span>
+  </div>
+
+  <div class="module">
+    <span class="num">05</span>
+    <div>
+      <span class="title">Kinetic Clarity</span>
+      <p class="desc">
+        <span data-lang="es" class="active">El cuerpo como sistema de información.</span>
+        <span data-lang="en">The body as an information system.</span>
+      </p>
+    </div>
+    <span class="tag">
+      <span data-lang="es" class="active">Núcleo</span>
+      <span data-lang="en">Core</span>
+    </span>
+  </div>
+
+  <div class="module">
+    <span class="num">06</span>
+    <div>
+      <span class="title">
+        <span data-lang="es" class="active">Señal vs Ruido</span>
+        <span data-lang="en">Signal vs Noise</span>
+      </span>
+      <p class="desc">
+        <span data-lang="es" class="active">Filtrar señal relevante en distorsión cognitiva.</span>
+        <span data-lang="en">Filtering relevant signal under cognitive distortion.</span>
+      </p>
+    </div>
+    <span class="tag">
+      <span data-lang="es" class="active">Núcleo</span>
+      <span data-lang="en">Core</span>
+    </span>
+  </div>
+
+  <div class="module">
+    <span class="num">07</span>
+    <div>
+      <span class="title">
+        <span data-lang="es" class="active">Costo de Oportunidad</span>
+        <span data-lang="en">Opportunity Cost</span>
+      </span>
+      <p class="desc">
+        <span data-lang="es" class="active">Lo que renuncias pesa en cada variable de elección.</span>
+        <span data-lang="en">What you forgo weighs in every choice variable.</span>
+      </p>
+    </div>
+    <span class="tag">
+      <span data-lang="es" class="active">Núcleo</span>
+      <span data-lang="en">Core</span>
+    </span>
+  </div>
+
+  <div class="module">
+    <span class="num">08</span>
+    <div>
+      <span class="title">
+        <span data-lang="es" class="active">Capacidad Interpretativa</span>
+        <span data-lang="en">Interpretive Capacity</span>
+      </span>
+      <p class="desc">
+        <span data-lang="es" class="active">Leer contexto sin proyección ni sesgo.</span>
+        <span data-lang="en">Reading context without projection or bias.</span>
+      </p>
+    </div>
+    <span class="tag">
+      <span data-lang="es" class="active">Núcleo</span>
+      <span data-lang="en">Core</span>
+    </span>
+  </div>
+
+  <div class="module">
+    <span class="num">09</span>
+    <div>
+      <span class="title">
+        <span data-lang="es" class="active">Claridad como Ventaja</span>
+        <span data-lang="en">Clarity as Advantage</span>
+      </span>
+      <p class="desc">
+        <span data-lang="es" class="active">Convertir el protocolo en diferencial operativo.</span>
+        <span data-lang="en">Converting the protocol into an operational edge.</span>
+      </p>
+    </div>
+    <span class="tag">
+      <span data-lang="es" class="active">Núcleo</span>
+      <span data-lang="en">Core</span>
+    </span>
+  </div>
+
+  <div class="module">
+    <span class="num">10</span>
+    <div>
+      <span class="title">
+        <span data-lang="es" class="active">Epílogo Operativo</span>
+        <span data-lang="en">Operational Epilogue</span>
+      </span>
+      <p class="desc">
+        <span data-lang="es" class="active">El mapa de variables propias. El protocolo en terreno real.</span>
+        <span data-lang="en">The personal variable map. The protocol in real terrain.</span>
+      </p>
+    </div>
+    <span class="tag">
+      <span data-lang="es" class="active">Cierre</span>
+      <span data-lang="en">Closing</span>
+    </span>
+  </div>
+</div>
+
+<div class="deliverables reveal">
+  <div class="deliverable">
+    <span class="num">— A</span>
+    <p class="name">
+      <span data-lang="es" class="active">Documento interactivo</span>
+      <span data-lang="en">Interactive document</span>
+    </p>
+    <p class="detail">
+      <span data-lang="es" class="active">Frase clave, resumen, puntos operativos, conclusión, micro-glosario y tres preguntas con espacio de escritura por módulo.</span>
+      <span data-lang="en">Key phrase, summary, operational points, conclusion, micro-glossary, and three questions with writing space per module.</span>
+    </p>
+  </div>
+  <div class="deliverable">
+    <span class="num">— B</span>
+    <p class="name">
+      <span data-lang="es" class="active">Tracker + PDF</span>
+      <span data-lang="en">Tracker + PDF</span>
+    </p>
+    <p class="detail">
+      <span data-lang="es" class="active">Seguimiento de progreso dentro del protocolo y versión exportable para imprimir.</span>
+      <span data-lang="en">Progress tracking within the protocol and an exportable version for print.</span>
+    </p>
+  </div>
+  <div class="deliverable">
+    <span class="num">— C</span>
+    <p class="name">
+      <span data-lang="es" class="active">Acceso de por vida</span>
+      <span data-lang="en">Lifetime access</span>
+    </p>
+    <p class="detail">
+      <span data-lang="es" class="active">Una sola adquisición. Sin suscripción. Sin contenido infinito.</span>
+      <span data-lang="en">A single acquisition. No subscription. No infinite content.</span>
+    </p>
+  </div>
+</div>
+```
+
+  </div>
+</section>
+
+<!-- 6 · AUTHOR -->
+
+<section class="author">
+  <div class="author-grid">
+    <div class="author-image reveal">
+      <img src="assets/andres-color.png" alt="Andrés Ramírez">
+      <span class="img-meta">
+        <span data-lang="es" class="active">Andrés Ramírez · Autor</span>
+        <span data-lang="en">Andrés Ramírez · Author</span>
+      </span>
+    </div>
+    <div class="author-text">
+      <div class="sec-label reveal">
+        <span class="num">05</span>
+        <span class="name">
+          <span data-lang="es" class="active">El autor</span>
+          <span data-lang="en">The author</span>
+        </span>
+      </div>
+      <h3 class="reveal">
+        <span data-lang="es" class="active">Economista. Estratega.<br><em>Entrenador personal.</em></span>
+        <span data-lang="en">Economist. Strategist.<br><em>Personal trainer.</em></span>
+      </h3>
+      <div class="reveal">
+        <p>
+          <span data-lang="es" class="active">Andrés Ramírez estudia la intersección entre toma de decisiones, arquitectura de sistemas y comportamiento humano en entornos de alta presión.</span>
+          <span data-lang="en">Andrés Ramírez studies the intersection of decision-making, systems architecture, and human behavior in high-pressure environments.</span>
+        </p>
+        <p>
+          <span data-lang="es" class="active">The Clarity Protocol es la destilación de ese trabajo: un protocolo construido sobre principios verificables, no sobre frases inspiracionales.</span>
+          <span data-lang="en">The Clarity Protocol is the distillation of that work: a protocol built on verifiable principles, not inspirational phrases.</span>
+        </p>
+      </div>
+      <div class="author-tags reveal">
+        <span class="author-tag">
+          <span data-lang="es" class="active">Economía conductual</span>
+          <span data-lang="en">Behavioral economics</span>
+        </span>
+        <span class="author-tag">
+          <span data-lang="es" class="active">Arquitectura de sistemas</span>
+          <span data-lang="en">Systems architecture</span>
+        </span>
+        <span class="author-tag">Self Love Club</span>
+      </div>
     </div>
   </div>
-  <button class="btn-buy-inv" onclick="handleBuy()">
-    <span data-lang="es" class="active">Acceder al Protocolo</span>
-    <span data-lang="en">Access the Protocol</span>
-    <span class="arr">&rarr;</span>
-  </button>
-  <span class="access-note"><span data-lang="es" class="active">Descarga inmediata &middot; Acceso permanente</span><span data-lang="en">Instant download &middot; Permanent access</span></span>
 </section>
+
+<!-- 7 · TRANSFORMATION -->
+
+<section class="section transformation">
+  <div class="container">
+    <div class="sec-label reveal">
+      <span class="num">06</span>
+      <span class="name">
+        <span data-lang="es" class="active">Lo que el protocolo entrega</span>
+        <span data-lang="en">What the protocol delivers</span>
+      </span>
+    </div>
+    <h2 class="sec-h reveal">
+      <span data-lang="es" class="active">No promete <em>cambio.</em><br>Entrega <em>arquitectura.</em></span>
+      <span data-lang="en">It doesn't promise <em>change.</em><br>It delivers <em>architecture.</em></span>
+    </h2>
+
+```
+<div class="trans-list">
+  <div class="trans-item reveal">
+    <span class="num">— 01</span>
+    <p>
+      <span data-lang="es" class="active">Un mapa de variables propias para tomar decisiones bajo presión.</span>
+      <span data-lang="en">A map of personal variables for making decisions under pressure.</span>
+    </p>
+  </div>
+  <div class="trans-item reveal">
+    <span class="num">— 02</span>
+    <p>
+      <span data-lang="es" class="active">Un sistema de discernimiento que sustituye reacción por arquitectura.</span>
+      <span data-lang="en">A discernment system that replaces reaction with architecture.</span>
+    </p>
+  </div>
+  <div class="trans-item reveal">
+    <span class="num">— 03</span>
+    <p>
+      <span data-lang="es" class="active">Un protocolo cerrado, completo, con principio y cierre. No suscripción a ruido infinito.</span>
+      <span data-lang="en">A closed, complete protocol with beginning and ending. Not a subscription to infinite noise.</span>
+    </p>
+  </div>
+  <div class="trans-item reveal">
+    <span class="num">— 04</span>
+    <p>
+      <span data-lang="es" class="active">Acceso de por vida. Reentrada cuando el contexto cambie.</span>
+      <span data-lang="en">Lifetime access. Re-entry whenever the context changes.</span>
+    </p>
+  </div>
+</div>
+```
+
+  </div>
+</section>
+
+<!-- 8 · FINAL CTA -->
+
+<section class="final" id="cta">
+  <div class="container">
+    <span class="meta reveal">
+      <span data-lang="es" class="active">— Acceso · The Clarity Protocol</span>
+      <span data-lang="en">— Access · The Clarity Protocol</span>
+    </span>
+    <h2 class="reveal">
+      <span data-lang="es" class="active">10 módulos.<br>Una sola <em>adquisición.</em></span>
+      <span data-lang="en">10 modules.<br>A single <em>acquisition.</em></span>
+    </h2>
+    <div class="final-meta reveal">
+      <div>
+        <p class="k">
+          <span data-lang="es" class="active">Formato</span>
+          <span data-lang="en">Format</span>
+        </p>
+        <p class="v">
+          <span data-lang="es" class="active">Documento + PDF</span>
+          <span data-lang="en">Document + PDF</span>
+        </p>
+      </div>
+      <div>
+        <p class="k">
+          <span data-lang="es" class="active">Acceso</span>
+          <span data-lang="en">Access</span>
+        </p>
+        <p class="v">
+          <span data-lang="es" class="active">De por vida</span>
+          <span data-lang="en">Lifetime</span>
+        </p>
+      </div>
+      <div>
+        <p class="k">
+          <span data-lang="es" class="active">Inversión</span>
+          <span data-lang="en">Investment</span>
+        </p>
+        <p class="v">$49 USD</p>
+      </div>
+    </div>
+    <a class="btn-primary reveal" href="https://andresramirez.gumroad.com/l/clarity-protocol">
+      <span data-lang="es" class="active">Acceder al Protocolo</span>
+      <span data-lang="en">Access the Protocol</span>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
 
 <footer>
-  <div>
-    <div class="f-brand">Self Love Club</div>
-    <div class="f-name">Andr&eacute;s Ram&iacute;rez</div>
-  </div>
-  <div class="footer-links">
-    <a href="https://andresramirez.pro">andresramirez.pro</a>
-    <a href="https://threads.net/@aram7891" target="_blank">Threads</a>
-    <a href="https://instagram.com/selfloveclubusa" target="_blank">Instagram</a>
+  <div class="footer-inner">
+    <span class="meta">© Self Love Club · MMXXVI</span>
+    <div class="footer-links">
+      <a href="https://andresramirez.pro">andresramirez.pro</a>
+      <a href="https://threads.net/@aram7891" target="_blank" rel="noopener">Threads</a>
+      <a href="https://instagram.com/selfloveclubusa" target="_blank" rel="noopener">Instagram</a>
+    </div>
   </div>
 </footer>
 
 <script>
-  function setLang(l){
-    document.querySelectorAll("[data-lang]").forEach(el=>el.classList.remove("active"));
-    document.querySelectorAll('[data-lang="'+l+'"]').forEach(el=>el.classList.add("active"));
-    document.querySelectorAll(".lang-btn").forEach(btn=>btn.classList.toggle("active",btn.textContent.trim().toLowerCase()===l));
-    document.documentElement.lang=l;
-    localStorage.setItem("slc-lang",l);
+  // ─── i18n toggle ───
+  function setLang(l) {
+    document.querySelectorAll('[data-lang]').forEach(function (el) {
+      el.classList.remove('active');
+    });
+    document.querySelectorAll('[data-lang="' + l + '"]').forEach(function (el) {
+      el.classList.add('active');
+    });
+    document.querySelectorAll('.lang-btn').forEach(function (btn) {
+      btn.classList.toggle('active', btn.textContent.trim().toLowerCase() === l);
+    });
+    document.documentElement.lang = l;
+    try { localStorage.setItem('slc-lang', l); } catch (e) {}
   }
-  function handleBuy(){
-    // window.location.href = "TU_URL_GUMROAD";
-    alert("Redirigiendo a Gumroad...");
-  }
-  setLang(localStorage.getItem("slc-lang")||"es");
+
+  // Initial language: stored > browser > 'es'
+  (function () {
+    var stored;
+    try { stored = localStorage.getItem('slc-lang'); } catch (e) {}
+    var nav = (navigator.language || 'es').slice(0, 2).toLowerCase();
+    var initial = stored || (nav === 'en' ? 'en' : 'es');
+    setLang(initial);
+  })();
+
+  // ─── Reveal on scroll ───
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+  document.querySelectorAll('.reveal').forEach(function (el, i) {
+    el.style.transitionDelay = Math.min(i * 60, 300) + 'ms';
+    io.observe(el);
+  });
 </script>
+
 </body>
 </html>
