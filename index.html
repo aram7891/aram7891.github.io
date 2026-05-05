@@ -499,6 +499,242 @@ window.onload = () => {
 
 </section>
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=DM+Mono&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --parchment: #F7F4EF;
+      --ink: #1A1814;
+      --amber: #8B6F4E;
+      --sand: #C4A882;
+      --vinotinto: #5E1914;
+    }
+
+    body {
+      margin: 0;
+      background-color: #f0f0f0;
+      font-family: 'Instrument Sans', sans-serif;
+    }
+
+    .clarity-banner {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 9999;
+      /* Formato más rectangular y amplio */
+      width: 680px; 
+      background: var(--parchment);
+      color: var(--ink);
+      text-decoration: none;
+      display: flex;
+      overflow: hidden;
+      border: 1px solid rgba(139, 111, 78, 0.22);
+      opacity: 0;
+      transform: translateY(28px);
+      transition: 
+        opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 0.4s ease;
+      box-shadow: 0 30px 70px -28px rgba(26, 24, 20, 0.28);
+    }
+
+    .clarity-banner.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .clarity-banner.dismissed {
+      opacity: 0;
+      transform: translateY(20px);
+      pointer-events: none;
+    }
+
+    /* Foto de perfil con más presencia */
+    .banner-portrait {
+      width: 260px;
+      flex-shrink: 0;
+      background-image: url("/assets/images/andres-color.png");
+      background-size: cover;
+      background-position: center 35%; /* Ajustado para el nuevo rectángulo */
+      border-right: 1px solid rgba(139, 111, 78, 0.15);
+      position: relative;
+    }
+
+    .banner-portrait::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(26,24,20,0.05), transparent);
+    }
+
+    .banner-portrait::before {
+      content: '02';
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      z-index: 2;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--parchment);
+      background: rgba(26, 24, 20, 0.5);
+      backdrop-filter: blur(8px);
+      padding: 4px 10px;
+      letter-spacing: 0.1em;
+    }
+
+    .banner-content {
+      padding: 40px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      flex-grow: 1;
+    }
+
+    .banner-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 12px;
+    }
+
+    .banner-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      line-height: 1.05;
+      margin: 0 0 18px 0;
+      font-weight: 400;
+    }
+
+    .banner-description {
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: rgba(26, 24, 20, 0.9);
+      margin-bottom: 28px;
+    }
+
+    .lang-divider {
+      display: block;
+      height: 1px;
+      width: 50px;
+      background: var(--sand);
+      margin: 12px 0;
+      opacity: 0.3;
+    }
+
+    .banner-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--vinotinto);
+      color: #FFFFFF;
+      text-decoration: none;
+      font-family: 'Instrument Sans', sans-serif;
+      font-weight: 500;
+      font-size: 0.85rem;
+      padding: 16px 28px;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      box-shadow: 0 4px 15px rgba(94, 25, 20, 0.25);
+      width: fit-content;
+    }
+
+    .banner-cta:hover {
+      background-color: #7A211A;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(94, 25, 20, 0.4);
+    }
+
+    .close-banner {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--ink);
+      opacity: 0.2;
+      transition: opacity 0.3s ease;
+      line-height: 1;
+    }
+
+    .close-banner:hover { opacity: 1; }
+
+    /* Adaptación para móviles */
+    @media (max-width: 768px) {
+      .clarity-banner {
+        width: calc(100% - 32px);
+        right: 16px;
+        bottom: 16px;
+        flex-direction: column;
+      }
+      .banner-portrait { 
+        width: 100%; 
+        height: 200px; 
+        border-right: none;
+        border-bottom: 1px solid rgba(139, 111, 78, 0.15);
+      }
+      .banner-content { padding: 32px 24px; }
+      .banner-title { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="clarityProtocolBanner" class="clarity-banner">
+    <!-- Tu foto ahora tiene mucho más peso visual -->
+    <div class="banner-portrait"></div>
+    
+    <div class="banner-content">
+      <button class="close-banner" onclick="dismissBanner(event)">&times;</button>
+      <span class="banner-label">Infrastructure / Infraestructura</span>
+      <h2 class="banner-title">The Clarity Protocol</h2>
+      
+      <div class="banner-description">
+        <div>Ten sequential modules. Decide with less energy lost. A system, not a course.</div>
+        <span class="lang-divider"></span>
+        <div style="font-style: italic; opacity: 0.8;">Diez módulos secuenciales. Decide con menos pérdida de energía. Un sistema, no un curso.</div>
+      </div>
+      
+      <a href="https://andresramirezpro.gumroad.com/l/clarity" target="_blank" class="banner-cta">
+        Access Protocol / Acceder
+      </a>
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener('load', () => {
+      if (!sessionStorage.getItem('bannerDismissed')) {
+        setTimeout(() => {
+          const banner = document.getElementById('clarityProtocolBanner');
+          if (banner) banner.classList.add('visible');
+        }, 1500);
+      }
+    });
+
+    function dismissBanner(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      const banner = document.getElementById('clarityProtocolBanner');
+      if (banner) {
+        banner.classList.add('dismissed');
+        sessionStorage.setItem('bannerDismissed', 'true');
+      }
+    }
+  </script>
+
+</body>
+</html>
 
 </body>
 </html>
