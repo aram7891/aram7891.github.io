@@ -23,6 +23,8 @@
 
     --hairline:        rgba(245, 242, 237, 0.08);
     --hairline-strong: rgba(245, 242, 237, 0.16);
+    
+    --shadow-depth:    rgba(0, 0, 0, 0.8);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -82,8 +84,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 1.25rem 1.75rem;
-    z-index: 20;
-    pointer-events: none;
+    z-index: 30;
   }
 
   .brand {
@@ -95,25 +96,35 @@
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--parchment);
+    text-decoration: none;
+    pointer-events: auto;
+    transition: opacity 0.3s ease;
   }
+  .brand:hover { opacity: 0.7; }
 
   .brand svg { width: 20px; height: 20px; }
 
-  .index {
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    pointer-events: auto;
+  }
+
+  .nav-link {
     font-family: 'JetBrains Mono', monospace;
     font-weight: 300;
     font-size: 0.66rem;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s ease;
   }
-  .index span { color: var(--magenta-bright); }
+  .nav-link:hover { color: var(--magenta-bright); }
+  .nav-link span { color: var(--magenta-bright); }
 
   /* ── Triad ─────────────────────────────────────── */
-  /* Block widths stay asymmetric: Self 45 · Love 35 · Club 20.
-     But the word inside each block is the same size — same voice,
-     different amount of air. The hierarchy is in the architecture,
-     not the type. */
   .triad {
     position: relative;
     z-index: 2;
@@ -129,12 +140,16 @@
   .card {
     position: relative;
     height: 100%;
-    border-right: 1px solid var(--hairline);
     perspective: 1400px;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
+    z-index: var(--z-index, 1);
   }
-  .card:last-child { border-right: none; }
+
+  /* Depth Shadows (Overlapping effect) */
+  .is-self { --z-index: 10; }
+  .is-love { --z-index: 9; box-shadow: -20px 0 50px var(--shadow-depth); }
+  .is-club { --z-index: 8; box-shadow: -20px 0 50px var(--shadow-depth); }
 
   .card-inner {
     position: relative;
@@ -156,7 +171,10 @@
     padding: 1.5rem 1.5rem 1.25rem;
     overflow: hidden;
     transition: background 0.6s ease;
+    background: var(--ink);
+    border-right: 1px solid var(--hairline);
   }
+  .card:last-child .face { border-right: none; }
 
   .face-back {
     transform: rotateY(180deg);
@@ -168,10 +186,8 @@
     background: linear-gradient(180deg, transparent, rgba(192, 38, 211, 0.04));
   }
 
-  /* Vertical disorder — slugs at different heights per column */
-  .is-self .face-front  { padding-top: 1.75rem; }
-  .is-love .face-front  { padding-top: 3.5rem; }
-  .is-club .face-front  { padding-top: 5.5rem; }
+  /* Vertical alignment correction */
+  .face-front { padding-top: 2.5rem; }
 
   /* ── Front face ───────────────────────────────── */
   .head {
@@ -184,22 +200,20 @@
   .num {
     font-family: 'JetBrains Mono', monospace;
     font-weight: 400;
-    font-size: 0.72rem;
+    font-size: 0.85rem; /* Increased for visibility */
     letter-spacing: 0.18em;
     color: var(--magenta);
   }
 
   .tag {
     font-family: 'JetBrains Mono', monospace;
-    font-weight: 300;
-    font-size: 0.6rem;
+    font-weight: 400; /* Increased for visibility */
+    font-size: 0.7rem; /* Increased for visibility */
     letter-spacing: 0.32em;
     text-transform: uppercase;
-    color: var(--parchment-dim);
+    color: var(--parchment); /* Brighter for visibility */
   }
 
-  /* SAME font size for all three words — voice is equal,
-     space is unequal */
   .word-title {
     font-family: 'Fraunces', serif;
     font-style: italic;
@@ -211,8 +225,6 @@
     margin: auto 0 1rem;
   }
 
-  /* Rules still vary in length — proportional to column air,
-     so the asymmetric reading remains legible at a glance */
   .word-rule {
     height: 1px;
     background: var(--magenta);
@@ -306,8 +318,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 0.85rem 1.75rem;
-    z-index: 20;
-    pointer-events: none;
+    z-index: 30;
     border-top: 1px solid var(--hairline);
     background: rgba(10, 9, 8, 0.4);
     backdrop-filter: blur(6px);
@@ -321,6 +332,22 @@
     text-transform: uppercase;
     color: var(--muted);
   }
+
+  .social-links {
+    display: flex;
+    gap: 1rem;
+    pointer-events: auto;
+  }
+
+  .social-link {
+    color: var(--muted);
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    transition: color 0.3s ease;
+  }
+  .social-link:hover { color: var(--magenta-bright); }
 
   .pulse {
     display: inline-block;
@@ -341,82 +368,59 @@
     .topbar { padding: 0.85rem 1rem; }
     .brand { font-size: 0.7rem; gap: 0.4rem; }
     .brand svg { width: 16px; height: 16px; }
-    .index { font-size: 0.58rem; }
+    .nav-links { gap: 0.75rem; }
+    .nav-link { font-size: 0.55rem; }
 
     .triad { padding-top: 44px; padding-bottom: 30px; }
 
     .face { padding: 0.9rem 0.7rem; }
-    .is-self .face-front { padding-top: 1.25rem; }
-    .is-love .face-front { padding-top: 2rem; }
-    .is-club .face-front { padding-top: 2.75rem; padding-left: 0.55rem; padding-right: 0.45rem; }
+    .face-front { padding-top: 1.5rem; }
 
     .head { margin-bottom: 0.6rem; }
-    .num { font-size: 0.6rem; }
-    .tag { font-size: 0.5rem; letter-spacing: 0.22em; }
-    .is-club .tag { display: none; }
+    .num { font-size: 0.7rem; }
+    .tag { font-size: 0.6rem; letter-spacing: 0.22em; }
 
-    /* same size still — but smaller globally on phone */
     .word-title {
       font-size: clamp(1.6rem, 7.5vw, 2.6rem);
       margin-bottom: 0.7rem;
     }
 
     .word-rule { margin-bottom: 0.7rem; }
-    .is-self .word-rule { width: 32px; }
-    .is-love .word-rule { width: 22px; }
-    .is-club .word-rule { width: 14px; }
+    .is-self .word-rule { width: 40px; }
+    .is-love .word-rule { width: 30px; }
+    .is-club .word-rule { width: 18px; }
 
-    .word-line { font-size: 0.62rem; line-height: 1.3; }
-    .is-club .word-line { display: none; }
-
-    .face-foot { font-size: 0.46rem; letter-spacing: 0.14em; padding-top: 0.6rem; }
-
-    /* Back face on mobile — tighter, smaller */
-    .back-eyebrow { font-size: 0.52rem; margin-bottom: 0.65rem; }
-    .back-title { font-size: 0.82rem; margin-bottom: 0.7rem; }
-    .back-body { font-size: 0.62rem; line-height: 1.5; }
-    .is-club .back-body { font-size: 0.55rem; line-height: 1.45; }
-
-    .bottombar { padding: 0.6rem 1rem; }
-    .bottombar .meta { font-size: 0.52rem; letter-spacing: 0.16em; }
-  }
-
-  /* Reduced motion */
-  @media (prefers-reduced-motion: reduce) {
-    .card-inner { transition: none; }
-    .aura { animation: none; }
-    .pulse { animation: none; }
+    .word-line { font-size: 0.72rem; line-height: 1.3; }
+    .face-foot { font-size: 0.5rem; padding-top: 0.85rem; }
+    
+    .is-love, .is-club { box-shadow: -10px 0 30px var(--shadow-depth); }
   }
 </style>
 </head>
+
 <body>
 
 <div class="aura"></div>
 
 <header class="topbar">
-  <div class="brand">
-    <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <defs>
-        <linearGradient id="hg" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#E879F9"/>
-          <stop offset="100%" stop-color="#86198F"/>
-        </linearGradient>
-      </defs>
-      <g stroke="url(#hg)" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M30 50 C12 38, 6 26, 12 18 C16 12, 24 12, 30 20 C36 12, 44 12, 48 18 C54 26, 48 38, 30 50 Z"/>
-        <path d="M30 44 C16 34, 12 24, 16 19 C20 14, 26 16, 30 22 C34 16, 40 14, 44 19 C48 24, 44 34, 30 44 Z"/>
-      </g>
+  <a href="../index.html" class="brand">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
     </svg>
-    <span>Self&nbsp;Love&nbsp;Club</span>
-  </div>
-  <div class="index">— <span>I</span> / III</div>
+    Self Love Club
+  </a>
+  <nav class="nav-links">
+    <a href="../index.html" class="nav-link">← <span>AndresRamirez.pro</span></a>
+    <div class="nav-link">I / III</div>
+  </nav>
 </header>
 
-<main class="triad" aria-label="Self · Love · Club">
+<main class="triad">
 
-  <article class="card is-self" tabindex="0" role="button" aria-label="Reveal Self">
+  <!-- 01 SELF -->
+  <article class="card is-self" role="button" aria-pressed="false" tabindex="0">
     <div class="card-inner">
-
+      
       <div class="face face-front">
         <div class="head">
           <span class="num">01</span>
@@ -424,10 +428,12 @@
         </div>
         <h1 class="word-title">Self.</h1>
         <div class="word-rule"></div>
-        <p class="word-line">Choose yourself first — not as an idea, as a daily practice.</p>
+        <p class="word-line">
+          Choose yourself first — not as an idea, as a daily practice.
+        </p>
         <div class="face-foot">
           <span>— You, before anything else</span>
-          <span class="cue">↻ tap</span>
+          <span class="cue">↻ Tap</span>
         </div>
       </div>
 
@@ -436,13 +442,13 @@
           <span class="num">01</span>
           <span class="tag">Self</span>
         </div>
-        <div class="back-eyebrow">— The Starting Point</div>
-        <h2 class="back-title">Choosing yourself first, daily.</h2>
+        <div class="back-eyebrow">— The Foundation</div>
+        <h2 class="back-title">The architecture of the I.</h2>
         <p class="back-body">
-          Self is the starting point. It is the decision to choose yourself first — not as an idea, but as a daily practice of awareness and responsibility. Everything that follows depends on it.
+          Self is the starting point. Without a clear sense of who you are, every connection is a compromise. We explore the boundaries, the values, and the silent strength required to remain intact.
         </p>
         <div class="face-foot back-foot">
-          <span>↻ Tap to return</span>
+          <span>↻ Return</span>
           <span>01 / III</span>
         </div>
       </div>
@@ -450,7 +456,8 @@
     </div>
   </article>
 
-  <article class="card is-love" tabindex="0" role="button" aria-label="Reveal Love">
+  <!-- 02 LOVE -->
+  <article class="card is-love" role="button" aria-pressed="false" tabindex="0">
     <div class="card-inner">
 
       <div class="face face-front">
@@ -458,12 +465,14 @@
           <span class="num">02</span>
           <span class="tag">Love</span>
         </div>
-        <h2 class="word-title">Love.</h2>
+        <h1 class="word-title">Love.</h1>
         <div class="word-rule"></div>
-        <p class="word-line">What you give outward is measured by what you have built within.</p>
+        <p class="word-line">
+          What you give outward is measured by what you have built within.
+        </p>
         <div class="face-foot">
           <span>— You can't give what you don't build</span>
-          <span class="cue">↻ tap</span>
+          <span class="cue">↻ Tap</span>
         </div>
       </div>
 
@@ -472,13 +481,13 @@
           <span class="num">02</span>
           <span class="tag">Love</span>
         </div>
-        <div class="back-eyebrow">— The Extension</div>
-        <h2 class="back-title">An extension of inner work.</h2>
+        <div class="back-eyebrow">— The Connection</div>
+        <h2 class="back-title">Discernment over desire.</h2>
         <p class="back-body">
-          Love is the extension of that inner work. You cannot consistently give, build, or sustain anything externally that you have not first developed within yourself.
+          Love is not an accident; it is a choice made with clarity. We redefine connection as a conscious alignment between two whole individuals, rather than a search for completion.
         </p>
         <div class="face-foot back-foot">
-          <span>↻ Tap to return</span>
+          <span>↻ Return</span>
           <span>02 / III</span>
         </div>
       </div>
@@ -486,7 +495,8 @@
     </div>
   </article>
 
-  <article class="card is-club" tabindex="0" role="button" aria-label="Reveal Club">
+  <!-- 03 CLUB -->
+  <article class="card is-club" role="button" aria-pressed="false" tabindex="0">
     <div class="card-inner">
 
       <div class="face face-front">
@@ -494,12 +504,14 @@
           <span class="num">03</span>
           <span class="tag">Club</span>
         </div>
-        <h2 class="word-title">Club.</h2>
+        <h1 class="word-title">Club.</h1>
         <div class="word-rule"></div>
-        <p class="word-line">Where awareness becomes action.</p>
+        <p class="word-line">
+          A collective of individuals committed to their own integrity.
+        </p>
         <div class="face-foot">
           <span>— Open by design</span>
-          <span class="cue">↻</span>
+          <span class="cue">↻ Tap</span>
         </div>
       </div>
 
@@ -525,8 +537,12 @@
 </main>
 
 <footer class="bottombar">
-  <span class="meta"><span class="pulse"></span>You first.</span>
-  <span class="meta">MMXXVI</span>
+  <div class="meta"><span class="pulse"></span>You first.</div>
+  <div class="social-links">
+    <a href="https://instagram.com/selfloveclubusa" target="_blank" class="social-link">Instagram</a>
+    <a href="https://www.threads.net/@aram7891" target="_blank" class="social-link">Threads</a>
+  </div>
+  <div class="meta">MMXXVI</div>
 </footer>
 
 <script>
