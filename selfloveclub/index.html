@@ -83,17 +83,17 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.25rem 1.75rem;
+    padding: 1.5rem 2rem; /* Increased padding */
     z-index: 30;
   }
 
   .brand {
     display: flex;
     align-items: center;
-    gap: 0.55rem;
+    gap: 0.75rem;
     font-family: 'Anton', sans-serif;
-    font-size: 0.82rem;
-    letter-spacing: 0.06em;
+    font-size: 1.2rem; /* Larger title */
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--parchment);
     text-decoration: none;
@@ -102,7 +102,7 @@
   }
   .brand:hover { opacity: 0.7; }
 
-  .brand svg { width: 20px; height: 20px; }
+  .brand svg { width: 24px; height: 24px; }
 
   .nav-links {
     display: flex;
@@ -132,7 +132,7 @@
     width: 100%;
     display: grid;
     grid-template-columns: 45fr 35fr 20fr;
-    padding-top: 56px;
+    padding-top: 80px; /* More space for larger topbar */
     padding-bottom: 36px;
   }
 
@@ -148,8 +148,8 @@
 
   /* Depth Shadows (Overlapping effect) */
   .is-self { --z-index: 10; }
-  .is-love { --z-index: 9; box-shadow: -20px 0 50px var(--shadow-depth); }
-  .is-club { --z-index: 8; box-shadow: -20px 0 50px var(--shadow-depth); }
+  .is-love { --z-index: 9; box-shadow: -30px 0 60px var(--shadow-depth); }
+  .is-club { --z-index: 8; box-shadow: -30px 0 60px var(--shadow-depth); }
 
   .card-inner {
     position: relative;
@@ -168,7 +168,7 @@
     -webkit-backface-visibility: hidden;
     display: flex;
     flex-direction: column;
-    padding: 1.5rem 1.5rem 1.25rem;
+    padding: 2rem 2rem 1.5rem;
     overflow: hidden;
     transition: background 0.6s ease;
     background: var(--ink);
@@ -187,48 +187,60 @@
   }
 
   /* Vertical alignment correction */
-  .face-front { padding-top: 2.5rem; }
+  .face-front { padding-top: 3rem; }
 
   /* ── Front face ───────────────────────────────── */
   .head {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
   }
 
   .num {
     font-family: 'JetBrains Mono', monospace;
     font-weight: 400;
-    font-size: 0.85rem; /* Increased for visibility */
+    font-size: 0.85rem;
     letter-spacing: 0.18em;
     color: var(--magenta);
   }
 
   .tag {
     font-family: 'JetBrains Mono', monospace;
-    font-weight: 400; /* Increased for visibility */
-    font-size: 0.7rem; /* Increased for visibility */
+    font-weight: 400;
+    font-size: 0.7rem;
     letter-spacing: 0.32em;
     text-transform: uppercase;
-    color: var(--parchment); /* Brighter for visibility */
+    color: var(--parchment-dim);
   }
 
-  .word-title {
+  .word-initial {
     font-family: 'Fraunces', serif;
     font-style: italic;
     font-weight: 300;
-    font-size: clamp(3rem, 5vw, 5.4rem);
-    line-height: 0.95;
-    letter-spacing: -0.025em;
+    font-size: clamp(6rem, 15vw, 14rem); /* Giant initials */
+    line-height: 0.8;
+    letter-spacing: -0.05em;
     color: var(--parchment);
-    margin: auto 0 1rem;
+    margin: auto 0 0.5rem;
+    display: block;
+  }
+
+  .word-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    opacity: 0.6;
   }
 
   .word-rule {
     height: 1px;
     background: var(--magenta);
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     transition: width 0.6s ease, opacity 0.6s ease;
   }
   .is-self .word-rule { width: 56px; }
@@ -317,7 +329,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.85rem 1.75rem;
+    padding: 0.85rem 2rem;
     z-index: 30;
     border-top: 1px solid var(--hairline);
     background: rgba(10, 9, 8, 0.4);
@@ -335,7 +347,7 @@
 
   .social-links {
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
     pointer-events: auto;
   }
 
@@ -365,27 +377,33 @@
 
   /* ── Mobile ─────────────────────────────────── */
   @media (max-width: 720px) {
-    .topbar { padding: 0.85rem 1rem; }
-    .brand { font-size: 0.7rem; gap: 0.4rem; }
-    .brand svg { width: 16px; height: 16px; }
+    .topbar { padding: 1rem; }
+    .brand { font-size: 0.9rem; gap: 0.5rem; }
+    .brand svg { width: 18px; height: 18px; }
     .nav-links { gap: 0.75rem; }
     .nav-link { font-size: 0.55rem; }
 
-    .triad { padding-top: 44px; padding-bottom: 30px; }
+    .triad { padding-top: 60px; padding-bottom: 30px; }
 
-    .face { padding: 0.9rem 0.7rem; }
+    .face { padding: 1.2rem 1rem; }
     .face-front { padding-top: 1.5rem; }
 
     .head { margin-bottom: 0.6rem; }
     .num { font-size: 0.7rem; }
     .tag { font-size: 0.6rem; letter-spacing: 0.22em; }
 
-    .word-title {
-      font-size: clamp(1.6rem, 7.5vw, 2.6rem);
-      margin-bottom: 0.7rem;
+    .word-initial {
+      font-size: clamp(4rem, 20vw, 7rem);
+      margin-bottom: 0.2rem;
+    }
+    
+    .word-subtitle {
+      font-size: 0.5rem;
+      letter-spacing: 0.3em;
+      margin-bottom: 1rem;
     }
 
-    .word-rule { margin-bottom: 0.7rem; }
+    .word-rule { margin-bottom: 1rem; }
     .is-self .word-rule { width: 40px; }
     .is-love .word-rule { width: 30px; }
     .is-club .word-rule { width: 18px; }
@@ -393,7 +411,7 @@
     .word-line { font-size: 0.72rem; line-height: 1.3; }
     .face-foot { font-size: 0.5rem; padding-top: 0.85rem; }
     
-    .is-love, .is-club { box-shadow: -10px 0 30px var(--shadow-depth); }
+    .is-love, .is-club { box-shadow: -15px 0 40px var(--shadow-depth); }
   }
 </style>
 </head>
@@ -426,7 +444,8 @@
           <span class="num">01</span>
           <span class="tag">Self</span>
         </div>
-        <h1 class="word-title">Self.</h1>
+        <span class="word-initial">S</span>
+        <div class="word-subtitle">Self</div>
         <div class="word-rule"></div>
         <p class="word-line">
           Choose yourself first — not as an idea, as a daily practice.
@@ -465,7 +484,8 @@
           <span class="num">02</span>
           <span class="tag">Love</span>
         </div>
-        <h1 class="word-title">Love.</h1>
+        <span class="word-initial">L</span>
+        <div class="word-subtitle">Love</div>
         <div class="word-rule"></div>
         <p class="word-line">
           What you give outward is measured by what you have built within.
@@ -504,7 +524,8 @@
           <span class="num">03</span>
           <span class="tag">Club</span>
         </div>
-        <h1 class="word-title">Club.</h1>
+        <span class="word-initial">C</span>
+        <div class="word-subtitle">Club</div>
         <div class="word-rule"></div>
         <p class="word-line">
           A collective of individuals committed to their own integrity.
