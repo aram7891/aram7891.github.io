@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Self Love Club</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Manrope:wght@200..800&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --ink:             #0A0908;
+    --ink-soft:        #14110F;
+    --parchment:       #F5F2ED;
+    --parchment-dim:   #C9C3B8;
+    --muted:           #6B655C;
+
+    --magenta:         #C026D3;
+    --magenta-deep:    #86198F;
+    --magenta-bright:  #E879F9;
+
+    --hairline:        rgba(245, 242, 237, 0.08);
+    --hairline-strong: rgba(245, 242, 237, 0.16);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  body {
+    font-family: 'Manrope', system-ui, sans-serif;
+    background: var(--ink);
+    color: var(--parchment);
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+  }
+
+  /* ── Atmosphere ───────────────────────────────── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+  }
+
+  .aura {
+    position: fixed;
+    top: 25%;
+    left: -8%;
+    width: 60vw;
+    height: 60vw;
+    max-width: 800px;
+    max-height: 800px;
+    background: radial-gradient(circle at center, var(--magenta-deep) 0%, transparent 60%);
+    filter: blur(120px);
+    opacity: 0.28;
+    pointer-events: none;
+    z-index: 1;
+    animation: drift 22s ease-in-out infinite alternate;
+  }
+
+  @keyframes drift {
+    0%   { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(20%, -10%) scale(1.18); }
+  }
+
+  /* ── Top mark ─────────────────────────────────── */
+  .topbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 1.75rem;
+    z-index: 20;
+    pointer-events: none;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-family: 'Anton', sans-serif;
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--parchment);
+  }
+
+  .brand svg { width: 20px; height: 20px; }
+
+  .index {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.66rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .index span { color: var(--magenta-bright); }
+
+  /* ── Triad ─────────────────────────────────────── */
+  /* Block widths stay asymmetric: Self 45 · Love 35 · Club 20.
+     But the word inside each block is the same size — same voice,
+     different amount of air. The hierarchy is in the architecture,
+     not the type. */
+  .triad {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 45fr 35fr 20fr;
+    padding-top: 56px;
+    padding-bottom: 36px;
+  }
+
+  /* ── Card (the flippable block) ─────────────── */
+  .card {
+    position: relative;
+    height: 100%;
+    border-right: 1px solid var(--hairline);
+    perspective: 1400px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .card:last-child { border-right: none; }
+
+  .card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.95s cubic-bezier(0.4, 0.05, 0.2, 1);
+  }
+
+  .card.is-flipped .card-inner { transform: rotateY(180deg); }
+
+  .face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 1.5rem 1.25rem;
+    overflow: hidden;
+    transition: background 0.6s ease;
+  }
+
+  .face-back {
+    transform: rotateY(180deg);
+    justify-content: flex-start;
+    background: linear-gradient(180deg, rgba(192, 38, 211, 0.06), transparent 60%), var(--ink-soft);
+  }
+
+  .card:hover .face-front {
+    background: linear-gradient(180deg, transparent, rgba(192, 38, 211, 0.04));
+  }
+
+  /* Vertical disorder — slugs at different heights per column */
+  .is-self .face-front  { padding-top: 1.75rem; }
+  .is-love .face-front  { padding-top: 3.5rem; }
+  .is-club .face-front  { padding-top: 5.5rem; }
+
+  /* ── Front face ───────────────────────────────── */
+  .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1rem;
+  }
+
+  .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 400;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    color: var(--magenta);
+  }
+
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.6rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--parchment-dim);
+  }
+
+  /* SAME font size for all three words — voice is equal,
+     space is unequal */
+  .word-title {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(3rem, 5vw, 5.4rem);
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    color: var(--parchment);
+    margin: auto 0 1rem;
+  }
+
+  /* Rules still vary in length — proportional to column air,
+     so the asymmetric reading remains legible at a glance */
+  .word-rule {
+    height: 1px;
+    background: var(--magenta);
+    margin-bottom: 1rem;
+    transition: width 0.6s ease, opacity 0.6s ease;
+  }
+  .is-self .word-rule { width: 56px; }
+  .is-love .word-rule { width: 38px; }
+  .is-club .word-rule { width: 22px; opacity: 0.55; }
+
+  .card:hover .word-rule { width: 88px; opacity: 1; }
+
+  .word-line {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(0.78rem, 0.92vw, 1rem);
+    line-height: 1.35;
+    color: var(--parchment-dim);
+    max-width: 22ch;
+  }
+
+  .face-foot {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.58rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: auto;
+    padding-top: 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.75rem;
+  }
+
+  .face-foot .cue {
+    color: var(--magenta-bright);
+    opacity: 0.6;
+    transition: opacity 0.4s ease;
+  }
+  .card:hover .face-foot .cue { opacity: 1; }
+
+  /* ── Back face ────────────────────────────────── */
+  .face-back .head { margin-bottom: 1.5rem; }
+
+  .back-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 400;
+    font-size: 0.66rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--magenta-bright);
+    margin-bottom: 1.25rem;
+  }
+
+  .back-title {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(1.1rem, 1.4vw, 1.6rem);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    color: var(--parchment);
+    margin-bottom: 1.5rem;
+  }
+
+  .back-body {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 300;
+    font-size: clamp(0.78rem, 0.95vw, 1.02rem);
+    line-height: 1.6;
+    color: var(--parchment-dim);
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .back-body::-webkit-scrollbar { width: 0; }
+
+  .back-foot {
+    color: var(--magenta-bright);
+    opacity: 0.7;
+  }
+
+  /* ── Bottom mark ──────────────────────────────── */
+  .bottombar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.85rem 1.75rem;
+    z-index: 20;
+    pointer-events: none;
+    border-top: 1px solid var(--hairline);
+    background: rgba(10, 9, 8, 0.4);
+    backdrop-filter: blur(6px);
+  }
+
+  .bottombar .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .pulse {
+    display: inline-block;
+    width: 5px; height: 5px;
+    background: var(--magenta);
+    border-radius: 50%;
+    margin-right: 0.5rem;
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.3; transform: scale(0.9); }
+    50%      { opacity: 1; transform: scale(1.2); }
+  }
+
+  /* ── Mobile ─────────────────────────────────── */
+  @media (max-width: 720px) {
+    .topbar { padding: 0.85rem 1rem; }
+    .brand { font-size: 0.7rem; gap: 0.4rem; }
+    .brand svg { width: 16px; height: 16px; }
+    .index { font-size: 0.58rem; }
+
+    .triad { padding-top: 44px; padding-bottom: 30px; }
+
+    .face { padding: 0.9rem 0.7rem; }
+    .is-self .face-front { padding-top: 1.25rem; }
+    .is-love .face-front { padding-top: 2rem; }
+    .is-club .face-front { padding-top: 2.75rem; padding-left: 0.55rem; padding-right: 0.45rem; }
+
+    .head { margin-bottom: 0.6rem; }
+    .num { font-size: 0.6rem; }
+    .tag { font-size: 0.5rem; letter-spacing: 0.22em; }
+    .is-club .tag { display: none; }
+
+    /* same size still — but smaller globally on phone */
+    .word-title {
+      font-size: clamp(1.6rem, 7.5vw, 2.6rem);
+      margin-bottom: 0.7rem;
+    }
+
+    .word-rule { margin-bottom: 0.7rem; }
+    .is-self .word-rule { width: 32px; }
+    .is-love .word-rule { width: 22px; }
+    .is-club .word-rule { width: 14px; }
+
+    .word-line { font-size: 0.62rem; line-height: 1.3; }
+    .is-club .word-line { display: none; }
+
+    .face-foot { font-size: 0.46rem; letter-spacing: 0.14em; padding-top: 0.6rem; }
+
+    /* Back face on mobile — tighter, smaller */
+    .back-eyebrow { font-size: 0.52rem; margin-bottom: 0.65rem; }
+    .back-title { font-size: 0.82rem; margin-bottom: 0.7rem; }
+    .back-body { font-size: 0.62rem; line-height: 1.5; }
+    .is-club .back-body { font-size: 0.55rem; line-height: 1.45; }
+
+    .bottombar { padding: 0.6rem 1rem; }
+    .bottombar .meta { font-size: 0.52rem; letter-spacing: 0.16em; }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .card-inner { transition: none; }
+    .aura { animation: none; }
+    .pulse { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="aura"></div>
+
+<header class="topbar">
+  <div class="brand">
+    <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <linearGradient id="hg" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#E879F9"/>
+          <stop offset="100%" stop-color="#86198F"/>
+        </linearGradient>
+      </defs>
+      <g stroke="url(#hg)" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M30 50 C12 38, 6 26, 12 18 C16 12, 24 12, 30 20 C36 12, 44 12, 48 18 C54 26, 48 38, 30 50 Z"/>
+        <path d="M30 44 C16 34, 12 24, 16 19 C20 14, 26 16, 30 22 C34 16, 40 14, 44 19 C48 24, 44 34, 30 44 Z"/>
+      </g>
+    </svg>
+    <span>Self&nbsp;Love&nbsp;Club</span>
+  </div>
+  <div class="index">— <span>I</span> / III</div>
+</header>
+
+<main class="triad" aria-label="Self · Love · Club">
+
+  <article class="card is-self" tabindex="0" role="button" aria-label="Reveal Self">
+    <div class="card-inner">
+
+      <div class="face face-front">
+        <div class="head">
+          <span class="num">01</span>
+          <span class="tag">Self</span>
+        </div>
+        <h1 class="word-title">Self.</h1>
+        <div class="word-rule"></div>
+        <p class="word-line">Choose yourself first — not as an idea, as a daily practice.</p>
+        <div class="face-foot">
+          <span>— You, before anything else</span>
+          <span class="cue">↻ tap</span>
+        </div>
+      </div>
+
+      <div class="face face-back">
+        <div class="head">
+          <span class="num">01</span>
+          <span class="tag">Self</span>
+        </div>
+        <div class="back-eyebrow">— The Starting Point</div>
+        <h2 class="back-title">Choosing yourself first, daily.</h2>
+        <p class="back-body">
+          Self is the starting point. It is the decision to choose yourself first — not as an idea, but as a daily practice of awareness and responsibility. Everything that follows depends on it.
+        </p>
+        <div class="face-foot back-foot">
+          <span>↻ Tap to return</span>
+          <span>01 / III</span>
+        </div>
+      </div>
+
+    </div>
+  </article>
+
+  <article class="card is-love" tabindex="0" role="button" aria-label="Reveal Love">
+    <div class="card-inner">
+
+      <div class="face face-front">
+        <div class="head">
+          <span class="num">02</span>
+          <span class="tag">Love</span>
+        </div>
+        <h2 class="word-title">Love.</h2>
+        <div class="word-rule"></div>
+        <p class="word-line">What you give outward is measured by what you have built within.</p>
+        <div class="face-foot">
+          <span>— You can't give what you don't build</span>
+          <span class="cue">↻ tap</span>
+        </div>
+      </div>
+
+      <div class="face face-back">
+        <div class="head">
+          <span class="num">02</span>
+          <span class="tag">Love</span>
+        </div>
+        <div class="back-eyebrow">— The Extension</div>
+        <h2 class="back-title">An extension of inner work.</h2>
+        <p class="back-body">
+          Love is the extension of that inner work. You cannot consistently give, build, or sustain anything externally that you have not first developed within yourself.
+        </p>
+        <div class="face-foot back-foot">
+          <span>↻ Tap to return</span>
+          <span>02 / III</span>
+        </div>
+      </div>
+
+    </div>
+  </article>
+
+  <article class="card is-club" tabindex="0" role="button" aria-label="Reveal Club">
+    <div class="card-inner">
+
+      <div class="face face-front">
+        <div class="head">
+          <span class="num">03</span>
+          <span class="tag">Club</span>
+        </div>
+        <h2 class="word-title">Club.</h2>
+        <div class="word-rule"></div>
+        <p class="word-line">Where awareness becomes action.</p>
+        <div class="face-foot">
+          <span>— Open by design</span>
+          <span class="cue">↻</span>
+        </div>
+      </div>
+
+      <div class="face face-back">
+        <div class="head">
+          <span class="num">03</span>
+          <span class="tag">Club</span>
+        </div>
+        <div class="back-eyebrow">— The Practice</div>
+        <h2 class="back-title">Awareness becoming action.</h2>
+        <p class="back-body">
+          Club is the expression of it in practice. Not a membership or a closed system, but a space where awareness becomes action through tools, ideas, and creations that may exist or evolve over time.
+        </p>
+        <div class="face-foot back-foot">
+          <span>↻ Return</span>
+          <span>03 / III</span>
+        </div>
+      </div>
+
+    </div>
+  </article>
+
+</main>
+
+<footer class="bottombar">
+  <span class="meta"><span class="pulse"></span>You first.</span>
+  <span class="meta">MMXXVI</span>
+</footer>
+
+<script>
+  // Click to flip
+  document.querySelectorAll('.card').forEach(card => {
+    const flip = (e) => {
+      e.preventDefault();
+      card.classList.toggle('is-flipped');
+      card.setAttribute('aria-pressed', card.classList.contains('is-flipped'));
+    };
+    card.addEventListener('click', flip);
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') flip(e);
+    });
+  });
+
+  // Esc closes any open card
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.card.is-flipped').forEach(c => {
+        c.classList.remove('is-flipped');
+        c.setAttribute('aria-pressed', 'false');
+      });
+    }
+  });
+</script>
+
+</body>
+</html>
