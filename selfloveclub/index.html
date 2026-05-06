@@ -1,9 +1,15 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>Self Love Club</title>
+<title>Self Love Club · Andrés Ramírez</title>
+<meta name="description" content="A collective of individuals committed to their own integrity. Self · Love · Club — three premises and the publications they generate." />
+<meta property="og:title" content="Self Love Club" />
+<meta property="og:description" content="Self · Love · Club. Three premises. The Archive." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.andresramirez.pro/selfloveclub/" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -11,27 +17,25 @@
 
 <style>
   :root {
-    --ink:             #0A0908;
-    --ink-soft:        #14110F;
-    --parchment:       #F5F2ED;
-    --parchment-dim:   #C9C3B8;
-    --muted:           #6B655C;
-
-    --magenta:         #C026D3;
-    --magenta-deep:    #86198F;
-    --magenta-bright:  #E879F9;
-
-    --hairline:        rgba(245, 242, 237, 0.08);
+    --ink: #0A0908;
+    --ink-soft: #14110F;
+    --ink-deep: #050403;
+    --parchment: #F5F2ED;
+    --parchment-dim: #C9C3B8;
+    --muted: #6B655C;
+    --magenta: #C026D3;
+    --magenta-deep: #86198F;
+    --magenta-bright: #E879F9;
+    --hairline: rgba(245, 242, 237, 0.08);
     --hairline-strong: rgba(245, 242, 237, 0.16);
-    
-    --shadow-depth:    rgba(0, 0, 0, 0.8);
+    --shadow-depth: rgba(0, 0, 0, 0.8);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   html, body {
-    height: 100%;
-    overflow: hidden;
+    min-height: 100%;
+    overflow-x: hidden;
   }
 
   body {
@@ -41,9 +45,9 @@
     font-weight: 300;
     -webkit-font-smoothing: antialiased;
     position: relative;
+    padding-bottom: 60px;
   }
 
-  /* ── Atmosphere ───────────────────────────────── */
   body::before {
     content: '';
     position: fixed;
@@ -57,7 +61,7 @@
 
   .aura {
     position: fixed;
-    top: 25%;
+    top: 15%;
     left: -8%;
     width: 60vw;
     height: 60vw;
@@ -72,19 +76,22 @@
   }
 
   @keyframes drift {
-    0%   { transform: translate(0, 0) scale(1); }
+    0% { transform: translate(0, 0) scale(1); }
     100% { transform: translate(20%, -10%) scale(1.18); }
   }
 
-  /* ── Top mark ─────────────────────────────────── */
   .topbar {
     position: fixed;
     top: 0; left: 0; right: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.5rem 2rem; /* Increased padding */
+    padding: 1.5rem 2rem;
     z-index: 30;
+    background: linear-gradient(180deg, rgba(10, 9, 8, 0.85) 0%, rgba(10, 9, 8, 0) 100%);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    gap: 1rem;
   }
 
   .brand {
@@ -92,7 +99,7 @@
     align-items: center;
     gap: 0.75rem;
     font-family: 'Anton', sans-serif;
-    font-size: 1.2rem; /* Larger title */
+    font-size: 1.2rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--parchment);
@@ -101,12 +108,11 @@
     transition: opacity 0.3s ease;
   }
   .brand:hover { opacity: 0.7; }
-
   .brand svg { width: 24px; height: 24px; }
 
   .nav-links {
     display: flex;
-    gap: 1.5rem;
+    gap: 1.25rem;
     align-items: center;
     pointer-events: auto;
   }
@@ -124,19 +130,41 @@
   .nav-link:hover { color: var(--magenta-bright); }
   .nav-link span { color: var(--magenta-bright); }
 
-  /* ── Triad ─────────────────────────────────────── */
-  .triad {
+  .lang-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 400;
+    font-size: 0.66rem;
+    letter-spacing: 0.18em;
+    display: flex;
+    gap: 0.45rem;
+    align-items: center;
+    padding: 0;
+    text-transform: uppercase;
+  }
+  .lang-toggle [data-lang] {
+    color: var(--muted);
+    transition: color 0.3s ease;
+  }
+  .lang-toggle .lang-active { color: var(--magenta-bright); }
+  .lang-toggle .lang-divider { color: var(--muted); opacity: 0.4; }
+
+  .stage {
     position: relative;
     z-index: 2;
-    height: 100%;
+    padding-top: 80px;
+  }
+
+  /* TRIAD */
+  .triad {
     width: 100%;
     display: grid;
     grid-template-columns: 45fr 35fr 20fr;
-    padding-top: 80px; /* More space for larger topbar */
-    padding-bottom: 36px;
+    height: clamp(380px, 58vh, 560px);
   }
 
-  /* ── Card (the flippable block) ─────────────── */
   .card {
     position: relative;
     height: 100%;
@@ -146,10 +174,9 @@
     z-index: var(--z-index, 1);
   }
 
-  /* Depth Shadows (Overlapping effect) */
   .is-self { --z-index: 10; }
-  .is-love { --z-index: 9; box-shadow: -30px 0 60px var(--shadow-depth); }
-  .is-club { --z-index: 8; box-shadow: -30px 0 60px var(--shadow-depth); }
+  .is-love { --z-index: 9;  box-shadow: -30px 0 60px var(--shadow-depth); }
+  .is-club { --z-index: 8;  box-shadow: -30px 0 60px var(--shadow-depth); }
 
   .card-inner {
     position: relative;
@@ -158,7 +185,6 @@
     transform-style: preserve-3d;
     transition: transform 0.95s cubic-bezier(0.4, 0.05, 0.2, 1);
   }
-
   .card.is-flipped .card-inner { transform: rotateY(180deg); }
 
   .face {
@@ -168,7 +194,7 @@
     -webkit-backface-visibility: hidden;
     display: flex;
     flex-direction: column;
-    padding: 2rem 2rem 1.5rem;
+    padding: 1.75rem 1.75rem 1.25rem;
     overflow: hidden;
     transition: background 0.6s ease;
     background: var(--ink);
@@ -186,76 +212,70 @@
     background: linear-gradient(180deg, transparent, rgba(192, 38, 211, 0.04));
   }
 
-  /* Vertical alignment correction */
-  .face-front { padding-top: 3rem; }
+  .face-front { padding-top: 2rem; }
 
-  /* ── Front face ───────────────────────────────── */
   .head {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
   }
-
   .num {
     font-family: 'JetBrains Mono', monospace;
     font-weight: 400;
-    font-size: 0.85rem;
+    font-size: 0.78rem;
     letter-spacing: 0.18em;
     color: var(--magenta);
   }
-
   .tag {
     font-family: 'JetBrains Mono', monospace;
     font-weight: 400;
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     letter-spacing: 0.32em;
     text-transform: uppercase;
     color: var(--parchment-dim);
   }
 
+  /* BRAND TYPE — Anton sans-serif heavy (loyal to original logo) */
   .word-initial {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-weight: 300;
-    font-size: clamp(6rem, 15vw, 14rem); /* Giant initials */
-    line-height: 0.8;
-    letter-spacing: -0.05em;
+    font-family: 'Anton', sans-serif;
+    font-weight: 400;
+    font-size: clamp(5.5rem, 11vw, 10rem);
+    line-height: 0.9;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
     color: var(--parchment);
-    margin-top: 15vh; /* Fixed top position */
+    margin-top: clamp(0.5rem, 3vh, 2.5rem);
     margin-bottom: 0.5rem;
     display: block;
   }
-
   .word-subtitle {
     font-family: 'JetBrains Mono', monospace;
     font-weight: 300;
-    font-size: 0.6rem;
+    font-size: 0.55rem;
     letter-spacing: 0.4em;
     text-transform: uppercase;
     color: var(--muted);
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.1rem;
     opacity: 0.6;
   }
-
   .word-rule {
     height: 1px;
     background: var(--magenta);
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.1rem;
     transition: width 0.6s ease, opacity 0.6s ease;
   }
   .is-self .word-rule { width: 56px; }
   .is-love .word-rule { width: 38px; }
   .is-club .word-rule { width: 22px; opacity: 0.55; }
-
   .card:hover .word-rule { width: 88px; opacity: 1; }
 
   .word-line {
     font-family: 'Fraunces', serif;
     font-style: italic;
     font-weight: 300;
-    font-size: clamp(0.78rem, 0.92vw, 1rem);
-    line-height: 1.35;
+    font-size: clamp(0.75rem, 0.88vw, 0.95rem);
+    line-height: 1.4;
     color: var(--parchment-dim);
     max-width: 22ch;
   }
@@ -263,18 +283,17 @@
   .face-foot {
     font-family: 'JetBrains Mono', monospace;
     font-weight: 300;
-    font-size: 0.58rem;
+    font-size: 0.55rem;
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--muted);
     margin-top: auto;
-    padding-top: 1.25rem;
+    padding-top: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: baseline;
     gap: 0.75rem;
   }
-
   .face-foot .cue {
     color: var(--magenta-bright);
     opacity: 0.6;
@@ -282,48 +301,210 @@
   }
   .card:hover .face-foot .cue { opacity: 1; }
 
-  /* ── Back face ────────────────────────────────── */
-  .face-back .head { margin-bottom: 1.5rem; }
-
+  .face-back .head { margin-bottom: 1rem; }
   .back-eyebrow {
     font-family: 'JetBrains Mono', monospace;
     font-weight: 400;
-    font-size: 0.66rem;
+    font-size: 0.62rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--magenta-bright);
-    margin-bottom: 1.25rem;
+    margin-bottom: 1rem;
   }
-
   .back-title {
     font-family: 'Fraunces', serif;
     font-style: italic;
     font-weight: 300;
-    font-size: clamp(1.1rem, 1.4vw, 1.6rem);
-    line-height: 1.15;
+    font-size: clamp(1rem, 1.3vw, 1.5rem);
+    line-height: 1.18;
     letter-spacing: -0.015em;
     color: var(--parchment);
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
   }
-
   .back-body {
     font-family: 'Manrope', sans-serif;
     font-weight: 300;
-    font-size: clamp(0.78rem, 0.95vw, 1.02rem);
-    line-height: 1.6;
+    font-size: clamp(0.74rem, 0.88vw, 0.95rem);
+    line-height: 1.55;
     color: var(--parchment-dim);
     flex: 1;
     overflow-y: auto;
   }
-
   .back-body::-webkit-scrollbar { width: 0; }
+  .back-foot { color: var(--magenta-bright); opacity: 0.7; }
 
-  .back-foot {
-    color: var(--magenta-bright);
-    opacity: 0.7;
+  /* ARCHIVE */
+  .archive {
+    position: relative;
+    padding: 5rem 2rem 3rem;
+    border-top: 1px solid var(--hairline);
   }
 
-  /* ── Bottom mark ──────────────────────────────── */
+  .archive-head {
+    max-width: 1280px;
+    margin: 0 auto 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .archive-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 400;
+    font-size: 0.66rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--magenta);
+  }
+
+  .archive-title {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--parchment);
+  }
+
+  .archive-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.62rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.4rem;
+  }
+
+  .archive-shelf {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--hairline);
+    border: 1px solid var(--hairline);
+  }
+
+  .pub {
+    position: relative;
+    background: var(--ink);
+    padding: 1.75rem 1.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: var(--parchment);
+    transition: background 0.5s ease;
+    min-height: 320px;
+  }
+  .pub:hover { background: var(--ink-soft); }
+  .pub:hover .pub-vol { color: var(--magenta-bright); }
+  .pub:hover .pub-title { color: var(--parchment); }
+  .pub:hover .pub-cta { letter-spacing: 0.32em; color: var(--magenta-bright); }
+
+  .pub-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1.25rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .pub-num { color: var(--magenta); }
+  .pub-year { color: var(--muted); }
+
+  /* Volume number — also Anton (brand language) */
+  .pub-vol {
+    font-family: 'Anton', sans-serif;
+    font-weight: 400;
+    font-size: 3rem;
+    line-height: 0.9;
+    letter-spacing: 0.04em;
+    color: var(--parchment-dim);
+    opacity: 0.55;
+    margin-bottom: 1.25rem;
+    transition: color 0.4s ease;
+    text-transform: uppercase;
+  }
+
+  .pub-title {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.15rem;
+    line-height: 1.15;
+    color: var(--parchment-dim);
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.015em;
+    transition: color 0.4s ease;
+  }
+
+  .pub-subtitle {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 300;
+    font-size: 0.72rem;
+    line-height: 1.4;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .pub-rule {
+    width: 22px;
+    height: 1px;
+    background: var(--magenta);
+    margin-bottom: 0.85rem;
+    opacity: 0.6;
+  }
+
+  .pub-desc {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 300;
+    font-size: 0.74rem;
+    line-height: 1.55;
+    color: var(--parchment-dim);
+    opacity: 0.75;
+    margin-bottom: 1.25rem;
+    flex: 1;
+  }
+
+  .pub-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--hairline);
+  }
+
+  .pub-type { color: var(--muted); }
+  .pub-cta {
+    color: var(--magenta);
+    letter-spacing: 0.22em;
+    transition: letter-spacing 0.4s ease, color 0.4s ease;
+  }
+
+  .pub-new {
+    position: absolute;
+    top: 1.75rem;
+    right: 1.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 400;
+    font-size: 0.55rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--magenta-bright);
+    padding: 0.2rem 0.5rem;
+  }
+
+  /* BOTTOMBAR */
   .bottombar {
     position: fixed;
     bottom: 0; left: 0; right: 0;
@@ -333,8 +514,9 @@
     padding: 0.85rem 2rem;
     z-index: 30;
     border-top: 1px solid var(--hairline);
-    background: rgba(10, 9, 8, 0.4);
-    backdrop-filter: blur(6px);
+    background: rgba(10, 9, 8, 0.78);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
   }
 
   .bottombar .meta {
@@ -351,7 +533,6 @@
     gap: 1.5rem;
     pointer-events: auto;
   }
-
   .social-link {
     color: var(--muted);
     text-decoration: none;
@@ -370,101 +551,69 @@
     margin-right: 0.5rem;
     animation: pulse 2.4s ease-in-out infinite;
   }
-
   @keyframes pulse {
     0%, 100% { opacity: 0.3; transform: scale(0.9); }
-    50%      { opacity: 1; transform: scale(1.2); }
+    50% { opacity: 1; transform: scale(1.2); }
   }
 
-  /* ── Mobile ─────────────────────────────────── */
-@media (max-width: 720px) {
-
-  .topbar { padding: 1rem; }
-  .brand { font-size: 0.9rem; gap: 0.5rem; }
-  .brand svg { width: 18px; height: 18px; }
-  .nav-links { gap: 0.75rem; }
-  .nav-link { font-size: 0.55rem; }
-
-  .triad { padding-top: 60px; padding-bottom: 30px; }
-
-  .face { padding: 1.2rem 1rem; }
-
-  .face-front { 
-    padding-top: 2.5rem; /* ← Alineación vertical uniforme */
+  /* RESPONSIVE */
+  @media (max-width: 960px) {
+    .archive-shelf { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
 
-  .head { margin-bottom: 0.6rem; }
-
-  .num { font-size: 0.7rem; }
-  .tag { font-size: 0.6rem; letter-spacing: 0.22em; }
-
-  /* ← ← ← LA SOLUCIÓN SUPERIOR: tamaño idéntico en todas las columnas */
-  .word-initial {
-    font-size: min(22vw, 6rem); /* ← Universal, estable, perfecto */
-    line-height: 0.8;
-    margin-bottom: 0.2rem;
-  }
-
-  .word-subtitle {
-    font-size: 0.5rem;
-    letter-spacing: 0.3em;
-    margin-bottom: 1rem;
-  }
-
-  .word-rule { margin-bottom: 1rem; }
-  .is-self .word-rule { width: 40px; }
-  .is-love .word-rule { width: 30px; }
-  .is-club .word-rule { width: 18px; }
-
-  .word-line { font-size: 0.72rem; line-height: 1.3; }
-
-  .face-foot { font-size: 0.5rem; padding-top: 0.85rem; }
-
-  .is-love, .is-club { 
-    box-shadow: -15px 0 40px var(--shadow-depth); 
-  }
-}
-
-    .topbar { padding: 1rem; }
-    .brand { font-size: 0.9rem; gap: 0.5rem; }
+  @media (max-width: 720px) {
+    .topbar { padding: 1rem; gap: 0.5rem; }
+    .brand { font-size: 0.95rem; gap: 0.5rem; }
     .brand svg { width: 18px; height: 18px; }
-    .nav-links { gap: 0.75rem; }
+    .nav-links { gap: 0.7rem; }
     .nav-link { font-size: 0.55rem; }
+    .lang-toggle { font-size: 0.55rem; gap: 0.3rem; }
 
-    .triad { padding-top: 60px; padding-bottom: 30px; }
-
-    .face { padding: 1.2rem 1rem; }
+    .stage { padding-top: 60px; }
+    .triad { height: clamp(320px, 50vh, 460px); }
+    .face { padding: 1rem 0.85rem 0.85rem; }
     .face-front { padding-top: 1.5rem; }
-
-    .head { margin-bottom: 0.6rem; }
-    .num { font-size: 0.7rem; }
-    .tag { font-size: 0.6rem; letter-spacing: 0.22em; }
+    .head { margin-bottom: 0.5rem; }
+    .num { font-size: 0.65rem; }
+    .tag { font-size: 0.55rem; letter-spacing: 0.22em; }
 
     .word-initial {
-      font-size: clamp(4rem, 20vw, 7rem);
-      margin-top: 10vh; /* Fixed top position for mobile */
-      margin-bottom: 0.2rem;
+      font-size: min(24vw, 6.5rem);
+      line-height: 0.88;
+      margin-top: 0.6rem;
+      margin-bottom: 0.35rem;
     }
-    
     .word-subtitle {
-      font-size: 0.5rem;
+      font-size: 0.48rem;
       letter-spacing: 0.3em;
-      margin-bottom: 1rem;
+      margin-bottom: 0.7rem;
     }
+    .word-rule { margin-bottom: 0.7rem; }
+    .is-self .word-rule { width: 36px; }
+    .is-love .word-rule { width: 26px; }
+    .is-club .word-rule { width: 16px; }
+    .word-line { font-size: 0.68rem; line-height: 1.3; }
+    .face-foot { font-size: 0.5rem; padding-top: 0.7rem; }
 
-    .word-rule { margin-bottom: 1rem; }
-    .is-self .word-rule { width: 40px; }
-    .is-love .word-rule { width: 30px; }
-    .is-club .word-rule { width: 18px; }
-
-    .word-line { font-size: 0.72rem; line-height: 1.3; }
-    .face-foot { font-size: 0.5rem; padding-top: 0.85rem; }
-    
     .is-love, .is-club { box-shadow: -15px 0 40px var(--shadow-depth); }
+
+    .archive { padding: 3rem 1rem 2rem; }
+    .archive-head { margin-bottom: 2rem; }
+    .archive-eyebrow { font-size: 0.6rem; }
+    .archive-title { font-size: 1.6rem; }
+    .archive-meta { font-size: 0.55rem; }
+    .archive-shelf { grid-template-columns: 1fr; }
+    .pub { min-height: 240px; padding: 1.5rem 1.25rem 1.25rem; }
+    .pub-vol { font-size: 2.4rem; margin-bottom: 1rem; }
+    .pub-title { font-size: 1.05rem; }
+
+    .bottombar { padding: 0.7rem 1rem; }
+    .bottombar .meta { font-size: 0.55rem; letter-spacing: 0.15em; }
+    .social-link { font-size: 0.55rem; }
   }
 </style>
-</head>
 
+</head>
 <body>
 
 <div class="aura"></div>
@@ -477,146 +626,277 @@
     Self Love Club
   </a>
   <nav class="nav-links">
-    <a href="../index.html" class="nav-link">← <span>AndresRamirez.pro</span></a>
-    <div class="nav-link">I / III</div>
+    <button class="lang-toggle" onclick="toggleLang()" aria-label="Switch language">
+      <span data-lang="en">EN</span>
+      <span class="lang-divider">&middot;</span>
+      <span data-lang="es">ES</span>
+    </button>
+    <a href="../index.html" class="nav-link">&larr; <span>AndresRamirez.pro</span></a>
   </nav>
 </header>
 
-<main class="triad">
+<div class="stage">
 
-  <!-- 01 SELF -->
-  <article class="card is-self" role="button" aria-pressed="false" tabindex="0">
-    <div class="card-inner">
-      
-      <div class="face face-front">
-        <div class="head">
-          <span class="num">01</span>
-          <span class="tag">Self</span>
-        </div>
-        <span class="word-initial">S</span>
-        <div class="word-subtitle">Self</div>
-        <div class="word-rule"></div>
-        <p class="word-line">
-          Choose yourself first — not as an idea, as a daily practice.
-        </p>
-        <div class="face-foot">
-          <span>— You, before anything else</span>
-          <span class="cue">↻ Tap</span>
-        </div>
+  <main class="triad">
+
+```
+<article class="card is-self" role="button" aria-pressed="false" tabindex="0">
+  <div class="card-inner">
+    <div class="face face-front">
+      <div class="head"><span class="num">01</span><span class="tag">Self</span></div>
+      <span class="word-initial">S</span>
+      <div class="word-subtitle">Self</div>
+      <div class="word-rule"></div>
+      <p class="word-line" data-i18n="self.line">Choose yourself first &mdash; not as an idea, as a daily practice.</p>
+      <div class="face-foot">
+        <span data-i18n="self.foot">&mdash; You, before anything else</span>
+        <span class="cue" data-i18n="cue.tap">&#8635; Tap</span>
       </div>
-
-      <div class="face face-back">
-        <div class="head">
-          <span class="num">01</span>
-          <span class="tag">Self</span>
-        </div>
-        <div class="back-eyebrow">— The Foundation</div>
-        <h2 class="back-title">The architecture of the I.</h2>
-        <p class="back-body">
-          Self is the starting point. Without a clear sense of who you are, every connection is a compromise. We explore the boundaries, the values, and the silent strength required to remain intact.
-        </p>
-        <div class="face-foot back-foot">
-          <span>↻ Return</span>
-          <span>01 / III</span>
-        </div>
-      </div>
-
     </div>
-  </article>
-
-  <!-- 02 LOVE -->
-  <article class="card is-love" role="button" aria-pressed="false" tabindex="0">
-    <div class="card-inner">
-
-      <div class="face face-front">
-        <div class="head">
-          <span class="num">02</span>
-          <span class="tag">Love</span>
-        </div>
-        <span class="word-initial">L</span>
-        <div class="word-subtitle">Love</div>
-        <div class="word-rule"></div>
-        <p class="word-line">
-          What you give outward is measured by what you have built within.
-        </p>
-        <div class="face-foot">
-          <span>— You can't give what you don't build</span>
-          <span class="cue">↻ Tap</span>
-        </div>
-      </div>
-
-      <div class="face face-back">
-        <div class="head">
-          <span class="num">02</span>
-          <span class="tag">Love</span>
-        </div>
-        <div class="back-eyebrow">— The Connection</div>
-        <h2 class="back-title">Discernment over desire.</h2>
-        <p class="back-body">
-          Love is not an accident; it is a choice made with clarity. We redefine connection as a conscious alignment between two whole individuals, rather than a search for completion.
-        </p>
-        <div class="face-foot back-foot">
-          <span>↻ Return</span>
-          <span>02 / III</span>
-        </div>
-      </div>
-
+    <div class="face face-back">
+      <div class="head"><span class="num">01</span><span class="tag">Self</span></div>
+      <div class="back-eyebrow" data-i18n="self.eyebrow">&mdash; The Foundation</div>
+      <h2 class="back-title" data-i18n="self.title">The architecture of the I.</h2>
+      <p class="back-body" data-i18n="self.body">Self is the starting point. Without a clear sense of who you are, every connection is a compromise. We explore the boundaries, the values, and the silent strength required to remain intact.</p>
+      <div class="face-foot back-foot"><span data-i18n="cue.return">&#8635; Return</span><span>01 / III</span></div>
     </div>
-  </article>
+  </div>
+</article>
 
-  <!-- 03 CLUB -->
-  <article class="card is-club" role="button" aria-pressed="false" tabindex="0">
-    <div class="card-inner">
-
-      <div class="face face-front">
-        <div class="head">
-          <span class="num">03</span>
-          <span class="tag">Club</span>
-        </div>
-        <span class="word-initial">C</span>
-        <div class="word-subtitle">Club</div>
-        <div class="word-rule"></div>
-        <p class="word-line">
-          A collective of individuals committed to their own integrity.
-        </p>
-        <div class="face-foot">
-          <span>— Open by design</span>
-          <span class="cue">↻ Tap</span>
-        </div>
+<article class="card is-love" role="button" aria-pressed="false" tabindex="0">
+  <div class="card-inner">
+    <div class="face face-front">
+      <div class="head"><span class="num">02</span><span class="tag">Love</span></div>
+      <span class="word-initial">L</span>
+      <div class="word-subtitle">Love</div>
+      <div class="word-rule"></div>
+      <p class="word-line" data-i18n="love.line">What you give outward is measured by what you have built within.</p>
+      <div class="face-foot">
+        <span data-i18n="love.foot">&mdash; You can&rsquo;t give what you don&rsquo;t build</span>
+        <span class="cue" data-i18n="cue.tap">&#8635; Tap</span>
       </div>
-
-      <div class="face face-back">
-        <div class="head">
-          <span class="num">03</span>
-          <span class="tag">Club</span>
-        </div>
-        <div class="back-eyebrow">— The Practice</div>
-        <h2 class="back-title">Awareness becoming action.</h2>
-        <p class="back-body">
-          Club is the expression of it in practice. Not a membership or a closed system, but a space where awareness becomes action through tools, ideas, and creations that may exist or evolve over time.
-        </p>
-        <div class="face-foot back-foot">
-          <span>↻ Return</span>
-          <span>03 / III</span>
-        </div>
-      </div>
-
     </div>
-  </article>
+    <div class="face face-back">
+      <div class="head"><span class="num">02</span><span class="tag">Love</span></div>
+      <div class="back-eyebrow" data-i18n="love.eyebrow">&mdash; The Connection</div>
+      <h2 class="back-title" data-i18n="love.title">Discernment over desire.</h2>
+      <p class="back-body" data-i18n="love.body">Love is not an accident; it is a choice made with clarity. We redefine connection as a conscious alignment between two whole individuals, rather than a search for completion.</p>
+      <div class="face-foot back-foot"><span data-i18n="cue.return">&#8635; Return</span><span>02 / III</span></div>
+    </div>
+  </div>
+</article>
 
-</main>
+<article class="card is-club" role="button" aria-pressed="false" tabindex="0">
+  <div class="card-inner">
+    <div class="face face-front">
+      <div class="head"><span class="num">03</span><span class="tag">Club</span></div>
+      <span class="word-initial">C</span>
+      <div class="word-subtitle">Club</div>
+      <div class="word-rule"></div>
+      <p class="word-line" data-i18n="club.line">A collective of individuals committed to their own integrity.</p>
+      <div class="face-foot">
+        <span data-i18n="club.foot">&mdash; Open by design</span>
+        <span class="cue" data-i18n="cue.tap">&#8635; Tap</span>
+      </div>
+    </div>
+    <div class="face face-back">
+      <div class="head"><span class="num">03</span><span class="tag">Club</span></div>
+      <div class="back-eyebrow" data-i18n="club.eyebrow">&mdash; The Practice</div>
+      <h2 class="back-title" data-i18n="club.title">Awareness becoming action.</h2>
+      <p class="back-body" data-i18n="club.body">Club is the expression of it in practice. Not a membership or a closed system, but a space where awareness becomes action through tools, ideas, and creations that may exist or evolve over time.</p>
+      <div class="face-foot back-foot"><span data-i18n="cue.return">&#8635; Return</span><span>03 / III</span></div>
+    </div>
+  </div>
+</article>
+```
+
+  </main>
+
+  <section class="archive">
+
+```
+<header class="archive-head">
+  <span class="archive-eyebrow" data-i18n="archive.eyebrow">&mdash; The Archive</span>
+  <h2 class="archive-title" data-i18n="archive.title">Publicaciones del Club</h2>
+  <span class="archive-meta" data-i18n="archive.meta">Est. MMXXVI &middot; 5 publications &middot; ES / EN</span>
+</header>
+
+<div class="archive-shelf">
+
+  <a href="https://andresramirezpro.gumroad.com/l/clarity" target="_blank" rel="noopener" class="pub">
+    <span class="pub-new" data-i18n="pub.new">New</span>
+    <div class="pub-head"><span class="pub-num">Pub. 01</span><span class="pub-year">MMXXVI</span></div>
+    <div class="pub-vol">I</div>
+    <h3 class="pub-title">The Clarity Protocol</h3>
+    <p class="pub-subtitle" data-i18n="pub01.sub">Decide with less energy lost.</p>
+    <div class="pub-rule"></div>
+    <p class="pub-desc" data-i18n="pub01.desc">Ten sequential modules. A system, not a course.</p>
+    <div class="pub-foot"><span class="pub-type" data-i18n="pub01.type">System &middot; ES/EN</span><span class="pub-cta" data-i18n="cta.access">Access &rarr;</span></div>
+  </a>
+
+  <a href="https://a.co/d/0972Qcvf" target="_blank" rel="noopener" class="pub">
+    <div class="pub-head"><span class="pub-num">Pub. 02</span><span class="pub-year">MMXXIV</span></div>
+    <div class="pub-vol">II</div>
+    <h3 class="pub-title">Mindful Match</h3>
+    <p class="pub-subtitle">Finding love without losing yourself.</p>
+    <div class="pub-rule"></div>
+    <p class="pub-desc" data-i18n="pub02.desc">A conscious guide to dating with clarity, boundaries, and self-respect.</p>
+    <div class="pub-foot"><span class="pub-type" data-i18n="pub02.type">Book &middot; EN</span><span class="pub-cta" data-i18n="cta.read">Read &rarr;</span></div>
+  </a>
+
+  <a href="https://www.amazon.com/Match-Consciente-Encontrar-Perderse-Spanish-ebook/dp/B0GLB3NJ1F" target="_blank" rel="noopener" class="pub">
+    <div class="pub-head"><span class="pub-num">Pub. 03</span><span class="pub-year">MMXXIV</span></div>
+    <div class="pub-vol">III</div>
+    <h3 class="pub-title">Match Consciente</h3>
+    <p class="pub-subtitle">Encontrar el amor sin perderte.</p>
+    <div class="pub-rule"></div>
+    <p class="pub-desc" data-i18n="pub03.desc">Una gu&iacute;a consciente para buscar pareja con claridad, l&iacute;mites y respeto propio.</p>
+    <div class="pub-foot"><span class="pub-type" data-i18n="pub03.type">Libro &middot; ES</span><span class="pub-cta" data-i18n="cta.read">Leer &rarr;</span></div>
+  </a>
+
+  <a href="https://a.co/d/04zOx2K6" target="_blank" rel="noopener" class="pub">
+    <div class="pub-head"><span class="pub-num">Pub. 04</span><span class="pub-year">MMXXIV</span></div>
+    <div class="pub-vol">IV</div>
+    <h3 class="pub-title">Don&rsquo;t Lose Yourself</h3>
+    <p class="pub-subtitle">While dating.</p>
+    <div class="pub-rule"></div>
+    <p class="pub-desc" data-i18n="pub04.desc">A practical workbook for setting boundaries, protecting your identity, and choosing from clarity.</p>
+    <div class="pub-foot"><span class="pub-type" data-i18n="pub04.type">Workbook &middot; EN</span><span class="pub-cta" data-i18n="cta.open">Open &rarr;</span></div>
+  </a>
+
+  <a href="https://www.amazon.com/No-Abandones-Buscar-Pareja-Spanish-ebook/dp/B0GCRCDMQL" target="_blank" rel="noopener" class="pub">
+    <div class="pub-head"><span class="pub-num">Pub. 05</span><span class="pub-year">MMXXIV</span></div>
+    <div class="pub-vol">V</div>
+    <h3 class="pub-title">No Te Abandones</h3>
+    <p class="pub-subtitle">Al buscar pareja.</p>
+    <div class="pub-rule"></div>
+    <p class="pub-desc" data-i18n="pub05.desc">Cuaderno de trabajo para establecer l&iacute;mites, proteger tu identidad y elegir desde la claridad.</p>
+    <div class="pub-foot"><span class="pub-type" data-i18n="pub05.type">Cuaderno &middot; ES</span><span class="pub-cta" data-i18n="cta.open">Abrir &rarr;</span></div>
+  </a>
+
+</div>
+```
+
+  </section>
+
+</div>
 
 <footer class="bottombar">
-  <div class="meta"><span class="pulse"></span>You first.</div>
+  <div class="meta"><span class="pulse"></span><span data-i18n="footer.tagline">You first.</span></div>
   <div class="social-links">
-    <a href="https://instagram.com/selfloveclubusa" target="_blank" class="social-link">Instagram</a>
-    <a href="https://www.threads.net/@aram7891" target="_blank" class="social-link">Threads</a>
+    <a href="https://instagram.com/selfloveclubusa" target="_blank" rel="noopener" class="social-link">Instagram</a>
+    <a href="https://www.threads.net/@aram7891" target="_blank" rel="noopener" class="social-link">Threads</a>
   </div>
   <div class="meta">MMXXVI</div>
 </footer>
 
 <script>
-  // Click to flip
+  const translations = {
+    en: {
+      'self.line': 'Choose yourself first &mdash; not as an idea, as a daily practice.',
+      'self.foot': '&mdash; You, before anything else',
+      'self.eyebrow': '&mdash; The Foundation',
+      'self.title': 'The architecture of the I.',
+      'self.body': 'Self is the starting point. Without a clear sense of who you are, every connection is a compromise. We explore the boundaries, the values, and the silent strength required to remain intact.',
+      'love.line': 'What you give outward is measured by what you have built within.',
+      'love.foot': '&mdash; You can&rsquo;t give what you don&rsquo;t build',
+      'love.eyebrow': '&mdash; The Connection',
+      'love.title': 'Discernment over desire.',
+      'love.body': 'Love is not an accident; it is a choice made with clarity. We redefine connection as a conscious alignment between two whole individuals, rather than a search for completion.',
+      'club.line': 'A collective of individuals committed to their own integrity.',
+      'club.foot': '&mdash; Open by design',
+      'club.eyebrow': '&mdash; The Practice',
+      'club.title': 'Awareness becoming action.',
+      'club.body': 'Club is the expression of it in practice. Not a membership or a closed system, but a space where awareness becomes action through tools, ideas, and creations that may exist or evolve over time.',
+      'cue.tap': '&#8635; Tap',
+      'cue.return': '&#8635; Return',
+      'archive.eyebrow': '&mdash; The Archive',
+      'archive.title': 'Club Publications',
+      'archive.meta': 'Est. MMXXVI &middot; 5 publications &middot; ES / EN',
+      'pub.new': 'New',
+      'pub01.sub': 'Decide with less energy lost.',
+      'pub01.desc': 'Ten sequential modules. A system, not a course.',
+      'pub01.type': 'System &middot; ES/EN',
+      'pub02.desc': 'A conscious guide to dating with clarity, boundaries, and self-respect.',
+      'pub02.type': 'Book &middot; EN',
+      'pub03.desc': 'A conscious guide to finding a partner with clarity, boundaries, and self-respect.',
+      'pub03.type': 'Book &middot; ES',
+      'pub04.desc': 'A practical workbook for setting boundaries, protecting your identity, and choosing from clarity.',
+      'pub04.type': 'Workbook &middot; EN',
+      'pub05.desc': 'A workbook to set boundaries, protect your identity, and choose from clarity.',
+      'pub05.type': 'Workbook &middot; ES',
+      'cta.access': 'Access &rarr;',
+      'cta.read': 'Read &rarr;',
+      'cta.open': 'Open &rarr;',
+      'footer.tagline': 'You first.'
+    },
+    es: {
+      'self.line': 'El&iacute;gete a ti primero &mdash; no como idea, sino como pr&aacute;ctica diaria.',
+      'self.foot': '&mdash; T&uacute;, antes que nada',
+      'self.eyebrow': '&mdash; El Fundamento',
+      'self.title': 'La arquitectura del Yo.',
+      'self.body': 'El Self es el punto de partida. Sin un sentido claro de qui&eacute;n eres, cada conexi&oacute;n es un compromiso. Exploramos los l&iacute;mites, los valores y la fuerza silenciosa necesarios para permanecer intacto.',
+      'love.line': 'Lo que das hacia afuera se mide por lo que has construido adentro.',
+      'love.foot': '&mdash; No puedes dar lo que no construyes',
+      'love.eyebrow': '&mdash; La Conexi&oacute;n',
+      'love.title': 'Discernimiento sobre deseo.',
+      'love.body': 'El amor no es accidente; es una elecci&oacute;n hecha con claridad. Redefinimos la conexi&oacute;n como alineaci&oacute;n consciente entre dos individuos enteros, no como b&uacute;squeda de completarse.',
+      'club.line': 'Un colectivo de individuos comprometidos con su propia integridad.',
+      'club.foot': '&mdash; Abierto por dise&ntilde;o',
+      'club.eyebrow': '&mdash; La Pr&aacute;ctica',
+      'club.title': 'Conciencia volvi&eacute;ndose acci&oacute;n.',
+      'club.body': 'Club es la expresi&oacute;n en pr&aacute;ctica. No una membres&iacute;a ni un sistema cerrado, sino un espacio donde la conciencia se vuelve acci&oacute;n a trav&eacute;s de herramientas, ideas y creaciones que pueden existir o evolucionar con el tiempo.',
+      'cue.tap': '&#8635; Tocar',
+      'cue.return': '&#8635; Volver',
+      'archive.eyebrow': '&mdash; El Archivo',
+      'archive.title': 'Publicaciones del Club',
+      'archive.meta': 'Est. MMXXVI &middot; 5 publicaciones &middot; ES / EN',
+      'pub.new': 'Nuevo',
+      'pub01.sub': 'Decide con menos p&eacute;rdida de energ&iacute;a.',
+      'pub01.desc': 'Diez m&oacute;dulos secuenciales. Un sistema, no un curso.',
+      'pub01.type': 'Sistema &middot; ES/EN',
+      'pub02.desc': 'Una gu&iacute;a consciente para tener citas con claridad, l&iacute;mites y respeto propio.',
+      'pub02.type': 'Libro &middot; EN',
+      'pub03.desc': 'Una gu&iacute;a consciente para buscar pareja con claridad, l&iacute;mites y respeto propio.',
+      'pub03.type': 'Libro &middot; ES',
+      'pub04.desc': 'Cuaderno pr&aacute;ctico para establecer l&iacute;mites, proteger tu identidad y elegir desde la claridad.',
+      'pub04.type': 'Cuaderno &middot; EN',
+      'pub05.desc': 'Cuaderno de trabajo para establecer l&iacute;mites, proteger tu identidad y elegir desde la claridad.',
+      'pub05.type': 'Cuaderno &middot; ES',
+      'cta.access': 'Acceder &rarr;',
+      'cta.read': 'Leer &rarr;',
+      'cta.open': 'Abrir &rarr;',
+      'footer.tagline': 'T&uacute; primero.'
+    }
+  };
+
+  function setLang(lang) {
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (translations[lang] && translations[lang][key] !== undefined) {
+        el.innerHTML = translations[lang][key];
+      }
+    });
+    document.querySelectorAll('.lang-toggle [data-lang]').forEach(el => {
+      el.classList.toggle('lang-active', el.getAttribute('data-lang') === lang);
+    });
+    localStorage.setItem('slc_lang', lang);
+  }
+
+  function toggleLang() {
+    const current = localStorage.getItem('slc_lang') ||
+                    ((navigator.language || 'en').slice(0, 2) === 'es' ? 'es' : 'en');
+    setLang(current === 'en' ? 'es' : 'en');
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const saved = localStorage.getItem('slc_lang');
+    const browser = (navigator.language || 'en').slice(0, 2);
+    const initial = saved || (browser === 'es' ? 'es' : 'en');
+    setLang(initial);
+  });
+
   document.querySelectorAll('.card').forEach(card => {
     const flip = (e) => {
       e.preventDefault();
@@ -629,7 +909,6 @@
     });
   });
 
-  // Esc closes any open card
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       document.querySelectorAll('.card.is-flipped').forEach(c => {
