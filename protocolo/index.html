@@ -1,358 +1,1001 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>The Clarity Protocol — Self Love Club</title>
-<meta name="description" content="A closed system of 10 modules applying economics, human behavior, and systems architecture to decision design. Andrés Ramírez." />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Clarity Protocol - SELF LOVE CLUB</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Instrument+Sans:wght@400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+        :root {
+            --primary-color: #000000;
+            --secondary-color: #ffffff;
+            --accent-color: #f0f0f0;
+            --text-color: #1a1a1a;
+            --light-text: #666666;
+            --border-color: #e0e0e0;
+            --spacing-unit: 1rem;
+        }
 
-<!-- Gumroad Script -->
-<script src="https://gumroad.com/js/gumroad.js"></script>
+        html {
+            scroll-behavior: smooth;
+        }
 
-<style>
-  :root {
-    --parchment: #F7F4EF;
-    --ink:       #1A1814;
-    --amber:     #8B6F4E;
-    --sand:      #C4A882;
-    --rule:      rgba(26,24,20,0.14);
-    --rule-strong: rgba(26,24,20,0.28);
-    --font-display: "Cormorant Garamond", "Times New Roman", serif;
-    --font-body:    "Instrument Sans", -apple-system, sans-serif;
-    --font-mono:    "DM Mono", "Courier New", monospace;
-    --max:    1180px;
-    --gutter: 6vw;
-  }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--secondary-color);
+            overflow-x: hidden;
+        }
 
-  *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-  body {
-    background: var(--parchment);
-    color: var(--ink);
-    font-family: var(--font-body);
-    font-weight: 300;
-    font-size: 17px;
-    line-height: 1.65;
-    letter-spacing: 0.005em;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  ::selection { background: var(--ink); color: var(--parchment); }
-  a { color: inherit; text-decoration: none; }
+        /* HEADER Y NAVEGACIÓN */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+        }
 
-  /* I18N TOGGLE */
-  [data-lang] { display: none; }
-  [data-lang].active { display: inline; }
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-  .container { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
-  .meta {
-    font-family: var(--font-mono);
-    font-weight: 300;
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--ink);
-    opacity: 0.6;
-  }
-  .section { padding: 12vh 0; border-top: 1px solid var(--rule); }
-  .section:first-of-type { border-top: 0; }
+        .logo {
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
 
-  /* NAV */
-  .nav {
-    position: sticky; top: 0; z-index: 50;
-    background: rgba(247,244,239,0.92);
-    border-bottom: 1px solid var(--rule);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-  }
-  .nav-inner {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 16px var(--gutter); max-width: var(--max); margin: 0 auto; gap: 16px;
-  }
-  .nav-brand {
-    font-family: var(--font-mono);
-    font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
-  }
-  .nav-brand em {
-    font-family: var(--font-display);
-    font-style: italic; text-transform: none; letter-spacing: 0;
-    font-size: 14px; color: var(--amber);
-  }
-  .nav-right { display: flex; align-items: center; gap: 18px; }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
 
-  .lang-btns { display: flex; border: 1px solid var(--rule-strong); }
-  .lang-btn {
-    background: none; border: 0; cursor: pointer;
-    font-family: var(--font-mono);
-    font-size: 10px; letter-spacing: 0.18em;
-    padding: 7px 11px; color: var(--ink); opacity: 0.5;
-    transition: all .25s;
-  }
-  .lang-btn + .lang-btn { border-left: 1px solid var(--rule-strong); }
-  .lang-btn.active { background: var(--ink); color: var(--parchment); opacity: 1; }
-  .lang-btn:hover:not(.active) { opacity: 1; }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
 
-  .nav-cta {
-    font-family: var(--font-mono);
-    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
-    padding: 9px 18px; border: 1px solid var(--ink);
-    transition: all .25s ease;
-  }
-  .nav-cta:hover { background: var(--ink); color: var(--parchment); }
+        .nav-links a:hover {
+            color: var(--light-text);
+        }
 
-  @media (max-width: 540px) {
-    .nav-brand { font-size: 9px; letter-spacing: 0.18em; }
-    .nav-brand em { font-size: 12px; }
-    .nav-cta { padding: 8px 12px; font-size: 10px; }
-    .lang-btn { padding: 7px 9px; }
-    .nav-right { gap: 10px; }
-  }
+        .cta-button {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
 
-  /* HERO */
-  .hero {
-    padding: 14vh var(--gutter);
-    position: relative; border-top: 0;
-    max-width: var(--max); margin: 0 auto;
-  }
-  .hero-meta {
-    display: flex; justify-content: space-between;
-    margin-bottom: 8vh; padding-bottom: 14px;
-    border-bottom: 1px solid var(--rule);
-  }
-  .hero-num {
-    font-family: var(--font-display); font-style: italic;
-    font-size: clamp(120px, 22vw, 280px);
-    line-height: 0.85;
-    color: var(--sand); opacity: 0.55;
-    letter-spacing: -0.04em;
-    position: absolute; right: var(--gutter); top: 18vh;
-    pointer-events: none; user-select: none; z-index: 0;
-  }
-  .hero-content { position: relative; z-index: 1; }
-  .hero h1 {
-    font-family: var(--font-display); font-weight: 400;
-    font-size: clamp(44px, 7.5vw, 96px);
-    line-height: 1.02; letter-spacing: -0.025em;
-    margin: 4vh 0 5vh; max-width: 14ch;
-  }
-  .hero h1 em { font-style: italic; color: var(--amber); }
-  .hero-sub {
-    font-size: clamp(17px, 1.6vw, 21px);
-    line-height: 1.55; max-width: 52ch;
-    margin-bottom: 6vh; color: var(--ink); opacity: 0.82;
-  }
-  .hero-actions { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
-  
-  /* Gumroad Button Override */
-  .gumroad-button {
-    background-color: var(--ink) !important;
-    color: var(--parchment) !important;
-    font-family: var(--font-mono) !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.22em !important;
-    border-radius: 0 !important;
-    padding: 18px 36px !important;
-    font-size: 12px !important;
-    border: 1px solid var(--ink) !important;
-    background-image: none !important;
-    display: inline-block !important;
-    transition: all .3s ease !important;
-  }
-  .gumroad-button:hover {
-    background-color: transparent !important;
-    color: var(--ink) !important;
-  }
+        .cta-button:hover {
+            background-color: #333333;
+            transform: translateY(-2px);
+        }
 
-  .price-tag {
-    font-family: var(--font-mono);
-    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
-    opacity: 0.55;
-  }
+        /* HERO SECTION */
+        .hero {
+            margin-top: 80px;
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, #ffffff 0%, #f9f9f9 100%);
+            text-align: center;
+        }
 
-  /* SECTION HEADERS */
-  .sec-label { display: flex; align-items: baseline; gap: 18px; margin-bottom: 6vh; }
-  .sec-label .num {
-    font-family: var(--font-mono);
-    font-size: 11px; letter-spacing: 0.22em; color: var(--amber);
-  }
-  .sec-label .name {
-    font-family: var(--font-mono);
-    font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
-    opacity: 0.7;
-  }
-  .sec-h {
-    font-family: var(--font-display); font-weight: 400;
-    font-size: clamp(34px, 4.6vw, 58px);
-    line-height: 1.08; letter-spacing: -0.02em;
-    max-width: 22ch; margin-bottom: 5vh;
-  }
-  .sec-h em { font-style: italic; color: var(--amber); }
-  .sec-body { font-size: 17px; line-height: 1.7; max-width: 58ch; opacity: 0.85; }
-  .sec-body p + p { margin-top: 1.4em; }
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
 
-  /* PROBLEM */
-  .problem-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 8vw; align-items: start; }
-  @media (max-width: 800px) { .problem-grid { grid-template-columns: 1fr; gap: 4vh; } }
-  .problem-statements { display: flex; flex-direction: column; gap: 4vh; }
-  .problem-item { padding-left: 22px; border-left: 1px solid var(--rule-strong); }
-  .problem-item p {
-    font-family: var(--font-display);
-    font-style: italic; font-weight: 400;
-    font-size: clamp(20px, 2vw, 26px);
-    line-height: 1.35;
-  }
-  .problem-item .meta { display: block; margin-bottom: 8px; }
+        .hero-subtitle {
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--light-text);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
 
-  /* SHIFT */
-  .shift { padding: 18vh 0; }
-  .shift .sec-label { margin-bottom: 8vh; }
-  .shift-statement {
-    font-family: var(--font-display); font-weight: 400; font-style: italic;
-    font-size: clamp(38px, 6.2vw, 86px);
-    line-height: 1.05; letter-spacing: -0.02em;
-    max-width: 18ch;
-  }
-  .shift-statement .accent { color: var(--amber); font-style: italic; }
-  .shift-tail { margin-top: 6vh; max-width: 52ch; font-size: 17px; line-height: 1.65; opacity: 0.78; }
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
 
-  /* SYSTEM */
-  .system-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8vw; align-items: start; }
-  @media (max-width: 800px) { .system-grid { grid-template-columns: 1fr; gap: 5vh; } }
-  .system-defs { border-top: 1px solid var(--rule); }
-  .system-def {
-    padding: 24px 0; border-bottom: 1px solid var(--rule);
-    display: grid; grid-template-columns: 80px 1fr; gap: 18px; align-items: baseline;
-  }
-  .system-def .key {
-    font-family: var(--font-mono);
-    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
-    color: var(--amber);
-  }
-  .system-def .val {
-    font-family: var(--font-display); font-style: italic;
-    font-size: 22px; line-height: 1.3;
-  }
-  .system-def .note {
-    font-family: var(--font-body);
-    font-size: 14px; opacity: 0.7; margin-top: 6px; line-height: 1.5;
-  }
+        .hero-description {
+            font-size: 1.2rem;
+            color: var(--light-text);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
 
-  /* MODULES */
-  .modules { border-top: 1px solid var(--ink); }
-  .module {
-    display: grid; grid-template-columns: 80px 1fr auto;
-    gap: 24px; padding: 24px 0;
-    border-bottom: 1px solid var(--rule);
-    align-items: baseline; transition: padding .3s ease;
-  }
-  .module:hover { padding-left: 12px; }
-  .module .num {
-    font-family: var(--font-mono); font-weight: 300;
-    font-size: 14px; letter-spacing: 0.05em; color: var(--amber);
-  }
-  .module .title {
-    font-family: var(--font-display); font-weight: 400; font-style: italic;
-    font-size: clamp(20px, 2vw, 26px); line-height: 1.25;
-  }
-  .module .desc { font-size: 14px; opacity: 0.65; margin-top: 4px; line-height: 1.5; font-style: normal; }
-  .module .tag {
-    font-family: var(--font-mono);
-    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
-    opacity: 0.4;
-  }
-  @media (max-width: 600px) {
-    .module { grid-template-columns: 50px 1fr; }
-    .module .tag { display: none; }
-  }
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
 
-  .deliverables {
-    margin-top: 10vh;
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink);
-  }
-  @media (max-width: 700px) { .deliverables { grid-template-columns: 1fr; } }
-  .deliverable { padding: 32px 28px; border-right: 1px solid var(--rule); }
-  .deliverable:last-child { border-right: 0; }
-  @media (max-width: 700px) {
-    .deliverable { border-right: 0; border-bottom: 1px solid var(--rule); }
-    .deliverable:last-child { border-bottom: 0; }
-  }
-  .deliverable .num {
-    font-family: var(--font-mono);
-    font-size: 11px; letter-spacing: 0.2em; color: var(--amber);
-    display: block; margin-bottom: 14px;
-  }
-  .deliverable .name {
-    font-family: var(--font-display); font-style: italic;
-    font-size: 22px; line-height: 1.25; margin-bottom: 10px;
-  }
-  .deliverable .detail { font-size: 13px; line-height: 1.55; opacity: 0.7; }
+        .primary-btn {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            padding: 1rem 2.5rem;
+            border: 2px solid var(--primary-color);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
 
-</style>
+        .primary-btn:hover {
+            background-color: #333333;
+            border-color: #333333;
+        }
+
+        .secondary-btn {
+            background-color: transparent;
+            color: var(--primary-color);
+            padding: 1rem 2.5rem;
+            border: 2px solid var(--primary-color);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .secondary-btn:hover {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+        }
+
+        .hero-price {
+            font-size: 1.1rem;
+            color: var(--text-color);
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+
+        /* SECCIONES NUMERADAS */
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            line-height: 1.3;
+        }
+
+        .section-subtitle {
+            font-size: 1.3rem;
+            color: var(--light-text);
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        /* PROBLEMA SECTION */
+        .problema-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .problema-card {
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background-color: var(--accent-color);
+            transition: all 0.3s ease;
+        }
+
+        .problema-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .problema-card-number {
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--light-text);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .problema-card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .problema-card-description {
+            font-size: 0.95rem;
+            color: var(--light-text);
+            line-height: 1.7;
+        }
+
+        /* MARCO SECTION */
+        .marco-content {
+            background-color: var(--accent-color);
+            padding: 3rem;
+            border-radius: 4px;
+            margin-top: 2rem;
+        }
+
+        .marco-text {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: var(--text-color);
+        }
+
+        /* SISTEMA SECTION */
+        .sistema-description {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: var(--light-text);
+            margin-bottom: 2rem;
+        }
+
+        .formatos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .formato-card {
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .formato-card:hover {
+            border-color: var(--primary-color);
+            background-color: var(--accent-color);
+        }
+
+        .formato-number {
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--light-text);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .formato-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .formato-description {
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        /* MÓDULOS SECTION */
+        .modulos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .modulo-card {
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background-color: var(--secondary-color);
+            transition: all 0.3s ease;
+        }
+
+        .modulo-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .modulo-number {
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--light-text);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .modulo-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .modulo-subtitle {
+            font-size: 0.95rem;
+            color: var(--light-text);
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .modulo-type {
+            display: inline-block;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            background-color: var(--accent-color);
+            padding: 0.3rem 0.8rem;
+            border-radius: 3px;
+            color: var(--light-text);
+            font-weight: 600;
+        }
+
+        /* AUTOR SECTION */
+        .autor-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        .autor-text {
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: var(--light-text);
+        }
+
+        .autor-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .autor-tag {
+            display: inline-block;
+            background-color: var(--accent-color);
+            padding: 0.5rem 1rem;
+            border-radius: 3px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-color);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        /* ENTREGA SECTION */
+        .entrega-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .entrega-item {
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background-color: var(--accent-color);
+        }
+
+        .entrega-label {
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--light-text);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .entrega-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        /* QUÉ ENTREGA SECTION */
+        .que-entrega-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .que-entrega-item {
+            padding: 2rem;
+            border-left: 3px solid var(--primary-color);
+            background-color: var(--accent-color);
+            border-radius: 4px;
+        }
+
+        .que-entrega-number {
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--light-text);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .que-entrega-text {
+            font-size: 1rem;
+            color: var(--text-color);
+            line-height: 1.8;
+            font-weight: 500;
+        }
+
+        /* CTA FINAL */
+        .cta-final {
+            text-align: center;
+            padding: 3rem 2rem;
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            border-radius: 4px;
+            margin-top: 3rem;
+        }
+
+        .cta-final-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .cta-final-price {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .cta-final-button {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-final-button:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        /* FOOTER */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-copyright {
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.8;
+            letter-spacing: 0.05em;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            opacity: 0.7;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .hero {
+                margin-top: 120px;
+                padding: 3rem 1rem;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-description {
+                font-size: 1rem;
+            }
+
+            .section {
+                padding: 3rem 1rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .autor-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+            }
+
+            .primary-btn,
+            .secondary-btn {
+                width: 100%;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.3rem;
+            }
+
+            .modulos-grid,
+            .problema-grid,
+            .formatos-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .cta-button {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* ANIMACIONES */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* SMOOTH SCROLL */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 999;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .scroll-to-top:hover {
+            background-color: #333333;
+            transform: translateY(-5px);
+        }
+
+        .scroll-to-top.show {
+            display: flex;
+        }
+    </style>
 </head>
 <body>
-  <nav class="nav">
-    <div class="nav-inner">
-      <div class="nav-brand">
-        SELF LOVE CLUB · <em>Protocolo</em>
-      </div>
-      <div class="nav-right">
-        <div class="lang-btns">
-          <button class="lang-btn active" onclick="setLang('es')">ES</button>
-          <button class="lang-btn" onclick="setLang('en')">EN</button>
-        </div>
-        <a href="#access" class="nav-cta">
-          <span data-lang="es" class="active">ACCEDER</span>
-          <span data-lang="en">ACCESS</span>
-        </a>
-      </div>
-    </div>
-  </nav>
+    <!-- HEADER -->
+    <header>
+        <nav>
+            <div class="logo">SELF LOVE CLUB · Protocolo</div>
+            <ul class="nav-links">
+                <li><a href="#problema">El Problema</a></li>
+                <li><a href="#modulos">Los 10 Módulos</a></li>
+                <li><a href="#autor">El Autor</a></li>
+                <li><a href="#entrega">Lo que Entrega</a></li>
+            </ul>
+            <a href="#acceso" class="cta-button">ACCEDER</a>
+        </nav>
+    </header>
 
-  <main class="container">
+    <!-- HERO SECTION -->
     <section class="hero">
-      <div class="hero-meta">
-        <div class="meta">SELF LOVE CLUB · LEVEL 02</div>
-        <div class="meta">MMXXVI</div>
-      </div>
-      <div class="hero-num">00</div>
-      <div class="hero-content">
-        <div class="meta">THE CLARITY PROTOCOL</div>
-        <h1>
-          <span data-lang="es" class="active">No es coaching. Es <em>arquitectura</em> de decisiones.</span>
-          <span data-lang="en">Not coaching. <em>Decision</em> architecture.</span>
-        </h1>
-        <p class="hero-sub">
-          <span data-lang="es" class="active">Un sistema cerrado de 10 módulos que aplica economía, comportamiento humano y arquitectura de sistemas al diseño de decisiones cotidianas.</span>
-          <span data-lang="en">A closed system of 10 modules applying economics, human behavior, and systems architecture to the design of everyday decisions.</span>
-        </p>
-        <div class="hero-actions">
-          <!-- Official Gumroad Button Integrated -->
-          <a class="gumroad-button" href="https://andresramirezpro.gumroad.com/l/clarity">Initiate Protocol</a>
-          <div class="price-tag">$49 · <span data-lang="es" class="active">ACCESO VITALICIO</span><span data-lang="en">LIFETIME ACCESS</span></div>
+        <div class="hero-content">
+            <div class="hero-subtitle">SELF LOVE CLUB · NIVEL 02 · MMXXVI</div>
+            <h1 class="hero-title">The Clarity Protocol</h1>
+            <p class="hero-description">No es coaching. Es arquitectura de decisiones.</p>
+            <p class="hero-description">Un sistema cerrado de 10 módulos que aplica economía, comportamiento humano y arquitectura de sistemas al diseño de decisiones cotidianas.</p>
+            <div class="hero-cta">
+                <a href="#acceso" class="primary-btn">ACCEDER AL PROTOCOLO</a>
+            </div>
+            <div class="hero-price">$49 · ACCESO DE POR VIDA</div>
         </div>
-      </div>
     </section>
 
-    <!-- ... rest of the content from landing.txt ... -->
-  </main>
+    <!-- SECCIÓN 01: EL PROBLEMA -->
+    <section class="section" id="problema">
+        <div class="section-number">01</div>
+        <h2 class="section-title">El Problema</h2>
+        <p class="section-subtitle">Decides reaccionando. No por arquitectura.</p>
+        
+        <div class="problema-grid">
+            <div class="problema-card">
+                <div class="problema-card-number">VARIABLE 01</div>
+                <div class="problema-card-title">El Ruido Informacional</div>
+                <div class="problema-card-description">El ruido informacional excede tu capacidad de filtrado. Estás expuesto a más información de la que puedes procesar efectivamente.</div>
+            </div>
+            <div class="problema-card">
+                <div class="problema-card-number">VARIABLE 02</div>
+                <div class="problema-card-title">Marcos Prestados</div>
+                <div class="problema-card-description">Operas sin marcos propios. Tomas decisiones de alta consecuencia con criterios prestados de otros.</div>
+            </div>
+            <div class="problema-card">
+                <div class="problema-card-number">VARIABLE 03</div>
+                <div class="problema-card-title">Acumulación Sin Claridad</div>
+                <div class="problema-card-description">Acumulas contenido. No acumulas claridad. Más información no genera mejor decisión.</div>
+            </div>
+        </div>
+    </section>
 
-  <script>
-    function setLang(lang) {
-      document.querySelectorAll('[data-lang]').forEach(el => {
-        el.classList.remove('active');
-        if (el.getAttribute('data-lang') === lang) el.classList.add('active');
-      });
-      document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.innerText.toLowerCase() === lang) btn.classList.add('active');
-      });
-    }
-  </script>
+    <!-- SECCIÓN 02: EL CAMBIO DE MARCO -->
+    <section class="section">
+        <div class="section-number">02</div>
+        <h2 class="section-title">El Cambio de Marco</h2>
+        <p class="section-subtitle">La claridad no es un estado. Es un sistema.</p>
+        
+        <div class="marco-content">
+            <p class="marco-text">Un sistema con principio, cuerpo y cierre tiene densidad de valor. Lo opuesto al ruido no es más información: es arquitectura. Diez módulos cerrados pesan más que mil horas de contenido infinito.</p>
+        </div>
+    </section>
+
+    <!-- SECCIÓN 03: QUÉ ES EL SISTEMA -->
+    <section class="section">
+        <div class="section-number">03</div>
+        <h2 class="section-title">Qué es el Sistema</h2>
+        <p class="section-subtitle">Un protocolo, no un curso.</p>
+        
+        <p class="sistema-description">The Clarity Protocol es un sistema cerrado de diez módulos que aplica economía, comportamiento humano y arquitectura de sistemas al diseño de decisiones.</p>
+        <p class="sistema-description">Cada módulo entrega una frase clave, un resumen analítico, puntos operativos, una conclusión, un micro-glosario y tres preguntas reflexivas con espacio de escritura.</p>
+        
+        <div class="formatos-grid">
+            <div class="formato-card">
+                <div class="formato-number">FMT 01</div>
+                <div class="formato-title">Documento Interactivo</div>
+                <div class="formato-description">Módulos con espacio de escritura propio para tu reflexión personal.</div>
+            </div>
+            <div class="formato-card">
+                <div class="formato-number">FMT 02</div>
+                <div class="formato-title">Tracker de Progreso</div>
+                <div class="formato-description">Seguimiento módulo a módulo dentro del protocolo.</div>
+            </div>
+            <div class="formato-card">
+                <div class="formato-number">FMT 03</div>
+                <div class="formato-title">PDF Exportable</div>
+                <div class="formato-description">El protocolo completo, para imprimir y llevar contigo.</div>
+            </div>
+            <div class="formato-card">
+                <div class="formato-number">FMT 04</div>
+                <div class="formato-title">Glosario Operativo</div>
+                <div class="formato-description">Definiciones técnicas de cada variable.</div>
+            </div>
+            <div class="formato-card">
+                <div class="formato-number">FMT 05</div>
+                <div class="formato-title">Marcos Extraíbles</div>
+                <div class="formato-description">Aplicables a cualquier contexto de decisión.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN 04: LOS 10 MÓDULOS -->
+    <section class="section" id="modulos">
+        <div class="section-number">04</div>
+        <h2 class="section-title">Los 10 Módulos</h2>
+        <p class="section-subtitle">Tu mapa de variables propias.</p>
+        
+        <div class="modulos-grid">
+            <div class="modulo-card">
+                <div class="modulo-number">00</div>
+                <div class="modulo-title">Prólogo Estructural</div>
+                <div class="modulo-subtitle">Instrucciones de uso del protocolo.</div>
+                <span class="modulo-type">Apertura</span>
+            </div>
+            <div class="modulo-card">
+                <div class="modulo-number">01</div>
+                <div class="modulo-title">Autoconocimiento</div>
+                <div class="modulo-subtitle">Variables propias como punto de partida analítico.</div>
+                <span class="modulo-type">Núcleo</span>
+            </div>
+            <div class="modulo-card">
+                <div class="modulo-number">02</div>
+                <div class="modulo-title">Arbitraje Emocional</div>
+                <div class="modulo-subtitle">Claridad mientras otros reaccionan.</div>
+                <span class="modulo-type">Núcleo</span>
+            </div>
+            <div class="modulo-card">
+                <div class="modulo-number">03</div>
+                <div class="modulo-title">Liquidez Cognitiva</div>
+                <div class="modulo-subtitle">Separar identidad de decisión en entornos de alto riesgo.</div>
+                <span class="modulo-type">Núcleo</span>
+            </div>
+            <div class="modulo-card">
+                <div class="modulo-number">04</div>
+                <div class="modulo-title">Arquitectura del Silencio</div>
+                <div class="modulo-subtitle">El espacio negativo como variable de decisión.</div>
+                <span class="modulo-type">Núcleo</span>
+            </div>
+            <div class="modulo-card">
+                <div class="modulo-number">05</div>
+                <div class="modulo-title">Kinetic Clarity</div>
+                <div class="modulo-subtitle">El cuerpo como sistema de información.</div>
+                <span class="modulo-type">Núcleo</span>
+            </div>
+            <div class="modulo-card">
+                <div class="modulo-number">06</div>
+                <div class="modulo-title">Señal vs Ruido</div>
+                <div class="modulo-subtitle">Filtrar señal relevante en distorsión cognitiva.</div>
+                <span class="modulo-type">Núcleo</span>
+            </div>
+            <div class="modulo-card">
+                <div class="modulo-number">07</div>
+                <div class="modulo-title">Costo de Oportunidad</div>
+                <div class="modulo-subtitle">Lo que renuncias pesa en cada variable de elección.</div>
+                <span class="modulo-type">Núcleo</span>
+            </div>
+            <div class="modulo-card">
+                <div class="modulo-number">08</div>
+                <div class="modulo-title">Capacidad Interpretativa</div>
+                <div class="modulo-subtitle">Leer contexto sin proyección ni sesgo.</div>
+                <span class="modulo-type">Núcleo</span>
+            </div>
+            <div class="modulo-card">
+                <div class="modulo-number">09</div>
+                <div class="modulo-title">Claridad como Ventaja</div>
+                <div class="modulo-subtitle">Convertir el protocolo en diferencial operativo.</div>
+                <span class="modulo-type">Núcleo</span>
+            </div>
+            <div class="modulo-card">
+                <div class="modulo-number">10</div>
+                <div class="modulo-title">Epílogo Operativo</div>
+                <div class="modulo-subtitle">El mapa de variables propias. El protocolo en terreno real.</div>
+                <span class="modulo-type">Cierre</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN 05: EL AUTOR -->
+    <section class="section" id="autor">
+        <div class="section-number">05</div>
+        <h2 class="section-title">El Autor</h2>
+        <p class="section-subtitle">Economista. Estratega. Entrenador personal.</p>
+        
+        <div class="autor-content">
+            <div>
+                <p class="autor-text">Andrés Ramírez estudia la intersección entre toma de decisiones, arquitectura de sistemas y comportamiento humano en entornos de alta presión.</p>
+                <p class="autor-text" style="margin-top: 1.5rem;">The Clarity Protocol es la destilación de ese trabajo: un protocolo construido sobre principios verificables, no sobre frases inspiracionales.</p>
+                <div class="autor-tags">
+                    <span class="autor-tag">Economía Conductual</span>
+                    <span class="autor-tag">Arquitectura de Sistemas</span>
+                    <span class="autor-tag">Self Love Club</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN 06: LO QUE EL PROTOCOLO ENTREGA -->
+    <section class="section" id="entrega">
+        <div class="section-number">06</div>
+        <h2 class="section-title">Lo que el Protocolo Entrega</h2>
+        <p class="section-subtitle">No promete cambio. Entrega arquitectura.</p>
+        
+        <div class="que-entrega-list">
+            <div class="que-entrega-item">
+                <div class="que-entrega-number">— 01</div>
+                <div class="que-entrega-text">Un mapa de variables propias para tomar decisiones bajo presión.</div>
+            </div>
+            <div class="que-entrega-item">
+                <div class="que-entrega-number">— 02</div>
+                <div class="que-entrega-text">Un sistema de discernimiento que sustituye reacción por arquitectura.</div>
+            </div>
+            <div class="que-entrega-item">
+                <div class="que-entrega-number">— 03</div>
+                <div class="que-entrega-text">Un protocolo cerrado, completo, con principio y cierre. No suscripción a ruido infinito.</div>
+            </div>
+            <div class="que-entrega-item">
+                <div class="que-entrega-number">— 04</div>
+                <div class="que-entrega-text">Acceso de por vida. Reentrada cuando el contexto cambie.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ESPECIFICACIONES Y CTA FINAL -->
+    <section class="section" id="acceso">
+        <div style="text-align: center;">
+            <h2 class="section-title">The Clarity Protocol</h2>
+            <p class="section-subtitle">10 módulos. Una sola adquisición.</p>
+            
+            <div class="entrega-grid" style="margin-top: 2rem; margin-bottom: 2rem;">
+                <div class="entrega-item">
+                    <div class="entrega-label">Formato</div>
+                    <div class="entrega-value">Documento + PDF</div>
+                </div>
+                <div class="entrega-item">
+                    <div class="entrega-label">Acceso</div>
+                    <div class="entrega-value">De por Vida</div>
+                </div>
+                <div class="entrega-item">
+                    <div class="entrega-label">Inversión</div>
+                    <div class="entrega-value">$49 USD</div>
+                </div>
+            </div>
+
+            <div class="cta-final">
+                <h3 class="cta-final-title">Acceso · The Clarity Protocol</h3>
+                <div class="cta-final-price">$49 USD · Acceso de por Vida</div>
+                <button class="cta-final-button" onclick="alert('Redirigiendo a página de pago...')">ACCEDER AL PROTOCOLO</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-copyright">© SELF LOVE CLUB · MMXXVI</div>
+            <div class="footer-links">
+                <a href="https://andresramirez.pro" target="_blank">ANDRESRAMIREZ.PRO</a>
+                <a href="https://threads.net" target="_blank">THREADS</a>
+                <a href="https://instagram.com" target="_blank">INSTAGRAM</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCROLL TO TOP BUTTON -->
+    <div class="scroll-to-top" id="scrollToTop">↑</div>
+
+    <script>
+        // Scroll to Top Button
+        const scrollToTopBtn = document.getElementById('scrollToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.add('show');
+            } else {
+                scrollToTopBtn.classList.remove('show');
+            }
+        });
+
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // CTA Button functionality
+        document.querySelectorAll('.primary-btn, .cta-button').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                if (this.getAttribute('href') === '#acceso') {
+                    e.preventDefault();
+                    document.getElementById('acceso').scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
