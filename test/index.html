@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Andrés Ramírez | Clarity Before Connection</title>
+  <meta name="description" content="Andrés Ramírez – Autor, estratega y creador del Clarity Protocol. Ensayos sobre discernimiento, capital emocional y claridad antes que conexión.">
+  
+  <meta property="og:url" content="https://www.andresramirez.pro/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Andrés Ramírez | Clarity Before Connection">
+  <meta property="og:description" content="Andrés Ramírez – Autor, estratega y creador del Clarity Protocol.">
+  <meta property="og:image" content="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/assets/images/og-andresramirezpro.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="twitter:domain" content="andresramirez.pro">
+  <meta property="twitter:url" content="https://www.andresramirez.pro/">
+  <meta name="twitter:title" content="Andrés Ramírez | Clarity Before Connection">
+  <meta name="twitter:description" content="Andrés Ramírez – Autor, estratega y creador del Clarity Protocol.">
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/assets/images/og-andresramirezpro.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Instrument+Sans:wght@400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --parchment: #F7F4EF;
+      --ink: #1A1814;
+      --amber: #8B6F4E;
+      --sand: #C4A882;
+      --rule: rgba(26, 24, 20, 0.14);
+      --rule-strong: rgba(26, 24, 20, 0.28);
+      --font-display: "Cormorant Garamond", "Times New Roman", serif;
+      --font-body: "Instrument Sans", -apple-system, sans-serif;
+      --font-mono: "DM Mono", "Courier New", monospace;
+      --max: 1180px;
+      --gutter: 6vw;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      background: var(--parchment);
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-weight: 300;
+      font-size: 17px;
+      line-height: 1.65;
+      letter-spacing: 0.005em;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    ::selection { background: var(--ink); color: var(--parchment); }
+    a { color: inherit; text-decoration: none; }
+
+    /* I18N TOGGLE */
+    [data-lang] { display: none; }
+    [data-lang].active { display: inline; }
+
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+    .meta {
+      font-family: var(--font-mono);
+      font-weight: 300;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink);
+      opacity: 0.6;
+    }
+    .section { padding: 12vh 0; border-top: 1px solid var(--rule); }
+    .section:first-of-type { border-top: 0; }
+
+    /* NAV */
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(247, 244, 239, 0.92);
+      border-bottom: 1px solid var(--rule);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .nav-inner {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 16px var(--gutter); max-width: var(--max); margin: 0 auto; gap: 16px;
+    }
+    .nav-brand {
+      font-family: var(--font-mono);
+      font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+    }
+    .nav-brand em {
+      font-family: var(--font-display);
+      font-style: italic; text-transform: none; letter-spacing: 0;
+      font-size: 14px; color: var(--amber);
+    }
+    .nav-right { display: flex; align-items: center; gap: 18px; }
+
+    .nav-links {
+      display: flex; align-items: center; gap: 24px;
+      font-family: var(--font-mono);
+      font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    }
+    .nav-link {
+      opacity: 0.7; transition: all 0.25s;
+      cursor: pointer;
+    }
+    .nav-link:hover { opacity: 1; }
+
+    .lang-btns { display: flex; border: 1px solid var(--rule-strong); }
+    .lang-btn {
+      background: none; border: 0; cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 10px; letter-spacing: 0.18em;
+      padding: 7px 11px; color: var(--ink); opacity: 0.5;
+      transition: all .25s;
+    }
+    .lang-btn + .lang-btn { border-left: 1px solid var(--rule-strong); }
+    .lang-btn.active { background: var(--ink); color: var(--parchment); opacity: 1; }
+    .lang-btn:hover:not(.active) { opacity: 1; }
+
+    .nav-cta {
+      font-family: var(--font-mono);
+      font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+      padding: 9px 18px; border: 1px solid var(--ink);
+      transition: all .25s ease;
+    }
+    .nav-cta:hover { background: var(--ink); color: var(--parchment); }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-brand { font-size: 9px; }
+    }
+
+    /* HERO */
+    .hero {
+      padding: 14vh var(--gutter);
+      position: relative; border-top: 0;
+      max-width: var(--max); margin: 0 auto;
+    }
+    .hero-meta {
+      display: flex; justify-content: space-between;
+      margin-bottom: 8vh; padding-bottom: 14px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .hero-num {
+      font-family: var(--font-display); font-style: italic;
+      font-size: clamp(120px, 22vw, 280px);
+      line-height: 0.85;
+      color: var(--sand); opacity: 0.55;
+      letter-spacing: -0.04em;
+      position: absolute; right: var(--gutter); top: 18vh;
+      pointer-events: none; user-select: none; z-index: 0;
+    }
+    .hero-content { position: relative; z-index: 1; }
+    .hero h1 {
+      font-family: var(--font-display); font-weight: 400;
+      font-size: clamp(44px, 7.5vw, 96px);
+      line-height: 1.02; letter-spacing: -0.025em;
+      margin: 4vh 0 5vh; max-width: 14ch;
+    }
+    .hero h1 em { font-style: italic; color: var(--amber); }
+    .hero-sub {
+      font-size: clamp(17px, 1.6vw, 21px);
+      line-height: 1.55; max-width: 52ch;
+      margin-bottom: 6vh; color: var(--ink); opacity: 0.82;
+    }
+    .hero-actions { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-block;
+      background: var(--ink); color: var(--parchment);
+      font-family: var(--font-mono);
+      font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase;
+      padding: 18px 36px;
+      transition: all .3s ease;
+      border: 1px solid var(--ink); cursor: pointer;
+    }
+    .btn-primary:hover { background: transparent; color: var(--ink); }
+    .price-tag {
+      font-family: var(--font-mono);
+      font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+      opacity: 0.55;
+    }
+
+    /* SECTION HEADERS */
+    .sec-label { display: flex; align-items: baseline; gap: 18px; margin-bottom: 6vh; }
+    .sec-label .num {
+      font-family: var(--font-mono);
+      font-size: 11px; letter-spacing: 0.22em; color: var(--amber);
+    }
+    .sec-label .name {
+      font-family: var(--font-mono);
+      font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+      opacity: 0.7;
+    }
+    .sec-h {
+      font-family: var(--font-display); font-weight: 400;
+      font-size: clamp(34px, 4.6vw, 58px);
+      line-height: 1.08; letter-spacing: -0.02em;
+      max-width: 22ch; margin-bottom: 5vh;
+    }
+    .sec-h em { font-style: italic; color: var(--amber); }
+    .sec-body { font-size: 17px; line-height: 1.7; max-width: 58ch; opacity: 0.85; }
+    .sec-body p + p { margin-top: 1.4em; }
+
+    /* AUTHOR SECTION */
+    .author-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 8vw; align-items: start; }
+    @media (max-width: 800px) { .author-grid { grid-template-columns: 1fr; gap: 4vh; } }
+    .author-image { position: relative; }
+    .author-image img {
+      width: 100%; height: auto; display: block;
+      border: 1px solid var(--rule);
+    }
+    .img-meta {
+      font-family: var(--font-mono);
+      font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+      display: block; margin-top: 3vh; opacity: 0.6;
+    }
+
+    /* ESSAYS */
+    .essays-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 6vh; margin-top: 8vh;
+    }
+    @media (max-width: 1000px) { .essays-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .essays-grid { grid-template-columns: 1fr; } }
+
+    .essay-card {
+      padding: 24px 0; border-bottom: 1px solid var(--rule);
+      display: flex; flex-direction: column;
+    }
+    .essay-card h3 {
+      font-family: var(--font-display); font-weight: 400; font-style: italic;
+      font-size: clamp(18px, 2vw, 24px); line-height: 1.3;
+      margin-bottom: 3vh;
+    }
+    .essay-card p {
+      font-size: 15px; line-height: 1.6; opacity: 0.75; margin-bottom: 3vh;
+    }
+    .essay-card a {
+      font-family: var(--font-mono);
+      font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+      opacity: 0.6; transition: all 0.25s;
+      margin-top: auto;
+    }
+    .essay-card a:hover { opacity: 1; }
+
+    /* BOOKS SECTION */
+    .books-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 8vh; margin-top: 8vh;
+    }
+    @media (max-width: 800px) { .books-grid { grid-template-columns: 1fr; } }
+
+    .book-item {
+      display: grid; grid-template-columns: 120px 1fr;
+      gap: 6vh; align-items: start;
+    }
+    .book-cover {
+      aspect-ratio: 2/3; border: 1px solid var(--rule);
+      display: flex; flex-direction: column; justify-content: space-between;
+      padding: 16px; background: var(--ink); color: var(--parchment);
+      font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.15em;
+    }
+    .book-title {
+      font-family: var(--font-display); font-style: italic;
+      font-size: 16px; line-height: 1.2;
+    }
+    .book-info h3 {
+      font-family: var(--font-display); font-weight: 400; font-style: italic;
+      font-size: clamp(18px, 2vw, 22px); line-height: 1.3;
+      margin-bottom: 2vh;
+    }
+    .book-info p {
+      font-size: 15px; line-height: 1.6; opacity: 0.75; margin-bottom: 3vh;
+    }
+    .book-info a {
+      font-family: var(--font-mono);
+      font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+      opacity: 0.6; transition: all 0.25s;
+    }
+    .book-info a:hover { opacity: 1; }
+
+    /* PROTOCOL SECTION */
+    .protocol-section {
+      background: linear-gradient(135deg, rgba(139, 111, 78, 0.08) 0%, rgba(196, 168, 130, 0.04) 100%);
+      border: 1px solid var(--rule-strong);
+      padding: 8vh var(--gutter);
+      border-radius: 2px;
+    }
+    .protocol-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 8vw; align-items: center;
+    }
+    @media (max-width: 900px) { .protocol-inner { grid-template-columns: 1fr; } }
+
+    .protocol-content h2 {
+      font-family: var(--font-display); font-weight: 400;
+      font-size: clamp(34px, 4.6vw, 58px);
+      line-height: 1.08; letter-spacing: -0.02em;
+      margin-bottom: 4vh;
+    }
+    .protocol-content h2 em { font-style: italic; color: var(--amber); }
+    .protocol-content p {
+      font-size: 17px; line-height: 1.7; opacity: 0.85; margin-bottom: 3vh;
+    }
+    .protocol-meta {
+      display: flex; flex-direction: column; gap: 2vh;
+      margin-top: 6vh;
+    }
+    .protocol-meta-item {
+      display: grid; grid-template-columns: 100px 1fr;
+      gap: 2vh;
+    }
+    .protocol-meta-item .key {
+      font-family: var(--font-mono);
+      font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--amber);
+    }
+    .protocol-meta-item .val {
+      font-family: var(--font-display); font-style: italic;
+      font-size: 18px; line-height: 1.3;
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 12vh var(--gutter);
+      border-top: 1px solid var(--rule);
+      text-align: center;
+    }
+    .footer-inner {
+      max-width: var(--max); margin: 0 auto;
+    }
+    .footer-links {
+      display: flex; justify-content: center; gap: 32px;
+      margin-top: 4vh; font-family: var(--font-mono);
+      font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    }
+    .footer-links a {
+      opacity: 0.6; transition: all 0.25s;
+    }
+    .footer-links a:hover { opacity: 1; }
+
+    /* REVEAL ANIMATION */
+    .reveal {
+      opacity: 0;
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 540px) {
+      :root { --gutter: 5vw; }
+      .nav-brand { font-size: 9px; }
+      .hero-num { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">
+      Andrés Ramírez · <em>Clarity</em>
+    </div>
+    <div class="nav-right">
+      <div class="nav-links">
+        <span class="nav-link" onclick="scrollToSection('home')" data-lang="es" class="active">
+          <span data-lang="es" class="active">Inicio</span>
+          <span data-lang="en">Home</span>
+        </span>
+        <span class="nav-link" onclick="scrollToSection('about')" data-lang="es" class="active">
+          <span data-lang="es" class="active">Autor</span>
+          <span data-lang="en">Author</span>
+        </span>
+        <span class="nav-link" onclick="scrollToSection('essays')" data-lang="es" class="active">
+          <span data-lang="es" class="active">Ensayos</span>
+          <span data-lang="en">Essays</span>
+        </span>
+        <span class="nav-link" onclick="scrollToSection('books')" data-lang="es" class="active">
+          <span data-lang="es" class="active">Libros</span>
+          <span data-lang="en">Books</span>
+        </span>
+        <a href="laboratorio.html" class="nav-link" data-lang="es" class="active">
+          <span data-lang="es" class="active">Laboratorio</span>
+          <span data-lang="en">Lab</span>
+        </a>
+      </div>
+      <a href="protocolo/index.html" class="nav-cta" data-lang="es" class="active">
+        <span data-lang="es" class="active">Protocolo</span>
+        <span data-lang="en">Protocol</span>
+      </a>
+      <div class="lang-btns">
+        <button class="lang-btn active" onclick="setLang('es')">ES</button>
+        <button class="lang-btn" onclick="setLang('en')">EN</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="section hero" id="home">
+  <div class="container">
+    <div class="hero-meta reveal">
+      <div class="meta">
+        <span data-lang="es" class="active">— Autor · Estratega</span>
+        <span data-lang="en">— Author · Strategist</span>
+      </div>
+      <div class="meta">
+        <span data-lang="es" class="active">Clarity Before Connection</span>
+        <span data-lang="en">Clarity Before Connection</span>
+      </div>
+    </div>
+    <div class="hero-num reveal">01</div>
+    <div class="hero-content">
+      <h1 class="reveal">
+        <span data-lang="es" class="active">Claridad antes que <em>Conexión.</em></span>
+        <span data-lang="en">Clarity before <em>Connection.</em></span>
+      </h1>
+      <p class="hero-sub reveal">
+        <span data-lang="es" class="active">Porque el costo de amar sin discernir es perderte a ti mismo. Ensayos, herramientas y un protocolo de precisión para tomar decisiones bajo presión emocional.</span>
+        <span data-lang="en">Because attraction without discernment costs you yourself. Essays, tools, and a precision protocol for making decisions under emotional pressure.</span>
+      </p>
+      <div class="hero-actions reveal">
+        <a href="protocolo/index.html" class="btn-primary">
+          <span data-lang="es" class="active">Explorar el Protocolo</span>
+          <span data-lang="en">Explore Protocol</span>
+        </a>
+        <a href="javascript:void(0)" onclick="scrollToSection('essays')" class="btn-primary" style="background: transparent; color: var(--ink);">
+          <span data-lang="es" class="active">Leer Ensayos</span>
+          <span data-lang="en">Read Essays</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUTHOR -->
+<section class="section" id="about">
+  <div class="container">
+    <div class="sec-label reveal">
+      <span class="num">01</span>
+      <span class="name">
+        <span data-lang="es" class="active">El Autor</span>
+        <span data-lang="en">The Author</span>
+      </span>
+    </div>
+    <div class="author-grid">
+      <div class="author-image reveal">
+        <img src="assets/images/andres-color.png" alt="Andrés Ramírez">
+        <span class="img-meta">
+          <span data-lang="es" class="active">Andrés Ramírez · 2026</span>
+          <span data-lang="en">Andrés Ramírez · 2026</span>
+        </span>
+      </div>
+      <div>
+        <h2 class="sec-h reveal">
+          <span data-lang="es" class="active">Economista. Estratega. <em>Entrenador Personal.</em></span>
+          <span data-lang="en">Economist. Strategist. <em>Personal Trainer.</em></span>
+        </h2>
+        <div class="sec-body reveal">
+          <p>
+            <span data-lang="es" class="active">Andrés Ramírez estudia la intersección entre toma de decisiones, diseño de sistemas y comportamiento humano en entornos de alta presión.</span>
+            <span data-lang="en">Andrés Ramírez studies the intersection of decision-making, systems design, and human behavior in high-pressure environments.</span>
+          </p>
+          <p>
+            <span data-lang="es" class="active">No prometo transformaciones ni soluciones rápidas. Ofrezco presencia, discernimiento y herramientas para tomar decisiones adultas bajo presión emocional. Este trabajo es para personas que están cansadas de repetir patrones que ya entienden.</span>
+            <span data-lang="en">I don't promise transformations or quick fixes. I offer presence, discernment, and tools to make adult decisions under emotional pressure. This work is for those tired of repeating patterns they already understand.</span>
+          </p>
+          <p>
+            <span data-lang="es" class="active">Me interesa ayudar a que las personas se mantengan intactas cuando el deseo, la esperanza o la soledad generan presión para comprometer su claridad.</span>
+            <span data-lang="en">I'm interested in helping people stay intact when desire, hope, or loneliness create pressure to compromise clarity.</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ESSAYS -->
+<section class="section" id="essays">
+  <div class="container">
+    <div class="sec-label reveal">
+      <span class="num">02</span>
+      <span class="name">
+        <span data-lang="es" class="active">Archivo de Ensayos</span>
+        <span data-lang="en">Essay Archive</span>
+      </span>
+    </div>
+    <h2 class="sec-h reveal">
+      <span data-lang="es" class="active">Escritos sobre <em>claridad.</em></span>
+      <span data-lang="en">Writings on <em>clarity.</em></span>
+    </h2>
+
+    <div class="essays-grid reveal">
+      <article class="essay-card">
+        <h3>
+          <span data-lang="es" class="active">El Autoconocimiento como Activo Económico</span>
+          <span data-lang="en">Self-Knowledge as an Economic Asset</span>
+        </h3>
+        <p>
+          <span data-lang="es" class="active">Por qué la falta de regulación interna se convierte en el impuesto oculto más destructivo sobre tus decisiones y tu rendimiento.</span>
+          <span data-lang="en">Why the lack of internal regulation becomes the most destructive hidden tax on your decisions and performance.</span>
+        </p>
+        <a href="/content/essays/es/1-el-autoconocimiento-como-activo-economico.pdf" target="_blank" rel="noopener">
+          <span data-lang="es" class="active">[Leer PDF]</span>
+          <span data-lang="en">[Read PDF]</span>
+        </a>
+      </article>
+
+      <article class="essay-card">
+        <h3>
+          <span data-lang="es" class="active">Arbitraje Emocional</span>
+          <span data-lang="en">Emotional Arbitrage</span>
+        </h3>
+        <p>
+          <span data-lang="es" class="active">El mecanismo conductual para mantener la claridad estratégica mientras tu entorno reacciona desde el miedo.</span>
+          <span data-lang="en">The behavioral mechanism to maintain strategic clarity while your environment reacts from fear.</span>
+        </p>
+        <a href="/content/essays/es/2-arbitraje-emocional.pdf" target="_blank" rel="noopener">
+          <span data-lang="es" class="active">[Leer PDF]</span>
+          <span data-lang="en">[Read PDF]</span>
+        </a>
+      </article>
+
+      <article class="essay-card">
+        <h3>
+          <span data-lang="es" class="active">Liquidez Cognitiva</span>
+          <span data-lang="en">Cognitive Liquidity</span>
+        </h3>
+        <p>
+          <span data-lang="es" class="active">El peligro de fusionar tu identidad con tus decisiones y por qué la flexibilidad mental es tu mayor herramienta de supervivencia.</span>
+          <span data-lang="en">Why mental flexibility to change course is your greatest survival tool.</span>
+        </p>
+        <a href="/content/essays/es/5-liquidez-cognitiva.pdf" target="_blank" rel="noopener">
+          <span data-lang="es" class="active">[Leer PDF]</span>
+          <span data-lang="en">[Read PDF]</span>
+        </a>
+      </article>
+
+      <article class="essay-card">
+        <h3>
+          <span data-lang="es" class="active">La Arquitectura del Silencio</span>
+          <span data-lang="en">The Architecture of Silence</span>
+        </h3>
+        <p>
+          <span data-lang="es" class="active">Cómo las cosas no dichas distorsionan la realidad. Por qué evitar conversaciones difíciles crea un vacío donde la ansiedad se multiplica.</span>
+          <span data-lang="en">Why avoiding difficult conversations creates a vacuum where anxiety multiplies.</span>
+        </p>
+        <a href="/content/essays/es/4-la-arquitectura-del-silencio.pdf" target="_blank" rel="noopener">
+          <span data-lang="es" class="active">[Leer PDF]</span>
+          <span data-lang="en">[Read PDF]</span>
+        </a>
+      </article>
+
+      <article class="essay-card">
+        <h3>
+          <span data-lang="es" class="active">Señal vs Ruido</span>
+          <span data-lang="en">Signal vs Noise</span>
+        </h3>
+        <p>
+          <span data-lang="es" class="active">Cómo distinguir información útil de activación inútil en entornos saturados.</span>
+          <span data-lang="en">How to distinguish useful information from useless activation in saturated environments.</span>
+        </p>
+        <a href="/content/essays/es/6-senal-vs-ruido.pdf" target="_blank" rel="noopener">
+          <span data-lang="es" class="active">[Leer PDF]</span>
+          <span data-lang="en">[Read PDF]</span>
+        </a>
+      </article>
+
+      <article class="essay-card">
+        <h3>
+          <span data-lang="es" class="active">El Costo de Oportunidad de Complacer</span>
+          <span data-lang="en">The Opportunity Cost of People-Pleasing</span>
+        </h3>
+        <p>
+          <span data-lang="es" class="active">Cómo la necesidad de validación externa te hace acumular una "deuda emocional" que erosiona tu autonomía.</span>
+          <span data-lang="en">How the need for external validation makes you accumulate emotional debt that erodes your autonomy.</span>
+        </p>
+        <a href="/content/essays/es/3-costo-de-oportunidad-de-complacer.pdf" target="_blank" rel="noopener">
+          <span data-lang="es" class="active">[Leer PDF]</span>
+          <span data-lang="en">[Read PDF]</span>
+        </a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKS -->
+<section class="section" id="books">
+  <div class="container">
+    <div class="sec-label reveal">
+      <span class="num">03</span>
+      <span class="name">
+        <span data-lang="es" class="active">Libros Publicados</span>
+        <span data-lang="en">Published Books</span>
+      </span>
+    </div>
+    <h2 class="sec-h reveal">
+      <span data-lang="es" class="active">Guías para la <em>claridad.</em></span>
+      <span data-lang="en">Guides for <em>clarity.</em></span>
+    </h2>
+
+    <div class="books-grid reveal">
+      <div class="book-item">
+        <div class="book-cover">
+          <div class="meta">Andrés Ramírez</div>
+          <div class="book-title">Match Consciente</div>
+          <div class="meta">Amazon</div>
+        </div>
+        <div class="book-info">
+          <h3>
+            <span data-lang="es" class="active">Match Consciente</span>
+            <span data-lang="en">Mindful Match</span>
+          </h3>
+          <p>
+            <span data-lang="es" class="active">Una guía consciente para buscar pareja con claridad, límites y respeto propio.</span>
+            <span data-lang="en">A conscious guide to dating with clarity, boundaries, and self-respect.</span>
+          </p>
+          <a href="https://www.amazon.com/Match-Consciente-Encontrar-Perderse-Spanish-ebook/dp/B0GLB3NJ1F" target="_blank" rel="noopener">
+            <span data-lang="es" class="active">Leer en Amazon</span>
+            <span data-lang="en">Read on Amazon</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="book-item">
+        <div class="book-cover">
+          <div class="meta">Andrés Ramírez</div>
+          <div class="book-title">No te Abandones</div>
+          <div class="meta">Workbook</div>
+        </div>
+        <div class="book-info">
+          <h3>
+            <span data-lang="es" class="active">No Te Abandones Al Buscar Pareja</span>
+            <span data-lang="en">Don't Lose Yourself While Dating</span>
+          </h3>
+          <p>
+            <span data-lang="es" class="active">Un cuaderno de trabajo práctico para establecer límites y proteger tu identidad.</span>
+            <span data-lang="en">A practical workbook for setting boundaries and protecting your identity.</span>
+          </p>
+          <a href="https://www.amazon.com/No-Abandones-Buscar-Pareja-Spanish-ebook/dp/B0GCRCDMQL" target="_blank" rel="noopener">
+            <span data-lang="es" class="active">Leer en Amazon</span>
+            <span data-lang="en">Read on Amazon</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROTOCOL SECTION -->
+<section class="section" id="protocol">
+  <div class="container">
+    <div class="sec-label reveal">
+      <span class="num">04</span>
+      <span class="name">
+        <span data-lang="es" class="active">Sistema de Precisión</span>
+        <span data-lang="en">Precision System</span>
+      </span>
+    </div>
+    <div class="protocol-section reveal">
+      <div class="protocol-inner">
+        <div class="protocol-content">
+          <h2>
+            <span data-lang="es" class="active">The Clarity <em>Protocol.</em></span>
+            <span data-lang="en">The Clarity <em>Protocol.</em></span>
+          </h2>
+          <p>
+            <span data-lang="es" class="active">Diez módulos secuenciales. Un sistema con principio, cuerpo y cierre. No es un curso. Es un protocolo de precisión para tomar decisiones bajo presión emocional.</span>
+            <span data-lang="en">Ten sequential modules. A system with beginning, body, and closure. Not a course. A precision protocol for making decisions under emotional pressure.</span>
+          </p>
+          <p>
+            <span data-lang="es" class="active">Cada módulo entrega una frase clave, un resumen analítico, puntos operativos, una conclusión, un micro-glosario y tres preguntas reflexivas con espacio de escritura.</span>
+            <span data-lang="en">Each module delivers a key phrase, analytical summary, operational points, conclusion, micro-glossary, and three reflective questions with writing space.</span>
+          </p>
+          <div class="protocol-meta">
+            <div class="protocol-meta-item">
+              <span class="key">
+                <span data-lang="es" class="active">Formato</span>
+                <span data-lang="en">Format</span>
+              </span>
+              <span class="val">
+                <span data-lang="es" class="active">Documento + PDF</span>
+                <span data-lang="en">Document + PDF</span>
+              </span>
+            </div>
+            <div class="protocol-meta-item">
+              <span class="key">
+                <span data-lang="es" class="active">Acceso</span>
+                <span data-lang="en">Access</span>
+              </span>
+              <span class="val">
+                <span data-lang="es" class="active">De por vida</span>
+                <span data-lang="en">Lifetime</span>
+              </span>
+            </div>
+            <div class="protocol-meta-item">
+              <span class="key">
+                <span data-lang="es" class="active">Inversión</span>
+                <span data-lang="en">Investment</span>
+              </span>
+              <span class="val">$49 USD</span>
+            </div>
+          </div>
+          <a href="protocolo/index.html" class="btn-primary" style="margin-top: 6vh;">
+            <span data-lang="es" class="active">Explorar el Protocolo</span>
+            <span data-lang="en">Explore Protocol</span>
+          </a>
+        </div>
+        <div class="reveal" style="text-align: center;">
+          <img src="assets/images/andres-color2.png" alt="Protocol" style="max-width: 100%; height: auto; border: 1px solid var(--rule); display: block;">
+          <span class="img-meta" style="display: block; margin-top: 3vh;">
+            <span data-lang="es" class="active">The Clarity Protocol · Vol. 01</span>
+            <span data-lang="en">The Clarity Protocol · Vol. 01</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SELF LOVE CLUB & LAB -->
+<section class="section" id="ecosystem">
+  <div class="container">
+    <div class="sec-label reveal">
+      <span class="num">05</span>
+      <span class="name">
+        <span data-lang="es" class="active">Ecosistema</span>
+        <span data-lang="en">Ecosystem</span>
+      </span>
+    </div>
+    <h2 class="sec-h reveal">
+      <span data-lang="es" class="active">Self Love Club y <em>Laboratorio.</em></span>
+      <span data-lang="en">Self Love Club and <em>Lab.</em></span>
+    </h2>
+
+    <div class="sec-body reveal" style="max-width: 100%;">
+      <p>
+        <span data-lang="es" class="active">Self Love Club es una plataforma dedicada a la claridad, el autorrespeto y la toma de decisiones consciente en las relaciones. Todo está construido en torno al autoconocimiento aplicado—cómo la claridad se convierte en algo que practicas, no solo que entiendes.</span>
+        <span data-lang="en">Self Love Club is a platform dedicated to clarity, self-respect, and conscious decision-making in relationships. Everything is built around applied self-knowledge—how clarity becomes something you practice, not just something you understand.</span>
+      </p>
+      <p style="margin-top: 3vh;">
+        <span data-lang="es" class="active">El Laboratorio es un espacio para experimentar con herramientas, marcos de trabajo y recursos interactivos que complementan tu práctica de claridad.</span>
+        <span data-lang="en">The Lab is a space to experiment with tools, frameworks, and interactive resources that complement your clarity practice.</span>
+      </p>
+    </div>
+
+    <div style="display: flex; gap: 4vh; margin-top: 6vh; flex-wrap: wrap;">
+      <a href="selfloveclub/index.html" class="btn-primary reveal">
+        <span data-lang="es" class="active">Explorar Self Love Club</span>
+        <span data-lang="en">Explore Self Love Club</span>
+      </a>
+      <a href="laboratorio.html" class="btn-primary reveal" style="background: transparent; color: var(--ink);">
+        <span data-lang="es" class="active">Acceder al Laboratorio</span>
+        <span data-lang="en">Access Lab</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner reveal">
+    <div class="meta" style="margin-bottom: 4vh;">© Self Love Club · MMXXVI</div>
+    <div class="footer-links">
+      <a href="https://www.threads.net/@aram7891" target="_blank" rel="noopener">Threads</a>
+      <a href="https://www.instagram.com/selfloveclubusa" target="_blank" rel="noopener">Instagram</a>
+      <a href="mailto:andres@selfloveclubstore.com">Email</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Language switching
+  function setLang(l) {
+    document.querySelectorAll('[data-lang]').forEach(el => {
+      el.classList.remove('active');
+    });
+    document.querySelectorAll('[data-lang="' + l + '"]').forEach(el => {
+      el.classList.add('active');
+    });
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.textContent.trim() === l.toUpperCase());
+    });
+    try { localStorage.setItem('clarity-lang', l); } catch (e) {}
+  }
+
+  // Scroll to section
+  function scrollToSection(id) {
+    const el = document.getElementById(id);
+    if (el) {
+      window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' });
+    }
+  }
+
+  // Reveal animation on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.animationPlayState = 'running';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => {
+    el.style.animationPlayState = 'paused';
+    observer.observe(el);
+  });
+
+  // Initialize
+  window.addEventListener('load', () => {
+    const saved = localStorage.getItem('clarity-lang') || 'es';
+    setLang(saved);
+  });
+</script>
+
+</body>
+</html>
