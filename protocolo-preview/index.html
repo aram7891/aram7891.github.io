@@ -10,554 +10,114 @@
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --p: #F7F4EF;
-      --ink: #1A1814;
-      --amber: #8B6F4E;
-      --sand: #C4A882;
-      --line: 1px solid rgba(26,24,20,0.1);
-      --la: 1px solid rgba(139,111,78,0.2);
+      --p: #F7F4EF; --ink: #1A1814; --amber: #8B6F4E; --sand: #C4A882;
+      --line: 1px solid rgba(26,24,20,0.1); --la: 1px solid rgba(139,111,78,0.2);
     }
     html { scroll-behavior: smooth; }
-    body {
-      background: var(--p);
-      color: var(--ink);
-      font-family: 'Instrument Sans', sans-serif;
-      font-size: 15px;
-      line-height: 1.7;
-      min-height: 100vh;
-    }
+    body { background: var(--p); color: var(--ink); font-family: 'Instrument Sans', sans-serif; font-size: 15px; line-height: 1.7; min-height: 100vh; }
 
-    /* ── PROGRESS ── */
-    .progress-bar {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: rgba(196,168,130,0.15);
-      z-index: 200;
-    }
-    .progress-fill {
-      height: 100%;
-      background: var(--amber);
-      transition: width 0.4s ease;
-      width: 9.09%;
-    }
+    /* LANGUAGE */
+    .lang-toggle { display: flex; border: 1px solid rgba(139,111,78,0.25); }
+    .lang-btn { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px; padding: 0.35rem 0.7rem; background: transparent; color: var(--sand); border: none; cursor: pointer; transition: all 0.2s; text-transform: uppercase; }
+    .lang-btn.active { background: var(--ink); color: var(--p); }
+    .lang-btn:not(.active):hover { color: var(--amber); }
+    body[data-lang="en"] .es-only { display: none !important; }
+    body[data-lang="es"] .en-only { display: none !important; }
 
-    /* ── HEADER ── */
-    .site-header {
-      padding-top: 2px;
-      border-bottom: var(--line);
-      background: white;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .header-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.2rem 5%;
-      border-bottom: var(--line);
-    }
-    .header-brand {
-      display: flex;
-      flex-direction: column;
-    }
-    .brand-label {
-      font-family: 'DM Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 3px;
-      color: var(--amber);
-      text-transform: uppercase;
-      margin-bottom: 0.2rem;
-    }
-    .brand-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: 1.3rem;
-      font-weight: 300;
-      color: var(--ink);
-      line-height: 1;
-    }
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-    }
-    .btn-export {
-      font-family: 'DM Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      padding: 0.5rem 1.2rem;
-      background: var(--ink);
-      color: var(--p);
-      border: 1px solid var(--ink);
-      cursor: pointer;
-      transition: all 0.2s;
-    }
+    /* PROGRESS */
+    .progress-bar { position: fixed; top: 0; left: 0; right: 0; height: 2px; background: rgba(196,168,130,0.15); z-index: 200; }
+    .progress-fill { height: 100%; background: var(--amber); transition: width 0.4s ease; width: 9.09%; }
+
+    /* HEADER */
+    .site-header { padding-top: 2px; border-bottom: var(--line); background: white; position: sticky; top: 0; z-index: 100; }
+    .header-top { display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 5%; border-bottom: var(--line); gap: 1rem; }
+    .header-brand { display: flex; flex-direction: column; }
+    .brand-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 3px; color: var(--amber); text-transform: uppercase; margin-bottom: 0.2rem; }
+    .brand-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.3rem; font-weight: 300; color: var(--ink); line-height: 1; }
+    .header-actions { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
+    .save-status { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--sand); letter-spacing: 1px; opacity: 0.7; }
+    .btn-export { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; padding: 0.5rem 1.2rem; background: var(--ink); color: var(--p); border: 1px solid var(--ink); cursor: pointer; transition: all 0.2s; }
     .btn-export:hover { background: var(--amber); border-color: var(--amber); }
-    .btn-clear {
-      font-family: 'DM Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      padding: 0.5rem 1.2rem;
-      background: transparent;
-      color: var(--sand);
-      border: 1px solid rgba(196,168,130,0.35);
-      cursor: pointer;
-      transition: all 0.2s;
-    }
+    .btn-clear { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; padding: 0.5rem 1.2rem; background: transparent; color: var(--sand); border: 1px solid rgba(196,168,130,0.35); cursor: pointer; transition: all 0.2s; }
     .btn-clear:hover { border-color: var(--amber); color: var(--amber); }
-    .save-status {
-      font-family: 'DM Mono', monospace;
-      font-size: 9px;
-      color: var(--sand);
-      letter-spacing: 1px;
-      opacity: 0.7;
-    }
 
-    /* ── MODULE NAV ── */
-    .module-nav {
-      display: flex;
-      align-items: center;
-      padding: 0 5%;
-      gap: 0;
-      overflow-x: auto;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-    }
+    /* NAV */
+    .module-nav { display: flex; align-items: center; padding: 0 5%; overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; }
     .module-nav::-webkit-scrollbar { display: none; }
-    .mod-nav-btn {
-      font-family: 'DM Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 1px;
-      padding: 0.75rem 1rem;
-      background: none;
-      border: none;
-      border-bottom: 2px solid transparent;
-      color: var(--sand);
-      cursor: pointer;
-      white-space: nowrap;
-      transition: all 0.2s;
-      flex-shrink: 0;
-    }
+    .mod-nav-btn { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1px; padding: 0.75rem 1rem; background: none; border: none; border-bottom: 2px solid transparent; color: var(--sand); cursor: pointer; white-space: nowrap; transition: all 0.2s; flex-shrink: 0; }
     .mod-nav-btn:hover { color: var(--ink); }
-    .mod-nav-btn.active {
-      color: var(--amber);
-      border-bottom-color: var(--amber);
-    }
-    .mod-nav-btn.locked {
-      opacity: 0.45;
-    }
+    .mod-nav-btn.active { color: var(--amber); border-bottom-color: var(--amber); }
+    .mod-nav-btn.locked { opacity: 0.4; }
     #moduleSelect { display: none; }
 
-    /* ── MAIN LAYOUT ── */
-    main {
-      max-width: 780px;
-      margin: 0 auto;
-      padding: 4rem 5% 6rem;
-    }
-
-    /* ── MODULE ── */
+    /* MAIN */
+    main { max-width: 780px; margin: 0 auto; padding: 4rem 5% 6rem; }
     .module { display: none; }
     .module.active { display: block; animation: fadeUp 0.35s ease; }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(8px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* ── MODULE HEADER ── */
-    .module-header {
-      margin-bottom: 3rem;
-      padding-bottom: 2rem;
-      border-bottom: var(--line);
-      position: relative;
-    }
-    .module-number {
-      font-family: 'DM Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 3px;
-      color: var(--amber);
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-    .module-number::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--sand);
-      opacity: 0.25;
-      max-width: 60px;
-    }
-    .module-header h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
-      font-weight: 300;
-      line-height: 1.2;
-      color: var(--ink);
-      letter-spacing: -0.01em;
-      margin: 0;
-    }
+    /* MODULE HEADER */
+    .module-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: var(--line); }
+    .module-number { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 3px; color: var(--amber); text-transform: uppercase; margin-bottom: 1rem; display: flex; align-items: center; gap: 1rem; }
+    .module-number::after { content: ''; flex: 1; height: 1px; background: var(--sand); opacity: 0.25; max-width: 60px; }
+    .module-header h2 { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 300; line-height: 1.2; color: var(--ink); letter-spacing: -0.01em; margin: 0; }
 
-    /* ── FRASE CLAVE ── */
-    .frase-clave {
-      position: relative;
-      margin: 2.5rem 0 3rem;
-      padding: 2rem 2.5rem;
-      background: white;
-      border-left: 3px solid var(--amber);
-    }
-    .frase-clave::before {
-      content: '"';
-      position: absolute;
-      top: -0.5rem;
-      left: 1.5rem;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 5rem;
-      line-height: 1;
-      color: var(--sand);
-      opacity: 0.3;
-    }
-    .frase-clave p {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: 1.35rem;
-      line-height: 1.65;
-      color: var(--ink);
-      margin: 0;
-      position: relative;
-      z-index: 1;
-    }
+    /* FRASE CLAVE */
+    .frase-clave { position: relative; margin: 2.5rem 0 3rem; padding: 2rem 2.5rem; background: white; border-left: 3px solid var(--amber); }
+    .frase-clave::before { content: '"'; position: absolute; top: -0.5rem; left: 1.5rem; font-family: 'Cormorant Garamond', serif; font-size: 5rem; line-height: 1; color: var(--sand); opacity: 0.3; }
+    .frase-clave p { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.35rem; line-height: 1.65; color: var(--ink); margin: 0; position: relative; z-index: 1; }
 
-    /* ── SECTION TITLE ── */
-    .section-title {
-      font-family: 'DM Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 3px;
-      color: var(--amber);
-      text-transform: uppercase;
-      margin-top: 2.5rem;
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-    .section-title::after {
-      content: '';
-      height: 1px;
-      width: 30px;
-      background: var(--sand);
-      opacity: 0.35;
-    }
+    /* SECTION TITLE */
+    .section-title { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 3px; color: var(--amber); text-transform: uppercase; margin-top: 2.5rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 1rem; }
+    .section-title::after { content: ''; height: 1px; width: 30px; background: var(--sand); opacity: 0.35; }
 
-    /* ── CONTENT TEXT ── */
-    .content-text {
-      margin-bottom: 0.5rem;
-    }
-    .content-text p {
-      font-size: 15px;
-      line-height: 1.85;
-      color: var(--ink);
-      opacity: 0.82;
-      margin-bottom: 1.1rem;
-    }
+    /* CONTENT */
+    .content-text p { font-size: 15px; line-height: 1.85; color: var(--ink); opacity: 0.82; margin-bottom: 1.1rem; }
     .content-text p strong { font-weight: 600; opacity: 1; color: var(--ink); }
-    .content-text ul,
-    .content-text ol {
-      padding-left: 1.5rem;
-      margin-bottom: 1.2rem;
-    }
-    .content-text li {
-      font-size: 14px;
-      line-height: 1.8;
-      color: var(--ink);
-      opacity: 0.78;
-      margin-bottom: 0.5rem;
-    }
+    .content-text ul, .content-text ol { padding-left: 1.5rem; margin-bottom: 1.2rem; }
+    .content-text li { font-size: 14px; line-height: 1.8; color: var(--ink); opacity: 0.78; margin-bottom: 0.5rem; }
     .content-text li strong { opacity: 1; }
 
-    /* ── MICRO GLOSARIO ── */
-    .micro-glosario {
-      margin: 3rem 0 2rem;
-      padding: 2rem;
-      background: white;
-      border-top: var(--line);
-      border-bottom: var(--line);
-    }
-    .micro-glosario h3 {
-      font-family: 'DM Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 3px;
-      color: var(--amber);
-      text-transform: uppercase;
-      font-weight: 400;
-      font-style: normal;
-      margin-bottom: 1.5rem;
-    }
-    .micro-glosario dl {}
-    .micro-glosario dt {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: 1.1rem;
-      color: var(--ink);
-      margin-top: 1.2rem;
-      margin-bottom: 0.3rem;
-    }
+    /* MICRO GLOSARIO */
+    .micro-glosario { margin: 3rem 0 2rem; padding: 2rem; background: white; border-top: var(--line); border-bottom: var(--line); }
+    .micro-glosario h3 { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 3px; color: var(--amber); text-transform: uppercase; font-weight: 400; margin-bottom: 1.5rem; }
+    .micro-glosario dt { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.1rem; color: var(--ink); margin-top: 1.2rem; margin-bottom: 0.3rem; }
     .micro-glosario dt:first-of-type { margin-top: 0; }
-    .micro-glosario dd {
-      font-size: 13px;
-      line-height: 1.7;
-      color: var(--ink);
-      opacity: 0.65;
-      margin-left: 0;
-      padding-left: 1rem;
-      border-left: 2px solid rgba(196,168,130,0.3);
-    }
+    .micro-glosario dd { font-size: 13px; line-height: 1.7; color: var(--ink); opacity: 0.65; margin-left: 0; padding-left: 1rem; border-left: 2px solid rgba(196,168,130,0.3); }
 
-    /* ── PREGUNTAS FINALES ── */
-    .preguntas-finales {
-      margin: 2.5rem 0 2rem;
-      padding: 2rem 0 0;
-      border-top: var(--la);
-    }
-    .preguntas-finales h3 {
-      font-family: 'DM Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 3px;
-      color: var(--amber);
-      text-transform: uppercase;
-      font-weight: 400;
-      font-style: normal;
-      margin-bottom: 1.5rem;
-    }
-    .preguntas-finales ol {
-      padding-left: 0;
-      list-style: none;
-      counter-reset: q;
-    }
-    .preguntas-finales li {
-      counter-increment: q;
-      font-size: 14px;
-      line-height: 1.7;
-      color: var(--ink);
-      opacity: 0.8;
-      margin-bottom: 1rem;
-      padding-left: 2rem;
-      position: relative;
-    }
-    .preguntas-finales li::before {
-      content: counter(q, decimal-leading-zero);
-      position: absolute;
-      left: 0;
-      font-family: 'DM Mono', monospace;
-      font-size: 10px;
-      color: var(--amber);
-      letter-spacing: 1px;
-      top: 0.2rem;
-    }
+    /* PREGUNTAS */
+    .preguntas-finales { margin: 2.5rem 0 2rem; padding: 2rem 0 0; border-top: var(--la); }
+    .preguntas-finales h3 { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 3px; color: var(--amber); text-transform: uppercase; font-weight: 400; margin-bottom: 1.5rem; }
+    .preguntas-finales ol { padding-left: 0; list-style: none; counter-reset: q; }
+    .preguntas-finales li { counter-increment: q; font-size: 14px; line-height: 1.7; color: var(--ink); opacity: 0.8; margin-bottom: 1rem; padding-left: 2rem; position: relative; }
+    .preguntas-finales li::before { content: counter(q, decimal-leading-zero); position: absolute; left: 0; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--amber); letter-spacing: 1px; top: 0.2rem; }
 
-    /* ── NOTES SECTION ── */
-    .notes-section {
-      margin-top: 3rem;
-      padding-top: 2rem;
-      border-top: var(--line);
-    }
-    .notes-section label {
-      font-family: 'DM Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 3px;
-      color: var(--amber);
-      text-transform: uppercase;
-      display: block;
-      margin-bottom: 1rem;
-    }
-    .notes-section textarea {
-      width: 100%;
-      min-height: 140px;
-      padding: 1.5rem;
-      font-family: 'Instrument Sans', sans-serif;
-      font-size: 14px;
-      line-height: 1.75;
-      background: white;
-      border: var(--line);
-      resize: none;
-      outline: none;
-      color: var(--ink);
-      transition: border-color 0.25s;
-    }
-    .notes-section textarea::placeholder {
-      color: var(--sand);
-      font-style: italic;
-      opacity: 0.6;
-      font-size: 13px;
-    }
-    .notes-section textarea:focus {
-      border-color: rgba(139,111,78,0.35);
-    }
+    /* NOTES */
+    .notes-section { margin-top: 3rem; padding-top: 2rem; border-top: var(--line); }
+    .notes-section label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 3px; color: var(--amber); text-transform: uppercase; display: block; margin-bottom: 1rem; }
+    .notes-section textarea { width: 100%; min-height: 140px; padding: 1.5rem; font-family: 'Instrument Sans', sans-serif; font-size: 14px; line-height: 1.75; background: white; border: var(--line); resize: none; outline: none; color: var(--ink); transition: border-color 0.25s; }
+    .notes-section textarea::placeholder { color: var(--sand); font-style: italic; opacity: 0.6; font-size: 13px; }
+    .notes-section textarea:focus { border-color: rgba(139,111,78,0.35); }
 
-    /* ── LOCKED MODULE ── */
-    .module-locked {
-      margin-top: 1rem;
-      padding: 4rem 2.5rem;
-      background: white;
-      border: var(--line);
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.2rem;
-    }
-    .lock-rule {
-      width: 32px;
-      height: 1px;
-      background: var(--sand);
-      opacity: 0.4;
-      margin: 0 auto;
-    }
-    .lock-label {
-      font-family: 'DM Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 3px;
-      color: var(--amber);
-      text-transform: uppercase;
-    }
-    .lock-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: 1.5rem;
-      font-weight: 300;
-      color: var(--ink);
-      line-height: 1.3;
-      max-width: 380px;
-    }
-    .lock-body {
-      font-size: 13px;
-      line-height: 1.8;
-      color: var(--ink);
-      opacity: 0.55;
-      max-width: 340px;
-    }
-    .btn-unlock {
-      display: inline-block;
-      margin-top: 0.5rem;
-      font-family: 'DM Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      padding: 0.85rem 2rem;
-      background: var(--ink);
-      color: var(--p);
-      border: 1px solid var(--ink);
-      text-decoration: none;
-      transition: all 0.2s;
-      cursor: pointer;
-    }
-    .btn-unlock:hover {
-      background: var(--amber);
-      border-color: var(--amber);
-    }
-    .lock-meta {
-      font-family: 'DM Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 1.5px;
-      color: var(--sand);
-      text-transform: uppercase;
-    }
+    /* LOCKED */
+    .module-locked { margin-top: 1rem; padding: 4rem 2.5rem; background: white; border: var(--line); text-align: center; display: flex; flex-direction: column; align-items: center; gap: 1.2rem; }
+    .lock-rule { width: 32px; height: 1px; background: var(--sand); opacity: 0.4; }
+    .lock-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 3px; color: var(--amber); text-transform: uppercase; }
+    .lock-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.5rem; font-weight: 300; color: var(--ink); line-height: 1.3; max-width: 380px; }
+    .lock-body { font-size: 13px; line-height: 1.8; color: var(--ink); opacity: 0.55; max-width: 340px; }
+    .btn-unlock { display: inline-block; margin-top: 0.5rem; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; padding: 0.85rem 2rem; background: var(--ink); color: var(--p); border: 1px solid var(--ink); text-decoration: none; transition: all 0.2s; cursor: pointer; }
+    .btn-unlock:hover { background: var(--amber); border-color: var(--amber); }
+    .lock-meta { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 1.5px; color: var(--sand); text-transform: uppercase; }
 
-    /* ── FOOTER ── */
-    .site-footer {
-      border-top: var(--line);
-      padding: 1.5rem 5%;
-      background: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-    }
-    .footer-label {
-      font-family: 'DM Mono', monospace;
-      font-size: 9px;
-      color: var(--sand);
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
+    /* FOOTER */
+    .site-footer { border-top: var(--line); padding: 1.5rem 5%; background: white; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .footer-label { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--sand); letter-spacing: 2px; text-transform: uppercase; }
 
-    /* ── TOAST ── */
-    .toast {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      background: var(--ink);
-      color: var(--p);
-      padding: 0.8rem 1.4rem;
-      font-family: 'DM Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 1px;
-      opacity: 0;
-      transform: translateY(12px);
-      transition: all 0.3s ease;
-      pointer-events: none;
-      z-index: 1000;
-    }
+    /* TOAST */
+    .toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--ink); color: var(--p); padding: 0.8rem 1.4rem; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1px; opacity: 0; transform: translateY(12px); transition: all 0.3s ease; pointer-events: none; z-index: 1000; }
     .toast.show { opacity: 1; transform: translateY(0); }
 
-    /* ── MODAL ── */
-    .modal {
-      position: fixed; z-index: 500;
-      left: 0; top: 0; width: 100%; height: 100%;
-      background: rgba(26,24,20,0.5);
-      display: none;
-      align-items: center;
-      justify-content: center;
-    }
-    .modal-content {
-      background: var(--p);
-      padding: 2.5rem;
-      border: var(--line);
-      max-width: 360px;
-      width: 90%;
-    }
-    .modal-content h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: 1.4rem;
-      font-weight: 300;
-      margin-bottom: 1.5rem;
-    }
-    .close-modal {
-      float: right;
-      font-size: 1.2rem;
-      cursor: pointer;
-      color: var(--sand);
-      line-height: 1;
-      margin-top: -0.2rem;
-    }
-    .btn-danger {
-      font-family: 'DM Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 1px;
-      padding: 0.7rem 1.4rem;
-      background: var(--ink);
-      color: var(--p);
-      border: none;
-      cursor: pointer;
-      width: 100%;
-      transition: background 0.2s;
-    }
-    .btn-danger:hover { background: #c00; }
-
-    /* ── PRINT ── */
-    @media print {
-      .site-header, .site-footer, .toast { display: none; }
-      .module { display: block !important; page-break-after: always; }
-    }
-
-    /* ── MOBILE ── */
+    /* MOBILE */
     @media (max-width: 680px) {
       main { padding: 2.5rem 5% 5rem; }
       .module-nav { padding: 0 3%; }
@@ -566,623 +126,388 @@
       .frase-clave { padding: 1.5rem; }
       .frase-clave p { font-size: 1.15rem; }
       .module-locked { padding: 3rem 1.5rem; }
+      .save-status { display: none; }
     }
   </style>
 </head>
-<body>
+<body data-lang="es">
 
-  <!-- PROGRESS -->
   <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
 
-  <!-- MODAL -->
-  <div id="settingsModal" class="modal">
-    <div class="modal-content">
-      <span class="close-modal">&times;</span>
-      <h3>Confirmar</h3>
-      <button id="clearAllBtn" class="btn-danger">Limpiar todo el contenido</button>
-      <p style="font-size:12px;color:var(--sand);margin-top:1rem;font-family:'DM Mono',monospace;">Esta acción eliminará TODO lo que has escrito.</p>
-    </div>
-  </div>
-
-  <!-- HEADER -->
   <header class="site-header">
     <div class="header-top">
       <div class="header-brand">
         <span class="brand-label">Self Love Club</span>
-        <span class="brand-title">El Protocolo de la Claridad</span>
+        <span class="brand-title es-only">El Protocolo de la Claridad</span>
+        <span class="brand-title en-only">The Clarity Protocol</span>
       </div>
       <div class="header-actions">
-        <span class="save-status" id="autoSaveStatus">Cambios guardados</span>
+        <span class="save-status" id="autoSaveStatus">
+          <span class="es-only">Cambios guardados</span>
+          <span class="en-only">Changes saved</span>
+        </span>
         <span id="step-label" style="font-family:'DM Mono',monospace;font-size:12px;color:var(--amber);letter-spacing:2px;background:rgba(139,111,78,0.08);padding:0.35rem 0.9rem;border:1px solid rgba(139,111,78,0.2);">MÓDULO 1 / 11</span>
-        <button class="btn-clear" id="clearBtn">Limpiar</button>
-        <button class="btn-export" id="exportBtn">Exportar PDF</button>
+        <div class="lang-toggle">
+          <button class="lang-btn active" id="btnES" onclick="setLang('es')">ES</button>
+          <button class="lang-btn" id="btnEN" onclick="setLang('en')">EN</button>
+        </div>
+        <button class="btn-clear" id="clearBtn">
+          <span class="es-only">Limpiar</span><span class="en-only">Clear</span>
+        </button>
+        <button class="btn-export" id="exportBtn">
+          <span class="es-only">Exportar PDF</span><span class="en-only">Export PDF</span>
+        </button>
       </div>
     </div>
     <select id="moduleSelect" aria-hidden="true">
-      <option value="0">Módulo 00</option>
-      <option value="1">Módulo 01</option>
-      <option value="2">Módulo 02</option>
-      <option value="3">Módulo 03</option>
-      <option value="4">Módulo 04</option>
-      <option value="5">Módulo 05</option>
-      <option value="6">Módulo 06</option>
-      <option value="7">Módulo 07</option>
-      <option value="8">Módulo 08</option>
-      <option value="9">Módulo 09</option>
-      <option value="10">Módulo 10</option>
+      <option value="0">00</option><option value="1">01</option><option value="2">02</option>
+      <option value="3">03</option><option value="4">04</option><option value="5">05</option>
+      <option value="6">06</option><option value="7">07</option><option value="8">08</option>
+      <option value="9">09</option><option value="10">10</option>
     </select>
-    <nav class="module-nav" aria-label="Módulos del protocolo">
-      <button class="mod-nav-btn active" onclick="navTo('0', this)">00 — Prólogo</button>
-      <button class="mod-nav-btn" onclick="navTo('1', this)">01 — Autoconocimiento</button>
-      <button class="mod-nav-btn locked" onclick="navTo('2', this)">02 — ○</button>
-      <button class="mod-nav-btn locked" onclick="navTo('3', this)">03 — ○</button>
-      <button class="mod-nav-btn locked" onclick="navTo('4', this)">04 — ○</button>
-      <button class="mod-nav-btn locked" onclick="navTo('5', this)">05 — ○</button>
-      <button class="mod-nav-btn locked" onclick="navTo('6', this)">06 — ○</button>
-      <button class="mod-nav-btn locked" onclick="navTo('7', this)">07 — ○</button>
-      <button class="mod-nav-btn locked" onclick="navTo('8', this)">08 — ○</button>
-      <button class="mod-nav-btn locked" onclick="navTo('9', this)">09 — ○</button>
-      <button class="mod-nav-btn locked" onclick="navTo('10', this)">10 — ○</button>
+    <nav class="module-nav">
+      <button class="mod-nav-btn active" onclick="navTo('0',this)"><span class="es-only">00 — Prólogo</span><span class="en-only">00 — Prologue</span></button>
+      <button class="mod-nav-btn" onclick="navTo('1',this)"><span class="es-only">01 — Autoconocimiento</span><span class="en-only">01 — Self-Knowledge</span></button>
+      <button class="mod-nav-btn locked" onclick="navTo('2',this)">02 — ○</button>
+      <button class="mod-nav-btn locked" onclick="navTo('3',this)">03 — ○</button>
+      <button class="mod-nav-btn locked" onclick="navTo('4',this)">04 — ○</button>
+      <button class="mod-nav-btn locked" onclick="navTo('5',this)">05 — ○</button>
+      <button class="mod-nav-btn locked" onclick="navTo('6',this)">06 — ○</button>
+      <button class="mod-nav-btn locked" onclick="navTo('7',this)">07 — ○</button>
+      <button class="mod-nav-btn locked" onclick="navTo('8',this)">08 — ○</button>
+      <button class="mod-nav-btn locked" onclick="navTo('9',this)">09 — ○</button>
+      <button class="mod-nav-btn locked" onclick="navTo('10',this)">10 — ○</button>
     </nav>
-    <div style="height:2px;background:rgba(26,24,20,0.06);position:relative;">
-      <div id="progressFill2" style="height:100%;background:var(--amber);width:9.09%;transition:width 0.4s ease;"></div>
-    </div>
+    <div style="height:2px;background:rgba(26,24,20,0.06);"><div id="progressFill2" style="height:100%;background:var(--amber);width:9.09%;transition:width 0.4s ease;"></div></div>
   </header>
 
-  <!-- MAIN CONTENT -->
   <main>
     <div class="content-wrapper" id="pdf-content">
 
-      <div class="nav-controls" data-html2canvas-ignore="true" style="display:none;">
-        <select class="module-selector" id="moduleSelect2"></select>
-        <button id="exportBtn2"></button>
-        <button id="clearBtn2"></button>
-      </div>
-
-      <!-- ═══════════════════════════════════════════════ -->
-      <!-- MÓDULO 00 — PRÓLOGO (libre) -->
-      <!-- ═══════════════════════════════════════════════ -->
+      <!-- MODULE 00 — FREE -->
       <div class="module active" data-module="0">
-        <div class="module-header">
-          <div class="module-number">MÓDULO 00</div>
-          <h2>Prólogo — Instrucciones de uso del protocolo</h2>
+        <!-- ES -->
+        <div class="es-only">
+          <div class="module-header"><div class="module-number">MÓDULO 00</div><h2>Prólogo — Instrucciones de uso del protocolo</h2></div>
+          <div class="frase-clave"><p>"El protocolo comienza cuando dejas de esperar permiso para cambiar."</p></div>
+          <div class="section-title">Resumen</div>
+          <div class="content-text"><p>Este no es un libro de autoayuda. No te va a prometer transformación mágica ni decirte que simplemente "ames tu vulnerabilidad". Es un sistema donde cada módulo prepara el terreno para el siguiente. Requiere que respetes el orden, que tomes notas reales, que respondas preguntas incómodas.</p></div>
+          <div class="section-title">Por qué lees esto</div>
+          <div class="content-text">
+            <p>No lees esto porque tu vida está rota.</p>
+            <p>Lees esto porque funciona, pero no como desearías. Tomas decisiones. Algunas salen bien. Muchas te dejan con un sabor raro: la sensación de que pudiste hacerlo mejor, pero algo en ti —tu velocidad mental, tu activación emocional, tu propensión a exagerar lo pequeño— te bloquea.</p>
+            <p>O quizás es lo opuesto: eres alguien que se paraliza. Analizas demasiado. Esperas certeza que nunca llega. Pospones lo incómodo. Construyes narrativas elaboradas sobre por qué no puedes cambiar aún.</p>
+            <p>De cualquier forma, los patrones se repiten.</p>
+          </div>
+          <div class="section-title">Qué es este protocolo</div>
+          <div class="content-text">
+            <p>Es un sistema donde cada parte prepara la siguiente. Los primeros módulos construyen los fundamentos: cómo reconoces cuándo estás activado, cómo separas tu ego de tus decisiones, cómo te regulás sin dramatizar.</p>
+            <p>Los módulos intermedios aplican eso a la realidad: cómo tomas decisiones cuando todo sigue moviéndose, cómo lees correctamente en la era de información abundante, cómo reconoces que el "fracaso" a veces es solo progreso incómodo.</p>
+            <p>El último módulo te muestra cómo todo esto se integra en un patrón de vida que simplemente funciona más.</p>
+          </div>
+          <div class="section-title">Cómo leer esto</div>
+          <div class="content-text">
+            <p>Respeta el orden. No porque sea misterioso, sino porque es diseño.</p>
+            <p>Lee un módulo por semana. No más. La comprensión no es velocidad. Este protocolo espera que hagas preguntas incómodas mientras lees.</p>
+            <p>Toma notas. No pasivas. Cada módulo termina con preguntas. Respóndelas como si alguien que importa te estuviera observando. Porque te estás observando.</p>
+            <p>Al final encontrarás una hoja de ruta para los próximos 90 días. Úsala como espejo, no como lista de tareas. Tu vida va a resistirse a cambiar. Los patrones viejos tienen inercia. Eso es normal.</p>
+          </div>
+          <div class="section-title">Antes de empezar</div>
+          <div class="content-text">
+            <p>Esto no es para todos.</p>
+            <p>Si vienes buscando que alguien te diga que todo está bien tal como estás, que simplemente "ames tu caoticidad", que celebres tu ansiedad como "sensibilidad profunda", cierra esto.</p>
+            <p>Si vienes buscando un atajo, un hack, una fórmula mágica para saltarte el trabajo de reconstruirte, también te ahorras el tiempo.</p>
+            <p>Si vienes porque algo en ti sabe que hay un nivel diferente de funcionamiento disponible —donde tomas decisiones más claras, donde no te saboteas, donde tu energía se gasta en lo que realmente importa— entonces sigue leyendo.</p>
+          </div>
+          <div class="section-title">Puntos prácticos</div>
+          <div class="content-text"><ul style="margin-left:1.5rem"><li>Lee en orden. Los módulos son secuenciales.</li><li>Una sesión por semana. La lentitud permite comprensión real.</li><li>Escribe tus respuestas a las preguntas finales. La escritura fuerza claridad.</li><li>No busques transformación inmediata. Busca patrones que cambien silenciosamente.</li></ul></div>
+          <div class="section-title">Conclusión</div>
+          <div class="content-text"><p>El protocolo no promete una vida sin problemas. Te promete una mente menos secuestrable por ellos.</p></div>
+          <div class="micro-glosario"><h3>Micro-Glosario</h3><dl><dt>Protocolo</dt><dd>Un sistema donde cada parte prepara la siguiente. No es una colección de consejos sueltos.</dd><dt>Regulación</dt><dd>Modular tu respuesta emocional sin reprimir la emoción ni dejarte secuestrar por ella.</dd><dt>Patrón</dt><dd>Lo que repites inconscientemente, lo que hace que termines en el mismo lugar.</dd></dl></div>
+          <div class="preguntas-finales"><h3>Preguntas finales</h3><ol><li>¿Qué patrón mío se repite más consistentemente?</li><li>¿Qué me hace creer que esta vez podría ser diferente?</li><li>¿Estoy dispuesto a hacer esto lentamente, o necesito resultados inmediatos?</li></ol></div>
+          <div class="notes-section"><label for="n0es">Tus notas y reflexiones</label><textarea id="n0es" placeholder="Escribe aquí tus respuestas a las preguntas finales y reflexiones personales..."></textarea></div>
         </div>
-
-        <div class="frase-clave">
-          <p>"El protocolo comienza cuando dejas de esperar permiso para cambiar."</p>
-        </div>
-
-        <div class="section-title">Resumen</div>
-        <div class="content-text">
-          <p>Este no es un libro de autoayuda. No te va a prometer transformación mágica ni decirte que simplemente "ames tu vulnerabilidad". Es un sistema donde cada módulo prepara el terreno para el siguiente. Requiere que respetes el orden, que tomes notas reales, que respondas preguntas incómodas.</p>
-        </div>
-
-        <div class="section-title">Por qué lees esto</div>
-        <div class="content-text">
-          <p>No lees esto porque tu vida está rota.</p>
-          <p>Lees esto porque funciona, pero no como desearías. Tomas decisiones. Algunas salen bien. Muchas te dejan con un sabor raro: la sensación de que pudiste hacerlo mejor, pero algo en ti —tu velocidad mental, tu activación emocional, tu propensión a exagerar lo pequeño— te bloquea.</p>
-          <p>O quizás es lo opuesto: eres alguien que se paraliza. Analizas demasiado. Esperas certeza que nunca llega. Pospones lo incómodo. Construyes narrativas elaboradas sobre por qué no puedes cambiar aún.</p>
-          <p>De cualquier forma, los patrones se repiten.</p>
-        </div>
-
-        <div class="section-title">Qué es este protocolo</div>
-        <div class="content-text">
-          <p>Es un sistema donde cada parte prepara la siguiente. Los primeros módulos construyen los fundamentos: cómo reconoces cuándo estás activado, cómo separas tu ego de tus decisiones, cómo te regulás sin dramatizar.</p>
-          <p>Los módulos intermedios aplican eso a la realidad: cómo tomas decisiones cuando todo sigue moviéndose, cómo lees correctamente en la era de información abundante, cómo reconoces que el "fracaso" a veces es solo progreso incómodo.</p>
-          <p>El último módulo te muestra cómo todo esto se integra en un patrón de vida que simplemente funciona más.</p>
-        </div>
-
-        <div class="section-title">Cómo leer esto</div>
-        <div class="content-text">
-          <p>Respeta el orden. No porque sea misterioso, sino porque es diseño.</p>
-          <p>Lee un módulo por semana. No más. La comprensión no es velocidad. Este protocolo espera que hagas preguntas incómodas mientras lees.</p>
-          <p>Toma notas. No pasivas. Cada módulo termina con preguntas. Respóndelas como si alguien que importa te estuviera observando. Porque te estás observando.</p>
-          <p>Al final encontrarás una hoja de ruta para los próximos 90 días. Úsala como espejo, no como lista de tareas. Tu vida va a resistirse a cambiar. Los patrones viejos tienen inercia. Eso es normal.</p>
-        </div>
-
-        <div class="section-title">Antes de empezar</div>
-        <div class="content-text">
-          <p>Esto no es para todos.</p>
-          <p>Si vienes buscando que alguien te diga que todo está bien tal como estás, que simplemente "ames tu caoticidad", que celebres tu ansiedad como "sensibilidad profunda", cierra esto. No va a pasarte.</p>
-          <p>Si vienes buscando un atajo, un hack, una fórmula mágica para saltarte el trabajo de reconstruirte, también te ahorras el tiempo.</p>
-          <p>Si vienes porque algo en ti sabe que hay un nivel diferente de funcionamiento disponible —donde tomas decisiones más claras, donde no te saboteas, donde tu energía se gasta en lo que realmente importa— entonces sigue leyendo.</p>
-        </div>
-
-        <div class="section-title">Puntos prácticos</div>
-        <div class="content-text">
-          <ul style="margin-left: 1.5rem;">
-            <li>Lee en orden. Los módulos son secuenciales.</li>
-            <li>Una sesión por semana. La lentitud permite comprensión real.</li>
-            <li>Escribe tus respuestas a las preguntas finales. La escritura fuerza claridad.</li>
-            <li>No busques transformación inmediata. Busca patrones que cambien silenciosamente.</li>
-          </ul>
-        </div>
-
-        <div class="section-title">Conclusión</div>
-        <div class="content-text">
-          <p>El protocolo no promete una vida sin problemas. Te promete una mente menos secuestrable por ellos.</p>
-        </div>
-
-        <div class="micro-glosario">
-          <h3 style="margin-top: 0;">Micro-Glosario</h3>
-          <dl>
-            <dt>Protocolo</dt>
-            <dd>Un sistema donde cada parte prepara la siguiente. No es una colección de consejos sueltos.</dd>
-            <dt>Regulación</dt>
-            <dd>Modular tu respuesta emocional sin reprimir la emoción ni dejarte secuestrar por ella.</dd>
-            <dt>Patrón</dt>
-            <dd>Lo que repites inconscientemente, lo que hace que termines en el mismo lugar.</dd>
-          </dl>
-        </div>
-
-        <div class="preguntas-finales">
-          <h3>Preguntas finales</h3>
-          <ol>
-            <li>¿Qué patrón mío se repite más consistentemente?</li>
-            <li>¿Qué me hace creer que esta vez podría ser diferente?</li>
-            <li>¿Estoy dispuesto a hacer esto lentamente, o necesito resultados inmediatos?</li>
-          </ol>
-        </div>
-
-        <div class="notes-section">
-          <label for="notes0">Tus notas y reflexiones</label>
-          <textarea id="notes0" aria-label="Notas para el módulo 0" placeholder="Escribe aquí tus respuestas a las preguntas finales y reflexiones personales..."></textarea>
+        <!-- EN -->
+        <div class="en-only">
+          <div class="module-header"><div class="module-number">MODULE 00</div><h2>Prologue — How to use this protocol</h2></div>
+          <div class="frase-clave"><p>"The protocol begins when you stop waiting for permission to change."</p></div>
+          <div class="section-title">Summary</div>
+          <div class="content-text"><p>This is not a self-help book. It won't promise magical transformation or tell you to simply "embrace your vulnerability." It's a system where each module prepares the ground for the next. It requires you to respect the order, take real notes, and answer uncomfortable questions.</p></div>
+          <div class="section-title">Why you're reading this</div>
+          <div class="content-text">
+            <p>You're not reading this because your life is broken.</p>
+            <p>You're reading this because it works — just not the way you'd like. You make decisions. Some go well. Many leave you with a strange feeling: the sense that you could have done better, but something in you — your mental speed, your emotional activation, your tendency to magnify small things — gets in the way.</p>
+            <p>Or maybe it's the opposite: you're someone who freezes. You over-analyze. You wait for certainty that never comes. You postpone the uncomfortable. You build elaborate narratives about why you can't change yet.</p>
+            <p>Either way, the patterns repeat.</p>
+          </div>
+          <div class="section-title">What this protocol is</div>
+          <div class="content-text">
+            <p>It's a system where each part prepares the next. The first modules build the foundations: how you recognize when you're activated, how you separate your ego from your decisions, how you self-regulate without dramatizing.</p>
+            <p>The middle modules apply that to reality: how you make decisions when everything keeps moving, how to read clearly in the age of information abundance, how to recognize that "failure" is sometimes just uncomfortable progress.</p>
+            <p>The final module shows you how all of this integrates into a way of living that simply works better.</p>
+          </div>
+          <div class="section-title">How to read this</div>
+          <div class="content-text">
+            <p>Respect the order. Not because it's mysterious — because it's by design.</p>
+            <p>Read one module per week. No more. Understanding is not speed. This protocol expects you to ask uncomfortable questions as you read.</p>
+            <p>Take notes. Active ones. Each module ends with questions. Answer them as if someone who matters is watching. Because you are watching yourself.</p>
+            <p>At the end you'll find a 90-day roadmap. Use it as a mirror, not a to-do list. Your life will resist changing. Old patterns have inertia. That's normal.</p>
+          </div>
+          <div class="section-title">Before you begin</div>
+          <div class="content-text">
+            <p>This is not for everyone.</p>
+            <p>If you're looking for someone to tell you everything is fine just as it is — close this.</p>
+            <p>If you're looking for a shortcut, a hack, a magic formula to skip the work of rebuilding yourself — you'll save yourself the time.</p>
+            <p>If you're here because something in you knows there's a different level of functioning available — where you make clearer decisions, where you don't self-sabotage, where your energy goes to what actually matters — then keep reading.</p>
+          </div>
+          <div class="section-title">Practical points</div>
+          <div class="content-text"><ul style="margin-left:1.5rem"><li>Read in order. The modules are sequential.</li><li>One session per week. Slowness enables real understanding.</li><li>Write your answers to the final questions. Writing forces clarity.</li><li>Don't look for immediate transformation. Look for patterns that shift silently.</li></ul></div>
+          <div class="section-title">Conclusion</div>
+          <div class="content-text"><p>The protocol doesn't promise a life without problems. It promises a mind less hijackable by them.</p></div>
+          <div class="micro-glosario"><h3>Micro-Glossary</h3><dl><dt>Protocol</dt><dd>A system where each part prepares the next. Not a collection of loose advice.</dd><dt>Regulation</dt><dd>Modulating your emotional response without suppressing the emotion or letting it take over.</dd><dt>Pattern</dt><dd>What you repeat unconsciously — what keeps landing you in the same place.</dd></dl></div>
+          <div class="preguntas-finales"><h3>Final questions</h3><ol><li>What pattern of mine repeats most consistently?</li><li>What makes me think this time could be different?</li><li>Am I willing to do this slowly, or do I need immediate results?</li></ol></div>
+          <div class="notes-section"><label for="n0en">Your notes and reflections</label><textarea id="n0en" placeholder="Write your answers to the final questions and personal reflections here..."></textarea></div>
         </div>
       </div>
 
-      <!-- ═══════════════════════════════════════════════ -->
-      <!-- MÓDULO 01 — AUTOCONOCIMIENTO (libre) -->
-      <!-- ═══════════════════════════════════════════════ -->
+      <!-- MODULE 01 — FREE -->
       <div class="module" data-module="1">
-        <div class="module-header">
-          <div class="module-number">MÓDULO 01</div>
-          <h2>El Autoconocimiento como tu mayor recurso personal</h2>
+        <!-- ES -->
+        <div class="es-only">
+          <div class="module-header"><div class="module-number">MÓDULO 01</div><h2>El Autoconocimiento como tu mayor recurso personal</h2></div>
+          <div class="frase-clave"><p>"El autoconocimiento no es introspección lujosa. Es la forma más concreta de proteger tu vida."</p></div>
+          <div class="section-title">Resumen</div>
+          <div class="content-text"><p>La mayoría de tus decisiones malas no vienen de falta de información. Vienen de no saber cómo estás realmente: qué te activa, qué te paraliza, cuándo estás operando desde el miedo versus desde la claridad. El autoconocimiento es la capacidad de verte a ti mismo con honestidad brutal, sin excusas elegantes.</p></div>
+          <div class="section-title">El problema que resuelve</div>
+          <div class="content-text">
+            <p>Tomas decisiones desde la intuición, pero a menudo tu intuición está contaminada por:</p>
+            <ul style="margin-left:1.5rem;margin-bottom:1.5rem"><li><strong>Tu miedo:</strong> Que confundes con prudencia.</li><li><strong>Tu necesidad de aprobación:</strong> Que confundes con empatía.</li><li><strong>Tu falta de límites:</strong> Que confundes con generosidad.</li><li><strong>Tu propia rigidez:</strong> Que confundes con coherencia.</li></ul>
+            <p>Sin autoconocimiento, no ves estas distorsiones. Las crees. Y repites el mismo patrón esperando resultado diferente.</p>
+          </div>
+          <div class="section-title">El Efecto Iceberg</div>
+          <div class="content-text">
+            <p>Lo que ves de ti es solo la punta. Debajo está:</p>
+            <ul style="margin-left:1.5rem;margin-bottom:1.5rem"><li>Cómo respondes cuando alguien te cuestiona</li><li>Qué emociones reprimes versus cuáles explotan</li><li>Cuándo te desconectas versus cuándo estás presente</li><li>Dónde generas fricción sin darte cuenta</li><li>Qué te activa más: la vergüenza, la incompetencia, el abandono, el aburrimiento</li></ul>
+            <p>La mayoría vive operando solo con la punta visible. Repiten errores. Se preguntan por qué.</p>
+          </div>
+          <div class="section-title">El Filtro de Decisiones</div>
+          <div class="content-text">
+            <p>Sin autoconocimiento: decisiones reactivas, urgencia confundida con importancia, sabotaje propio.</p>
+            <p>Con autoconocimiento: ves el patrón antes de caer en él, decides desde la claridad, reconoces cuándo el ego está metido, eres predecible para ti mismo.</p>
+          </div>
+          <div class="section-title">El Costo de no conocerte</div>
+          <div class="content-text"><ul style="margin-left:1.5rem"><li>Relaciones inestables porque otros no saben quién eres realmente</li><li>Decisiones que tienes que corregir después</li><li>Energía desperdiciada en conflictos evitables</li><li>Una vida que siente como si sucediera a ti, no que tú estés construyendo</li></ul></div>
+          <div class="section-title">Cómo empezar</div>
+          <div class="content-text">
+            <p><strong>Preguntas que revelan autoconocimiento:</strong></p>
+            <ol style="margin-left:1.5rem;margin-bottom:1.5rem"><li>¿Cuándo miento más consistentemente?</li><li>¿A quién no puedo decirle que no?</li><li>¿Qué me hace sentir incompetente?</li><li>¿Cuándo cruzo mis propios límites sin notarlo?</li><li>¿Qué decisión repito esperando resultado diferente?</li></ol>
+            <p>No necesitas respuestas bonitas. Necesitas respuestas honestas.</p>
+          </div>
+          <div class="section-title">Puntos prácticos</div>
+          <div class="content-text"><ul style="margin-left:1.5rem"><li>Observa sin juzgar. El autoconocimiento empieza con mirar, no con cambiar.</li><li>Registra patrones por una semana. ¿Cuándo reaccionas igual? ¿Quién o qué te lo dispara?</li><li>Pregunta a alguien de confianza: "¿Qué ves en mí que yo no veo?"</li><li>No confundas autoconocimiento con autocrítica. Uno te libera. El otro te encierra más.</li></ul></div>
+          <div class="section-title">Conclusión</div>
+          <div class="content-text"><p>El autoconocimiento no es para personas que quieren sentirse mejor consigo mismas. Es para personas que quieren vivir mejor. Es el primer acto de responsabilidad real.</p></div>
+          <div class="micro-glosario"><h3>Micro-Glosario</h3><dl><dt>Autoconocimiento</dt><dd>Saber cómo funcionas: qué te activa, qué te paraliza, cuándo estás claro versus cuando estás operando desde el miedo.</dd><dt>Patrón reactivo</dt><dd>Lo que haces automáticamente sin decidir.</dd><dt>Filtro de decisiones</dt><dd>Tu capacidad de procesar información sin que la emoción distorsione tu juicio.</dd><dt>Reactividad</dt><dd>Responder desde el estímulo inmediato en lugar de desde tu elección consciente.</dd></dl></div>
+          <div class="preguntas-finales"><h3>Preguntas finales</h3><ol><li>¿En qué área de tu vida eres más reactivo (relaciones, trabajo, dinero)?</li><li>¿Cuál es el patrón que más dolor te causa y que más repites?</li><li>¿Qué verdad sobre ti has estado evitando ver?</li></ol></div>
+          <div class="notes-section"><label for="n1es">Tus notas y reflexiones</label><textarea id="n1es" placeholder="Escribe aquí tus respuestas a las preguntas finales y reflexiones personales..."></textarea></div>
         </div>
-
-        <div class="frase-clave">
-          <p>"El autoconocimiento no es introspección lujosa. Es la forma más concreta de proteger tu vida."</p>
-        </div>
-
-        <div class="section-title">Resumen</div>
-        <div class="content-text">
-          <p>La mayoría de tus decisiones malas no vienen de falta de información. Vienen de no saber cómo estás realmente: qué te activa, qué te paraliza, cuándo estás operando desde el miedo versus desde la claridad. El autoconocimiento es la capacidad de verte a ti mismo con honestidad brutal, sin excusas elegantes.</p>
-        </div>
-
-        <div class="section-title">El problema que resuelve</div>
-        <div class="content-text">
-          <p>Tomas decisiones desde la intuición, pero a menudo tu intuición está contaminada. Está contaminada por:</p>
-          <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
-            <li><strong>Tu miedo:</strong> Que confundes con prudencia.</li>
-            <li><strong>Tu necesidad de aprobación:</strong> Que confundes con empatía.</li>
-            <li><strong>Tu falta de límites:</strong> Que confundes con generosidad.</li>
-            <li><strong>Tu propia rigidez:</strong> Que confundes con coherencia.</li>
-          </ul>
-          <p>Sin autoconocimiento, no ves estas distorsiones. Las crees. Y repites el mismo patrón esperando resultado diferente.</p>
-        </div>
-
-        <div class="section-title">El Efecto Iceberg</div>
-        <div class="content-text">
-          <p>Lo que ves de ti es solo la punta. Debajo está:</p>
-          <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
-            <li>Cómo respondes cuando alguien te cuestiona</li>
-            <li>Qué emociones reprimes versus cuáles explotan</li>
-            <li>Cuándo te desconectas versus cuándo estás presente</li>
-            <li>Dónde generas fricción sin darte cuenta</li>
-            <li>Qué te activa más: la vergüenza, la incompetencia, el abandono, el aburrimiento</li>
-          </ul>
-          <p>La mayoría vive operando solo con la punta visible. Repiten errores. Se preguntan por qué.</p>
-        </div>
-
-        <div class="section-title">El Filtro de Decisiones</div>
-        <div class="content-text">
-          <p>El autoconocimiento funciona como un filtro. Sin él:</p>
-          <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
-            <li>Tomas decisiones desde la reactividad</li>
-            <li>Confundes urgencia con importancia</li>
-            <li>Exageras lo pequeño y minimizas lo grande</li>
-            <li>Saboteas tus propios objetivos</li>
-            <li>Generas conflictos sin entender por qué</li>
-          </ul>
-          <p>Con autoconocimiento:</p>
-          <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
-            <li>Ves el patrón antes de caer en él</li>
-            <li>Tomas decisiones desde la claridad, no desde el pánico</li>
-            <li>Reconoces cuándo tu ego está metido en la decisión</li>
-            <li>Eres predecible para ti mismo</li>
-            <li>Atraes personas y oportunidades más alineadas</li>
-          </ul>
-        </div>
-
-        <div class="section-title">El Costo de no conocerte</div>
-        <div class="content-text">
-          <p>Cada vez que reaccionas sin autoconocimiento, pagas un precio:</p>
-          <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
-            <li>Relaciones inestables porque otros no saben quién eres realmente</li>
-            <li>Decisiones que tienes que corregir después</li>
-            <li>Energía desperdiciada en conflictos evitables</li>
-            <li>Una reputación que dice más de tu inconsistencia que de tu talento</li>
-            <li>Una vida que siente como si sucediera a ti, no que tú estés construyendo</li>
-          </ul>
-        </div>
-
-        <div class="section-title">Cómo empezar</div>
-        <div class="content-text">
-          <p><strong>Preguntas que revelan autoconocimiento:</strong></p>
-          <ol style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
-            <li>¿Cuándo miento más consistentemente?</li>
-            <li>¿A quién no puedo decirle que no?</li>
-            <li>¿Qué me hace sentir incompetente?</li>
-            <li>¿Cuándo cruzo mis propios límites sin notarlo?</li>
-            <li>¿Qué decisión repito esperando resultado diferente?</li>
-          </ol>
-          <p>No necesitas respuestas bonitas. Necesitas respuestas honestas.</p>
-        </div>
-
-        <div class="section-title">Puntos prácticos</div>
-        <div class="content-text">
-          <ul style="margin-left: 1.5rem;">
-            <li>Observa sin juzgar. El autoconocimiento empieza con mirar, no con cambiar.</li>
-            <li>Registra patrones por una semana. ¿Cuándo reaccionas igual? ¿Quién o qué te lo dispara?</li>
-            <li>Pregunta a alguien de confianza: "¿Qué ves en mí que yo no veo?" Su respuesta te incomoda porque es verdad.</li>
-            <li>No confundas autoconocimiento con autocrítica. Uno te libera. El otro te encierra más.</li>
-          </ul>
-        </div>
-
-        <div class="section-title">Conclusión</div>
-        <div class="content-text">
-          <p>El autoconocimiento no es para personas que quieren sentirse mejor consigo mismas. Es para personas que quieren vivir mejor. Es el primer acto de responsabilidad real.</p>
-        </div>
-
-        <div class="micro-glosario">
-          <h3 style="margin-top: 0;">Micro-Glosario</h3>
-          <dl>
-            <dt>Autoconocimiento</dt>
-            <dd>Saber cómo funcionas: qué te activa, qué te paraliza, cuándo estás claro versus cuando estás operando desde el miedo.</dd>
-            <dt>Patrón reactivo</dt>
-            <dd>Lo que haces automáticamente sin decidir. Leer un mensaje y responder furioso. Sentir rechazo y desaparecer. Cometer error y asumirlo todo.</dd>
-            <dt>Filtro de decisiones</dt>
-            <dd>Tu capacidad de procesar información sin que la emoción distorsione tu juicio.</dd>
-            <dt>Reactividad</dt>
-            <dd>Responder desde el estímulo inmediato en lugar de desde tu elección consciente.</dd>
-          </dl>
-        </div>
-
-        <div class="preguntas-finales">
-          <h3>Preguntas finales</h3>
-          <ol>
-            <li>¿En qué área de tu vida eres más reactivo (relaciones, trabajo, dinero)?</li>
-            <li>¿Cuál es el patrón que más dolor te causa y que más repites?</li>
-            <li>¿Qué verdad sobre ti has estado evitando ver?</li>
-          </ol>
-        </div>
-
-        <div class="notes-section">
-          <label for="notes1">Tus notas y reflexiones</label>
-          <textarea id="notes1" aria-label="Notas para el módulo 1" placeholder="Escribe aquí tus respuestas a las preguntas finales y reflexiones personales..."></textarea>
+        <!-- EN -->
+        <div class="en-only">
+          <div class="module-header"><div class="module-number">MODULE 01</div><h2>Self-Knowledge as your greatest personal resource</h2></div>
+          <div class="frase-clave"><p>"Self-knowledge is not a luxury of introspection. It's the most concrete way to protect your life."</p></div>
+          <div class="section-title">Summary</div>
+          <div class="content-text"><p>Most of your bad decisions don't come from lack of information. They come from not knowing how you actually are: what activates you, what paralyzes you, when you're operating from fear versus from clarity. Self-knowledge is the capacity to see yourself with brutal honesty — without elegant excuses.</p></div>
+          <div class="section-title">The problem it solves</div>
+          <div class="content-text">
+            <p>You make decisions from intuition, but often your intuition is contaminated by:</p>
+            <ul style="margin-left:1.5rem;margin-bottom:1.5rem"><li><strong>Your fear:</strong> Which you confuse with prudence.</li><li><strong>Your need for approval:</strong> Which you confuse with empathy.</li><li><strong>Your lack of limits:</strong> Which you confuse with generosity.</li><li><strong>Your own rigidity:</strong> Which you confuse with consistency.</li></ul>
+            <p>Without self-knowledge, you don't see these distortions. You believe them. And you repeat the same pattern expecting a different result.</p>
+          </div>
+          <div class="section-title">The Iceberg Effect</div>
+          <div class="content-text">
+            <p>What you see of yourself is only the surface. Underneath:</p>
+            <ul style="margin-left:1.5rem;margin-bottom:1.5rem"><li>How you respond when someone questions you</li><li>Which emotions you suppress versus which ones explode</li><li>When you disconnect versus when you're present</li><li>Where you create friction without realizing it</li><li>What activates you most: shame, incompetence, abandonment, boredom</li></ul>
+            <p>Most people operate only from the visible tip. They repeat mistakes. They wonder why.</p>
+          </div>
+          <div class="section-title">The Decision Filter</div>
+          <div class="content-text">
+            <p>Without self-knowledge: reactive decisions, urgency confused with importance, self-sabotage.</p>
+            <p>With self-knowledge: you see the pattern before falling into it, decide from clarity, recognize when ego is inside the decision, become predictable to yourself.</p>
+          </div>
+          <div class="section-title">The cost of not knowing yourself</div>
+          <div class="content-text"><ul style="margin-left:1.5rem"><li>Unstable relationships because others don't know who you really are</li><li>Decisions you have to undo later</li><li>Energy wasted on avoidable conflict</li><li>A life that feels like it's happening to you, not one you're building</li></ul></div>
+          <div class="section-title">How to start</div>
+          <div class="content-text">
+            <p><strong>Questions that reveal self-knowledge:</strong></p>
+            <ol style="margin-left:1.5rem;margin-bottom:1.5rem"><li>When do I lie most consistently?</li><li>Who can I not say no to?</li><li>What makes me feel incompetent?</li><li>When do I cross my own limits without noticing?</li><li>What decision do I repeat expecting a different result?</li></ol>
+            <p>You don't need beautiful answers. You need honest ones.</p>
+          </div>
+          <div class="section-title">Practical points</div>
+          <div class="content-text"><ul style="margin-left:1.5rem"><li>Observe without judging. Self-knowledge starts with looking, not changing.</li><li>Track patterns for one week. When do you react the same way? Who or what triggers it?</li><li>Ask someone you trust: "What do you see in me that I don't see?"</li><li>Don't confuse self-knowledge with self-criticism. One frees you. The other locks you in further.</li></ul></div>
+          <div class="section-title">Conclusion</div>
+          <div class="content-text"><p>Self-knowledge is not for people who want to feel better about themselves. It's for people who want to live better. It's the first act of real accountability.</p></div>
+          <div class="micro-glosario"><h3>Micro-Glossary</h3><dl><dt>Self-knowledge</dt><dd>Knowing how you function: what activates you, what paralyzes you, when you're clear versus when you're operating from fear.</dd><dt>Reactive pattern</dt><dd>What you do automatically, without deciding to do it.</dd><dt>Decision filter</dt><dd>Your capacity to process information without emotion distorting your judgment.</dd><dt>Reactivity</dt><dd>Responding to the immediate stimulus instead of from conscious choice.</dd></dl></div>
+          <div class="preguntas-finales"><h3>Final questions</h3><ol><li>In what area of your life are you most reactive (relationships, work, money)?</li><li>What is the pattern that causes you the most pain — and that you repeat most?</li><li>What truth about yourself have you been avoiding seeing?</li></ol></div>
+          <div class="notes-section"><label for="n1en">Your notes and reflections</label><textarea id="n1en" placeholder="Write your answers to the final questions and personal reflections here..."></textarea></div>
         </div>
       </div>
 
-      <!-- ═══════════════════════════════════════════════ -->
-      <!-- MÓDULOS 02–10 — BLOQUEADOS -->
-      <!-- ═══════════════════════════════════════════════ -->
-
+      <!-- MODULES 02–10 — LOCKED -->
       <div class="module" data-module="2">
-        <div class="module-header">
-          <div class="module-number">MÓDULO 02</div>
-          <h2>Arbitraje Emocional — Cómo aprovechar tu regulación para tomar mejores decisiones</h2>
-        </div>
-        <div class="module-locked">
-          <div class="lock-rule"></div>
-          <span class="lock-label">Acceso completo requerido</span>
-          <p class="lock-title">Este módulo forma parte del protocolo completo.</p>
-          <p class="lock-body">Los módulos 02 al 10 — incluyendo el Epílogo Operativo y el tracker de progreso — están disponibles con acceso de por vida en Gumroad.</p>
-          <a class="btn-unlock" href="https://andresramirezpro.gumroad.com/l/clarity" data-gumroad-single-product="true">Desbloquear el Protocolo Completo</a>
-          <span class="lock-meta">$49 USD · Acceso de por vida · Una sola adquisición</span>
-          <div class="lock-rule"></div>
-        </div>
+        <div class="module-header"><div class="module-number">MÓDULO 02 / MODULE 02</div><h2 class="es-only">Arbitraje Emocional — Cómo aprovechar tu regulación para tomar mejores decisiones</h2><h2 class="en-only">Emotional Arbitrage — How to use your regulation to make better decisions</h2></div>
+        <div class="module-locked"><div class="lock-rule"></div><span class="lock-label es-only">Acceso completo requerido</span><span class="lock-label en-only">Full access required</span><p class="lock-title es-only">Este módulo forma parte del protocolo completo.</p><p class="lock-title en-only">This module is part of the complete protocol.</p><p class="lock-body es-only">Los módulos 02 al 10 — incluyendo el Epílogo Operativo y el tracker de progreso — están disponibles con acceso de por vida en Gumroad.</p><p class="lock-body en-only">Modules 02 through 10 — including the Operational Epilogue and progress tracker — are available with lifetime access on Gumroad.</p><a class="btn-unlock" href="https://andresramirezpro.gumroad.com/l/clarity" data-gumroad-single-product="true"><span class="es-only">Desbloquear el Protocolo Completo</span><span class="en-only">Unlock the Complete Protocol</span></a><span class="lock-meta es-only">$49 USD · Acceso de por vida · Una sola adquisición</span><span class="lock-meta en-only">$49 USD · Lifetime access · Single acquisition</span><div class="lock-rule"></div></div>
       </div>
 
       <div class="module" data-module="3">
-        <div class="module-header">
-          <div class="module-number">MÓDULO 03</div>
-          <h2>Liquidez Cognitiva — Separando tu identidad de tus decisiones en momentos de alto riesgo</h2>
-        </div>
-        <div class="module-locked">
-          <div class="lock-rule"></div>
-          <span class="lock-label">Acceso completo requerido</span>
-          <p class="lock-title">Este módulo forma parte del protocolo completo.</p>
-          <p class="lock-body">Los módulos 02 al 10 — incluyendo el Epílogo Operativo y el tracker de progreso — están disponibles con acceso de por vida en Gumroad.</p>
-          <a class="btn-unlock" href="https://andresramirezpro.gumroad.com/l/clarity" data-gumroad-single-product="true">Desbloquear el Protocolo Completo</a>
-          <span class="lock-meta">$49 USD · Acceso de por vida · Una sola adquisición</span>
-          <div class="lock-rule"></div>
-        </div>
+        <div class="module-header"><div class="module-number">MÓDULO 03 / MODULE 03</div><h2 class="es-only">Liquidez Cognitiva — Separando tu identidad de tus decisiones en momentos de alto riesgo</h2><h2 class="en-only">Cognitive Liquidity — Separating your identity from your decisions under high-risk conditions</h2></div>
+        <div class="module-locked"><div class="lock-rule"></div><span class="lock-label es-only">Acceso completo requerido</span><span class="lock-label en-only">Full access required</span><p class="lock-title es-only">Este módulo forma parte del protocolo completo.</p><p class="lock-title en-only">This module is part of the complete protocol.</p><p class="lock-body es-only">Los módulos 02 al 10 están disponibles con acceso de por vida en Gumroad.</p><p class="lock-body en-only">Modules 02 through 10 are available with lifetime access on Gumroad.</p><a class="btn-unlock" href="https://andresramirezpro.gumroad.com/l/clarity" data-gumroad-single-product="true"><span class="es-only">Desbloquear el Protocolo Completo</span><span class="en-only">Unlock the Complete Protocol</span></a><span class="lock-meta es-only">$49 USD · Acceso de por vida · Una sola adquisición</span><span class="lock-meta en-only">$49 USD · Lifetime access · Single acquisition</span><div class="lock-rule"></div></div>
       </div>
 
       <div class="module" data-module="4">
-        <div class="module-header">
-          <div class="module-number">MÓDULO 04</div>
-          <h2>Geometría del Silencio — Cómo las cosas no dichas distorsionan la realidad</h2>
-        </div>
-        <div class="module-locked">
-          <div class="lock-rule"></div>
-          <span class="lock-label">Acceso completo requerido</span>
-          <p class="lock-title">Este módulo forma parte del protocolo completo.</p>
-          <p class="lock-body">Los módulos 02 al 10 — incluyendo el Epílogo Operativo y el tracker de progreso — están disponibles con acceso de por vida en Gumroad.</p>
-          <a class="btn-unlock" href="https://andresramirezpro.gumroad.com/l/clarity" data-gumroad-single-product="true">Desbloquear el Protocolo Completo</a>
-          <span class="lock-meta">$49 USD · Acceso de por vida · Una sola adquisición</span>
-          <div class="lock-rule"></div>
-        </div>
+        <div class="module-header"><div class="module-number">MÓDULO 04 / MODULE 04</div><h2 class="es-only">Geometría del Silencio — Cómo las cosas no dichas distorsionan la realidad</h2><h2 class="en-only">Geometry of Silence — How the unsaid distorts reality</h2></div>
+        <div class="module-locked"><div class="lock-rule"></div><span class="lock-label es-only">Acceso completo requerido</span><span class="lock-label en-only">Full access required</span><p class="lock-title es-only">Este módulo forma parte del protocolo completo.</p><p class="lock-title en-only">This module is part of the complete protocol.</p><p class="lock-body es-only">Los módulos 02 al 10 están disponibles con acceso de por vida en Gumroad.</p><p class="lock-body en-only">Modules 02 through 10 are available with lifetime access on Gumroad.</p><a class="btn-unlock" href="https://andresramirezpro.gumroad.com/l/clarity" data-gumroad-single-product="true"><span class="es-only">Desbloquear el Protocolo Completo</span><span class="en-only">Unlock the Complete Protocol</span></a><span class="lock-meta es-only">$49 USD · Acceso de por vida · Una sola adquisición</span><span class="lock-meta en-only">$49 USD · Lifetime access · Single acquisition</span><div class="lock-rule"></div></div>
       </div>
 
       <div class="module" data-module="5">
-        <div class="module-header">
-          <div class="module-number">MÓDULO 05</div>
-          <h2>Kinetic Signal — Cómo decidir sin detenerte cuando todo sigue moviéndose</h2>
-        </div>
-        <div class="module-locked">
-          <div class="lock-rule"></div>
-          <span class="lock-label">Acceso completo requerido</span>
-          <p class="lock-title">Este módulo forma parte del protocolo completo.</p>
-          <p class="lock-body">Los módulos 02 al 10 — incluyendo el Epílogo Operativo y el tracker de progreso — están disponibles con acceso de por vida en Gumroad.</p>
-          <a class="btn-unlock" href="https://andresramirezpro.gumroad.com/l/clarity" data-gumroad-single-product="true">Desbloquear el Protocolo Completo</a>
-          <span class="lock-meta">$49 USD · Acceso de por vida · Una sola adquisición</span>
-          <div class="lock-rule"></div>
-        </div>
+        <div class="module-header"><div class="module-number">MÓDULO 05 / MODULE 05</div><h2 class="es-only">Kinetic Signal — Cómo decidir sin detenerte cuando todo sigue moviéndose</h2><h2 class="en-only">Kinetic Signal — How to decide without stopping when everything keeps moving</h2></div>
+        <div class="module-locked"><div class="lock-rule"></div><span class="lock-label es-only">Acceso completo requerido</span><span class="lock-label en-only">Full access required</span><p class="lock-title es-only">Este módulo forma parte del protocolo completo.</p><p class="lock-title en-only">This module is part of the complete protocol.</p><p class="lock-body es-only">Los módulos 02 al 10 están disponibles con acceso de por vida en Gumroad.</p><p class="lock-body en-only">Modules 02 through 10 are available with lifetime access on Gumroad.</p><a class="btn-unlock" href="https://andresramirezpro.gumroad.com/l/clarity" data-gumroad-single-product="true"><span class="es-only">Desbloquear el Protocolo Completo</span><span class="en-only">Unlock the Complete Protocol</span></a><span class="lock-meta es-only">$49 USD · Acceso de por vida · Una sola adquisición</span><span class="lock-meta en-only">$49 USD · Lifetime access · Single acquisition</span><div class="lock-rule"></div></div>
       </div>
 
       <div class="module" data-module="6">
-        <div class="module-header">
-          <div class="module-number">MÓDULO 06</div>
-          <h2>Señal vs Ruido — Cómo distinguir información útil de activación innecesaria</h2>
-        </div>
-        <div class="module-locked">
-          <div class="lock-rule"></div>
-          <span class="lock-label">Acceso completo requerido</span>
-          <p class="lock-title">Este módulo forma parte del protocolo completo.</p>
-          <p class="lock-body">Los módulos 02 al 10 — incluyendo el Epílogo Operativo y el tracker de progreso — están disponibles con acceso de por vida en Gumroad.</p>
-          <a class="btn-unlock" href="https://andresramirezpro.gumroad.com/l/clarity" data-gumroad-single-product="true">Desbloquear el Protocolo Completo</a>
-          <span class="lock-meta">$49 USD · Acceso de por vida · Una sola adquisición</span>
-          <div class="lock-rule"></div>
-        </div>
+        <div class="module-header"><div class="module-number">MÓDULO 06 / MODULE 06</div><h2 class="es-only">Señal vs Ruido — Cómo distinguir información útil de activación innecesaria</h2><h2 class="en-only">Signal vs Noise — How to distinguish useful information from unnecessary activation</h2></div>
+        <div class="module-locked"><div class="lock-rule"></div><span class="lock-label es-only">Acceso completo requerido</span><span class="lock-label en-only">Full access required</span><p class="lock-title es-only">Este módulo forma parte del protocolo completo.</p><p class="lock-title en-only">This module is part of the complete protocol.</p><p class="lock-body es-only">Los módulos 02 al 10 están disponibles con acceso de por vida en Gumroad.</p><p class="lock-body en-only">Modules 02 through 10 are available with lifetime access on Gumroad.</p><a class="btn-unlock" href="https://andresramirezpro.gumroad.com/l/clarity" data-gumroad-single-product="true"><span class="es-only">Desbloquear el Protocolo Completo</span><span class="en-only">Unlock the Complete Protocol</span></a><span class="lock-meta es-only">$49 USD · Acceso de por vida · Una sola adquisición</span><span class="lock-meta en-only">$49 USD · Lifetime access · Single acquisition</span><div class="lock-rule"></div></div>
       </div>
 
       <div class="module" data-module="7">
-        <div class="module-header">
-          <div class="module-number">MÓDULO 07</div>
-          <h2>Costo de Oportunidad — Por qué decir sí a todo es decir no a ti mismo</h2>
-        </div>
-        <div class="module-locked">
-          <div class="lock-rule"></div>
-          <span class="lock-label">Acceso completo requerido</span>
-          <p class="lock-title">Este módulo forma parte del protocolo completo.</p>
-          <p class="lock-body">Los módulos 02 al 10 — incluyendo el Epílogo Operativo y el tracker de progreso — están disponibles con acceso de por vida en Gumroad.</p>
-          <a class="btn-unlock" href="https://andresramirezpro.gumroad.com/l/clarity" data-gumroad-single-product="true">Desbloquear el Protocolo Completo</a>
-          <span class="lock-meta">$49 USD · Acceso de por vida · Una sola adquisición</span>
-          <div class="lock-rule"></div>
-        </div>
+        <div class="module-header"><div class="module-number">MÓDULO 07 / MODULE 07</div><h2 class="es-only">Costo de Oportunidad — Por qué decir sí a todo es decir no a ti mismo</h2><h2 class="en-only">Opportunity Cost — Why saying yes to everything is saying no to yourself</h2></div>
+        <div class="module-locked"><div class="lock-rule"></div><span class="lock-label es-only">Acceso completo requerido</span><span class="lock-label en-only">Full access required</span><p class="lock-title es-only">Este módulo forma parte del protocolo completo.</p><p class="lock-title en-only">This module is part of the complete protocol.</p><p class="lock-body es-only">Los módulos 02 al 10 están disponibles con acceso de por vida en Gumroad.</p><p class="lock-body en-only">Modules 02 through 10 are available with lifetime access on Gumroad.</p><a class="btn-unlock" href="https://andresramirezpro.gumroad.com/l/clarity" data-gumroad-single-product="true"><span class="es-only">Desbloquear el Protocolo Completo</span><span class="en-only">Unlock the Complete Protocol</span></a><span class="lock-meta es-only">$49 USD · Acceso de por vida · Una sola adquisición</span><span class="lock-meta en-only">$49 USD · Lifetime access · Single acquisition</span><div class="lock-rule"></div></div>
       </div>
 
       <div class="module" data-module="8">
-        <div class="module-header">
-          <div class="module-number">MÓDULO 08</div>
-          <h2>Capacidad Interpretativa — Por qué el significado es más valioso que la información</h2>
-        </div>
-        <div class="module-locked">
-          <div class="lock-rule"></div>
-          <span class="lock-label">Acceso completo requerido</span>
-          <p class="lock-title">Este módulo forma parte del protocolo completo.</p>
-          <p class="lock-body">Los módulos 02 al 10 — incluyendo el Epílogo Operativo y el tracker de progreso — están disponibles con acceso de por vida en Gumroad.</p>
-          <a class="btn-unlock" href="https://andresramirezpro.gumroad.com/l/clarity" data-gumroad-single-product="true">Desbloquear el Protocolo Completo</a>
-          <span class="lock-meta">$49 USD · Acceso de por vida · Una sola adquisición</span>
-          <div class="lock-rule"></div>
-        </div>
+        <div class="module-header"><div class="module-number">MÓDULO 08 / MODULE 08</div><h2 class="es-only">Capacidad Interpretativa — Por qué el significado es más valioso que la información</h2><h2 class="en-only">Interpretive Capacity — Why meaning is more valuable than information</h2></div>
+        <div class="module-locked"><div class="lock-rule"></div><span class="lock-label es-only">Acceso completo requerido</span><span class="lock-label en-only">Full access required</span><p class="lock-title es-only">Este módulo forma parte del protocolo completo.</p><p class="lock-title en-only">This module is part of the complete protocol.</p><p class="lock-body es-only">Los módulos 02 al 10 están disponibles con acceso de por vida en Gumroad.</p><p class="lock-body en-only">Modules 02 through 10 are available with lifetime access on Gumroad.</p><a class="btn-unlock" href="https://andresramirezpro.gumroad.com/l/clarity" data-gumroad-single-product="true"><span class="es-only">Desbloquear el Protocolo Completo</span><span class="en-only">Unlock the Complete Protocol</span></a><span class="lock-meta es-only">$49 USD · Acceso de por vida · Una sola adquisición</span><span class="lock-meta en-only">$49 USD · Lifetime access · Single acquisition</span><div class="lock-rule"></div></div>
       </div>
 
       <div class="module" data-module="9">
-        <div class="module-header">
-          <div class="module-number">MÓDULO 09</div>
-          <h2>Ventaja Operativa — Cómo cambia tu vida cuando dejas de reaccionar</h2>
-        </div>
-        <div class="module-locked">
-          <div class="lock-rule"></div>
-          <span class="lock-label">Acceso completo requerido</span>
-          <p class="lock-title">Este módulo forma parte del protocolo completo.</p>
-          <p class="lock-body">Los módulos 02 al 10 — incluyendo el Epílogo Operativo y el tracker de progreso — están disponibles con acceso de por vida en Gumroad.</p>
-          <a class="btn-unlock" href="https://andresramirezpro.gumroad.com/l/clarity" data-gumroad-single-product="true">Desbloquear el Protocolo Completo</a>
-          <span class="lock-meta">$49 USD · Acceso de por vida · Una sola adquisición</span>
-          <div class="lock-rule"></div>
-        </div>
+        <div class="module-header"><div class="module-number">MÓDULO 09 / MODULE 09</div><h2 class="es-only">Ventaja Operativa — Cómo cambia tu vida cuando dejas de reaccionar</h2><h2 class="en-only">Operational Edge — How your life changes when you stop reacting</h2></div>
+        <div class="module-locked"><div class="lock-rule"></div><span class="lock-label es-only">Acceso completo requerido</span><span class="lock-label en-only">Full access required</span><p class="lock-title es-only">Este módulo forma parte del protocolo completo.</p><p class="lock-title en-only">This module is part of the complete protocol.</p><p class="lock-body es-only">Los módulos 02 al 10 están disponibles con acceso de por vida en Gumroad.</p><p class="lock-body en-only">Modules 02 through 10 are available with lifetime access on Gumroad.</p><a class="btn-unlock" href="https://andresramirezpro.gumroad.com/l/clarity" data-gumroad-single-product="true"><span class="es-only">Desbloquear el Protocolo Completo</span><span class="en-only">Unlock the Complete Protocol</span></a><span class="lock-meta es-only">$49 USD · Acceso de por vida · Una sola adquisición</span><span class="lock-meta en-only">$49 USD · Lifetime access · Single acquisition</span><div class="lock-rule"></div></div>
       </div>
 
       <div class="module" data-module="10">
-        <div class="module-header">
-          <div class="module-number">MÓDULO 10</div>
-          <h2>Epílogo Operativo — Los próximos 90 días</h2>
-        </div>
-        <div class="module-locked">
-          <div class="lock-rule"></div>
-          <span class="lock-label">Acceso completo requerido</span>
-          <p class="lock-title">Este módulo forma parte del protocolo completo.</p>
-          <p class="lock-body">Los módulos 02 al 10 — incluyendo el Epílogo Operativo y el tracker de progreso — están disponibles con acceso de por vida en Gumroad.</p>
-          <a class="btn-unlock" href="https://andresramirezpro.gumroad.com/l/clarity" data-gumroad-single-product="true">Desbloquear el Protocolo Completo</a>
-          <span class="lock-meta">$49 USD · Acceso de por vida · Una sola adquisición</span>
-          <div class="lock-rule"></div>
-        </div>
+        <div class="module-header"><div class="module-number">MÓDULO 10 / MODULE 10</div><h2 class="es-only">Epílogo Operativo — Los próximos 90 días</h2><h2 class="en-only">Operational Epilogue — The next 90 days</h2></div>
+        <div class="module-locked"><div class="lock-rule"></div><span class="lock-label es-only">Acceso completo requerido</span><span class="lock-label en-only">Full access required</span><p class="lock-title es-only">Este módulo forma parte del protocolo completo.</p><p class="lock-title en-only">This module is part of the complete protocol.</p><p class="lock-body es-only">Los módulos 02 al 10 están disponibles con acceso de por vida en Gumroad.</p><p class="lock-body en-only">Modules 02 through 10 are available with lifetime access on Gumroad.</p><a class="btn-unlock" href="https://andresramirezpro.gumroad.com/l/clarity" data-gumroad-single-product="true"><span class="es-only">Desbloquear el Protocolo Completo</span><span class="en-only">Unlock the Complete Protocol</span></a><span class="lock-meta es-only">$49 USD · Acceso de por vida · Una sola adquisición</span><span class="lock-meta en-only">$49 USD · Lifetime access · Single acquisition</span><div class="lock-rule"></div></div>
       </div>
 
-    </div><!-- end content-wrapper -->
+    </div>
   </main>
 
-  <!-- FOOTER -->
   <footer class="site-footer">
-    <span class="footer-label">Protocolo de Claridad — Self Love Club</span>
-    <span class="footer-label" id="autoSaveStatus2">Cambios guardados</span>
+    <span class="footer-label es-only">Protocolo de Claridad — Self Love Club</span>
+    <span class="footer-label en-only">The Clarity Protocol — Self Love Club</span>
+    <span class="footer-label" id="footerStatus"><span class="es-only">Cambios guardados</span><span class="en-only">Changes saved</span></span>
   </footer>
 
   <div class="toast" id="toast"></div>
 
   <script>
-    const MODULES = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
-    const STORAGE_PREFIX = 'protocolo_claridad_';
+    const MODULES = ['0','1','2','3','4','5','6','7','8','9','10'];
+    const PFX = 'slc_proto_';
     let currentModule = '0';
-    let unsavedChanges = false;
-    let autoSaveTimer = null;
+    let unsaved = false;
+    let saveTimer = null;
+    const mods = document.querySelectorAll('.module');
+    const sel = document.getElementById('moduleSelect');
 
-    const moduleSelect = document.getElementById('moduleSelect');
-    const modules = document.querySelectorAll('.module');
-    const exportBtn = document.getElementById('exportBtn');
-    const clearBtn = document.getElementById('clearBtn');
-    const toast = document.getElementById('toast');
-    const progressFill = document.getElementById('progressFill');
-    const autoSaveStatus = document.getElementById('autoSaveStatus');
-
-    window.addEventListener('DOMContentLoaded', () => {
-      if(typeof updateStepLabel === 'function') updateStepLabel('0');
-      loadAllNotes();
-      attachEventListeners();
-      updateProgressBar();
-    });
-
-    function attachEventListeners() {
-      moduleSelect.addEventListener('change', (e) => {
-        currentModule = e.target.value;
-        showModule(currentModule);
-        updateProgressBar();
-      });
-      const textareas = document.querySelectorAll('textarea');
-      textareas.forEach((textarea) => {
-        const moduleNum = textarea.id.replace('notes', '');
-        textarea.addEventListener('input', (e) => {
-          unsavedChanges = true;
-          saveNote(moduleNum, e.target.value);
-          debounceAutoSave();
-        });
-      });
-      exportBtn.addEventListener('click', exportToPDF);
-      clearBtn.addEventListener('click', clearAllData);
-      window.addEventListener('beforeunload', (e) => {
-        if (unsavedChanges) { e.preventDefault(); e.returnValue = ''; }
-      });
-    }
-
-    function showModule(moduleNum) {
-      modules.forEach(mod => mod.classList.remove('active'));
-      const activeModule = document.querySelector(`[data-module="${moduleNum}"]`);
-      if (activeModule) activeModule.classList.add('active');
-    }
-
-    function safeLocalStorageSet(key, value) {
-      try { localStorage.setItem(key, value); return true; }
-      catch (e) { showToast('Error: No se pudo guardar.', 4000); return false; }
-    }
-    function safeLocalStorageGet(key) {
-      try { return localStorage.getItem(key); }
-      catch (e) { return null; }
-    }
-    function saveNote(moduleNum, content) {
-      if (content.length > 10000) { showToast('Nota demasiado larga (máx 10,000 caracteres)', 3000); return; }
-      safeLocalStorageSet(`${STORAGE_PREFIX}notes_${moduleNum}`, content);
-      unsavedChanges = false;
-      autoSaveStatus.textContent = 'Cambios guardados';
-    }
-    function loadNote(moduleNum) {
-      return safeLocalStorageGet(`${STORAGE_PREFIX}notes_${moduleNum}`) || '';
-    }
-    function loadAllNotes() {
-      ['0','1'].forEach(moduleNum => {
-        const textarea = document.getElementById(`notes${moduleNum}`);
-        if (textarea) textarea.value = loadNote(moduleNum);
-      });
-    }
-    function debounceAutoSave() {
-      clearTimeout(autoSaveTimer);
-      autoSaveStatus.textContent = 'Guardando...';
-      autoSaveTimer = setTimeout(() => {
-        showToast('Cambios guardados', 2000);
-        autoSaveStatus.textContent = 'Cambios guardados';
-      }, 1500);
-    }
-    function showToast(message, duration = 2000) {
-      toast.textContent = message;
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), duration);
-    }
-    function exportToPDF() {
-      const element = document.querySelector('.content-wrapper');
-      const opt = {
-        margin: 15,
-        filename: 'Protocolo_de_Claridad_Preview.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
-      };
-      modules.forEach(mod => mod.style.display = 'block');
-      html2pdf().set(opt).from(element).save().then(() => {
-        modules.forEach(mod => mod.style.display = '');
-        showModule(currentModule);
-        showToast('PDF exportado correctamente', 3000);
-      });
-    }
-    function clearAllData() {
-      const confirmed = confirm('¿Está seguro de que desea borrar todas sus notas?');
-      if (confirmed) {
-        ['0','1'].forEach(moduleNum => {
-          try { localStorage.removeItem(`${STORAGE_PREFIX}notes_${moduleNum}`); } catch(e) {}
-          const textarea = document.getElementById(`notes${moduleNum}`);
-          if (textarea) textarea.value = '';
-        });
-        unsavedChanges = false;
-        showToast('Notas eliminadas', 3000);
+    function setLang(lang) {
+      document.body.setAttribute('data-lang', lang);
+      document.documentElement.setAttribute('lang', lang);
+      document.getElementById('btnES').classList.toggle('active', lang === 'es');
+      document.getElementById('btnEN').classList.toggle('active', lang === 'en');
+      const lbl = document.getElementById('step-label');
+      if (lbl) {
+        const idx = parseInt(currentModule, 10) + 1;
+        lbl.textContent = (lang === 'en' ? 'MODULE' : 'MÓDULO') + ' ' + idx + ' / 11';
       }
+      try { localStorage.setItem('slc_lang', lang); } catch(e) {}
     }
-    function updateProgressBar() {
-      const currentIndex = MODULES.indexOf(currentModule);
-      const progress = ((currentIndex + 1) / MODULES.length) * 100;
-      progressFill.style.width = progress + '%';
-    }
-    showModule('0');
-  </script>
 
-  <script>
-    function navTo(num, btn) {
+    function showModule(n) {
+      mods.forEach(m => m.classList.remove('active'));
+      const t = document.querySelector('[data-module="' + n + '"]');
+      if (t) t.classList.add('active');
+    }
+
+    function navTo(n, btn) {
       document.querySelectorAll('.mod-nav-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      var sel = document.getElementById('moduleSelect');
-      sel.value = num;
-      sel.dispatchEvent(new Event('change'));
-      updateStepLabel(num);
+      sel.value = n; sel.dispatchEvent(new Event('change'));
+      currentModule = n;
+      const lang = document.body.getAttribute('data-lang') || 'es';
+      const idx = parseInt(n, 10) + 1;
+      const lbl = document.getElementById('step-label');
+      if (lbl) lbl.textContent = (lang === 'en' ? 'MODULE' : 'MÓDULO') + ' ' + idx + ' / 11';
+      const pct = (idx / 11 * 100) + '%';
+      document.getElementById('progressFill').style.width = pct;
+      document.getElementById('progressFill2').style.width = pct;
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-    function updateStepLabel(num) {
-      var idx = parseInt(num, 10) + 1;
-      var el = document.getElementById('step-label');
-      if (el) el.textContent = 'MÓDULO ' + idx + ' / 11';
-      var pct = (idx / 11 * 100) + '%';
-      var fill = document.getElementById('progressFill');
-      if (fill) fill.style.width = pct;
-      var fill2 = document.getElementById('progressFill2');
-      if (fill2) fill2.style.width = pct;
+
+    function toast(msg, ms) {
+      const t = document.getElementById('toast');
+      t.textContent = msg; t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), ms || 2000);
     }
-    const obs = new MutationObserver(() => {
-      const s = document.getElementById('autoSaveStatus');
-      if (s) document.getElementById('autoSaveStatus2').textContent = s.textContent;
-    });
+
+    function save(id, val) {
+      if (val.length > 10000) { toast('Nota demasiado larga', 3000); return; }
+      try { localStorage.setItem(PFX + id, val); } catch(e) {}
+      unsaved = false;
+    }
+
+    function loadNotes() {
+      ['n0es','n0en','n1es','n1en'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) { try { el.value = localStorage.getItem(PFX + id) || ''; } catch(e) {} }
+      });
+    }
+
+    function clearAll() {
+      const lang = document.body.getAttribute('data-lang');
+      const msg = lang === 'en' ? 'Delete all notes? This cannot be undone.' : '¿Eliminar todas las notas? Esta acción no se puede deshacer.';
+      if (!confirm(msg)) return;
+      ['n0es','n0en','n1es','n1en'].forEach(id => {
+        try { localStorage.removeItem(PFX + id); } catch(e) {}
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+      });
+      toast(lang === 'en' ? 'Notes cleared' : 'Notas eliminadas', 3000);
+    }
+
+    function exportPDF() {
+      mods.forEach(m => m.style.display = 'block');
+      html2pdf().set({ margin: 15, filename: 'Clarity_Protocol_Preview.pdf', image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 }, jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' } }).from(document.getElementById('pdf-content')).save().then(() => {
+        mods.forEach(m => m.style.display = '');
+        showModule(currentModule);
+      });
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
-      const el = document.getElementById('autoSaveStatus');
-      if (el) obs.observe(el, { childList: true, characterData: true, subtree: true });
+      try { const l = localStorage.getItem('slc_lang'); if (l === 'en') setLang('en'); } catch(e) {}
+      loadNotes();
+      sel.addEventListener('change', e => { currentModule = e.target.value; showModule(currentModule); });
+      document.getElementById('exportBtn').addEventListener('click', exportPDF);
+      document.getElementById('clearBtn').addEventListener('click', clearAll);
+      document.querySelectorAll('textarea').forEach(ta => {
+        ta.addEventListener('input', function() {
+          unsaved = true; save(this.id, this.value);
+          clearTimeout(saveTimer);
+          saveTimer = setTimeout(() => { const l = document.body.getAttribute('data-lang'); toast(l === 'en' ? 'Changes saved' : 'Cambios guardados', 2000); }, 1500);
+          this.style.height = 'auto'; this.style.height = this.scrollHeight + 'px';
+        });
+        ta.style.height = 'auto'; ta.style.height = ta.scrollHeight + 'px';
+      });
+      showModule('0');
     });
   </script>
-
-  <script>
-    function autoResizeTextarea(elem) {
-      elem.style.height = 'auto';
-      elem.style.height = (elem.scrollHeight) + 'px';
-    }
-    document.querySelectorAll('textarea').forEach(elem => {
-      elem.addEventListener('input', function() { autoResizeTextarea(this); });
-      autoResizeTextarea(elem);
-    });
-  </script>
-
 </body>
 </html>
