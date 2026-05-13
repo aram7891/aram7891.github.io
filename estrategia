@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Self Love Club — Estrategia de Producto & Marca</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1814;
+    --parchment: #f7f4ef;
+    --warm-mid: #e8e2d9;
+    --accent: #8b6f4e;
+    --accent-light: #c4a882;
+    --rule: rgba(26,24,20,0.12);
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --mono: 'DM Mono', 'Courier New', monospace;
+    --sans: 'Instrument Sans', system-ui, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--parchment);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── COVER ─────────────────────────────────── */
+  .cover {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 80px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 71px,
+        var(--rule) 71px,
+        var(--rule) 72px
+      );
+    pointer-events: none;
+  }
+
+  .cover-inner {
+    max-width: 760px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cover-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 56px;
+  }
+
+  .cover h1 {
+    font-size: clamp(42px, 7vw, 80px);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin-bottom: 24px;
+  }
+
+  .cover h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .cover-sub {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: rgba(26,24,20,0.5);
+    margin-top: 40px;
+    text-transform: uppercase;
+  }
+
+  .rule-h {
+    width: 48px;
+    height: 1px;
+    background: var(--accent);
+    margin: 32px auto;
+  }
+
+  /* ── LAYOUT ─────────────────────────────────── */
+  .page {
+    max-width: 840px;
+    margin: 0 auto;
+    padding: 96px 48px;
+  }
+
+  @media (max-width: 600px) {
+    .page { padding: 64px 24px; }
+  }
+
+  /* ── SECTION HEADERS ─────────────────────────── */
+  .section-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  .section-title {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 300;
+    line-height: 1.15;
+    margin-bottom: 48px;
+    letter-spacing: -0.01em;
+  }
+
+  .section-title em { font-style: italic; color: var(--accent); }
+
+  /* ── DIVIDER ─────────────────────────────────── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 80px 0;
+  }
+
+  /* ── PROSE ──────────────────────────────────── */
+  p {
+    font-size: 17px;
+    margin-bottom: 24px;
+    max-width: 66ch;
+  }
+
+  p:last-child { margin-bottom: 0; }
+
+  strong { font-weight: 600; }
+
+  /* ── CALLOUT BLOCK ───────────────────────────── */
+  .callout {
+    border-left: 2px solid var(--accent);
+    padding: 24px 32px;
+    margin: 40px 0;
+    background: rgba(139,111,78,0.04);
+  }
+
+  .callout p {
+    font-size: 19px;
+    font-style: italic;
+    line-height: 1.7;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  /* ── GRID CARDS ──────────────────────────────── */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin: 40px 0;
+  }
+
+  @media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--warm-mid);
+    padding: 32px 28px;
+  }
+
+  .card-num {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .card h3 {
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+
+  .card p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: rgba(26,24,20,0.7);
+    margin: 0;
+  }
+
+  /* ── CHAPTERS TABLE ──────────────────────────── */
+  .chapters {
+    margin: 40px 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .chapter-row {
+    display: grid;
+    grid-template-columns: 48px 1fr auto;
+    align-items: baseline;
+    gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .ch-num {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--accent-light);
+    letter-spacing: 0.1em;
+  }
+
+  .ch-title {
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  .ch-badge {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    background: var(--ink);
+    color: var(--parchment);
+    white-space: nowrap;
+  }
+
+  .ch-badge.light {
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent-light);
+  }
+
+  /* ── MONETIZATION MATRIX ─────────────────────── */
+  .matrix {
+    margin: 40px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .matrix-row {
+    display: grid;
+    grid-template-columns: 200px 1fr 1fr;
+    gap: 2px;
+  }
+
+  @media (max-width: 640px) {
+    .matrix-row { grid-template-columns: 1fr; }
+  }
+
+  .matrix-cell {
+    padding: 20px 22px;
+    background: var(--warm-mid);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .matrix-cell.header {
+    background: var(--ink);
+    color: var(--parchment);
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .matrix-cell.label {
+    font-weight: 500;
+    font-size: 14px;
+    background: rgba(139,111,78,0.08);
+  }
+
+  /* ── BRAND PALETTE ──────────────────────────── */
+  .palette {
+    display: flex;
+    gap: 2px;
+    margin: 32px 0;
+    height: 80px;
+  }
+
+  .swatch {
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+    padding: 10px 12px;
+  }
+
+  .swatch span {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    opacity: 0.7;
+  }
+
+  /* ── VISUAL IDENTITY BLOCK ───────────────────── */
+  .identity-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+    margin: 40px 0;
+  }
+
+  @media (max-width: 640px) { .identity-grid { grid-template-columns: 1fr; } }
+
+  .id-cell {
+    padding: 32px 24px;
+    background: var(--warm-mid);
+  }
+
+  .id-cell h4 {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .id-cell p {
+    font-size: 13px;
+    line-height: 1.7;
+    color: rgba(26,24,20,0.75);
+    margin: 0;
+  }
+
+  .id-cell .sample {
+    font-size: 26px;
+    font-weight: 300;
+    margin-bottom: 8px;
+    line-height: 1;
+  }
+
+  /* ── FINAL RECOMMENDATION ────────────────────── */
+  .recommendation {
+    background: var(--ink);
+    color: var(--parchment);
+    padding: 64px 56px;
+    margin: 80px 0 0;
+  }
+
+  .recommendation .section-label { color: var(--accent-light); }
+  .recommendation .section-label::after { background: rgba(247,244,239,0.15); }
+  .recommendation .section-title { color: var(--parchment); }
+  .recommendation .section-title em { color: var(--accent-light); }
+  .recommendation p { color: rgba(247,244,239,0.8); }
+  .recommendation .callout {
+    border-left-color: var(--accent-light);
+    background: rgba(247,244,239,0.05);
+  }
+  .recommendation .callout p { color: var(--parchment); }
+
+  /* ── FOOTER ─────────────────────────────────── */
+  footer {
+    text-align: center;
+    padding: 64px 48px;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(26,24,20,0.3);
+  }
+
+  /* ── TIMELINE ────────────────────────────────── */
+  .timeline {
+    margin: 40px 0;
+    position: relative;
+    padding-left: 32px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: var(--rule);
+  }
+
+  .tl-item {
+    margin-bottom: 36px;
+    position: relative;
+  }
+
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -36px;
+    top: 8px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .tl-phase {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  .tl-item h4 {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .tl-item p {
+    font-size: 13px;
+    line-height: 1.65;
+    color: rgba(26,24,20,0.65);
+    margin: 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-inner">
+    <div class="cover-label">Informe Estratégico de Producto y Marca · Confidencial</div>
+    <h1><em>Self Love Club</em><br>De Ensayo a Protocolo</h1>
+    <div class="rule-h"></div>
+    <p style="max-width:52ch; margin:0 auto; font-size:16px; color:rgba(26,24,20,0.6); line-height:1.8;">
+      Hoja de ruta para convertir 10 activos intelectuales en un producto de alto valor, posicionado como autoridad silenciosa en el mercado de Human Performance.
+    </p>
+    <div class="cover-sub">Economista · Personal Trainer · Clarity Strategist</div>
+  </div>
+</div>
+
+<!-- SECCIÓN 1: EL DIAGNÓSTICO -->
+<div class="page">
+
+  <div class="section-label">01 — Diagnóstico</div>
+  <h2 class="section-title">El problema no es el contenido.<br>Es el <em>marco de referencia.</em></h2>
+
+  <p>El mercado de Self-Love y Human Performance está saturado porque la mayoría de sus productores piensan como <strong>creadores de contenido</strong>: optimizan para volumen, frecuencia y algoritmos. Tu ventaja competitiva no es producir más, es producir <em>diferente</em>.</p>
+
+  <p>Tu perfil híbrido —Economista, Personal Trainer, Clarity Strategist— no es una anomalía. Es el activo más escaso del mercado: la capacidad de aplicar marcos conceptuales duros (teoría económica, análisis de sistemas) a la experiencia humana subjetiva. Eso no se improvisa. Eso es autoridad.</p>
+
+  <div class="callout">
+    <p>"El objetivo no es tener más audiencia. Es tener la audiencia correcta, convencida de que lo que tienes no se consigue en ningún otro lado."</p>
+  </div>
+
+  <p>La finitud que percibes como limitación —10 ensayos terminados, sin plan de publicación perpetua— es precisamente tu diferencial estratégico. Los libros clásicos no tienen temporadas. Los protocolos no tienen feeds. Los manuales no se actualizan cada semana.</p>
+
+</div>
+
+<hr class="divider" style="max-width:840px; margin:0 auto;">
+
+<!-- SECCIÓN 2: ARQUITECTURA DEL PRODUCTO -->
+<div class="page">
+
+  <div class="section-label">02 — Arquitectura del Producto</div>
+  <h2 class="section-title">El <em>Motor de 8 Cilindros:</em><br>De episodios a protocolo</h2>
+
+  <p>El error que cometen el 90% de los creadores es publicar ensayos en secuencia sin una <strong>arquitectura de tensión narrativa</strong>. El lector o escucha termina un episodio y no siente urgencia por el siguiente porque cada pieza es autocontenida. Tu solución es construir una arquitectura de tres capas:</p>
+
+  <div class="grid-2">
+    <div class="card">
+      <span class="card-num">Capa 01</span>
+      <h3>La Promesa del Sistema</h3>
+      <p>Un prólogo o "Instrucciones de uso" que le diga al lector: <em>esto no es una colección de ensayos, es un protocolo secuencial</em>. Cada capítulo es un módulo con prerequisitos. Leer el capítulo 4 antes del 2 es como hacer peso muerto sin haber construido la cadena posterior. Esto crea dependencia narrativa.</p>
+    </div>
+    <div class="card">
+      <span class="card-num">Capa 02</span>
+      <h3>Los 10 Módulos del Protocolo</h3>
+      <p>Renombrar "ensayos" como "módulos" o "capítulos del protocolo" no es cosmético. Cambia la expectativa del consumidor. Un módulo pertenece a un sistema. Un ensayo pertenece a una revista. La reencuadración semántica es la herramienta más barata de diferenciación.</p>
+    </div>
+    <div class="card">
+      <span class="card-num">Capa 03</span>
+      <h3>El Epílogo Operativo</h3>
+      <p>Un capítulo de cierre que funcione como "Hoja de Ruta de Implementación": qué hacer con lo aprendido, en qué orden aplicarlo, qué señales indican que el protocolo está funcionando. Esto convierte el producto en una herramienta, no en entretenimiento.</p>
+    </div>
+    <div class="card">
+      <span class="card-num">Capa 04</span>
+      <h3>La Numeración como Señal</h3>
+      <p>Usa numeración explícita en los títulos: "Módulo 01 de 10", "Módulo 02 de 10". La finitud visible comunica valor. El oyente sabe exactamente dónde está en el proceso. Esta sencilla decisión de diseño elimina la sensación de "contenido infinito".</p>
+    </div>
+  </div>
+
+  <p>Así, el producto deja de sentirse como una playlist y empieza a sentirse como un <strong>libro de texto de una sola disciplina</strong>, con la gravedad intelectual que eso implica.</p>
+
+  <hr class="divider" style="margin: 48px 0;">
+
+  <div class="section-label">02B — Secuencia de Capítulos</div>
+  <h3 style="font-size:20px; font-weight:400; margin-bottom: 32px;">Propuesta de arquitectura narrativa para los 10 módulos</h3>
+
+  <div class="chapters">
+    <div class="chapter-row">
+      <span class="ch-num">00</span>
+      <span class="ch-title"><strong>Prólogo: Instrucciones de uso del protocolo</strong> — Por qué este manual existe y cómo leerlo</span>
+      <span class="ch-badge light">Ancla</span>
+    </div>
+    <div class="chapter-row">
+      <span class="ch-num">01</span>
+      <span class="ch-title">Auto-conocimiento como Activo Económico — El capital que no aparece en el balance</span>
+      <span class="ch-badge">Fundamento</span>
+    </div>
+    <div class="chapter-row">
+      <span class="ch-num">02</span>
+      <span class="ch-title">Arbitraje Emocional — Detectar ineficiencias en tu mercado interno</span>
+      <span class="ch-badge">Fundamento</span>
+    </div>
+    <div class="chapter-row">
+      <span class="ch-num">03</span>
+      <span class="ch-title">Liquidez Cognitiva — Cómo mantener recursos mentales disponibles para decisiones de alto valor</span>
+      <span class="ch-badge light">Expansión</span>
+    </div>
+    <div class="chapter-row">
+      <span class="ch-num">04</span>
+      <span class="ch-title">Arquitectura del Silencio — El silencio como variable operativa, no como ausencia</span>
+      <span class="ch-badge light">Expansión</span>
+    </div>
+    <div class="chapter-row">
+      <span class="ch-num">05–08</span>
+      <span class="ch-title">Módulos intermedios — [Tus 4 ensayos restantes, organizados por curva de tensión ascendente]</span>
+      <span class="ch-badge light">Desarrollo</span>
+    </div>
+    <div class="chapter-row">
+      <span class="ch-num">09</span>
+      <span class="ch-title">Módulo de síntesis — Cómo los sistemas se integran</span>
+      <span class="ch-badge">Cierre</span>
+    </div>
+    <div class="chapter-row">
+      <span class="ch-num">10</span>
+      <span class="ch-title">Epílogo Operativo — La hoja de ruta de implementación de 90 días</span>
+      <span class="ch-badge">Cierre</span>
+    </div>
+  </div>
+
+  <p style="font-size:13px; color:rgba(26,24,20,0.5); margin-top: 16px;">Los módulos 05–08 deben ordenarse siguiendo una curva de tensión: de conceptos descriptivos hacia prescriptivos. El clímax cognitivo debe estar en el módulo 08 o 09.</p>
+
+</div>
+
+<hr class="divider" style="max-width:840px; margin:0 auto;">
+
+<!-- SECCIÓN 3: DIFERENCIACIÓN DE MARCA -->
+<div class="page">
+
+  <div class="section-label">03 — Identidad de Marca</div>
+  <h2 class="section-title">Autoridad <em>Silenciosa:</em><br>El lenguaje que diferencia</h2>
+
+  <p>Tu perfil de Economista y Estratega te da acceso a un registro semántico que nadie en el mercado de "Self-Love" usa con consistencia. Esa es tu fosa competitiva. El vocabulario de la economía aplicado a la experiencia humana genera inmediata percepción de rigor.</p>
+
+  <div class="callout">
+    <p>No eres un "coach de vida". Eres un arquitecto de sistemas de decisión personal. Esa es la diferencia entre que te contraten a $100/hora o a $500/hora.</p>
+  </div>
+
+  <p>El posicionamiento de "Autoridad Silenciosa" tiene cuatro pilares de ejecución práctica:</p>
+
+  <div class="grid-2">
+    <div class="card">
+      <span class="card-num">Pilar 01</span>
+      <h3>No venderás transformación. Venderás claridad.</h3>
+      <p>La palabra "transformación" está agotada. "Claridad" es escasa, medible y técnica. Un Clarity Strategist resuelve problemas de arquitectura mental. Eso se factura por proyecto, no por sesión.</p>
+    </div>
+    <div class="card">
+      <span class="card-num">Pilar 02</span>
+      <h3>Vocabulario de sistema, no de emoción</h3>
+      <p>Elimina de tu comunicación: "viaje", "despertar", "autenticidad". Incorpora: "protocolo", "variable", "umbral", "retorno sobre energía invertida", "costo de oportunidad emocional".</p>
+    </div>
+    <div class="card">
+      <span class="card-num">Pilar 03</span>
+      <h3>Menos volumen, más densidad</h3>
+      <p>Un post largo y técnico publicado una vez cada dos semanas comunica más autoridad que cinco posts cortos diarios. La escasez de contenido es una señal de precio alto, no de inactividad.</p>
+    </div>
+    <div class="card">
+      <span class="card-num">Pilar 04</span>
+      <h3>La firma de economista</h3>
+      <p>Cada pieza de contenido debe incluir un marco conceptual aplicado. No "cómo tomar mejores decisiones", sino "análisis costo-beneficio en entornos de alta ambigüedad emocional". El nivel técnico es la marca.</p>
+    </div>
+  </div>
+
+  <hr class="divider" style="margin: 48px 0;">
+
+  <div class="section-label">03B — Naming</div>
+  <h3 style="font-size:20px; font-weight:400; margin-bottom: 24px;">Tensión estratégica en el nombre</h3>
+
+  <p>"Self Love Club" como nombre tiene una tensión valiosa: la calidez del "amor propio" colisiona con la sobriedad de "club" (exclusividad, membresía, acceso). No cambies el nombre. Pero sí decide qué parte enfatizar en cada contexto:</p>
+
+  <div class="grid-2">
+    <div class="card">
+      <span class="card-num">Para el Producto</span>
+      <h3>Self Love Club: <em>Protocolo</em></h3>
+      <p>El nombre del macro-ensayo/audiolibro añade "Protocolo" o "Manual" como subtítulo. Eso lo ancla en el registro técnico y justifica el precio premium.</p>
+    </div>
+    <div class="card">
+      <span class="card-num">Para la Marca Personal</span>
+      <h3>[Tu nombre] · Clarity Strategist</h3>
+      <p>Separa el producto de la persona. El producto es Self Love Club. Tú eres el estratega. Esa distinción te permite escalar sin depender del producto y lanzar productos futuros bajo una identidad diferente.</p>
+    </div>
+  </div>
+
+</div>
+
+<hr class="divider" style="max-width:840px; margin:0 auto;">
+
+<!-- SECCIÓN 4: MONETIZACIÓN -->
+<div class="page">
+
+  <div class="section-label">04 — Estrategia de Monetización</div>
+  <h2 class="section-title">Tres modelos.<br>Una <em>jerarquía</em> óptima.</h2>
+
+  <p>Los tres modelos que propones no son excluyentes, pero tienen una jerarquía estratégica clara según tu objetivo prioritario. Si el objetivo es posicionamiento y consultoría de alto ticket, el orden importa.</p>
+
+  <div class="matrix">
+    <div class="matrix-row">
+      <div class="matrix-cell header">Modelo</div>
+      <div class="matrix-cell header">Ventajas</div>
+      <div class="matrix-cell header">Limitaciones</div>
+    </div>
+    <div class="matrix-row">
+      <div class="matrix-cell label">Gated Content<br><span style="font-size:11px;font-weight:300;font-family:var(--mono);">Venta directa PDF + Audio</span></div>
+      <div class="matrix-cell">Control total del precio. Sin intermediarios. Margen del 90%+. Crea percepción de exclusividad y valor. Funciona excepcionalmente bien con audiencias pequeñas y muy calificadas. Un precio de $47–$97 USD con 200 ventas = $9.400–$19.400.</div>
+      <div class="matrix-cell">Requiere tráfico propio. Sin el algoritmo de plataformas para distribuir. Inversión en infraestructura (Gumroad, Podia, o sitio propio). Mayor fricción de descubrimiento inicial.</div>
+    </div>
+    <div class="matrix-row">
+      <div class="matrix-cell label">Lead Magnet<br><span style="font-size:11px;font-weight:300;font-family:var(--mono);">Serie → Consultoría Alto Ticket</span></div>
+      <div class="matrix-cell">ROI más alto si tu consultoría corre a $500+/hora. Un solo cliente captado por el producto amortiza todo el proyecto. La serie funciona como filtro: quien la compra y la termina es exactamente el cliente ideal. Elimina el costo de adquisición de leads de baja calidad.</div>
+      <div class="matrix-cell">El ingreso directo del producto es secundario. Requiere un embudo bien construido: serie → lista → llamada estratégica. Si no tienes capacidad para atender consultoría, el lead magnet genera frustración.</div>
+    </div>
+    <div class="matrix-row">
+      <div class="matrix-cell label">Plataformas<br><span style="font-size:11px;font-weight:300;font-family:var(--mono);">Spotify / Audible</span></div>
+      <div class="matrix-cell">Spotify: descubrimiento orgánico, playlist editorial, credibilidad de plataforma. Audible: compra única, percepción de "libro publicado", acceso a mercado hispanohablante en Amazon. Ambas generan regalías pasivas.</div>
+      <div class="matrix-cell">Spotify paga $0.003–$0.005 por stream. Necesitas volumen alto para ingresos relevantes. Audible toma el 60–75% del precio. Pierdes control del precio y del dato del cliente. La plataforma es dueña de la relación con el oyente.</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <p>La recomendación estratégica: lanza primero en Gated Content (venta directa) para construir tu lista propia y capturar datos. Seis meses después, distribuye en Audible para credibilidad y descubrimiento. Nunca cedas Spotify como canal primario.</p>
+  </div>
+
+  <hr class="divider" style="margin: 48px 0;">
+
+  <div class="section-label">04B — Estructura de Precios</div>
+  <h3 style="font-size:20px; font-weight:400; margin-bottom: 32px;">Tres niveles de acceso</h3>
+
+  <div class="grid-2">
+    <div class="card">
+      <span class="card-num">Nivel 01 · $0</span>
+      <h3>El Prólogo Público</h3>
+      <p>Publica el prólogo y el módulo 01 de forma completamente gratuita en tu sitio y en plataformas. Su función no es generar ingreso; es filtrar audiencia y construir lista. Quien lo consume y quiere más, está pre-calificado.</p>
+    </div>
+    <div class="card">
+      <span class="card-num">Nivel 02 · $67–$97</span>
+      <h3>El Protocolo Completo</h3>
+      <p>PDF de alta fidelidad + Audio de los 10 módulos. Venta directa. Sin plataformas. Incluye acceso a una comunidad privada o lista de correo donde publicas notas técnicas trimestrales. El precio comunica que no es un podcast gratuito.</p>
+    </div>
+    <div class="card">
+      <span class="card-num">Nivel 03 · $300–$500</span>
+      <h3>Protocolo + Sesión Estratégica</h3>
+      <p>El producto completo más una sesión individual de 60 minutos para aplicar el protocolo al caso específico del cliente. Este nivel es el puente hacia tu consultoría de alto ticket. Limita la disponibilidad: máximo 10 por lanzamiento.</p>
+    </div>
+    <div class="card">
+      <span class="card-num">Nivel 04 · $1,500+</span>
+      <h3>Consultoría Estratégica</h3>
+      <p>Para quien compra en cualquier nivel anterior y quiere implementación profunda. El producto funciona como filtro de pre-calificación: quien llega aquí ya ha demostrado que lee, piensa y está dispuesto a invertir en claridad.</p>
+    </div>
+  </div>
+
+</div>
+
+<hr class="divider" style="max-width:840px; margin:0 auto;">
+
+<!-- SECCIÓN 5: IDENTIDAD VISUAL -->
+<div class="page">
+
+  <div class="section-label">05 — Identidad Visual</div>
+  <h2 class="section-title">El diseño como<br><em>señal de precio.</em></h2>
+
+  <p>En el mercado de alto valor, el diseño no es decoración. Es comunicación de precio antes de que el cliente lea una sola línea. Tu brief es correcto: mucho espacio en blanco, ritmo visual lento. Eso en diseño se llama <strong>Editorial Austero</strong>: la estética de los libros de arquitectura, los informes de fondos de capital privado y las revistas académicas de diseño.</p>
+
+  <hr class="divider" style="margin: 40px 0;">
+
+  <div class="section-label">05A — Paleta Cromática</div>
+  <p style="margin-bottom: 24px;">Tres colores. No más. La restricción es parte del mensaje.</p>
+
+  <div class="palette">
+    <div class="swatch" style="background:#f7f4ef;">
+      <span style="color:#1a1814;">#F7F4EF<br>Parchment</span>
+    </div>
+    <div class="swatch" style="background:#1a1814;">
+      <span style="color:#f7f4ef;">#1A1814<br>Ink</span>
+    </div>
+    <div class="swatch" style="background:#8b6f4e;">
+      <span style="color:#f7f4ef;">#8B6F4E<br>Amber</span>
+    </div>
+    <div class="swatch" style="background:#c4a882; flex:0.5;">
+      <span style="color:#1a1814;">#C4A882<br>Sand</span>
+    </div>
+  </div>
+
+  <p style="font-size:13px; color:rgba(26,24,20,0.55);">Parchment como fondo base comunica antigüedad y calidad física, como papel de 120gr. Ink para texto. Amber como único acento —solo para énfasis crítico y elementos de estructura. Sand como transición. Evita el negro puro y el blanco puro: son de pantalla, no de libro.</p>
+
+  <hr class="divider" style="margin: 40px 0;">
+
+  <div class="section-label">05B — Sistema Tipográfico</div>
+
+  <div class="identity-grid">
+    <div class="id-cell">
+      <h4>Display / Títulos</h4>
+      <div class="sample" style="font-family:'Cormorant Garamond',serif; font-style:italic;">Claridad</div>
+      <p><strong>Cormorant Garamond Italic</strong><br>Serif clásico con tensión literaria. Evoca rigor académico sin rigidez. Funciona en blanco y negro con igual fuerza.</p>
+    </div>
+    <div class="id-cell">
+      <h4>Cuerpo de Texto</h4>
+      <div class="sample" style="font-family:'Instrument Sans',sans-serif; font-size:18px; font-weight:300;">Sistema</div>
+      <p><strong>Instrument Sans Light</strong><br>Sans-serif limpio para cuerpos largos. Contrasta con el serif del título sin competir. Legibilidad alta en pantalla y en PDF impreso.</p>
+    </div>
+    <div class="id-cell">
+      <h4>Metadatos / Técnico</h4>
+      <div class="sample" style="font-family:'DM Mono',monospace; font-size:16px; font-weight:300;">01/10</div>
+      <p><strong>DM Mono Light</strong><br>Para numeración, etiquetas, fechas, y cualquier dato estructural. El uso de mono comunica precisión técnica. Es la fuente del economista.</p>
+    </div>
+  </div>
+
+  <hr class="divider" style="margin: 40px 0;">
+
+  <div class="section-label">05C — Principios de Diseño</div>
+
+  <div class="grid-2">
+    <div class="card">
+      <span class="card-num">Regla 01</span>
+      <h3>Márgenes generosos. Siempre.</h3>
+      <p>El margen mínimo en cualquier documento es el 20% del ancho de la hoja. En la cubierta del PDF, el 35%. El espacio en blanco no es espacio perdido; es la respiración del texto. Sin aire, no hay autoridad.</p>
+    </div>
+    <div class="card">
+      <span class="card-num">Regla 02</span>
+      <h3>Una imagen. Si acaso.</h3>
+      <p>No uses fotografías de stock, ilustraciones de personas ni infografías de colores. Si existe un elemento visual, es geométrico: una línea horizontal, una barra de color, una tabla estructurada en cuadrícula.</p>
+    </div>
+    <div class="card">
+      <span class="card-num">Regla 03</span>
+      <h3>El número visible como elemento de diseño</h3>
+      <p>"Módulo 01 de 10" no es solo información; es un elemento tipográfico. Hazlo visible, en mono, en pequeño. La numeración explícita da sensación de sistema cuantificado, no de colección artística.</p>
+    </div>
+    <div class="card">
+      <span class="card-num">Regla 04</span>
+      <h3>Sin gradientes. Sin texturas. Sin sombras.</h3>
+      <p>La sencillez extrema en el tratamiento de color es la firma estética del producto de alto valor. Los gradientes son la firma estética del producto de bajo precio. Esta regla no tiene excepciones.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- SECCIÓN 6: RECOMENDACIÓN FINAL -->
+<div class="page" style="padding-bottom: 0;">
+  <div class="recommendation">
+    <div class="section-label">06 — Recomendación de Ejecución</div>
+    <h2 class="section-title">El <em>Lanzamiento en Tres Fases.</em><br>Sin urgencia artificial.</h2>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-phase">Fase 01 · Semanas 1–4</div>
+        <h4>Terminación y Diseño del Protocolo</h4>
+        <p>Completar los 2 ensayos pendientes. Escribir el Prólogo y el Epílogo Operativo. Diseñar el PDF con el sistema tipográfico descrito. Grabar el audio en un solo bloque de sesiones (no semanalmente). La voz debe ser la misma en todos los módulos; las sesiones separadas en semanas crean inconsistencia vocal.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-phase">Fase 02 · Semanas 5–6</div>
+        <h4>Pre-lanzamiento y Lista de Espera</h4>
+        <p>Publicar el Prólogo y el Módulo 01 de forma gratuita. Crear una página de "acceso anticipado" con precio de pre-lanzamiento ($47 vs. $97 precio regular). Objetivo: 50–100 compradores en pre-lanzamiento para validar demanda antes de inversión en distribución en plataformas.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-phase">Fase 03 · Semanas 7–8</div>
+        <h4>Lanzamiento Completo y Subida a Audible</h4>
+        <p>Apertura de venta directa al precio regular. Paralelamente, iniciar el proceso de distribución en Audible (ACX) que toma 4–6 semanas de revisión. Spotify solo si el objetivo es visibilidad de marca, no ingreso. En ese caso, considera lanzar solo los primeros 3 módulos como "muestra editorial" gratuita.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-phase">Fase 04 · Mes 3 en adelante</div>
+        <h4>Activación del Embudo de Consultoría</h4>
+        <p>A los compradores del Nivel 02 enviar, en el módulo 10, una invitación privada al Nivel 03 (sesión estratégica). Solo para quienes completaron el protocolo. La exclusividad de la invitación aumenta la tasa de conversión y la calidad del cliente.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p>"El producto no es el destino. Es el argumento más caro que podrías presentar para justificar tu precio de consultoría. Quien lo compra ya ha invertido dinero y tiempo en conocer tu forma de pensar. Eso no tiene precio en publicidad."</p>
+    </div>
+
+    <p>Tu ventaja competitiva en dos líneas: <strong>eres el único en tu mercado con la formación técnica para hacer lo que haces.</strong> El trabajo ahora es hacer que eso sea visible sin decirlo explícitamente. El producto hace esa demostración mejor que cualquier bio o credencial.</p>
+
+  </div>
+</div>
+
+<footer>
+  Self Love Club: Claridad y toma de decisiones en entornos modernos<br>
+  Informe Estratégico · Confidencial · Uso Exclusivo del Cliente
+</footer>
+
+</body>
+</html>
