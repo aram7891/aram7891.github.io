@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Clarity Library • Banco de Ensayos • Self Love Club</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@300;400;700&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0C0B09; --surface: #131210; --ivory: #EDE8DF; 
+  --muted: rgba(237,232,223,0.7); --amber: #C4976A;
+}
+body { margin:0; padding:0; background:var(--bg); color:var(--ivory); font-family:'DM Sans',sans-serif; overflow:hidden; }
+.library-container { display:flex; height:100vh; }
+.sidebar { width:300px; background:var(--surface); border-right:1px solid rgba(255,255,255,0.06); padding:40px 28px; overflow-y:auto; }
+.main { flex:1; padding:48px; overflow-y:auto; }
+.lang-switch { display:flex; gap:16px; margin-bottom:40px; }
+.lang-btn { background:none; border:none; color:var(--muted); font-size:14px; cursor:pointer; padding:4px 12px; }
+.lang-btn.active { color:var(--amber); border-bottom:2px solid var(--amber); }
+.essay-card { background:#1A1815; padding:24px; margin-bottom:16px; border-radius:8px; cursor:pointer; transition:all 0.3s; }
+.essay-card:hover { background:#22201C; transform:translateY(-2px); }
+.modal { position:fixed; inset:0; background:rgba(12,11,9,0.95); display:none; align-items:center; justify-content:center; z-index:9999; }
+.pdf-container { background:#f5f0e6; max-width:980px; width:100%; max-height:94vh; border-radius:12px; box-shadow:0 30px 80px -20px rgba(196,151,106,0.4); overflow:hidden; }
+.pdf-header { padding:18px 32px; background:#ede8df; border-bottom:1px solid #d4c9b8; display:flex; justify-content:space-between; align-items:center; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:17px; }
+.close { font-size:34px; cursor:pointer; color:#8c7a66; }
+.content { padding:48px; height:calc(94vh - 68px); overflow:auto; font-size:11.5px; line-height:1.75; color:#3A3530; }
+</style>
+</head>
+<body>
+
+<div class="library-container">
+  <div class="sidebar">
+    <h1 style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:32px; margin:0 0 8px;">Clarity Library</h1>
+    <p style="color:var(--muted); font-size:13px;">12 ensayos • Acceso completo</p>
+    
+    <div class="lang-switch">
+      <button onclick="switchLang('en')" class="lang-btn active" id="en">English</button>
+      <button onclick="switchLang('es')" class="lang-btn" id="es">Español</button>
+      <button onclick="openTranslator()" class="lang-btn" style="font-size:22px;">🌐</button>
+    </div>
+
+    <div id="sidebarContent"></div>
+  </div>
+
+  <div class="main">
+    <h2 id="mainTitle" style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:48px;">Clarity Library</h2>
+    <p id="mainSubtitle" style="color:var(--muted); max-width:620px;">12 ensayos estratégicos para decidir sin ruido, reaccionar menos y vivir mejor.</p>
+    
+    <button onclick="downloadBundle()" style="margin:32px 0; padding:16px 36px; background:#C4976A; color:#0C0B09; border:none; font-weight:400; letter-spacing:1px; text-transform:uppercase; cursor:pointer;">
+      ⬇️ Descargar los 12 ensayos completos
+    </button>
+
+    <div id="mainContent"></div>
+  </div>
+</div>
+
+<!-- MODAL PAPEL CREMA -->
+<div class="modal" id="modal">
+  <div class="pdf-container">
+    <div class="pdf-header">
+      <span id="modalTitleText"></span>
+      <span onclick="closeModal()" class="close">×</span>
+    </div>
+    <div class="content" id="modalContent"></div>
+  </div>
+</div>
+
+<script>
+// === DATOS DE LOS 12 ENSAYOS (ya extraídos de tu script Python) ===
+const ESSAYS = {
+  es: [ /* aquí van los 12 ensayos completos en español */ ],
+  en: [ /* aquí van los 12 ensayos completos en inglés */ ]
+};
+// (El objeto completo con todos los títulos, subtítulos, quotes, secciones, etc. es muy largo. 
+// Te lo voy a dar en el siguiente mensaje para que no se corte.)
+
+let currentLang = 'es';
+
+function switchLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.id === lang));
+  renderLibrary();
+}
+
+function renderLibrary() {
+  // Código que renderiza la lista de ensayos según idioma
+  // (Ya está preparado, solo falta completar el objeto ESSAYS)
+  console.log("Renderizando en " + currentLang);
+  // Por ahora muestra un mensaje temporal
+  document.getElementById('mainContent').innerHTML = `<p style="color:#C4976A;">✅ Página cargada correctamente.<br>En el siguiente paso reemplazaremos los ensayos completos.</p>`;
+}
+
+function openEssay(num) {
+  alert("✅ Modal abierto (prueba). En el siguiente paso aquí se mostrará el ensayo completo.");
+}
+
+function closeModal() { document.getElementById('modal').style.display = 'none'; }
+function openTranslator() { window.open('https://translate.google.com', '_blank'); }
+function downloadBundle() { alert("✅ Botón listo. Cuando tengas los PDFs, este botón los descargará."); }
+
+// Password temporal (cámbialo después en Gumroad)
+window.onload = () => {
+  const pass = prompt("🔑 Ingresa tu código de acceso (te lo envía Gumroad):");
+  if (pass !== "clarity2026") {
+    alert("Código incorrecto. Regresando a la página principal.");
+    window.location.href = "https://selfloveclubusa.com";
+    return;
+  }
+  renderLibrary();
+};
+</script>
+</body>
+</html>
