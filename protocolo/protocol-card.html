@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Clarity Protocol | Ownership & Privacy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300;1,400&family=Instrument+Sans:wght@300&family=DM+Mono:wght@300&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #E0DDD8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 40px;
+  }
+
+  .card {
+    width: 1200px;
+    height: 750px;
+    background: #F7F4EF;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+  }
+
+  .top-line {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: #8B6F4E;
+    z-index: 10;
+  }
+
+  .content {
+    width: 52%;
+    padding: 72px 48px 72px 88px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* TOP */
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-weight: 300;
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    color: #8B6F4E;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 92px;
+    line-height: 0.88;
+    color: #1A1814;
+    letter-spacing: -0.02em;
+  }
+
+  h1 .accent { color: #8B6F4E; }
+
+  .tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 18px;
+    color: #C4A882;
+    margin-top: 16px;
+    letter-spacing: 0.03em;
+  }
+
+  /* FORMAT — the product is a local asset */
+  .format-block {
+    border-left: 2px solid #8B6F4E;
+    padding-left: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .format-title {
+    font-family: 'DM Mono', monospace;
+    font-weight: 300;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: #8B6F4E;
+    text-transform: uppercase;
+  }
+
+  .format-desc {
+    font-family: 'Instrument Sans', sans-serif;
+    font-weight: 300;
+    font-size: 13px;
+    color: #1A1814;
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+  }
+
+  .format-sub {
+    font-family: 'DM Mono', monospace;
+    font-weight: 300;
+    font-size: 9px;
+    color: #C4A882;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  /* CONTENTS */
+  .mid-block {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+
+  .mid-label {
+    font-family: 'DM Mono', monospace;
+    font-weight: 300;
+    font-size: 8.5px;
+    letter-spacing: 0.2em;
+    color: #C4A882;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+
+  .item {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+  }
+
+  .item-num {
+    font-family: 'DM Mono', monospace;
+    font-weight: 300;
+    font-size: 8.5px;
+    color: #C4A882;
+    letter-spacing: 0.1em;
+    min-width: 20px;
+  }
+
+  .item-text {
+    font-family: 'Instrument Sans', sans-serif;
+    font-weight: 300;
+    font-size: 12.5px;
+    color: #1A1814;
+    letter-spacing: 0.01em;
+    line-height: 1;
+  }
+
+  /* BOTTOM — Ownership focus */
+  .bottom-block {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .dot-small {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #C4A882;
+    flex-shrink: 0;
+  }
+
+  .bottom-note {
+    font-family: 'DM Mono', monospace;
+    font-weight: 300;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    color: #C4A882;
+    text-transform: uppercase;
+  }
+
+  /* PHOTO */
+  .photo-col {
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 48%;
+    overflow: hidden;
+  }
+
+  .photo-col img {
+    width: 100%;
+    height: 120%;
+    object-fit: cover;
+    object-position: center 10%;
+    display: block;
+  }
+
+  .photo-col::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 200px;
+    background: linear-gradient(to right, #F7F4EF 0%, rgba(247,244,239,0) 100%);
+    z-index: 1;
+  }
+
+  .watermark {
+    position: absolute;
+    right: 46%;
+    bottom: -20px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 260px;
+    line-height: 1;
+    color: rgba(139, 111, 78, 0.07);
+    z-index: 1;
+    user-select: none;
+    pointer-events: none;
+    letter-spacing: -0.05em;
+  }
+
+  /* PREVIEW TAG */
+  .preview-tag {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: #8B6F4E;
+    border: 1px solid #8B6F4E;
+    padding: 8px 16px;
+    text-transform: uppercase;
+    z-index: 20;
+    background: rgba(247, 244, 239, 0.8);
+    backdrop-filter: blur(4px);
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="top-line"></div>
+  <div class="watermark">10</div>
+
+  <!-- This tag will be toggled for the preview version -->
+  <div class="preview-tag" id="version-tag" style="display: none;">Preview Version</div>
+
+  <div class="content">
+
+    <div>
+      <p class="eyebrow">Self Love Club</p>
+      <h1>Clarity<br><span class="accent">Protocol</span></h1>
+      <p class="tagline">Stop reacting. Start deciding.</p>
+    </div>
+
+    <div class="format-block">
+      <span class="format-title">What you receive</span>
+      <span class="format-desc"><strong>A local digital asset</strong> you download and own. A self-contained web experience that runs directly from your computer — no app, no account, no internet required.</span>
+      <span class="format-sub">Zero-cloud architecture. Your data stays on your device.</span>
+    </div>
+
+    <div class="mid-block">
+      <p class="mid-label">Inside</p>
+      <div class="item">
+        <span class="item-num">01</span>
+        <span class="item-text">10 web modules + prologue + epilogue</span>
+      </div>
+      <div class="item">
+        <span class="item-num">02</span>
+        <span class="item-text">90-day implementation roadmap</span>
+      </div>
+      <div class="item">
+        <span class="item-num">03</span>
+        <span class="item-text">Progress tracker — built into the experience</span>
+      </div>
+    </div>
+
+    <div class="bottom-block">
+      <div class="dot-small"></div>
+      <span class="bottom-note">Permanent Ownership — No subscriptions, no servers. It's yours.</span>
+    </div>
+
+  </div>
+
+  <div class="photo-col">
+    <img src="https://www.andresramirez.pro/assets/images/protocolocase.JPG" alt="Clarity Protocol Case">
+  </div>
+</div>
+
+<script>
+  // Simple logic to show preview tag if URL contains 'preview'
+  if (window.location.pathname.includes('preview') || window.location.search.includes('preview')) {
+    document.getElementById('version-tag').style.display = 'block';
+    document.title = "Clarity Protocol | Preview Experience";
+  }
+</script>
+</body>
+</html>
