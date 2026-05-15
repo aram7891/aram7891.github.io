@@ -210,8 +210,30 @@
                         method: 'POST', 
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
-                            contents: [{ parts: [{ text: "Create EXACTLY 7 carousel slides based on the provided text. Return ONLY a raw JSON object with the following structure: { \"slides\": [ { \"title\": \"...\", \"subtitle\": \"...\", \"body\": \"...\", \"slideNumber\": 1 } ] }. Slide 1 is title/subtitle only, slides 2-6 body only, slide 7 closing. Text: " + essay }] }],
-                            generationConfig: { responseMimeType: "application/json" }
+                            contents: [{ parts: [{ text: `
+                                Actúa como un estratega de contenido premium (Clarity Strategist). 
+                                Tu objetivo es convertir un ensayo en un carrusel educativo de EXACTAMENTE 7 láminas.
+
+                                ESTRUCTURA OBLIGATORIA POR LÁMINA:
+                                1. Gancho: Título disruptivo y subtítulo.
+                                2. El Problema: Identifica el error principal del ensayo.
+                                3. Manifestación: Cómo afecta esto al lector (síntomas).
+                                4. El Cambio: Concepto clave para solucionarlo.
+                                5. Acción: Un paso práctico o ejercicio concreto.
+                                6. Resultado: Beneficio tangible del cambio.
+                                7. Cierre: Call to Action invitando a seguir los contenidos de Andrés Ramírez.
+
+                                REGLAS:
+                                - MÁXIMO 4 LÍNEAS por lámina.
+                                - Frases cortas y minimalistas.
+                                - Estilo Self Love Club: directo y profesional.
+
+                                Ensayo: ${essay}
+
+                                Responde ÚNICAMENTE con JSON:
+                                { "slides": [ { "title": "...", "subtitle": "...", "body": "...", "slideNumber": 1 } ] }` 
+                            }] }],
+                            generationConfig: { responseMimeType: "application/json", temperature: 0.6 }
                         })
                     });
                     
@@ -232,6 +254,7 @@
                     setLoading(false); 
                 }
             };
+
 
             const polishSlide = async () => {
                 if (!slides || !userApiKey.trim()) return;
