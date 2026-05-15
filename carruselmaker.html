@@ -270,26 +270,6 @@ Responde ÚNICAMENTE con un JSON válido y nada más:
         setLoading(false); 
     }
 };
-                    
-                    const data = await response.json();
-                    if (data.error) throw new Error(data.error.message);
-                    
-                    const rawJson = data.candidates[0].content.parts[0].text;
-                    const cleanJson = rawJson.replace(/```json|```/g, "").trim();
-                    const parsed = JSON.parse(cleanJson);
-                    
-                    if (parsed.slides) {
-                        setSlides(parsed.slides);
-                        setCurrentSlide(0);
-                    }
-                } catch (err) { 
-                    setError("Error de Generación: " + err.message); 
-                } finally { 
-                    setLoading(false); 
-                }
-            };
-
-
             const polishSlide = async () => {
                 if (!slides || !userApiKey.trim()) return;
                 setPolishing(true);
