@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Seed - Self Love Club</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital@0;1&family=Instrument+Sans:wght@400;500&family=DM+Mono:wght@400;500&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background-color: #F7F4EF;
+            color: #1A1814;
+            font-family: 'Instrument Sans', sans-serif;
+            font-weight: 400;
+            line-height: 1.8;
+        }
+        
+        .language-selector {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(247, 244, 239, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            border-bottom: 1px solid #E5DFD3;
+            box-shadow: 0 2px 10px rgba(26, 24, 20, 0.05);
+        }
+        
+        .language-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .slc-mark {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            color: #8B6F4E;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+        
+        .language-buttons {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .lang-btn {
+            padding: 8px 16px;
+            border: 2px solid #C4A882;
+            background: transparent;
+            color: #8B6F4E;
+            font-family: 'Instrument Sans', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .lang-btn:hover {
+            background: #F0EAE0;
+            border-color: #8B6F4E;
+        }
+        
+        .lang-btn.active {
+            background: #8B6F4E;
+            color: #F7F4EF;
+            border-color: #8B6F4E;
+        }
+        
+        .book-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 100px 60px 60px;
+            min-height: 100vh;
+        }
+        
+        .language-section {
+            display: none;
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        .language-section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .page {
+            margin-bottom: 80px;
+            position: relative;
+        }
+        
+        .page-number {
+            font-family: 'DM Mono', monospace;
+            font-size: 12px;
+            color: #8B6F4E;
+            margin-top: 40px;
+            text-align: right;
+        }
+        
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            font-weight: 400;
+            font-style: italic;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+        
+        .insight {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            font-style: italic;
+            color: #8B6F4E;
+            margin: 30px 0;
+            line-height: 1.7;
+        }
+        
+        p {
+            margin-bottom: 16px;
+            font-size: 16px;
+        }
+        
+        .text-body {
+            font-size: 16px;
+            line-height: 1.9;
+        }
+        
+        .number {
+            font-family: 'DM Mono', monospace;
+            font-weight: 500;
+        }
+        
+        .subtitle {
+            font-family: 'Instrument Sans', sans-serif;
+            font-size: 13px;
+            color: #C4A882;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+        }
+        
+        .conflict-section {
+            border-left: 3px solid #8B6F4E;
+            padding-left: 20px;
+            margin: 30px 0;
+        }
+        
+        .title-page {
+            text-align: center;
+            padding: 80px 0;
+        }
+        
+        .title-page h1 {
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+        
+        .slc-logo-container {
+            margin: 40px 0;
+        }
+        
+        .slc-logo {
+            max-width: 200px;
+            height: auto;
+            margin: 0 auto;
+            display: block;
+        }
+        
+        .title-page p {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 18px;
+            color: #8B6F4E;
+            margin-top: 30px;
+        }
+        
+        .colophon {
+            text-align: center;
+            padding-top: 80px;
+            border-top: 1px solid #C4A882;
+            margin-top: 80px;
+        }
+        
+        .colophon-text {
+            font-family: 'DM Mono', monospace;
+            font-size: 13px;
+            color: #8B6F4E;
+            letter-spacing: 1px;
+            line-height: 2;
+        }
+        
+        .colophon-logo {
+            margin-top: 30px;
+        }
+        
+        .colophon-logo img {
+            max-width: 100px;
+            height: auto;
+            opacity: 0.7;
+        }
+        
+        @media (max-width: 768px) {
+            .book-container {
+                padding: 100px 30px 60px;
+            }
+            
+            .language-container {
+                padding: 0 20px;
+            }
+            
+            .title-page {
+                padding: 60px 0;
+            }
+            
+            .title-page h1 {
+                font-size: 28px;
+            }
+            
+            .slc-logo {
+                max-width: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- LANGUAGE SELECTOR -->
+    <div class="language-selector">
+        <div class="language-container">
+            <div class="slc-mark">Self Love Club</div>
+            <div class="language-buttons">
+                <button class="lang-btn active" onclick="setLanguage('es')">Español</button>
+                <button class="lang-btn" onclick="setLanguage('en')">English</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="book-container">
+        
+        <!-- SPANISH VERSION -->
+        <div id="es-section" class="language-section active">
+            
+            <!-- PORTADA -->
+            <div class="title-page">
+                <div class="slc-logo-container">
+                    <img src="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/assets/images/slc-logo.png" alt="Self Love Club" class="slc-logo">
+                </div>
+                <h1>La Semilla</h1>
+                <p>Una historia sobre el valor de elegir bien,<br>desde adentro.</p>
+            </div>
+            
+            <!-- PÁGINA 1 -->
+            <div class="page">
+                <div class="subtitle">Página 1</div>
+                <div class="text-body">
+                    <p>Debajo de la tierra, una semilla esperaba.</p>
+                    <p>No quería ser la más grande.</p>
+                    <p>No quería crecer rápido.</p>
+                    <p class="insight">Solo quería crecer bien, desde adentro.</p>
+                    <p>Y eso le pedía algo: decidir.</p>
+                </div>
+                <div class="page-number">1</div>
+            </div>
+            
+            <!-- PÁGINA 2 -->
+            <div class="page">
+                <div class="subtitle">Página 2</div>
+                <div class="text-body">
+                    <p>Cada mañana, la semilla tenía opciones:</p>
+                    <p><span class="number">Agua turbia</span> o <span class="number">agua limpia</span>.</p>
+                    <p><span class="number">Sombra profunda</span> o <span class="number">luz tibia</span>.</p>
+                    <p><span class="number">Tierra apretada</span> o <span class="number">tierra suelta</span>.</p>
+                    <p>Sus padres traían las opciones.</p>
+                    <p class="insight">Pero ella decidía cuál necesitaba.</p>
+                </div>
+                <div class="page-number">2</div>
+            </div>
+            
+            <!-- PÁGINA 3 -->
+            <div class="page">
+                <div class="subtitle">Página 3</div>
+                <div class="text-body">
+                    <p>Pasaron días.</p>
+                    <p>Y la semilla comenzó a notar algo claro:</p>
+                    <p>Cuando elegía agua limpia, sus raíces crecían firmes.<br>
+                    Cuando bebía agua turbia, se debilitaba.</p>
+                    <p class="insight">No todas las opciones valían igual.</p>
+                    <p>Algunas la fortalecían.<br>
+                    Otras la gastaban.</p>
+                    <p>La semilla aprendió a escuchar lo que su cuerpo le decía.</p>
+                </div>
+                <div class="page-number">3</div>
+            </div>
+            
+            <!-- PÁGINA 4 -->
+            <div class="page">
+                <div class="subtitle">Página 4</div>
+                <div class="conflict-section">
+                    <p>Un día, una semilla cercana le susurró:</p>
+                    <p><em>"¿Por qué eres tan exigente contigo misma?<br>
+                    Yo bebo cualquier agua. Crezco igual."</em></p>
+                    <p>Otra preguntó:</p>
+                    <p><em>"¿No es egoísmo pensar tanto en lo que necesitas?<br>
+                    Las semillas de verdad no eligen. Solo crecen."</em></p>
+                    <p>La semilla sintió la duda.<br>
+                    ¿Estaba sola por elegir bien?<br>
+                    ¿Era egoísmo cuidarse a sí misma?</p>
+                </div>
+                <div class="page-number">4</div>
+            </div>
+            
+            <!-- PÁGINA 5 -->
+            <div class="page">
+                <div class="subtitle">Página 5</div>
+                <div class="text-body">
+                    <p>Más tiempo después, vio a la otra semilla.</p>
+                    <p>La que decía que todas las aguas valían igual.</p>
+                    <p>Estaba débil. Sus raíces apenas sostenían el peso.</p>
+                    <p>Entonces la semilla entendió sin necesidad de sermón:</p>
+                    <p class="insight">Cuidarse a sí misma no era egoísmo.<br>
+                    Era la única manera de poder cuidar a otros.</p>
+                </div>
+                <div class="page-number">5</div>
+            </div>
+            
+            <!-- PÁGINA 6 -->
+            <div class="page">
+                <div class="subtitle">Página 6</div>
+                <div class="text-body">
+                    <p>Pasó un año.</p>
+                    <p>La semilla era ahora un árbol joven y firme.</p>
+                    <p>Sus raíces eran profundas.</p>
+                    <p>Sus ramas, fuertes.</p>
+                    <p>Y ahora podía hacer cosas que antes no podía:</p>
+                    <p>Ofrecer sombra fresca a quien tenía calor.<br>
+                    Sostener flores.<br>
+                    Alimentar pájaros.<br>
+                    Abrazar a sus padres con raíces profundas y seguras.</p>
+                    <p class="insight">Todo eso vino de haber elegido bien<br>
+                    cuando era solo una semilla en la oscuridad.</p>
+                </div>
+                <div class="page-number">6</div>
+            </div>
+            
+            <!-- PÁGINA 7 -->
+            <div class="page">
+                <div class="subtitle">Página 7</div>
+                <div class="text-body">
+                    <p>El árbol joven seguía en el mismo bosque.</p>
+                    <p>Cada día, nuevas semillas llegaban con la misma pregunta:</p>
+                    <p><em>"¿No es egoísmo pensar en lo que yo necesito?"</em></p>
+                    <p>El árbol sonrió.</p>
+                    <p class="insight">Y dijo algo que nunca olvidarían:</p>
+                    <p>"El amor propio no es lo opuesto al amor por otros.</p>
+                    <p>Es el inicio."</p>
+                    <p style="margin-top: 30px; font-size: 15px; line-height: 1.9;">Cuando aprendas a elegir bien para ti,<br>
+                    cuando crezcas fuerte desde adentro,<br>
+                    tendrás todo lo que necesitas para amar de verdad.</p>
+                    <p style="margin-top: 30px; font-size: 15px; line-height: 1.9;">Y eso es el regalo más grande<br>
+                    que puedes darle a quienes te aman.</p>
+                </div>
+                <div class="page-number">7</div>
+            </div>
+            
+            <!-- COLOFÓN -->
+            <div class="page colophon">
+                <div class="colophon-text">
+                    SELF LOVE CLUB<br>
+                    La Semilla<br><br>
+                    <span style="font-size: 12px;">Un protocolo de amor propio<br>
+                    narrado para quien aún crece.</span>
+                </div>
+                <div class="colophon-logo">
+                    <img src="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/assets/images/slc-logo.png" alt="Self Love Club">
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- ENGLISH VERSION -->
+        <div id="en-section" class="language-section">
+            
+            <!-- TITLE PAGE -->
+            <div class="title-page">
+                <div class="slc-logo-container">
+                    <img src="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/assets/images/slc-logo.png" alt="Self Love Club" class="slc-logo">
+                </div>
+                <h1>The Seed</h1>
+                <p>A story about the courage to choose well,<br>from within.</p>
+            </div>
+            
+            <!-- PAGE 1 -->
+            <div class="page">
+                <div class="subtitle">Page 1</div>
+                <div class="text-body">
+                    <p>Beneath the earth, a seed waited.</p>
+                    <p>It did not want to be the biggest.</p>
+                    <p>It did not want to grow fast.</p>
+                    <p class="insight">It only wanted to grow well, from within.</p>
+                    <p>And that required something of her: to decide.</p>
+                </div>
+                <div class="page-number">1</div>
+            </div>
+            
+            <!-- PAGE 2 -->
+            <div class="page">
+                <div class="subtitle">Page 2</div>
+                <div class="text-body">
+                    <p>Every morning, the seed had choices:</p>
+                    <p><span class="number">Murky water</span> or <span class="number">clean water</span>.</p>
+                    <p><span class="number">Deep shadow</span> or <span class="number">warm light</span>.</p>
+                    <p><span class="number">Tight soil</span> or <span class="number">loose soil</span>.</p>
+                    <p>Her parents brought the options.</p>
+                    <p class="insight">But she decided which one she needed.</p>
+                </div>
+                <div class="page-number">2</div>
+            </div>
+            
+            <!-- PAGE 3 -->
+            <div class="page">
+                <div class="subtitle">Page 3</div>
+                <div class="text-body">
+                    <p>Days passed.</p>
+                    <p>And the seed began to notice something clear:</p>
+                    <p>When she chose clean water, her roots grew firm.<br>
+                    When she drank murky water, she felt herself weaken.</p>
+                    <p class="insight">Not all choices were equal.</p>
+                    <p>Some strengthened her.<br>
+                    Others wore her down.</p>
+                    <p>The seed learned to listen to what her own body told her.</p>
+                </div>
+                <div class="page-number">3</div>
+            </div>
+            
+            <!-- PAGE 4 -->
+            <div class="page">
+                <div class="subtitle">Page 4</div>
+                <div class="conflict-section">
+                    <p>One day, a seed nearby whispered to her:</p>
+                    <p><em>"Why are you so demanding of yourself?<br>
+                    I drink any water. I grow the same."</em></p>
+                    <p>Another asked:</p>
+                    <p><em>"Isn't it selfish to think so much about what you need?<br>
+                    Real seeds don't choose. They just grow."</em></p>
+                    <p>The seed felt the doubt.<br>
+                    Was she alone for choosing well?<br>
+                    Was caring for herself selfish?</p>
+                </div>
+                <div class="page-number">4</div>
+            </div>
+            
+            <!-- PAGE 5 -->
+            <div class="page">
+                <div class="subtitle">Page 5</div>
+                <div class="text-body">
+                    <p>More time passed.</p>
+                    <p>She saw the other seed, the one who said all waters were equal.</p>
+                    <p>It was weak. Its roots barely held its weight.</p>
+                    <p>Then the seed understood without any lesson needed:</p>
+                    <p class="insight">Caring for herself was not selfishness.<br>
+                    It was the only way she could care for others.</p>
+                </div>
+                <div class="page-number">5</div>
+            </div>
+            
+            <!-- PAGE 6 -->
+            <div class="page">
+                <div class="subtitle">Page 6</div>
+                <div class="text-body">
+                    <p>One year passed.</p>
+                    <p>The seed was now a young tree.</p>
+                    <p>Its roots were deep.</p>
+                    <p>Its branches, strong.</p>
+                    <p>And now it could do things it never could before:</p>
+                    <p>Offer cool shade to those who had heat.<br>
+                    Hold flowers.<br>
+                    Feed birds.<br>
+                    Hold its parents with roots deep and sure.</p>
+                    <p class="insight">All of that came from choosing well,<br>
+                    when it was only a seed in the dark.</p>
+                </div>
+                <div class="page-number">6</div>
+            </div>
+            
+            <!-- PAGE 7 -->
+            <div class="page">
+                <div class="subtitle">Page 7</div>
+                <div class="text-body">
+                    <p>The young tree stayed in the same forest.</p>
+                    <p>Each day, new seeds came with the same question:</p>
+                    <p><em>"Isn't it selfish to think about what I need?"</em></p>
+                    <p>The tree smiled.</p>
+                    <p class="insight">And said something they would never forget:</p>
+                    <p>"Self-love is not the opposite of love for others.</p>
+                    <p>It is the beginning."</p>
+                    <p style="margin-top: 30px; font-size: 15px; line-height: 1.9;">When you learn to choose well for yourself,<br>
+                    when you grow strong from within,<br>
+                    you will have everything you need to love truly.</p>
+                    <p style="margin-top: 30px; font-size: 15px; line-height: 1.9;">And that is the greatest gift<br>
+                    you can give to those who love you.</p>
+                </div>
+                <div class="page-number">7</div>
+            </div>
+            
+            <!-- COLOPHON -->
+            <div class="page colophon">
+                <div class="colophon-text">
+                    SELF LOVE CLUB<br>
+                    The Seed<br><br>
+                    <span style="font-size: 12px;">A protocol of self-love<br>
+                    narrated for those who are still growing.</span>
+                </div>
+                <div class="colophon-logo">
+                    <img src="https://raw.githubusercontent.com/aram7891/aram7891.github.io/main/assets/images/slc-logo.png" alt="Self Love Club">
+                </div>
+            </div>
+            
+        </div>
+
+    </div>
+
+    <script>
+        function setLanguage(lang) {
+            const esSection = document.getElementById('es-section');
+            const enSection = document.getElementById('en-section');
+            const esBtnBtn = document.querySelectorAll('.lang-btn')[0];
+            const enBtn = document.querySelectorAll('.lang-btn')[1];
+
+            if (lang === 'es') {
+                esSection.classList.add('active');
+                enSection.classList.remove('active');
+                esBtnBtn.classList.add('active');
+                enBtn.classList.remove('active');
+                document.documentElement.lang = 'es';
+            } else {
+                enSection.classList.add('active');
+                esSection.classList.remove('active');
+                enBtn.classList.add('active');
+                esBtnBtn.classList.remove('active');
+                document.documentElement.lang = 'en';
+            }
+            
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
