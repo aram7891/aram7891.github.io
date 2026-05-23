@@ -48,7 +48,91 @@
     <script type="text/babel">
         const { useState, useEffect, useLayoutEffect, useRef } = React;
 
-        // Componente para ajustar el contenido automáticamente al tamaño del slide
+        // NUEVO: Configuración centralizada de branding
+        const BRANDING_CONFIGS = {
+            personal: {
+                name: "Andrés Ramírez",
+                title: "Clarity Strategist",
+                photo: "/assets/images/andres-ramirez-portrait.jpg",
+                footerVisible: true,
+                socialLinks: { threads: "@aram7891", instagram: "@selfloveclubusa" }
+            },
+            selfLoveClub: {
+                name: "Self Love Club",
+                title: "Clarity Engine",
+                photo: null,
+                footerVisible: true,
+                socialLinks: { threads: "@aram7891", instagram: "@selfloveclubusa" }
+            },
+            client: {
+                name: null,
+                title: null,
+                photo: null,
+                footerVisible: false,
+                socialLinks: null
+            }
+        };
+
+        // NUEVO: CTAs dinámicos por preset
+        const CTA_STRATEGIES = {
+            selfLoveCoach: "Descubre cómo transformar tu relación contigo mismo en Self Love Club.",
+            mindfulness: "Accede a prácticas de presencia y claridad en Self Love Club.",
+            businessGrowth: "Escala tu negocio sin sacrificar tu bienestar en Self Love Club.",
+            relationshipHealing: "Sana tus patrones y construye relaciones auténticas en Self Love Club."
+        };
+
+        // NUEVO: Funciones de sanitización y validación
+        const sanitizeListFormatting = (text) => {
+            if (!text) return text;
+            
+            // Convertir todos los tipos de viñetas a guiones normalizados
+            let cleaned = text.replace(/^[•●\*]\s+/gm, '- ');
+            
+            // Asegurar que si hay lista numerada, sea SOLO números sin mezcla
+            const hasNumberedLists = /^\d+\.\s+/m.test(cleaned);
+            const hasBulletLists = /^-\s+/m.test(cleaned);
+            
+            if (hasNumberedLists && hasBulletLists) {
+                // Si hay ambos, convertir todo a guiones (más limpio para redes)
+                cleaned = cleaned.replace(/^\d+\.\s+/gm, '- ');
+            }
+            
+            // Evitar doble espaciado después de viñetas
+            cleaned = cleaned.replace(/^-\s{2,}/gm, '- ');
+            
+            return cleaned;
+        };
+
+        const validateSelfLoveClubIntegrity = (text) => {
+            if (!text) return text;
+            
+            const lines = text.split('\n');
+            const fixed = lines.map((line, idx) => {
+                // Si la línea termina en "en el" o "en " y la siguiente empieza con "Self"
+                if (idx < lines.length - 1) {
+                    const endsWithPartialPhrase = /en\s*$|en\s+el\s*$/.test(line.trim());
+                    const nextLineStartsWithSelf = /^Self\s+Love\s+Club/.test(lines[idx + 1].trim());
+                    
+                    if (endsWithPartialPhrase && nextLineStartsWithSelf) {
+                        return line + " Self Love Club";
+                    }
+                }
+                return line;
+            });
+            
+            return fixed.join('\n');
+        };
+
+        const postProcessSlides = (slides) => {
+            return slides.map(slide => ({
+                ...slide,
+                title: sanitizeListFormatting(validateSelfLoveClubIntegrity(slide.title || "")),
+                subtitle: sanitizeListFormatting(validateSelfLoveClubIntegrity(slide.subtitle || "")),
+                body: sanitizeListFormatting(validateSelfLoveClubIntegrity(slide.body || ""))
+            }));
+        };
+
+        // Componente AutoFitContent (sin cambios)
         const AutoFitContent = ({ children, isCenter }) => {
             const containerRef = useRef(null);
             const contentRef = useRef(null);
@@ -87,7 +171,7 @@
             );
         };
 
-        // NUEVO: Modal para Batch Management
+        // Modal para Batch Management (sin cambios)
         const BatchModal = ({ isOpen, onClose, batch, onDelete, onRegenerate, onExport }) => {
             if (!isOpen) return null;
             return (
@@ -145,7 +229,7 @@
             );
         };
 
-        // NUEVO: Modal para Video Compilation Options
+        // Modal para Video Compilation (sin cambios)
         const VideoCompilationModal = ({ isOpen, onClose, onCreateGif, onDownloadImages, isProcessing }) => {
             const [slideDelay, setSlideDelay] = useState(2);
             const [format, setFormat] = useState("gif");
@@ -238,9 +322,12 @@
             const [showBatchModal, setShowBatchModal] = useState(false);
             const [showVideoModal, setShowVideoModal] = useState(false);
             const [processingVideo, setProcessingVideo] = useState(false);
+            const [brandingMode, setBrandingMode] = useState("personal");
+            const [selectedPreset, setSelectedPreset] = useState("selfLoveCoach");
             const slideRef = useRef(null);
 
-            // NUEVO: Quick Presets
+            const currentBranding = BRANDING_CONFIGS[brandingMode];
+
             const quickPresets = {
                 selfLoveCoach: {
                     title: "Self Love Coach",
@@ -306,7 +393,6 @@
 
             const slideDimensions = getSlidesDimensions();
 
-            // NUEVO: Crear GIF animado
             const createGifAnimation = async (delaySeconds) => {
                 setProcessingVideo(true);
                 try {
@@ -353,7 +439,6 @@
                 }
             };
 
-            // NUEVO: Descargar imágenes secuenciales
             const downloadSequentialImages = async () => {
                 setProcessingVideo(true);
                 try {
@@ -471,13 +556,12 @@
 
                 let slideCount = 7;
                 let formatInstructions = "un carrusel de Instagram de **exactamente 7 láminas** que sea visualmente dinámico, elegante y adictivo de leer.";
-                let ctaInstruction = "Cierre potente + CTA estratégico enfocado en los productos o comunidad de Self Love Club (SIN mencionar nombres personales). **CRÍTICO: 'Self Love Club' DEBE estar siempre en la MISMA LÍNEA, NUNCA separado**. Ejemplos: 'Descubre cómo en Self Love Club transformas tu relación contigo mismo.' o 'Tu próximo nivel espera en Self Love Club.'";
+                let ctaInstruction = CTA_STRATEGIES[selectedPreset] || "Cierre potente enfocado en Self Love Club.";
                 let densityInstruction = "Máximo 4 líneas de texto por lámina, con variación de densidad.";
 
                 if (formatType === "story") {
                     slideCount = 4;
                     formatInstructions = "un carrusel Stories de Instagram de **exactamente 4 láminas** (9:16 vertical) con gancho inicial agresivo, texto muy conciso y CTA claro.";
-                    ctaInstruction = "Cierre con CTA urgente y conversión directa a Self Love Club. **CRÍTICO: 'Self Love Club' DEBE estar siempre en la MISMA LÍNEA, NUNCA separado**. Ejemplos: 'Accede ahora a Self Love Club.' o 'Tu transformación comienza en Self Love Club.'";
                     densityInstruction = "Máximo 3 líneas por lámina. Texto MUY conciso (1-2 palabras por línea cuando sea posible).";
                 }
 
@@ -495,7 +579,7 @@ REGLAS OBLIGATORIAS:
 - ${densityInstruction}
 - Usa saltos de línea naturales (\\n) para que el texto respire. Nunca un párrafo largo.
 - Las preguntas deben ir en su propia línea, grandes y potentes.
-- **REGLA CRÍTICA PARA LISTAS: SOLO usa guiones (-) para viñetas. UNA SOLA VIÑETA O NÚMERO POR ÍTEM. CERO REDUNDANCIAS TIPOGRÁFICAS. Si es una lista numerada, usa "1. 2. 3." ÚNICAMENTE. Nunca mezcles "-" con "•" con números.**
+- **REGLA CRÍTICA PARA LISTAS: SOLO usa guiones (-) para viñetas. UNA SOLA VIÑETA O NÚMERO POR ÍTEM. CERO REDUNDANCIAS TIPOGRÁFICAS. Si es una lista numerada, usa "1. 2. 3." ÚNICAMENTE. Nunca mezcles "-" con "•" con números. NUNCA.**
 - Usa **negritas** solo en las frases más importantes.
 - Títulos disruptivos pero elegantes (nunca clickbait barato).
 - **REGLA CRÍTICA DE COHERENCIA: "Self Love Club" NUNCA debe estar separado en dos líneas. Si una línea termina en "en el" o "en", la siguiente línea DEBE comenzar con "Self Love Club", no con "Self" solamente.**
@@ -511,7 +595,7 @@ TIPOS DE LÁMINAS QUE DEBES VARIAR:
 4. Lista corta y clara (máximo 3-4 ítems, SOLO guiones o SOLO números)
 5. El giro / la clave transformadora
 6. Ejercicio o acción práctica (con pasos numerados si aplica)
-7. ${ctaInstruction}
+7. Cierre: "${ctaInstruction}"
 
 Ensayo original:
 ${essay}
@@ -542,7 +626,8 @@ Responde ÚNICAMENTE con un JSON válido:
                     const parsed = JSON.parse(cleanJson);
                     
                     if (parsed.slides && parsed.slides.length === slideCount) {
-                        setSlides(parsed.slides);
+                        const processedSlides = postProcessSlides(parsed.slides);
+                        setSlides(processedSlides);
                         setCurrentSlide(0);
                     } else {
                         throw new Error(`El JSON debe tener exactamente ${slideCount} slides. Recibido: ${parsed.slides?.length || 0}`);
@@ -568,8 +653,9 @@ Responde ÚNICAMENTE con un JSON válido:
                     const data = await response.json();
                     const cleanJson = data.candidates[0].content.parts[0].text.replace(/```json|```/g, "").trim();
                     const refined = JSON.parse(cleanJson);
+                    const processedRefined = postProcessSlides([refined])[0];
                     const newSlides = [...slides]; 
-                    newSlides[currentSlide] = { ...slides[currentSlide], ...refined };
+                    newSlides[currentSlide] = { ...slides[currentSlide], ...processedRefined };
                     setSlides(newSlides);
                 } catch (err) { 
                     setError("Error al pulir: " + err.message); 
@@ -590,7 +676,6 @@ Responde ÚNICAMENTE con un JSON válido:
                 setIsSpeaking(true);
             };
 
-            // NUEVO: Guardar a batch con actualización
             const saveToBatch = () => {
                 if (!slides) return;
                 const newBatch = [...batchData];
@@ -599,7 +684,8 @@ Responde ÚNICAMENTE con un JSON válido:
                     slides, 
                     date: new Date().toISOString(),
                     format: formatType,
-                    style: currentStyle
+                    style: currentStyle,
+                    branding: brandingMode
                 });
                 setBatchData(newBatch);
                 localStorage.setItem('cl_batch', JSON.stringify(newBatch));
@@ -607,33 +693,26 @@ Responde ÚNICAMENTE con un JSON válido:
                 alert("¡Carrusel guardado en tu lote! 🚀");
             };
 
-            // NUEVO: Eliminar de batch
             const deleteFromBatch = (idx) => {
                 const newBatch = batchData.filter((_, i) => i !== idx);
                 setBatchData(newBatch);
                 localStorage.setItem('cl_batch', JSON.stringify(newBatch));
             };
 
-            // NUEVO: Regenerar desde batch
             const regenerateFromBatch = (idx) => {
                 const item = batchData[idx];
                 setSlides(item.slides);
                 setCurrentSlide(0);
                 setFormatType(item.format);
                 setCurrentStyle(item.style);
+                setBrandingMode(item.branding || "personal");
                 setShowBatchModal(false);
             };
 
-            // NUEVO: Exportar batch individual
             const exportBatchItem = async (idx) => {
                 const item = batchData[idx];
                 const zip = new JSZip();
                 try {
-                    for (let i = 0; i < item.slides.length; i++) {
-                        setCurrentSlide(i);
-                        // Aquí habría que renderizar, pero es complejo sin acceso al DOM
-                        // Por ahora, solo creamos un JSON con los slides
-                    }
                     zip.file('carrusel-data.json', JSON.stringify(item, null, 2));
                     const content = await zip.generateAsync({type: "blob"});
                     const link = document.createElement("a");
@@ -652,7 +731,9 @@ Responde ÚNICAMENTE con un JSON válido:
                             <span className="font-serif font-bold text-2xl tracking-wide text-white">Kinetic Clarity</span>
                         </div>
                         <div className="flex items-center gap-4">
-                            <img src="/assets/images/andres-ramirez-portrait.jpg" className="w-11 h-11 rounded-full border-2 border-slate-700 shadow-md object-cover" />
+                            {currentBranding.photo && (
+                                <img src={currentBranding.photo} className="w-11 h-11 rounded-full border-2 border-slate-700 shadow-md object-cover" />
+                            )}
                         </div>
                     </nav>
 
@@ -700,6 +781,19 @@ Responde ÚNICAMENTE con un JSON válido:
                                     )}
 
                                     <div className="space-y-2">
+                                        <label className="text-[10px] uppercase tracking-widest text-slate-500 font-bold ml-1">Modo de Branding</label>
+                                        <select 
+                                            value={brandingMode}
+                                            onChange={(e) => setBrandingMode(e.target.value)}
+                                            className="w-full bg-[#0b1121] border border-slate-700 rounded-xl p-3 text-sm focus:border-kinetic outline-none text-slate-300"
+                                        >
+                                            <option value="personal">👤 Personal (con footer)</option>
+                                            <option value="selfLoveClub">🌱 Self Love Club (con footer)</option>
+                                            <option value="client">🎯 Cliente (sin footer)</option>
+                                        </select>
+                                    </div>
+
+                                    <div className="space-y-2">
                                         <label className="text-[10px] uppercase tracking-widest text-slate-500 font-bold ml-1">Formato de Generación</label>
                                         <div className="flex gap-2">
                                             <button 
@@ -723,8 +817,8 @@ Responde ÚNICAMENTE con un JSON válido:
                                             {Object.entries(quickPresets).map(([key, preset]) => (
                                                 <button
                                                     key={key}
-                                                    onClick={() => setEssay(preset.text)}
-                                                    className="py-2 px-3 rounded-lg text-[9px] font-bold bg-[#0b1121] text-slate-300 border border-slate-700 hover:border-kinetic hover:text-kinetic transition-all"
+                                                    onClick={() => { setEssay(preset.text); setSelectedPreset(key); }}
+                                                    className={`py-2 px-3 rounded-lg text-[9px] font-bold border transition-all ${selectedPreset === key ? 'bg-kinetic text-white border-kinetic' : 'bg-[#0b1121] text-slate-300 border-slate-700 hover:border-kinetic hover:text-kinetic'}`}
                                                     title={preset.title}
                                                 >
                                                     {preset.title}
@@ -830,16 +924,20 @@ Responde ÚNICAMENTE con un JSON válido:
                                             )}
                                         </AutoFitContent>
 
-                                        <div className={`flex items-center justify-between border-t ${stylesConfig[currentStyle].border} pt-6 mt-auto flex-none z-10`}>
-                                            <div className="flex items-center gap-3">
-                                                <img src="/assets/images/andres-ramirez-portrait.jpg" className={`w-12 h-12 rounded-full border border-current grayscale-editorial object-cover`} />
-                                                <div className="flex flex-col text-left">
-                                                    <span className={`text-[10px] font-bold tracking-wider uppercase ${stylesConfig[currentStyle].fontBody}`}>Andrés Ramírez</span>
-                                                    <span className={`text-[8px] font-semibold opacity-40 uppercase tracking-widest ${stylesConfig[currentStyle].fontBody}`}>Clarity Strategist</span>
+                                        {currentBranding.footerVisible && (
+                                            <div className={`flex items-center justify-between border-t ${stylesConfig[currentStyle].border} pt-6 mt-auto flex-none z-10`}>
+                                                <div className="flex items-center gap-3">
+                                                    {currentBranding.photo && (
+                                                        <img src={currentBranding.photo} className={`w-12 h-12 rounded-full border border-current object-cover`} />
+                                                    )}
+                                                    <div className="flex flex-col text-left">
+                                                        <span className={`text-[10px] font-bold tracking-wider uppercase ${stylesConfig[currentStyle].fontBody}`}>{currentBranding.name}</span>
+                                                        <span className={`text-[8px] font-semibold opacity-40 uppercase tracking-widest ${stylesConfig[currentStyle].fontBody}`}>{currentBranding.title}</span>
+                                                    </div>
                                                 </div>
+                                                <div className={`px-4 py-1.5 rounded-full text-[8px] ${stylesConfig[currentStyle].tag}`}>0{currentSlide + 1}</div>
                                             </div>
-                                            <div className={`px-4 py-1.5 rounded-full text-[8px] ${stylesConfig[currentStyle].tag}`}>0{currentSlide + 1}</div>
-                                        </div>
+                                        )}
                                     </div>
 
                                     <div className="flex items-center gap-6 bg-surface p-3 rounded-full border border-slate-800 shadow-2xl">
