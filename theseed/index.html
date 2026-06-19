@@ -198,7 +198,7 @@
   @media (max-width: 600px) {
     .audioBar { bottom: 12px; }
     .audioBar button { padding: 8px 14px; font-size: 10px; }
-    .nav { padding: 8px 16px 40px; } /* Dar espacio para que el botón no tape el texto si hay mucho */
+    .nav { padding: 8px 16px 40px; }
   }
   
   /* ---- Parents Overlay ---- */
@@ -280,6 +280,10 @@
   }
   .author-footer a { color: var(--ink); text-decoration: none; font-weight: 500; }
   .author-footer a:hover { color: var(--amber); }
+  .author-footer .site-link {
+    display: block; margin-top: 4px; font-family: 'DM Mono', monospace;
+    font-size: 12px; letter-spacing: 0.05em; opacity: 0.6;
+  }
 </style>
 </head>
 <body>
@@ -365,7 +369,7 @@
           <div class="product-card">
             <div class="product-img-box">
               <span class="badge">KIT</span>
-              <img src="assets/theseed/Familia.JPG" alt="Guía Familiar" onerror="this.style.display='none'">
+              <img src="assets/theseed/familia.JPG" alt="Guía Familiar" onerror="this.style.display='none'">
             </div>
             <div class="product-info">
               <h3 class="info-title" style="font-size: 20px;" data-es="Guía Familiar" data-en="Family Guide">Guía Familiar</h3>
@@ -397,6 +401,7 @@
     <footer class="author-footer">
       <p style="font-size: 14px; color: var(--ink); opacity: 0.7; margin-bottom: 8px;" data-es="Una experiencia creada por" data-en="An experience created by">Una experiencia creada por</p>
       <a href="https://www.andresramirez.pro" target="_blank" style="font-size: 18px; font-family: 'Cormorant Garamond', serif; font-style: italic;">Andrés Ramírez</a>
+      <a href="https://www.andresramirez.pro" target="_blank" class="site-link">andresramirez.pro</a>
     </footer>
   </div>
 
@@ -435,7 +440,7 @@ const SCENES = [
     en:["One year passed.","The seed was now a young tree.","Its roots were deep. Its branches, strong.","And now it could do things it never could before:","Offer cool shade to those who had heat. Hold flowers. Feed birds. Hold its parents with roots deep and sure.","All of that came from choosing well, when it was only a seed in the dark."] },
 
   { img:"p7.png",
-    es:["El árbol joven seguía en el mismo bosque.","Cada día, nuevas semillas llegaban con la misma pregunta:","<em>\u201c¿No es egoísmo pensar en lo que yo necesito?\u201d</em>","El árbol sonrió. And dijo algo que nunca olvidarían:","\u201cEl amor propio no es lo opuesto al amor por otros. Es el inicio.\u201d","Cuando aprendas a elegir bien para ti, cuando crezcas fuerte desde adentro, tendrás todo lo que necesitas para amar de verdad.","And eso es el regalo más grande que puedes darle a quienes te aman."],
+    es:["El árbol joven seguía en el mismo bosque.","Cada día, nuevas semillas llegaban con la misma pregunta:","<em>\u201c¿No es egoísmo pensar en lo que yo necesito?\u201d</em>","El árbol sonrió. Y dijo algo que nunca olvidarían:","\u201cEl amor propio no es lo opuesto al amor por otros. Es el inicio.\u201d","Cuando aprendas a elegir bien para ti, cuando crezcas fuerte desde adentro, tendrás todo lo que necesitas para amar de verdad.","Y eso es el regalo más grande que puedes darle a quienes te aman."],
     en:["The young tree stayed in the same forest.","Each day, new seeds came with the same question:","<em>\u201cIsn\u2019t it selfish to think about what I need?\u201d</em>","The tree smiled. And said something they would never forget:","\u201cSelf-love is not the opposite of love for others. It is the beginning.\u201d","When you learn to choose well for yourself, when you grow strong from within, you will have everything you need to love truly.","And that is the greatest gift you can give to those who love you."] },
 
   { type:"colophon", img:"contraportada.png",
