@@ -181,7 +181,7 @@
 
   /* ---- Audio Bar ---- */
   .audioBar{
-    position:fixed;bottom:70px;left:0;right:0;
+    position:fixed;bottom:20px;left:0;right:0;
     display:flex;justify-content:center;z-index:10;pointer-events:none;
   }
   .audioBar button{
@@ -194,6 +194,12 @@
   }
   .audioBar button:hover{background:var(--sand);box-shadow:0 6px 16px rgba(26,24,20,.2);}
   .audioBar button:active{transform:scale(.98);}
+
+  @media (max-width: 600px) {
+    .audioBar { bottom: 12px; }
+    .audioBar button { padding: 8px 14px; font-size: 10px; }
+    .nav { padding: 8px 16px 40px; } /* Dar espacio para que el botón no tape el texto si hay mucho */
+  }
   
   /* ---- Parents Overlay ---- */
   .parents-overlay {
@@ -246,14 +252,15 @@
     border-radius: 12px; overflow: hidden; display: flex; flex-direction: column;
   }
   .product-img-box {
-    height: 180px; background: var(--muted, #E8E4DC);
+    aspect-ratio: 1 / 1; background: var(--muted, #E8E4DC);
     position: relative; border-bottom: 1px solid rgba(196,168,130,0.2);
+    overflow: hidden;
   }
   .product-img-box img { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: multiply; }
   .badge {
     position: absolute; top: 12px; right: 12px; background: var(--amber);
     color: var(--paper); font-family: 'DM Mono', monospace; font-size: 10px;
-    padding: 4px 10px; border-radius: 20px; letter-spacing: 0.1em;
+    padding: 4px 10px; border-radius: 20px; letter-spacing: 0.1em; z-index: 2;
   }
   .product-info { padding: 24px; flex: 1; display: flex; flex-direction: column; }
   .price-row { margin-top: auto; padding-top: 20px; display: flex; justify-content: space-between; align-items: center; }
@@ -428,7 +435,7 @@ const SCENES = [
     en:["One year passed.","The seed was now a young tree.","Its roots were deep. Its branches, strong.","And now it could do things it never could before:","Offer cool shade to those who had heat. Hold flowers. Feed birds. Hold its parents with roots deep and sure.","All of that came from choosing well, when it was only a seed in the dark."] },
 
   { img:"p7.png",
-    es:["El árbol joven seguía en el mismo bosque.","Cada día, nuevas semillas llegaban con la misma pregunta:","<em>\u201c¿No es egoísmo pensar en lo que yo necesito?\u201d</em>","El árbol sonrió. Y dijo algo que nunca olvidarían:","\u201cEl amor propio no es lo opuesto al amor por otros. Es el inicio.\u201d","Cuando aprendas a elegir bien para ti, cuando crezcas fuerte desde adentro, tendrás todo lo que necesitas para amar de verdad.","Y eso es el regalo más grande que puedes darle a quienes te aman."],
+    es:["El árbol joven seguía en el mismo bosque.","Cada día, nuevas semillas llegaban con la misma pregunta:","<em>\u201c¿No es egoísmo pensar en lo que yo necesito?\u201d</em>","El árbol sonrió. And dijo algo que nunca olvidarían:","\u201cEl amor propio no es lo opuesto al amor por otros. Es el inicio.\u201d","Cuando aprendas a elegir bien para ti, cuando crezcas fuerte desde adentro, tendrás todo lo que necesitas para amar de verdad.","And eso es el regalo más grande que puedes darle a quienes te aman."],
     en:["The young tree stayed in the same forest.","Each day, new seeds came with the same question:","<em>\u201cIsn\u2019t it selfish to think about what I need?\u201d</em>","The tree smiled. And said something they would never forget:","\u201cSelf-love is not the opposite of love for others. It is the beginning.\u201d","When you learn to choose well for yourself, when you grow strong from within, you will have everything you need to love truly.","And that is the greatest gift you can give to those who love you."] },
 
   { type:"colophon", img:"contraportada.png",
