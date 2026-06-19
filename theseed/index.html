@@ -553,15 +553,11 @@ render();
   const playIcon = document.getElementById("playIcon");
   let isPlaying = false;
 
-  function toggleAudio() {
-    if (isPlaying) {
-      narratorAudio.pause();
-      playIcon.textContent = "▶";
-    } else {
-      narratorAudio.play().catch(e => console.log("Audio not ready"));
-      playIcon.textContent = "⏸";
-    }
-    isPlaying = !isPlaying;
+    function narrationSoon() {
+    const msg = lang === "es"
+      ? "La narración llegará muy pronto. Con una voz muy especial."
+      : "The narration is coming very soon. With a very special voice.";
+    alert(msg);
   }
 
   function toggleParents() {
