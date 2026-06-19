@@ -27,21 +27,23 @@
     --paper:#FCFAF6;
   }
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  html,body{min-height:100dvh;}
+  html,body{height:100dvh;}
   body{
     background:var(--parchment);
     color:var(--ink);
     font-family:'Instrument Sans',sans-serif;
     font-weight:300;
-    overflow-y:auto;
+    overflow:hidden;
     display:flex;
     flex-direction:column;
+    height:100dvh;
   }
 
   .topbar{
     flex:0 0 auto;
     display:flex;justify-content:flex-end;align-items:center;
     padding:14px 20px 6px;
+    gap: 20px;
   }
   .lang{
     font-family:'DM Mono',monospace;font-weight:300;font-size:12px;
@@ -50,6 +52,15 @@
   .lang button{background:none;border:none;cursor:pointer;font:inherit;color:var(--sand);padding:4px 0;position:relative}
   .lang button.active{color:var(--ink)}
   .lang button.active::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1px;background:var(--amber)}
+
+  .btn-parents {
+    background: none; border: 1px solid var(--rule-strong, rgba(26,24,20,0.2));
+    padding: 6px 14px; border-radius: 20px;
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--amber); cursor: pointer; transition: 0.3s;
+  }
+  .btn-parents:hover { background: var(--amber); color: var(--paper); }
 
   .stage{
     flex:1 1 auto;display:flex;align-items:center;justify-content:center;
@@ -184,6 +195,20 @@
   .audioBar button:hover{background:var(--sand);box-shadow:0 6px 16px rgba(26,24,20,.2);}
   .audioBar button:active{transform:scale(.98);}
   
+  /* ---- Parents Overlay ---- */
+  .parents-overlay {
+    position: fixed; top: 100%; left: 0; width: 100%; height: 100dvh;
+    background: var(--parchment); z-index: 100; overflow-y: auto;
+    transition: top 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex; flex-direction: column;
+  }
+  .parents-overlay.open { top: 0; }
+  .close-overlay {
+    position: absolute; top: 20px; right: 24px;
+    background: none; border: none; font-size: 28px;
+    color: var(--amber); cursor: pointer; z-index: 101;
+  }
+
   /* ---- Funnel Sections ---- */
   .landing-section {
     padding: 80px 24px; background: var(--parchment);
@@ -240,12 +265,21 @@
     text-decoration: none; transition: 0.3s;
   }
   .btn-buy:hover { background: var(--sand); }
+
+  .author-footer {
+    text-align: center; padding: 40px 20px;
+    border-top: 1px solid rgba(196,168,130,0.3);
+    font-family: 'Instrument Sans', sans-serif;
+  }
+  .author-footer a { color: var(--ink); text-decoration: none; font-weight: 500; }
+  .author-footer a:hover { color: var(--amber); }
 </style>
 </head>
 <body>
 
   <div style="height: 100dvh; display: flex; flex-direction: column; position: relative;">
     <div class="topbar">
+      <button class="btn-parents" onclick="toggleParents()" data-es="Para Padres" data-en="For Parents">Para Padres</button>
       <div class="lang">
         <button id="es" class="active" onclick="setLang('es')">Español</button>
         <button id="en" onclick="setLang('en')">English</button>
@@ -276,79 +310,88 @@
   
   <audio id="narrator" src="assets/audio/eleida-narration.mp3" loop preload="none"></audio>
 
-  <section class="landing-section">
-    <div class="section-content">
-      <h2 class="section-title" data-es="Acerca de The Seed" data-en="About The Seed">Acerca de The Seed</h2>
-      <p class="section-sub" data-es="Un espacio diseñado para familias que buscan crear momentos de conexión tranquila y criar con intención." data-en="A space designed for families seeking to create moments of quiet connection and parent with intention.">Un espacio diseñado para familias que buscan crear momentos de conexión tranquila y criar con intención.</p>
-      
-      <div class="grid-3">
-        <div class="info-card">
-          <h3 class="info-title" data-es="Inclusión" data-en="Inclusivity">Inclusión</h3>
-          <p class="info-text" data-es="Diseñamos para todas las familias. Abuelos, familias monoparentales o tradicionales. Aquí todos son bienvenidos." data-en="We design for all families. Grandparents, single-parent, or traditional families. Everyone is welcome here.">Diseñamos para todas las familias. Abuelos, familias monoparentales o tradicionales. Aquí todos son bienvenidos.</p>
-        </div>
-        <div class="info-card">
-          <h3 class="info-title" data-es="Calma" data-en="Calm">Calma</h3>
-          <p class="info-text" data-es="En un mundo acelerado, ofrecemos herramientas emocionales para momentos de frustración, necesidad de calma o descanso." data-en="In a fast-paced world, we offer emotional tools for moments of frustration, a need for calm, or rest.">En un mundo acelerado, ofrecemos herramientas emocionales para momentos de frustración, necesidad de calma o descanso.</p>
-        </div>
-        <div class="info-card">
-          <h3 class="info-title" data-es="Autenticidad" data-en="Authenticity">Autenticidad</h3>
-          <p class="info-text" data-es="Rechazamos lo artificial. Arte familiar original y narraciones con voces que transmiten contención pedagógica real." data-en="We reject the artificial. Original family art and narrations with voices that transmit real pedagogical containment.">Rechazamos lo artificial. Arte familiar original y narraciones con voces que transmiten contención pedagógica real.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="landing-section" style="background: var(--paper);">
-    <div class="section-content">
-      <h2 class="section-title" data-es="Recursos & Cuadernos" data-en="Resources & Workbooks">Recursos & Cuadernos</h2>
-      <p class="section-sub" data-es="Materiales descargables diseñados para enriquecer la experiencia y transformar la lectura en un ritual familiar." data-en="Downloadable materials designed to enrich the experience and transform reading into a family ritual.">Materiales descargables diseñados para enriquecer la experiencia y transformar la lectura en un ritual familiar.</p>
-
-      <div class="grid-3">
-        <div class="product-card">
-          <div class="product-img-box">
-            <span class="badge">PDF</span>
-            <img src="assets/theseed/coloring-preview.png" alt="Libro para Colorear" onerror="this.style.display='none'">
+  <div id="parentsOverlay" class="parents-overlay">
+    <button class="close-overlay" onclick="toggleParents()">×</button>
+    
+    <section class="landing-section">
+      <div class="section-content">
+        <h2 class="section-title" data-es="Acerca de The Seed" data-en="About The Seed">Acerca de The Seed</h2>
+        <p class="section-sub" data-es="Un espacio diseñado para familias que buscan crear momentos de conexión tranquila y criar con intención." data-en="A space designed for families seeking to create moments of quiet connection and parent with intention.">Un espacio diseñado para familias que buscan crear momentos de conexión tranquila y criar con intención.</p>
+        
+        <div class="grid-3">
+          <div class="info-card">
+            <h3 class="info-title" data-es="Inclusión" data-en="Inclusivity">Inclusión</h3>
+            <p class="info-text" data-es="Diseñamos para todas las familias. Abuelos, familias monoparentales o tradicionales. Aquí todos son bienvenidos." data-en="We design for all families. Grandparents, single-parent, or traditional families. Everyone is welcome here.">Diseñamos para todas las familias. Abuelos, familias monoparentales o tradicionales. Aquí todos son bienvenidos.</p>
           </div>
-          <div class="product-info">
-            <h3 class="info-title" style="font-size: 20px;" data-es="Libro para Colorear" data-en="Coloring Book">Libro para Colorear</h3>
-            <p class="info-text" data-es="Las ilustraciones originales listas para que el niño explore su creatividad en calma." data-en="The original illustrations ready for the child to explore their creativity in calm.">Las ilustraciones originales listas para que el niño explore su creatividad en calma.</p>
-            <div class="price-row">
-              <span class="price">$9.99</span>
-              <a href="https://gumroad.com/theseed" target="_blank" class="btn-buy" data-es="Comprar" data-en="Buy">Comprar</a>
-            </div>
+          <div class="info-card">
+            <h3 class="info-title" data-es="Calma" data-en="Calm">Calma</h3>
+            <p class="info-text" data-es="En un mundo acelerado, ofrecemos herramientas emocionales para momentos de frustración, necesidad de calma o descanso." data-en="In a fast-paced world, we offer emotional tools for moments of frustration, a need for calm, or rest.">En un mundo acelerado, ofrecemos herramientas emocionales para momentos de frustración, necesidad de calma o descanso.</p>
           </div>
-        </div>
-        <div class="product-card">
-          <div class="product-img-box">
-            <span class="badge">KIT</span>
-            <img src="assets/theseed/family-preview.png" alt="Guía Familiar" onerror="this.style.display='none'">
-          </div>
-          <div class="product-info">
-            <h3 class="info-title" style="font-size: 20px;" data-es="Guía Familiar" data-en="Family Guide">Guía Familiar</h3>
-            <p class="info-text" data-es="Actividades de anclaje, búsqueda botánica y reflexión para cualquier estructura familiar." data-en="Anchoring activities, botanical search, and reflection for any family structure.">Actividades de anclaje, búsqueda botánica y reflexión para cualquier estructura familiar.</p>
-            <div class="price-row">
-              <span class="price">$14.99</span>
-              <a href="https://gumroad.com/theseed" target="_blank" class="btn-buy" data-es="Comprar" data-en="Buy">Comprar</a>
-            </div>
-          </div>
-        </div>
-        <div class="product-card">
-          <div class="product-img-box">
-            <span class="badge">AUDIO+PDF</span>
-            <img src="assets/theseed/ritual-preview.png" alt="Ritual Completo" onerror="this.style.display='none'">
-          </div>
-          <div class="product-info">
-            <h3 class="info-title" style="font-size: 20px;" data-es="Family Ritual Kit" data-en="Family Ritual Kit">Family Ritual Kit</h3>
-            <p class="info-text" data-es="La experiencia total: audios narrados para dormir, tarjetas de regalo y todas las guías." data-en="The total experience: narrated audios for sleeping, gift cards, and all guides.">La experiencia total: audios narrados para dormir, tarjetas de regalo y todas las guías.</p>
-            <div class="price-row">
-              <span class="price">$24.99</span>
-              <a href="https://gumroad.com/theseed" target="_blank" class="btn-buy" data-es="Comprar" data-en="Buy">Comprar</a>
-            </div>
+          <div class="info-card">
+            <h3 class="info-title" data-es="Autenticidad" data-en="Authenticity">Autenticidad</h3>
+            <p class="info-text" data-es="Rechazamos lo artificial. Arte familiar original y narraciones con voces que transmiten contención pedagógica real." data-en="We reject the artificial. Original family art and narrations with voices that transmit real pedagogical containment.">Rechazamos lo artificial. Arte familiar original y narraciones con voces que transmiten contención pedagógica real.</p>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <section class="landing-section" style="background: var(--paper);">
+      <div class="section-content">
+        <h2 class="section-title" data-es="Recursos & Cuadernos" data-en="Resources & Workbooks">Recursos & Cuadernos</h2>
+        <p class="section-sub" data-es="Materiales descargables diseñados para enriquecer la experiencia y transformar la lectura en un ritual familiar." data-en="Downloadable materials designed to enrich the experience and transform reading into a family ritual.">Materiales descargables diseñados para enriquecer la experiencia y transformar la lectura en un ritual familiar.</p>
+
+        <div class="grid-3">
+          <div class="product-card">
+            <div class="product-img-box">
+              <span class="badge">PDF</span>
+              <img src="assets/theseed/lapiz.JPG" alt="Libro para Colorear" onerror="this.style.display='none'">
+            </div>
+            <div class="product-info">
+              <h3 class="info-title" style="font-size: 20px;" data-es="Libro para Colorear" data-en="Coloring Book">Libro para Colorear</h3>
+              <p class="info-text" data-es="Las ilustraciones originales listas para que el niño explore su creatividad en calma." data-en="The original illustrations ready for the child to explore their creativity in calm.">Las ilustraciones originales listas para que el niño explore su creatividad en calma.</p>
+              <div class="price-row">
+                <span class="price">$9.99</span>
+                <a href="https://gumroad.com/theseed" target="_blank" class="btn-buy" data-es="Comprar" data-en="Buy">Comprar</a>
+              </div>
+            </div>
+          </div>
+          <div class="product-card">
+            <div class="product-img-box">
+              <span class="badge">KIT</span>
+              <img src="assets/theseed/Familia.JPG" alt="Guía Familiar" onerror="this.style.display='none'">
+            </div>
+            <div class="product-info">
+              <h3 class="info-title" style="font-size: 20px;" data-es="Guía Familiar" data-en="Family Guide">Guía Familiar</h3>
+              <p class="info-text" data-es="Actividades de anclaje, búsqueda botánica y reflexión para cualquier estructura familiar." data-en="Anchoring activities, botanical search, and reflection for any family structure.">Actividades de anclaje, búsqueda botánica y reflexión para cualquier estructura familiar.</p>
+              <div class="price-row">
+                <span class="price">$14.99</span>
+                <a href="https://gumroad.com/theseed" target="_blank" class="btn-buy" data-es="Comprar" data-en="Buy">Comprar</a>
+              </div>
+            </div>
+          </div>
+          <div class="product-card">
+            <div class="product-img-box">
+              <span class="badge">AUDIO+PDF</span>
+              <img src="assets/theseed/flor.JPG" alt="Ritual Completo" onerror="this.style.display='none'">
+            </div>
+            <div class="product-info">
+              <h3 class="info-title" style="font-size: 20px;" data-es="Family Ritual Kit" data-en="Family Ritual Kit">Family Ritual Kit</h3>
+              <p class="info-text" data-es="La experiencia total: audios narrados para dormir, tarjetas de regalo y todas las guías." data-en="The total experience: narrated audios for sleeping, gift cards, and all guides.">La experiencia total: audios narrados para dormir, tarjetas de regalo y todas las guías.</p>
+              <div class="price-row">
+                <span class="price">$24.99</span>
+                <a href="https://gumroad.com/theseed" target="_blank" class="btn-buy" data-es="Comprar" data-en="Buy">Comprar</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="author-footer">
+      <p style="font-size: 14px; color: var(--ink); opacity: 0.7; margin-bottom: 8px;" data-es="Una experiencia creada por" data-en="An experience created by">Una experiencia creada por</p>
+      <a href="https://www.andresramirez.pro" target="_blank" style="font-size: 18px; font-family: 'Cormorant Garamond', serif; font-style: italic;">Andrés Ramírez</a>
+    </footer>
+  </div>
 
 <script>
 const IMG = "assets/theseed/"; // <-- ajusta esta ruta a donde subas las imagenes
@@ -500,6 +543,10 @@ render();
       playIcon.textContent = "⏸";
     }
     isPlaying = !isPlaying;
+  }
+
+  function toggleParents() {
+    document.getElementById('parentsOverlay').classList.toggle('open');
   }
 </script>
 </body>
