@@ -27,16 +27,15 @@
     --paper:#FCFAF6;
   }
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  html,body{height:100%}
+  html,body{min-height:100dvh;}
   body{
     background:var(--parchment);
     color:var(--ink);
     font-family:'Instrument Sans',sans-serif;
     font-weight:300;
-    overflow:hidden;
+    overflow-y:auto;
     display:flex;
     flex-direction:column;
-    height:100dvh;
   }
 
   .topbar{
@@ -168,29 +167,188 @@
     .page{transition:opacity .2s linear}
     .page.active,.page.leaving{transform:none}
   }
+
+  /* ---- Audio Bar ---- */
+  .audioBar{
+    position:fixed;bottom:70px;left:0;right:0;
+    display:flex;justify-content:center;z-index:10;pointer-events:none;
+  }
+  .audioBar button{
+    pointer-events:auto;background:var(--amber);color:var(--paper);
+    border:none;font-family:'DM Mono',monospace;font-size:12px;
+    letter-spacing:.12em;text-transform:uppercase;padding:10px 18px;
+    border-radius:20px;box-shadow:0 4px 12px rgba(26,24,20,.15);
+    cursor:pointer;display:flex;align-items:center;gap:8px;
+    transition:all .3s ease;
+  }
+  .audioBar button:hover{background:var(--sand);box-shadow:0 6px 16px rgba(26,24,20,.2);}
+  .audioBar button:active{transform:scale(.98);}
+  
+  /* ---- Funnel Sections ---- */
+  .landing-section {
+    padding: 80px 24px; background: var(--parchment);
+    border-top: 1px dashed var(--sand); display: flex;
+    flex-direction: column; align-items: center;
+  }
+  .section-content { width: 100%; max-width: 900px; }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: clamp(32px, 6vw, 42px); color: var(--amber);
+    text-align: center; margin-bottom: 12px;
+  }
+  .section-sub {
+    font-size: 16px; text-align: center; color: var(--ink);
+    opacity: 0.8; margin-bottom: 48px; max-width: 600px;
+    margin-left: auto; margin-right: auto; line-height: 1.6;
+  }
+  .grid-3 {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px; margin-bottom: 40px;
+  }
+  .info-card {
+    background: var(--paper); border: 1px solid rgba(196,168,130,0.3);
+    border-radius: 12px; padding: 30px 24px; text-align: center;
+  }
+  .info-title {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 24px; color: var(--amber); margin-bottom: 12px;
+  }
+  .info-text { font-size: 14px; line-height: 1.7; color: var(--ink); opacity: 0.85; }
+  
+  /* Tienda */
+  .product-card {
+    background: var(--paper); border: 1px solid rgba(196,168,130,0.4);
+    border-radius: 12px; overflow: hidden; display: flex; flex-direction: column;
+  }
+  .product-img-box {
+    height: 180px; background: var(--muted, #E8E4DC);
+    position: relative; border-bottom: 1px solid rgba(196,168,130,0.2);
+  }
+  .product-img-box img { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: multiply; }
+  .badge {
+    position: absolute; top: 12px; right: 12px; background: var(--amber);
+    color: var(--paper); font-family: 'DM Mono', monospace; font-size: 10px;
+    padding: 4px 10px; border-radius: 20px; letter-spacing: 0.1em;
+  }
+  .product-info { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+  .price-row { margin-top: auto; padding-top: 20px; display: flex; justify-content: space-between; align-items: center; }
+  .price { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: bold; color: var(--amber); }
+  .btn-buy {
+    background: var(--amber); color: var(--paper); border: none; padding: 10px 20px;
+    font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.1em;
+    text-transform: uppercase; border-radius: 20px; cursor: pointer;
+    text-decoration: none; transition: 0.3s;
+  }
+  .btn-buy:hover { background: var(--sand); }
 </style>
 </head>
 <body>
 
-  <div class="topbar">
-    <div class="lang">
-      <button id="es" class="active" onclick="setLang('es')">Español</button>
-      <button id="en" onclick="setLang('en')">English</button>
+  <div style="height: 100dvh; display: flex; flex-direction: column; position: relative;">
+    <div class="topbar">
+      <div class="lang">
+        <button id="es" class="active" onclick="setLang('es')">Español</button>
+        <button id="en" onclick="setLang('en')">English</button>
+      </div>
+    </div>
+
+    <div class="stage">
+      <div class="book" id="book">
+        <div class="tapzone left" onclick="prev()"></div>
+        <div class="tapzone right" onclick="next()"></div>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button id="prevBtn" onclick="prev()"><span class="arrow">‹</span><span data-es="Anterior" data-en="Back">Anterior</span></button>
+      <div class="progress" id="progress"></div>
+      <button id="nextBtn" onclick="next()"><span data-es="Siguiente" data-en="Next">Siguiente</span><span class="arrow">›</span></button>
+    </div>
+
+    <!-- Barra Flotante de Audio -->
+    <div class="audioBar" id="audioBar">
+      <button id="playBtn" onclick="toggleAudio()">
+        <span class="playIcon" id="playIcon">▶</span>
+        <span id="playText" data-es="Escuchar" data-en="Listen">Escuchar</span>
+      </button>
     </div>
   </div>
+  
+  <audio id="narrator" src="assets/audio/eleida-narration.mp3" loop preload="none"></audio>
 
-  <div class="stage">
-    <div class="book" id="book">
-      <div class="tapzone left" onclick="prev()"></div>
-      <div class="tapzone right" onclick="next()"></div>
+  <section class="landing-section">
+    <div class="section-content">
+      <h2 class="section-title" data-es="Acerca de The Seed" data-en="About The Seed">Acerca de The Seed</h2>
+      <p class="section-sub" data-es="Un espacio diseñado para familias que buscan crear momentos de conexión tranquila y criar con intención." data-en="A space designed for families seeking to create moments of quiet connection and parent with intention.">Un espacio diseñado para familias que buscan crear momentos de conexión tranquila y criar con intención.</p>
+      
+      <div class="grid-3">
+        <div class="info-card">
+          <h3 class="info-title" data-es="Inclusión" data-en="Inclusivity">Inclusión</h3>
+          <p class="info-text" data-es="Diseñamos para todas las familias. Abuelos, familias monoparentales o tradicionales. Aquí todos son bienvenidos." data-en="We design for all families. Grandparents, single-parent, or traditional families. Everyone is welcome here.">Diseñamos para todas las familias. Abuelos, familias monoparentales o tradicionales. Aquí todos son bienvenidos.</p>
+        </div>
+        <div class="info-card">
+          <h3 class="info-title" data-es="Calma" data-en="Calm">Calma</h3>
+          <p class="info-text" data-es="En un mundo acelerado, ofrecemos herramientas emocionales para momentos de frustración, necesidad de calma o descanso." data-en="In a fast-paced world, we offer emotional tools for moments of frustration, a need for calm, or rest.">En un mundo acelerado, ofrecemos herramientas emocionales para momentos de frustración, necesidad de calma o descanso.</p>
+        </div>
+        <div class="info-card">
+          <h3 class="info-title" data-es="Autenticidad" data-en="Authenticity">Autenticidad</h3>
+          <p class="info-text" data-es="Rechazamos lo artificial. Arte familiar original y narraciones con voces que transmiten contención pedagógica real." data-en="We reject the artificial. Original family art and narrations with voices that transmit real pedagogical containment.">Rechazamos lo artificial. Arte familiar original y narraciones con voces que transmiten contención pedagógica real.</p>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
 
-  <div class="nav">
-    <button id="prevBtn" onclick="prev()"><span class="arrow">‹</span><span data-es="Anterior" data-en="Back">Anterior</span></button>
-    <div class="progress" id="progress"></div>
-    <button id="nextBtn" onclick="next()"><span data-es="Siguiente" data-en="Next">Siguiente</span><span class="arrow">›</span></button>
-  </div>
+  <section class="landing-section" style="background: var(--paper);">
+    <div class="section-content">
+      <h2 class="section-title" data-es="Recursos & Cuadernos" data-en="Resources & Workbooks">Recursos & Cuadernos</h2>
+      <p class="section-sub" data-es="Materiales descargables diseñados para enriquecer la experiencia y transformar la lectura en un ritual familiar." data-en="Downloadable materials designed to enrich the experience and transform reading into a family ritual.">Materiales descargables diseñados para enriquecer la experiencia y transformar la lectura en un ritual familiar.</p>
+
+      <div class="grid-3">
+        <div class="product-card">
+          <div class="product-img-box">
+            <span class="badge">PDF</span>
+            <img src="assets/theseed/coloring-preview.png" alt="Libro para Colorear" onerror="this.style.display='none'">
+          </div>
+          <div class="product-info">
+            <h3 class="info-title" style="font-size: 20px;" data-es="Libro para Colorear" data-en="Coloring Book">Libro para Colorear</h3>
+            <p class="info-text" data-es="Las ilustraciones originales listas para que el niño explore su creatividad en calma." data-en="The original illustrations ready for the child to explore their creativity in calm.">Las ilustraciones originales listas para que el niño explore su creatividad en calma.</p>
+            <div class="price-row">
+              <span class="price">$9.99</span>
+              <a href="https://gumroad.com/theseed" target="_blank" class="btn-buy" data-es="Comprar" data-en="Buy">Comprar</a>
+            </div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-img-box">
+            <span class="badge">KIT</span>
+            <img src="assets/theseed/family-preview.png" alt="Guía Familiar" onerror="this.style.display='none'">
+          </div>
+          <div class="product-info">
+            <h3 class="info-title" style="font-size: 20px;" data-es="Guía Familiar" data-en="Family Guide">Guía Familiar</h3>
+            <p class="info-text" data-es="Actividades de anclaje, búsqueda botánica y reflexión para cualquier estructura familiar." data-en="Anchoring activities, botanical search, and reflection for any family structure.">Actividades de anclaje, búsqueda botánica y reflexión para cualquier estructura familiar.</p>
+            <div class="price-row">
+              <span class="price">$14.99</span>
+              <a href="https://gumroad.com/theseed" target="_blank" class="btn-buy" data-es="Comprar" data-en="Buy">Comprar</a>
+            </div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-img-box">
+            <span class="badge">AUDIO+PDF</span>
+            <img src="assets/theseed/ritual-preview.png" alt="Ritual Completo" onerror="this.style.display='none'">
+          </div>
+          <div class="product-info">
+            <h3 class="info-title" style="font-size: 20px;" data-es="Family Ritual Kit" data-en="Family Ritual Kit">Family Ritual Kit</h3>
+            <p class="info-text" data-es="La experiencia total: audios narrados para dormir, tarjetas de regalo y todas las guías." data-en="The total experience: narrated audios for sleeping, gift cards, and all guides.">La experiencia total: audios narrados para dormir, tarjetas de regalo y todas las guías.</p>
+            <div class="price-row">
+              <span class="price">$24.99</span>
+              <a href="https://gumroad.com/theseed" target="_blank" class="btn-buy" data-es="Comprar" data-en="Buy">Comprar</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
 <script>
 const IMG = "assets/theseed/"; // <-- ajusta esta ruta a donde subas las imagenes
@@ -291,23 +449,58 @@ function go(n){
   setTimeout(()=>cur.classList.remove("leaving"),550);
   idx=n;render();
 }
-function next(){go(idx+1)}
 function prev(){go(idx-1)}
+function next(){go(idx+1)}
 
 function setLang(l){
-  lang=l;document.documentElement.lang=l;
-  document.getElementById("es").classList.toggle("active",l==="es");
-  document.getElementById("en").classList.toggle("active",l==="en");
-  document.querySelectorAll("[data-es][data-en]").forEach(el=>el.textContent=el.getAttribute("data-"+l));
-  document.querySelectorAll("[data-es-html][data-en-html]").forEach(el=>el.innerHTML=decodeURIComponent(el.getAttribute("data-"+l+"-html")));
+  lang=l;
+  document.querySelectorAll(".lang button").forEach(b=>b.classList.toggle("active",b.id===l));
+  
+  // Actualizar elementos con data-es/data-en
+  document.querySelectorAll("[data-es]").forEach(el=>{
+    el.textContent = el.getAttribute("data-"+l);
+  });
+
+  // Actualizar el libro interactivo (especialmente el contenido dinámico de las páginas)
+  pages.forEach((p, i) => {
+    const textEl = p.querySelector(".text");
+    if(textEl) {
+      const html = decodeURIComponent(textEl.getAttribute("data-"+l+"-html"));
+      textEl.innerHTML = html;
+    }
+    const kicker = p.querySelector(".cover-kicker");
+    if(kicker) kicker.textContent = kicker.getAttribute("data-"+l);
+    const title = p.querySelector(".cover-title");
+    if(title) title.textContent = title.getAttribute("data-"+l);
+    const sub = p.querySelector(".cover-sub");
+    if(sub) sub.textContent = sub.getAttribute("data-"+l);
+    const secret = p.querySelector(".secret");
+    if(secret) secret.textContent = secret.getAttribute("data-"+l);
+    const mark = p.querySelector(".mark");
+    if(mark) mark.textContent = mark.getAttribute("data-"+l);
+    const cnote = p.querySelector(".cnote");
+    if(cnote) cnote.textContent = cnote.getAttribute("data-"+l);
+  });
 }
 
-document.addEventListener("keydown",e=>{if(e.key==="ArrowRight")next();if(e.key==="ArrowLeft")prev()});
-let x0=null;
-book.addEventListener("touchstart",e=>x0=e.touches[0].clientX,{passive:true});
-book.addEventListener("touchend",e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>45){dx<0?next():prev()}x0=null});
-
+// Inicializar
 render();
+
+  // Lógica del Audio
+  const narratorAudio = document.getElementById("narrator");
+  const playIcon = document.getElementById("playIcon");
+  let isPlaying = false;
+
+  function toggleAudio() {
+    if (isPlaying) {
+      narratorAudio.pause();
+      playIcon.textContent = "▶";
+    } else {
+      narratorAudio.play().catch(e => console.log("Audio not ready"));
+      playIcon.textContent = "⏸";
+    }
+    isPlaying = !isPlaying;
+  }
 </script>
 </body>
 </html>
