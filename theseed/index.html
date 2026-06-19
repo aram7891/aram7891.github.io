@@ -312,12 +312,11 @@
 
     <!-- Barra Flotante de Audio -->
     <div class="audioBar" id="audioBar">
-      <button id="playBtn" onclick="toggleAudio()">
-        <span class="playIcon" id="playIcon">▶</span>
-        <span id="playText" data-es="Escuchar" data-en="Listen">Escuchar</span>
+      <button id="playBtn" class="soon" onclick="narrationSoon()">
+        <span class="playIcon">♪</span>
+        <span data-es="Narración · Pronto" data-en="Narration · Soon">Narración · Pronto</span>
       </button>
     </div>
-  </div>
   
   <audio id="narrator" src="assets/audio/eleida-narration.mp3" loop preload="none"></audio>
 
