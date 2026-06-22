@@ -54,13 +54,23 @@
   .lang button.active::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1px;background:var(--amber)}
 
   .btn-parents {
-    background: none; border: 1px solid var(--rule-strong, rgba(26,24,20,0.2));
-    padding: 6px 14px; border-radius: 20px;
-    font-family: 'DM Mono', monospace; font-size: 10px;
-    letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--amber); cursor: pointer; transition: 0.3s;
+    background: var(--amber);
+    color: var(--paper);
+    border: 1px solid var(--amber);
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
   }
-  .btn-parents:hover { background: var(--amber); color: var(--paper); }
+  .btn-parents:hover {
+    background: var(--sand);
+    color: var(--ink);
+    border-color: var(--sand);
+  }
 
   .stage{
     flex:1 1 auto;display:flex;align-items:center;justify-content:center;
@@ -87,7 +97,6 @@
     padding:14px;
   }
   .illo::before{
-    /* the parchment leaf behind the image */
     content:"";position:absolute;inset:0;
     background:var(--paper);
     border-radius:255px 12px 225px 15px / 15px 225px 12px 255px;
@@ -179,31 +188,7 @@
     .page.active,.page.leaving{transform:none}
   }
 
-  /* ---- Audio Bar ---- */
-  .audioBar{
-    position:fixed;bottom:20px;left:0;right:0;
-    display:flex;justify-content:center;z-index:10;pointer-events:none;
-  }
-  .audioBar button{
-    pointer-events:auto;background:var(--amber);color:var(--paper);
-    border:none;font-family:'DM Mono',monospace;font-size:12px;
-    letter-spacing:.12em;text-transform:uppercase;padding:10px 18px;
-    border-radius:20px;box-shadow:0 4px 12px rgba(26,24,20,.15);
-    cursor:pointer;display:flex;align-items:center;gap:8px;
-    transition:all .3s ease;
-  }
-  .audioBar button:hover{background:var(--sand);box-shadow:0 6px 16px rgba(26,24,20,.2);}
-  .audioBar button:active{transform:scale(.98);}
-  /* estado "pronto" — apagado, no invita a tocarse */
-  .audioBar button.soon{
-    background:transparent;color:var(--sand);
-    border:1px solid var(--sand);box-shadow:none;cursor:default;
-  }
-  .audioBar button.soon:hover{background:transparent;box-shadow:none;}
-
   @media (max-width: 600px) {
-    .audioBar { bottom: 12px; }
-    .audioBar button { padding: 8px 14px; font-size: 10px; }
     .nav { padding: 8px 16px 40px; }
   }
 
@@ -278,7 +263,6 @@
     text-decoration: none; transition: 0.3s;
   }
   .btn-buy:hover { background: var(--sand); }
-  /* estado "en producción" — apagado, sin link */
   .btn-buy.soon{
     background:transparent;color:var(--sand);
     border:1px solid var(--sand);cursor:default;
@@ -302,7 +286,7 @@
 
   <div class="app-shell" style="height: 100dvh; display: flex; flex-direction: column; position: relative;">
     <div class="topbar">
-      <button class="btn-parents" onclick="toggleParents()" data-es="Para Padres" data-en="For Parents">Para Padres</button>
+      <button class="btn-parents" onclick="toggleParents()" data-es="Vive la experiencia" data-en="Live the experience">Vive la experiencia</button>
       <div class="lang">
         <button id="es" class="active" onclick="setLang('es')">Español</button>
         <button id="en" onclick="setLang('en')">English</button>
@@ -320,14 +304,6 @@
       <button id="prevBtn" onclick="prev()"><span class="arrow">‹</span><span data-es="Anterior" data-en="Back">Anterior</span></button>
       <div class="progress" id="progress"></div>
       <button id="nextBtn" onclick="next()"><span data-es="Siguiente" data-en="Next">Siguiente</span><span class="arrow">›</span></button>
-    </div>
-
-    <!-- Barra Flotante de Audio -->
-    <div class="audioBar" id="audioBar">
-      <button id="playBtn" class="soon" onclick="narrationSoon()">
-        <span class="playIcon">♪</span>
-        <span data-es="Narración · Pronto" data-en="Narration · Soon">Narración · Pronto</span>
-      </button>
     </div>
   </div>
 
@@ -369,38 +345,38 @@
             </div>
             <div class="product-info">
               <h3 class="info-title" style="font-size: 20px;" data-es="Libro para Colorear" data-en="Coloring Book">Libro para Colorear</h3>
-              <p class="info-text" data-es="Las ilustraciones originales listas para que el niño explore su creatividad en calma." data-en="The original illustrations ready for the child to explore their creativity in calm.">Las ilustraciones originales listas para que el niño explore su creatividad en calma.</p>
+              <p class="info-text" data-es="Siete láminas originales que siguen la historia de la semilla, listas para colorear en calma." data-en="Seven original pages that follow the seed's story, ready to color calmly.">Siete láminas originales que siguen la historia de la semilla, listas para colorear en calma.</p>
               <div class="price-row">
                 <span class="price">$9.99</span>
-                <span class="btn-buy soon" data-es="En Producción" data-en="In Production">En Producción</span>
+                <a class="btn-buy" href="https://andresramirezpro.gumroad.com/l/theseed-coloringbook" target="_blank" data-es="Comprar" data-en="Buy">Comprar</a>
               </div>
             </div>
           </div>
           <div class="product-card">
             <div class="product-img-box">
-              <span class="badge">KIT</span>
-              <img src="assets/theseed/familia.JPG" alt="Guía Familiar" onerror="this.style.display='none'">
+              <span class="badge">PDF</span>
+              <img src="assets/theseed/familia.JPG" alt="Libro + Diploma" onerror="this.style.display='none'">
             </div>
             <div class="product-info">
-              <h3 class="info-title" style="font-size: 20px;" data-es="Guía Familiar" data-en="Family Guide">Guía Familiar</h3>
-              <p class="info-text" data-es="Actividades de anclaje, búsqueda botánica y reflexión para cualquier estructura familiar." data-en="Anchoring activities, botanical search, and reflection for any family structure.">Actividades de anclaje, búsqueda botánica y reflexión para cualquier estructura familiar.</p>
+              <h3 class="info-title" style="font-size: 20px;" data-es="Libro + Diploma" data-en="Book + Diploma">Libro + Diploma</h3>
+              <p class="info-text" data-es="El libro para colorear y el diploma de Agüita Clara, para colorear, firmar y regalar." data-en="The coloring book and the Clear Water diploma, to color, sign and give away.">El libro para colorear y el diploma de Agüita Clara, para colorear, firmar y regalar.</p>
               <div class="price-row">
                 <span class="price">$14.99</span>
-                <span class="btn-buy soon" data-es="En Producción" data-en="In Production">En Producción</span>
+                <a class="btn-buy" href="https://andresramirezpro.gumroad.com/l/Theseed-bookanddiploma" target="_blank" data-es="Comprar" data-en="Buy">Comprar</a>
               </div>
             </div>
           </div>
           <div class="product-card">
             <div class="product-img-box">
-              <span class="badge">AUDIO+PDF</span>
-              <img src="assets/theseed/flor.JPG" alt="Ritual Completo" onerror="this.style.display='none'">
+              <span class="badge">PDF</span>
+              <img src="assets/theseed/flor.JPG" alt="La Experiencia Completa" onerror="this.style.display='none'">
             </div>
             <div class="product-info">
-              <h3 class="info-title" style="font-size: 20px;" data-es="Family Ritual Kit" data-en="Family Ritual Kit">Family Ritual Kit</h3>
-              <p class="info-text" data-es="La experiencia total: audios narrados para dormir, tarjetas de regalo y todas las guías." data-en="The total experience: narrated audios for sleeping, gift cards, and all guides.">La experiencia total: audios narrados para dormir, tarjetas de regalo y todas las guías.</p>
+              <h3 class="info-title" style="font-size: 20px;" data-es="La Experiencia Completa" data-en="The Complete Experience">La Experiencia Completa</h3>
+              <p class="info-text" data-es="Las tres piezas: libro para colorear, diploma de Agüita Clara y guía familiar." data-en="All three pieces: coloring book, Clear Water diploma and family guide.">Las tres piezas: libro para colorear, diploma de Agüita Clara y guía familiar.</p>
               <div class="price-row">
-                <span class="price">$24.99</span>
-                <span class="btn-buy soon" data-es="En Producción" data-en="In Production">En Producción</span>
+                <span class="price">$19.99</span>
+                <a class="btn-buy" href="https://andresramirezpro.gumroad.com/l/theseed-theexperience" target="_blank" data-es="Comprar" data-en="Buy">Comprar</a>
               </div>
             </div>
           </div>
@@ -416,7 +392,7 @@
   </div>
 
 <script>
-const IMG = "assets/theseed/"; // <-- ajusta esta ruta a donde subas las imagenes
+const IMG = "assets/theseed/";
 
 const SCENES = [
   { type:"cover", img:"portada.png",
@@ -521,13 +497,11 @@ function setLang(l){
   lang=l;
   document.querySelectorAll(".lang button").forEach(b=>b.classList.toggle("active",b.id===l));
 
-  // Actualizar elementos con data-es/data-en
   document.querySelectorAll("[data-es]").forEach(el=>{
     el.textContent = el.getAttribute("data-"+l);
   });
 
-  // Actualizar el libro interactivo (especialmente el contenido dinámico de las páginas)
-  pages.forEach((p, i) => {
+  pages.forEach((p) => {
     const textEl = p.querySelector(".text");
     if(textEl) {
       const html = decodeURIComponent(textEl.getAttribute("data-"+l+"-html"));
@@ -548,16 +522,7 @@ function setLang(l){
   });
 }
 
-// Inicializar
 render();
-
-// Narración — estado "pronto" (voz especial en camino)
-function narrationSoon() {
-  const msg = lang === "es"
-    ? "La narración llegará muy pronto. Con una voz muy especial."
-    : "The narration is coming very soon. With a very special voice.";
-  alert(msg);
-}
 
 function toggleParents() {
   document.getElementById('parentsOverlay').classList.toggle('open');
