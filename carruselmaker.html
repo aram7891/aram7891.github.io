@@ -41,6 +41,9 @@
         .grayscale-editorial { filter: grayscale(100%) contrast(1.15); }
         .fade-in { animation: fadeIn 0.5s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .processing-overlay {
+            animation: fadeIn 0.2s ease-out;
+        }
     </style>
 </head>
 <body>
@@ -85,19 +88,15 @@
         const sanitizeListFormatting = (text) => {
             if (!text) return text;
             
-            // Convertir todos los tipos de viñetas a guiones normalizados
             let cleaned = text.replace(/^[•●\*]\s+/gm, '- ');
             
-            // Asegurar que si hay lista numerada, sea SOLO números sin mezcla
             const hasNumberedLists = /^\d+\.\s+/m.test(cleaned);
             const hasBulletLists = /^-\s+/m.test(cleaned);
             
             if (hasNumberedLists && hasBulletLists) {
-                // Si hay ambos, convertir todo a guiones (más limpio para redes)
                 cleaned = cleaned.replace(/^\d+\.\s+/gm, '- ');
             }
             
-            // Evitar doble espaciado después de viñetas
             cleaned = cleaned.replace(/^-\s{2,}/gm, '- ');
             
             return cleaned;
@@ -108,7 +107,6 @@
             
             const lines = text.split('\n');
             const fixed = lines.map((line, idx) => {
-                // Si la línea termina en "en el" o "en " y la siguiente empieza con "Self"
                 if (idx < lines.length - 1) {
                     const endsWithPartialPhrase = /en\s*$|en\s+el\s*$/.test(line.trim());
                     const nextLineStartsWithSelf = /^Self\s+Love\s+Club/.test(lines[idx + 1].trim());
@@ -132,7 +130,7 @@
             }));
         };
 
-        // Componente AutoFitContent (sin cambios)
+        // Componente AutoFitContent
         const AutoFitContent = ({ children, isCenter }) => {
             const containerRef = useRef(null);
             const contentRef = useRef(null);
@@ -171,7 +169,7 @@
             );
         };
 
-        // Modal para Batch Management (sin cambios)
+        // Modal para Batch Management
         const BatchModal = ({ isOpen, onClose, batch, onDelete, onRegenerate, onExport }) => {
             if (!isOpen) return null;
             return (
@@ -229,8 +227,8 @@
             );
         };
 
-        // Modal para Video Compilation (sin cambios)
-        const VideoCompilationModal = ({ isOpen, onClose, onCreateGif, onDownloadImages, isProcessing }) => {
+        // Modal para Video Compilation (mejorado con mejor feedback)
+        const VideoCompilationModal = ({ isOpen, onClose, onCreateGif, onDownloadImages, isProcessing, progress }) => {
             const [slideDelay, setSlideDelay] = useState(2);
             const [format, setFormat] = useState("gif");
 
@@ -247,12 +245,14 @@
                                 <div className="flex gap-2">
                                     <button 
                                         onClick={() => setFormat("gif")}
+                                        disabled={isProcessing}
                                         className={`flex-1 py-2 rounded-lg text-[10px] font-bold border transition-all ${format === "gif" ? 'bg-kinetic text-white border-kinetic' : 'bg-[#0b1121] text-slate-400 border-slate-700'}`}
                                     >
                                         🎬 GIF Animado
                                     </button>
                                     <button 
                                         onClick={() => setFormat("images")}
+                                        disabled={isProcessing}
                                         className={`flex-1 py-2 rounded-lg text-[10px] font-bold border transition-all ${format === "images" ? 'bg-kinetic text-white border-kinetic' : 'bg-[#0b1121] text-slate-400 border-slate-700'}`}
                                     >
                                         🖼️ Imágenes ZIP
@@ -272,6 +272,7 @@
                                             value={slideDelay}
                                             onChange={(e) => setSlideDelay(parseFloat(e.target.value))}
                                             className="flex-1"
+                                            disabled={isProcessing}
                                         />
                                         <span className="text-white font-bold w-12 text-right">{slideDelay}s</span>
                                     </div>
@@ -322,9 +323,21 @@
             const [showBatchModal, setShowBatchModal] = useState(false);
             const [showVideoModal, setShowVideoModal] = useState(false);
             const [processingVideo, setProcessingVideo] = useState(false);
+            const [processingProgress, setProcessingProgress] = useState({ current: 0, total: 0, message: "" });
             const [brandingMode, setBrandingMode] = useState("personal");
             const [selectedPreset, setSelectedPreset] = useState("selfLoveCoach");
             const slideRef = useRef(null);
+
+            // ============================================
+            // Helper robusto para esperar renderizado completo
+            // ============================================
+            const waitForRender = (ms = 450) => new Promise(resolve => {
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        setTimeout(resolve, ms);
+                    });
+                });
+            });
 
             const currentBranding = BRANDING_CONFIGS[brandingMode];
 
@@ -393,8 +406,17 @@
 
             const slideDimensions = getSlidesDimensions();
 
+            // ============================================
+            // MEJORADO: createGifAnimation con progreso + espera robusta
+            // ============================================
             const createGifAnimation = async (delaySeconds) => {
+                if (!window.htmlToImage) {
+                    setError("Error: La librería de captura no ha cargado. Refresca la página.");
+                    return;
+                }
                 setProcessingVideo(true);
+                setProcessingProgress({ current: 0, total: slides.length, message: "Preparando fotogramas..." });
+
                 try {
                     const gif = new GIF({
                         workers: 2,
@@ -405,15 +427,27 @@
                     });
 
                     const originalSlide = currentSlide;
+
                     for (let i = 0; i < slides.length; i++) {
                         setCurrentSlide(i);
-                        await new Promise(res => setTimeout(res, 100));
+                        setProcessingProgress({ 
+                            current: i + 1, 
+                            total: slides.length, 
+                            message: `Capturando fotograma ${i + 1} de ${slides.length}...` 
+                        });
+
+                        await waitForRender(450);
                         
                         if (slideRef.current) {
-                            const canvas = await window.htmlToImage.toCanvas(slideRef.current);
+                            const canvas = await window.htmlToImage.toCanvas(slideRef.current, {
+                                pixelRatio: 2,
+                                cacheBust: true
+                            });
                             gif.addFrame(canvas, { delay: delaySeconds * 1000 });
                         }
                     }
+
+                    setProcessingProgress({ current: slides.length, total: slides.length, message: "Generando GIF animado..." });
 
                     gif.on('finished', function(blob) {
                         const link = document.createElement('a');
@@ -422,6 +456,7 @@
                         link.click();
                         setCurrentSlide(originalSlide);
                         setProcessingVideo(false);
+                        setProcessingProgress({ current: 0, total: 0, message: "" });
                         setShowVideoModal(false);
                         setError(null);
                     });
@@ -430,34 +465,54 @@
                         setError("Error al crear GIF: " + error.message);
                         setCurrentSlide(originalSlide);
                         setProcessingVideo(false);
+                        setProcessingProgress({ current: 0, total: 0, message: "" });
                     });
 
                     gif.render();
                 } catch (err) {
-                    setError("Error al procesar video: " + err.message);
+                    setError("Error en GIF: " + err.message);
                     setProcessingVideo(false);
+                    setProcessingProgress({ current: 0, total: 0, message: "" });
                 }
             };
 
+            // ============================================
+            // MEJORADO: downloadSequentialImages con progreso
+            // ============================================
             const downloadSequentialImages = async () => {
+                if (!window.htmlToImage) {
+                    setError("Error: La librería de captura no ha cargado. Refresca la página.");
+                    return;
+                }
                 setProcessingVideo(true);
+                setProcessingProgress({ current: 0, total: slides.length, message: "Preparando exportación..." });
+
                 try {
                     const zip = new JSZip();
                     const originalSlide = currentSlide;
 
                     for (let i = 0; i < slides.length; i++) {
                         setCurrentSlide(i);
-                        await new Promise(res => setTimeout(res, 500));
+                        setProcessingProgress({ 
+                            current: i + 1, 
+                            total: slides.length, 
+                            message: `Capturando slide ${i + 1} de ${slides.length}...` 
+                        });
+
+                        await waitForRender(450);
 
                         if (slideRef.current) {
                             const dataUrl = await window.htmlToImage.toJpeg(slideRef.current, { 
                                 quality: 0.95, 
-                                pixelRatio: 2, 
-                                useCORS: true 
+                                pixelRatio: 3, 
+                                useCORS: true,
+                                cacheBust: true 
                             });
                             zip.file(`slide-${String(i + 1).padStart(2, '0')}.jpg`, dataUrl.split(',')[1], {base64: true});
                         }
                     }
+
+                    setProcessingProgress({ current: slides.length, total: slides.length, message: "Comprimiendo archivo ZIP..." });
 
                     const content = await zip.generateAsync({type: "blob"});
                     const link = document.createElement("a");
@@ -467,10 +522,12 @@
 
                     setCurrentSlide(originalSlide);
                     setProcessingVideo(false);
+                    setProcessingProgress({ current: 0, total: 0, message: "" });
                     setShowVideoModal(false);
                 } catch (err) {
                     setError("Error al descargar imágenes: " + err.message);
                     setProcessingVideo(false);
+                    setProcessingProgress({ current: 0, total: 0, message: "" });
                 }
             };
 
@@ -503,7 +560,7 @@
                 try {
                     for (let i = 0; i < slides.length; i++) {
                         setCurrentSlide(i);
-                        await new Promise(res => setTimeout(res, 800));
+                        await waitForRender(450);
                         const dataUrl = await window.htmlToImage.toJpeg(slideRef.current, { quality: 0.95, pixelRatio: 3, useCORS: true, cacheBust: true });
                         zip.file(`SLC-Slide-0${i+1}.jpg`, dataUrl.split(',')[1], {base64: true});
                     }
@@ -724,6 +781,47 @@ Responde ÚNICAMENTE con un JSON válido:
                 }
             };
 
+            // Overlay de procesamiento mejorado
+            const ProcessingOverlay = () => {
+                if (!processingVideo) return null;
+
+                const percent = processingProgress.total > 0 
+                    ? Math.round((processingProgress.current / processingProgress.total) * 100) 
+                    : 0;
+
+                return (
+                    <div className="fixed inset-0 bg-black/90 z-[200] flex items-center justify-center processing-overlay">
+                        <div className="bg-surface border border-slate-700 rounded-3xl p-10 max-w-md w-full mx-4 text-center">
+                            <div className="mb-6">
+                                <i className="fa-solid fa-film text-5xl text-kinetic mb-4"></i>
+                                <h3 className="text-2xl font-serif font-bold text-white mb-2">Procesando exportación</h3>
+                                <p className="text-slate-400 text-sm">{processingProgress.message || "Capturando contenido..."}</p>
+                            </div>
+
+                            {processingProgress.total > 0 && (
+                                <div className="mb-6">
+                                    <div className="flex justify-between text-xs text-slate-400 mb-2 font-mono">
+                                        <span>Slide {processingProgress.current} / {processingProgress.total}</span>
+                                        <span>{percent}%</span>
+                                    </div>
+                                    <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                                        <div 
+                                            className="h-full bg-kinetic transition-all duration-300 ease-out rounded-full" 
+                                            style={{ width: `${percent}%` }}
+                                        ></div>
+                                    </div>
+                                </div>
+                            )}
+
+                            <div className="flex items-center justify-center gap-2 text-xs text-slate-500">
+                                <i className="fa-solid fa-spinner fa-spin"></i>
+                                <span>Esto puede tardar unos segundos...</span>
+                            </div>
+                        </div>
+                    </div>
+                );
+            };
+
             return (
                 <div className="min-h-screen bg-kineticDark text-slate-200 font-sans selection:bg-kinetic selection:text-white pb-20">
                     <nav className="border-b border-slate-800 bg-[#0b1121] py-5 px-8 flex justify-between items-center sticky top-0 z-50 shadow-lg">
@@ -902,7 +1000,7 @@ Responde ÚNICAMENTE con un JSON válido:
                                         </div>
                                     </div>
 
-                                    <div ref={slideRef} className={`${slideDimensions.width} ${slideDimensions.height} ${stylesConfig[currentStyle].container} shadow-2xl flex flex-col ${slideDimensions.padding} relative overflow-hidden transition-all duration-700 ease-in-out`}>
+                                    <div ref={slideRef} className={`${slideDimensions.width} ${slideDimensions.height} ${stylesConfig[currentStyle].container} shadow-2xl flex flex-col ${slideDimensions.padding} relative overflow-hidden`}>
                                         <div className="flex justify-between items-center z-10 flex-none mb-6">
                                             <span className={`text-[9px] uppercase tracking-[0.4em] opacity-40 ${stylesConfig[currentStyle].fontBody}`}>Self Love Club</span>
                                             <div className={`w-2 h-2 rounded-full ${stylesConfig[currentStyle].accent}`}></div>
@@ -982,7 +1080,12 @@ Responde ÚNICAMENTE con un JSON válido:
                         onCreateGif={createGifAnimation}
                         onDownloadImages={downloadSequentialImages}
                         isProcessing={processingVideo}
+                        progress={processingProgress}
                     />
+
+                    {/* Overlay de procesamiento global */}
+                    <ProcessingOverlay />
+
                 </div>
             );
         };
