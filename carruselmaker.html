@@ -4,6 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kinetic Clarity Engine - Self Love Club</title>
+
+    <!-- Manifest para Android/PWA -->
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Icono para iOS -->
+    <link rel="apple-touch-icon" href="/assets/images/logo.png">
+
+    <!-- Configuración adicional para iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="AR Strategist">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.js"></script>
     <script>
@@ -319,7 +330,16 @@
             const [isSpeaking, setIsSpeaking] = useState(false);
             const [listingModels, setListingModels] = useState(false);
             const [formatType, setFormatType] = useState("post");
-            const [batchData, setBatchData] = useState(JSON.parse(localStorage.getItem('cl_batch') || '[]'));
+            const [batchData, setBatchData] = useState(() => {
+                try {
+                    const raw = localStorage.getItem('cl_batch');
+                    const parsed = raw ? JSON.parse(raw) : [];
+                    return Array.isArray(parsed) ? parsed : [];
+                } catch {
+                    localStorage.removeItem('cl_batch');
+                    return [];
+                }
+            });
             const [showBatchModal, setShowBatchModal] = useState(false);
             const [showVideoModal, setShowVideoModal] = useState(false);
             const [processingVideo, setProcessingVideo] = useState(false);
