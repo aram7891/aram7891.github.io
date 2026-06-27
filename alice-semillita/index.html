@@ -21,7 +21,6 @@
     color:var(--ink);
     font-family:'Instrument Sans',sans-serif;
     font-weight:300;
-    padding-top:0;
   }
 
   .page{
@@ -85,7 +84,7 @@
     font-size:20pt;color:var(--sand);text-align:center;padding:3mm 0 1mm;
   }
 
-  /* ---- COVER: full-bleed image, no frame, nothing added ---- */
+  /* ---- COVER ---- */
   .page.cover{padding:0}
   .cover img{
     position:absolute;inset:0;
@@ -94,65 +93,40 @@
     display:block;
   }
 
-  /* ---- ALICE VIP PAGE (now page 2) ---- */
-  .page.alice{
-    background:var(--parchment);
-    padding:0;
-  }
-  .alice-inner{
-    position:absolute;inset:0;
-    display:flex;flex-direction:column;
-  }
+  /* ---- ALICE VIP PAGE: image complete first, message adapts above ---- */
+  .page.alice{background:var(--parchment);padding:0;}
+  .alice-inner{position:absolute;inset:0;display:flex;flex-direction:column;}
   .alice-kicker{
-    font-family:'DM Mono',monospace;font-size:8.5pt;letter-spacing:.24em;
-    text-transform:uppercase;color:var(--sand);
-    padding:12mm 14mm 0;
+    font-family:'DM Mono',monospace;font-size:8pt;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--sand);padding:9mm 13mm 0;
   }
   .alice-title{
     font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;
-    font-size:28pt;color:var(--ink);
-    padding:2.5mm 14mm 0;
+    font-size:25pt;color:var(--ink);padding:2mm 13mm 0;line-height:1;
   }
-  .alice-msg{
-    font-size:9.8pt;line-height:1.68;font-weight:300;
-    padding:5mm 14mm 0;
-  }
-  .alice-msg p{margin:0 0 .55em}
+  .alice-msg{font-size:8.6pt;line-height:1.58;font-weight:300;padding:3.5mm 13mm 0;}
+  .alice-msg p{margin:0 0 .4em}
   .alice-msg .lead::first-letter{
     font-family:'Cormorant Garamond',serif;font-style:italic;
-    font-size:2.3em;line-height:.8;float:left;margin:.05em .12em 0 0;color:var(--amber);
+    font-size:2.1em;line-height:.8;float:left;margin:.05em .12em 0 0;color:var(--amber);
   }
   .alice-sign{
-    font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14pt;
-    color:var(--amber);padding:3mm 14mm 0;
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12pt;
+    color:var(--amber);padding:2.5mm 13mm 0;line-height:1.1;
   }
   .alice-sign .by{
-    font-family:'DM Mono',monospace;font-size:7.5pt;letter-spacing:.2em;
-    text-transform:uppercase;color:var(--sand);display:block;margin-top:1mm;font-style:normal;
+    font-family:'DM Mono',monospace;font-size:7pt;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--sand);display:block;margin-top:.5mm;font-style:normal;
   }
-  /* full-bleed illustration anchored to bottom — FIXED HEIGHT so roots always show */
-  .alice-art{
-    margin-top:auto;
-    width:100%;
-    height:95mm;            /* guaranteed space for the full square image incl. roots */
-    display:flex;
-    align-items:flex-end;
-    justify-content:center;
-    overflow:hidden;
-  }
-  .alice-art img{
-    width:100%;
-    height:auto;
-    display:block;
-    mix-blend-mode:multiply;
-  }
+  /* image: always complete, anchored bottom, never cropped */
+  .alice-art{margin-top:auto;width:100%;display:flex;align-items:flex-end;justify-content:center;}
+  .alice-art img{width:138mm;max-width:100%;height:auto;display:block;mix-blend-mode:multiply;}
 
   /* ---- COLOPHON ---- */
   .page.colophon .frame{justify-content:center;align-items:center}
   .colophon .secret{
     font-family:'Cormorant Garamond',serif;font-style:italic;
-    font-size:24pt;text-align:center;color:var(--amber);
-    margin:0 0 8mm;
+    font-size:24pt;text-align:center;color:var(--amber);margin:0 0 8mm;
   }
   .colophon .mark{
     font-family:'DM Mono',monospace;font-size:9pt;letter-spacing:.22em;
@@ -164,27 +138,19 @@
     color:var(--sand);text-align:center;margin-top:8mm;
   }
 
-  /* ---- PRINT RULES ---- */
   @media print{
     body{background:none}
-    .page{
-      margin:0;
-      box-shadow:none;
-      page-break-after:always;
-      break-after:page;
-    }
+    .page{margin:0;box-shadow:none;page-break-after:always;break-after:page;}
     .page:last-child{page-break-after:auto;break-after:auto}
     @page{size:148mm 210mm;margin:0}
     .printbar{display:none !important}
   }
 
-  /* ---- print bar: NOT fixed; sits above the pages, scrolls away ---- */
   .printbar{
     background:var(--ink);color:var(--parchment);
     font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.04em;
     text-align:center;padding:14px 16px;
-    max-width:148mm;margin:16px auto 0;border-radius:4px;
-    line-height:1.7;
+    max-width:148mm;margin:16px auto 0;border-radius:4px;line-height:1.7;
   }
   .printbar strong{color:#fff}
   .printbar button{
@@ -202,9 +168,9 @@
     <button onclick="window.print()">Imprimir / Guardar PDF</button>
   </div>
 
-  <!-- 1 · COVER (official portada.png, untouched, full bleed) -->
+  <!-- 1 · COVER -->
   <section class="page cover">
-    <img src="assets/theseed/portada1.png" alt="La Semilla">
+    <img src="/assets/theseed/portada1.png" alt="La Semilla">
   </section>
 
   <!-- 2 · ALICE VIP PAGE -->
@@ -213,24 +179,24 @@
       <div class="alice-kicker">Una página solo para ti</div>
       <div class="alice-title">Para Alice</div>
       <div class="alice-msg">
-        <p class="lead">A veces crecer significa detenernos un momento, mirar hacia nuestro interior y aprender a reconocer aquello que nos hace bien. Así como nuestra pequeña protagonista en esta historia, cada persona tiene una forma única de crecer, florecer y encontrar su propia luz.</p>
-<p>Me llena de alegría saber que, aunque eres pequeña, ya puedes descubrir una enseñanza que muchas personas tardan años en aprender: cuidarte, escucharte y valorar quién eres es el primer paso para compartir todo lo hermoso que llevas dentro.</p>
-<p>Que esta página especial te recuerde siempre que tu esencia es tu mayor fortaleza, que tus sueños merecen crecer y que siempre habrá un lugar para ti en las historias más hermosas.</p>
+        <p class="lead">A veces crecer significa detenernos un momento, mirar hacia nuestro interior y reconocer aquello que nos hace bien. Así como nuestra pequeña protagonista, cada persona tiene una forma única de crecer, florecer y encontrar su propia luz.</p>
+<p>Me llena de alegría saber que, aunque eres pequeña, ya descubres algo que muchos tardan años en aprender: cuidarte, escucharte y valorar quién eres es el primer paso para compartir todo lo hermoso que llevas dentro.</p>
+<p>Que esta página te recuerde siempre que tu esencia es tu mayor fortaleza, y que siempre habrá un lugar para ti en las historias más hermosas.</p>
       </div>
       <div class="alice-sign">Con mucho cariño,
         <span class="by">Andrés Ramírez · Self Love Club</span>
       </div>
       <div class="alice-art">
-        <img src="assets/theseed/alice-semillita.png" alt="Alice y Semillita, sembradas juntas">
+        <img src="/assets/theseed/alice-semillita.png" alt="Alice y Semillita, sembradas juntas">
       </div>
     </div>
   </section>
 
-  <!-- 3+ · STORY PAGES -->
+  <!-- 3+ · STORY -->
   
   <section class="page story">
     <div class="frame">
-      <div class="illo"><img src="assets/theseed/p1.png" alt=""></div>
+      <div class="illo"><img src="/assets/theseed/p1.png" alt=""></div>
       <div class="text"><p class="lead">Debajo de la tierra, una semilla esperaba.</p><p class="">No quería ser la más grande.</p><p class="">No quería crecer rápido.</p><p class="">Solo quería crecer bien, desde adentro.</p><p class="">Y eso le pedía algo: decidir.</p></div>
       <div class="pageno">1</div>
     </div>
@@ -238,7 +204,7 @@
 
   <section class="page story">
     <div class="frame">
-      <div class="illo"><img src="assets/theseed/p2.png" alt=""></div>
+      <div class="illo"><img src="/assets/theseed/p2.png" alt=""></div>
       <div class="text"><p class="lead">Cada mañana, la semilla tenía opciones:</p><p class="">Agua turbia o agua limpia.</p><p class="">Sombra profunda o luz tibia.</p><p class="">Tierra apretada o tierra suelta.</p><p class="">Sus padres traían las opciones.</p><p class="">Pero ella decidía cuál necesitaba.</p></div>
       <div class="pageno">2</div>
     </div>
@@ -246,7 +212,7 @@
 
   <section class="page story">
     <div class="frame">
-      <div class="illo"><img src="assets/theseed/p3.png" alt=""></div>
+      <div class="illo"><img src="/assets/theseed/p3.png" alt=""></div>
       <div class="text"><p class="lead">Pasaron días.</p><p class="">Y la semilla comenzó a notar algo claro:</p><p class="">Cuando elegía agua limpia, sus raíces crecían firmes. Cuando bebía agua turbia, se debilitaba.</p><p class="">No todas las opciones valían igual.</p><p class="">Algunas la fortalecían. Otras la gastaban.</p><p class="">La semilla aprendió a escuchar lo que su cuerpo le decía.</p></div>
       <div class="pageno">3</div>
     </div>
@@ -254,7 +220,7 @@
 
   <section class="page story">
     <div class="frame">
-      <div class="illo"><img src="assets/theseed/p4.png" alt=""></div>
+      <div class="illo"><img src="/assets/theseed/p4.png" alt=""></div>
       <div class="text"><p class="lead">Un día, una semilla cercana le susurró:</p><p class=""><em>“¿Por qué eres tan exigente contigo misma? Yo bebo cualquier agua. Crezco igual.”</em></p><p class="">Otra preguntó:</p><p class=""><em>“¿No es egoísmo pensar tanto en lo que necesitas? Las semillas de verdad no eligen. Solo crecen.”</em></p><p class="">La semilla sintió la duda. ¿Estaba sola por elegir bien? ¿Era egoísmo cuidarse a sí misma?</p></div>
       <div class="pageno">4</div>
     </div>
@@ -262,7 +228,7 @@
 
   <section class="page story">
     <div class="frame">
-      <div class="illo"><img src="assets/theseed/p5.png" alt=""></div>
+      <div class="illo"><img src="/assets/theseed/p5.png" alt=""></div>
       <div class="text"><p class="lead">Más tiempo después, vio a la otra semilla.</p><p class="">La que decía que todas las aguas valían igual.</p><p class="">Estaba débil. Sus raíces apenas sostenían el peso.</p><p class="">Entonces la semilla entendió sin necesidad de sermón:</p><p class="">Cuidarse a sí misma no era egoísmo. Era la única manera de poder cuidar a otros.</p></div>
       <div class="pageno">5</div>
     </div>
@@ -270,7 +236,7 @@
 
   <section class="page story">
     <div class="frame">
-      <div class="illo"><img src="assets/theseed/p6.png" alt=""></div>
+      <div class="illo"><img src="/assets/theseed/p6.png" alt=""></div>
       <div class="text"><p class="lead">Pasó un año.</p><p class="">La semilla era ahora un árbol joven y firme.</p><p class="">Sus raíces eran profundas. Sus ramas, fuertes.</p><p class="">Y ahora podía hacer cosas que antes no podía:</p><p class="">Ofrecer sombra fresca a quien tenía calor. Sostener flores. Alimentar pájaros. Abrazar a sus padres con raíces profundas y seguras.</p><p class="">Todo eso vino de haber elegido bien cuando era solo una semilla en la oscuridad.</p></div>
       <div class="pageno">6</div>
     </div>
@@ -278,7 +244,7 @@
 
   <section class="page story">
     <div class="frame">
-      <div class="illo"><img src="assets/theseed/p7.png" alt=""></div>
+      <div class="illo"><img src="/assets/theseed/p7.png" alt=""></div>
       <div class="text"><p class="lead">El árbol joven seguía en el mismo bosque.</p><p class="">Cada día, nuevas semillas llegaban con la misma pregunta:</p><p class=""><em>“¿No es egoísmo pensar en lo que yo necesito?”</em></p><p class="">El árbol sonrió. Y dijo algo que nunca olvidarían:</p><p class="">“El amor propio no es lo opuesto al amor por otros. Es el inicio.”</p><p class="">Cuando aprendas a elegir bien para ti, cuando crezcas fuerte desde adentro, tendrás todo lo que necesitas para amar de verdad.</p><p class="">Y eso es el regalo más grande que puedes darle a quienes te aman.</p></div>
       <div class="pageno">7</div>
     </div>
