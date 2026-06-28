@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>La Semilla · Self Love Club</title>
+<meta property="og:title" content="La Semilla · Self Love Club">
+<meta property="og:description" content="Una historia sobre el valor de elegir bien, desde adentro.">
+<meta property="og:image" content="https://www.andresramirez.pro/assets/theseed/og-image.png">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500&family=Instrument+Sans:wght@300;400&family=DM+Mono:wght@300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --parchment: #F7F4EF;
+    --ink: #1A1814;
+    --amber: #8B6F4E;
+    --sand: #C4A882;
+    --paper: #FCFAF6;
+  }
+  
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  
+  html, body { height:100dvh; }
+  
+  body {
+    background: var(--parchment);
+    color: var(--ink);
+    font-family: 'Instrument Sans', sans-serif;
+    font-weight: 300;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+  }
+
+  .topbar {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px 6px;
+    gap: 20px;
+  }
+
+  .btn-about {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--amber);
+    padding: 8px 2px;
+    position: relative;
+    transition: color .3s ease;
+  }
+  .btn-about::after {
+    content: "";
+    position: absolute;
+    left: 2px; right: 2px; bottom: 4px; height: 1px;
+    background: var(--sand);
+    opacity: .5;
+    transition: opacity .3s ease;
+  }
+  .btn-about:hover { color: var(--ink); }
+  .btn-about:hover::after { opacity: 1; background: var(--amber); }
+
+  .btn-experience {
+    background: var(--amber);
+    color: var(--paper);
+    border: 1.5px solid var(--ink);
+    padding: 10px 22px;
+    border-radius: 22px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-shadow: 0 1px 1px rgba(26,24,20,0.3);
+    box-shadow: 0 2px 0 var(--ink);
+    transition: all 0.3s ease;
+  }
+  .btn-experience:hover {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+    text-shadow: none;
+    box-shadow: 0 2px 0 var(--amber);
+  }
+
+  .stage {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 16px;
+    position: relative;
+  }
+
+  .book {
+    width: 100%;
+    max-width: 560px;
+    height: 100%;
+    max-height: 880px;
+    position: relative;
+  }
+
+  .page {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .5s ease, transform .55s cubic-bezier(.4,0,.2,1);
+    transform: translateX(26px);
+  }
+  .page.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+  }
+  .page.leaving {
+    opacity: 0;
+    transform: translateX(-26px);
+  }
+
+  .frame {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    padding: 4% 7% 3%;
+    min-height: 0;
+  }
+
+  .illo {
+    flex: 1 1 56%;
+    min-height: 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px;
+  }
+  .illo::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--paper);
+    border-radius: 255px 12px 225px 15px / 15px 225px 12px 255px;
+    box-shadow:
+      0 1px 0 rgba(196,168,130,.4),
+      inset 0 0 22px rgba(196,168,130,.18),
+      0 6px 18px rgba(26,24,20,.06);
+    transform: rotate(-.4deg);
+  }
+  .illo img {
+    position: relative;
+    z-index: 1;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 200px 8px 180px 10px / 10px 180px 8px 200px;
+    mix-blend-mode: multiply;
+  }
+
+  .text {
+    flex: 0 0 auto;
+    font-size: clamp(14px, 3.8vw, 18px);
+    line-height: 1.8;
+    font-weight: 300;
+    padding: 4% 2% 0;
+  }
+  .text p { margin: 0 0 .6em; }
+  .text em { font-style: italic; color: var(--amber); }
+  .text .lead::first-letter {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 2.5em;
+    line-height: .8;
+    float: left;
+    margin: .05em .12em 0 0;
+    color: var(--amber);
+  }
+
+  .pageno {
+    flex: 0 0 auto;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 28px;
+    color: var(--sand);
+    text-align: center;
+    padding: 1% 0 2%;
+  }
+
+  /* Cover - Full image */
+  .page.cover .frame {
+    justify-content: center;
+    padding: 0;
+  }
+  .cover-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  /* Colophon */
+  .page.colophon .frame { justify-content: center; }
+  .colophon .illo { flex: 1 1 50%; }
+  .secret {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(22px, 6vw, 30px);
+    text-align: center;
+    color: var(--amber);
+    margin: 5% 0 3%;
+  }
+  .mark {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--sand);
+    text-align: center;
+    margin-bottom: 6px;
+  }
+  .cnote {
+    font-size: 13px;
+    line-height: 1.7;
+    text-align: center;
+    color: var(--amber);
+    max-width: 30ch;
+    margin: 0 auto;
+  }
+
+  .nav {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 24px 16px;
+    gap: 16px;
+  }
+  .nav button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink);
+    padding: 8px 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .nav button:disabled { color: var(--sand); opacity: .4; cursor: default; }
+  .nav .arrow { font-size: 18px; line-height: 1; }
+
+  .progress {
+    flex: 1 1 auto;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+  }
+  .dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--sand);
+    opacity: .4;
+    transition: all .3s;
+  }
+  .dot.on {
+    background: var(--amber);
+    opacity: 1;
+    transform: scale(1.4);
+  }
+
+  .tapzone {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 34%;
+    z-index: 5;
+    cursor: pointer;
+  }
+  .tapzone.left { left: 0; }
+  .tapzone.right { right: 0; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .page { transition: opacity .2s linear; }
+    .page.active, .page.leaving { transform: none; }
+  }
+
+  .parents-overlay {
+    position: fixed;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 100dvh;
+    background: var(--parchment);
+    z-index: 100;
+    overflow-y: auto;
+    transition: top 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+  }
+  .parents-overlay.open { top: 0; }
+
+  .close-overlay {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: var(--amber);
+    cursor: pointer;
+    z-index: 101;
+  }
+
+  .landing-section {
+    padding: 80px 24px;
+    background: var(--parchment);
+    border-top: 1px dashed var(--sand);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .section-content { width: 100%; max-width: 900px; }
+  .section-kicker {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--sand);
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(32px, 6vw, 42px);
+    color: var(--amber);
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .section-sub {
+    font-size: 16px;
+    text-align: center;
+    color: var(--ink);
+    opacity: 0.8;
+    margin-bottom: 48px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+
+  <div class="app-shell" style="height: 100dvh; display: flex; flex-direction: column; position: relative;">
+    
+    <!-- Topbar -->
+    <div class="topbar">
+      <button class="btn-about" onclick="toggleAbout()">Acerca de</button>
+      <button class="btn-experience" onclick="toggleStore()">Vive la experiencia</button>
+    </div>
+
+    <!-- Book -->
+    <div class="stage">
+      <div class="book" id="book">
+        <div class="tapzone left" onclick="prev()"></div>
+        <div class="tapzone right" onclick="next()"></div>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav">
+      <button id="prevBtn" onclick="prev()"><span class="arrow">‹</span> Anterior</button>
+      <div class="progress" id="progress"></div>
+      <button id="nextBtn" onclick="next()">Siguiente <span class="arrow">›</span></button>
+    </div>
+
+  </div>
+
+  <!-- Store Overlay -->
+  <div id="storeOverlay" class="parents-overlay">
+    <button class="close-overlay" onclick="toggleStore()">×</button>
+    <section class="landing-section">
+      <div class="section-content">
+        <div class="section-kicker">Self Love Club · La Semilla</div>
+        <h2 class="section-title">Vive la experiencia</h2>
+        <p class="section-sub">Materiales descargables diseñados para enriquecer la experiencia y transformar la lectura en un ritual familiar.</p>
+        
+        <!-- Aquí puedes agregar tus productos de Gumroad cuando quieras -->
+        <p style="text-align:center; color:#8B6F4E; font-size:14px;">
+          (Productos disponibles en Gumroad)
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <!-- About Overlay -->
+  <div id="aboutOverlay" class="parents-overlay">
+    <button class="close-overlay" onclick="toggleAbout()">×</button>
+    <section class="landing-section">
+      <div class="section-content">
+        <div class="section-kicker">Self Love Club</div>
+        <h2 class="section-title">Acerca de</h2>
+        <p class="section-sub">En el Self Love Club escribimos para todas las familias. Creamos historias y materiales que convierten la lectura en un momento de conexión tranquila, y que acompañan la crianza con intención. La Semilla es una de esas publicaciones.</p>
+      </div>
+    </section>
+  </div>
+
+<script>
+// ==================== CONFIGURACIÓN ====================
+const IMG_PATH = "assets/theseed/";
+
+const SCENES = [
+  // PORTADA - Solo imagen completa
+  { 
+    type: "cover", 
+    img: "portada2.png" 
+  },
+
+  // Páginas de la historia
+  { 
+    img: "p1.png",
+    text: [
+      "Debajo de la tierra, una semilla esperaba.",
+      "No quería ser la más grande.",
+      "No quería crecer rápido.",
+      "Solo quería crecer bien, desde adentro.",
+      "Y eso le pedía algo: decidir."
+    ]
+  },
+  { 
+    img: "p2.png",
+    text: [
+      "Cada mañana, la semilla tenía opciones:",
+      "Agua turbia o agua limpia.",
+      "Sombra profunda o luz tibia.",
+      "Tierra apretada o tierra suelta.",
+      "Sus padres traían las opciones.",
+      "Pero ella decidía cuál necesitaba."
+    ]
+  },
+  { 
+    img: "p3.png",
+    text: [
+      "Pasaron días.",
+      "Y la semilla comenzó a notar algo claro:",
+      "Cuando elegía agua limpia, sus raíces crecían firmes. Cuando bebía agua turbia, se debilitaba.",
+      "No todas las opciones valían igual.",
+      "Algunas la fortalecían. Otras la gastaban.",
+      "La semilla aprendió a escuchar lo que su cuerpo le decía."
+    ]
+  },
+  { 
+    img: "p4.png",
+    text: [
+      "Un día, una semilla cercana le susurró:",
+      "<em>“¿Por qué eres tan exigente contigo misma? Yo bebo cualquier agua. Crezco igual.”</em>",
+      "Otra preguntó:",
+      "<em>“¿No es egoísmo pensar tanto en lo que necesitas? Las semillas de verdad no eligen. Solo crecen.”</em>",
+      "La semilla sintió la duda. ¿Estaba sola por elegir bien? ¿Era egoísmo cuidarse a sí misma?"
+    ]
+  },
+  { 
+    img: "p5.png",
+    text: [
+      "Más tiempo después, vio a la otra semilla.",
+      "La que decía que todas las aguas valían igual.",
+      "Estaba débil. Sus raíces apenas sostenían el peso.",
+      "Entonces la semilla entendió sin necesidad de sermón:",
+      "Cuidarse a sí misma no era egoísmo. Era la única manera de poder cuidar a otros."
+    ]
+  },
+  { 
+    img: "p6.png",
+    text: [
+      "Pasó un año.",
+      "La semilla era ahora un árbol joven y firme.",
+      "Sus raíces eran profundas. Sus ramas, fuertes.",
+      "Y ahora podía hacer cosas que antes no podía:",
+      "Ofrecer sombra fresca a quien tenía calor. Sostener flores. Alimentar pájaros. Abrazar a sus padres con raíces profundas y seguras.",
+      "Todo eso vino de haber elegido bien cuando era solo una semilla en la oscuridad."
+    ]
+  },
+  { 
+    img: "p7.png",
+    text: [
+      "El árbol joven seguía en el mismo bosque.",
+      "Cada día, nuevas semillas llegaban con la misma pregunta:",
+      "<em>“¿No es egoísmo pensar en lo que yo necesito?”</em>",
+      "El árbol sonrió. Y dijo algo que nunca olvidarían:",
+      "“El amor propio no es lo opuesto al amor por otros. Es el inicio.”",
+      "Cuando aprendas a elegir bien para ti, cuando crezcas fuerte desde adentro, tendrás todo lo que necesitas para amar de verdad.",
+      "Y eso es el regalo más grande que puedes darle a quienes te aman."
+    ]
+  },
+
+  // Contraportada
+  { 
+    type: "colophon", 
+    img: "contraportada.png",
+    secret: "Y todo vuelve a empezar.",
+    mark: "Self Love Club · La Semilla",
+    cnote: "Un protocolo de amor propio para quien aún crece."
+  }
+];
+
+// ==================== LÓGICA ====================
+let idx = 0;
+const book = document.getElementById("book");
+
+function buildPage(scene, index) {
+  const page = document.createElement("div");
+  page.className = "page";
+
+  if (scene.type === "cover") {
+    page.classList.add("cover");
+    page.innerHTML = `
+      <div class="frame">
+        <img src="${IMG_PATH}${scene.img}" alt="La Semilla - Portada" class="cover-image">
+      </div>
+    `;
+  } 
+  else if (scene.type === "colophon") {
+    page.classList.add("colophon");
+    page.innerHTML = `
+      <div class="frame">
+        <div class="illo">
+          <img src="${IMG_PATH}${scene.img}" alt="">
+        </div>
+        <div class="secret">${scene.secret}</div>
+        <div class="mark">${scene.mark}</div>
+        <div class="cnote">${scene.cnote}</div>
+      </div>
+    `;
+  } 
+  else {
+    const paragraphs = scene.text.map((t, i) => 
+      `<p class="${i === 0 ? 'lead' : ''}">${t}</p>`
+    ).join("");
+
+    page.innerHTML = `
+      <div class="frame">
+        <div class="illo">
+          <img src="${IMG_PATH}${scene.img}" alt="">
+        </div>
+        <div class="text">${paragraphs}</div>
+        <div class="pageno">${index}</div>
+      </div>
+    `;
+  }
+
+  return page;
+}
+
+// Construir todas las páginas
+SCENES.forEach((scene, i) => {
+  book.appendChild(buildPage(scene, i));
+});
+
+const pages = [...book.querySelectorAll(".page")];
+
+// Progress dots
+const progressContainer = document.getElementById("progress");
+SCENES.forEach(() => {
+  const dot = document.createElement("div");
+  dot.className = "dot";
+  progressContainer.appendChild(dot);
+});
+const dots = [...progressContainer.querySelectorAll(".dot")];
+
+function render() {
+  pages.forEach((p, i) => p.classList.toggle("active", i === idx));
+  dots.forEach((d, i) => d.classList.toggle("on", i === idx));
+  
+  document.getElementById("prevBtn").disabled = idx === 0;
+  document.getElementById("nextBtn").disabled = idx === pages.length - 1;
+}
+
+function go(newIndex) {
+  if (newIndex < 0 || newIndex > pages.length - 1) return;
+  
+  const current = pages[idx];
+  current.classList.add("leaving");
+  
+  setTimeout(() => {
+    current.classList.remove("leaving");
+  }, 550);
+  
+  idx = newIndex;
+  render();
+}
+
+function prev() { go(idx - 1); }
+function next() { go(idx + 1); }
+
+// Inicializar
+render();
+
+// Funciones de overlays
+function toggleStore() {
+  document.getElementById('aboutOverlay').classList.remove('open');
+  document.getElementById('storeOverlay').classList.toggle('open');
+}
+
+function toggleAbout() {
+  document.getElementById('storeOverlay').classList.remove('open');
+  document.getElementById('aboutOverlay').classList.toggle('open');
+}
+</script>
+</body>
+</html>
