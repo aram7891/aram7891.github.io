@@ -371,7 +371,7 @@
   <!-- ===== PORTADA DE VIDEO ===== -->
   <video id="cover-video" autoplay muted loop playsinline
          poster="assets/theseed/landing-bg.PNG">
-    <source src="assets/theseed/landing-bg2.MP4" type="video/mp4">
+    <source src="assets/theseed/landing-bg.MP4" type="video/mp4">
   </video>
   <div id="cover-screen">
     <div class="cover-block">
@@ -665,6 +665,29 @@ function toggleAbout() {
   document.getElementById('storeOverlay').classList.remove('open');
   document.getElementById('aboutOverlay').classList.toggle('open');
 }
+
+/* ---- Apertura por enlace directo (#experiencia / #acerca) ---- */
+function openFromHash(){
+  var h = (location.hash || '').toLowerCase();
+  if(h.indexOf('experiencia') !== -1 || h.indexOf('experience') !== -1){
+    var s = document.getElementById('storeOverlay');
+    if(s){ s.classList.add('open'); }
+    var a = document.getElementById('aboutOverlay'); if(a) a.classList.remove('open');
+  } else if(h.indexOf('acerca') !== -1 || h.indexOf('about') !== -1){
+    var a = document.getElementById('aboutOverlay');
+    if(a){ a.classList.add('open'); }
+    var s2 = document.getElementById('storeOverlay'); if(s2) s2.classList.remove('open');
+  }
+}
+window.addEventListener('hashchange', openFromHash);
+/* al cargar: si hay idioma en el hash lo aplica, luego abre la secci\u00f3n */
+window.addEventListener('load', function(){
+  var h = (location.hash || '').toLowerCase();
+  if(h.indexOf('en') !== -1 && (h.indexOf('experience') !== -1 || h.indexOf('about') !== -1)){
+    if(typeof chooseLang === 'function'){ try{ chooseLang('en'); }catch(e){} }
+  }
+  setTimeout(openFromHash, 60);
+});
 </script>
 </body>
 </html>
