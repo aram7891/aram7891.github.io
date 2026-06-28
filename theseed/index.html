@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="es">
+<head><style>
+@font-face {
+  font-family: "Optimistic";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("/fonts/OptimisticAI_VF_Optimized.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Optimistic Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/OptimisticMono_W_TextRegular.woff2") format("woff2");
+}
+:where(html) {
+  font-family: "Optimistic", system-ui, sans-serif;
+}
+:where(code, pre, kbd, samp) {
+  font-family: "Optimistic Mono", ui-monospace, monospace;
+}
+</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>La Semilla · Self Love Club</title>
+<meta property="og:title" content="La Semilla · Self Love Club">
+<meta property="og:description" content="Una historia sobre el valor de elegir bien, desde adentro. The Seed - A story about growing with love.">
+<meta property="og:image" content="https://www.andresramirez.pro/assets/theseed/og-image.png">
+<meta property="og:image:width" content="1402">
+<meta property="og:image:height" content="1122">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.andresramirez.pro/theseed">
+<meta property="fb:app_id" content="1499851408010655">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="La Semilla · Self Love Club">
+<meta name="twitter:description" content="Una historia sobre el valor de elegir bien, desde adentro.">
+<meta name="twitter:image" content="https://www.andresramirez.pro/assets/theseed/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500&family=Instrument+Sans:wght@300;400&family=DM+Mono:wght@300&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --parchment:#F7F4EF;
+    --ink:#1A1814;
+    --amber:#8B6F4E;
+    --sand:#C4A882;
+    --paper:#FCFAF6;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{height:100dvh;}
+  body{
+    background:var(--parchment);
+    color:var(--ink);
+    font-family:'Instrument Sans',sans-serif;
+    font-weight:300;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    height:100dvh;
+  }
+
+  .topbar{
+    flex:0 0 auto;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:14px 20px 6px;
+    gap: 20px;
+  }
+  .topbar-right{display:flex;align-items:center;gap:20px}
+
+  /* ---- botón "Acerca de": discreto, a la izquierda ---- */
+  .btn-about{
+    background:none;border:none;cursor:pointer;
+    font-family:'DM Mono',monospace;font-size:11px;font-weight:300;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--amber);
+    padding:8px 2px;position:relative;transition:color .3s ease;
+  }
+  .btn-about::after{
+    content:"";position:absolute;left:2px;right:2px;bottom:4px;height:1px;
+    background:var(--sand);opacity:.5;transition:opacity .3s ease;
+  }
+  .btn-about:hover{color:var(--ink)}
+  .btn-about:hover::after{opacity:1;background:var(--amber)}
+  .lang{
+    font-family:'DM Mono',monospace;font-weight:300;font-size:12px;
+    letter-spacing:.12em;text-transform:uppercase;display:flex;gap:14px;
+  }
+  .lang button{background:none;border:none;cursor:pointer;font:inherit;color:var(--sand);padding:4px 0;position:relative}
+  .lang button.active{color:var(--ink)}
+  .lang button.active::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1px;background:var(--amber)}
+
+  /* ---- botón "Vive la experiencia": presencia sin gritar ---- */
+  .btn-parents {
+    background: var(--amber);
+    color: var(--paper);
+    border: 1.5px solid var(--ink);
+    padding: 10px 22px;
+    border-radius: 22px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-shadow: 0 1px 1px rgba(26,24,20,0.3);
+    box-shadow: 0 2px 0 var(--ink);
+    transition: all 0.3s ease;
+  }
+  .btn-parents:hover {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+    text-shadow: none;
+    box-shadow: 0 2px 0 var(--amber);
+  }
+
+  .stage{
+    flex:1 1 auto;display:flex;align-items:center;justify-content:center;
+    padding:0 16px;position:relative;
+  }
+  .book{width:100%;max-width:560px;height:100%;max-height:880px;position:relative}
+
+  .page{
+    position:absolute;inset:0;
+    display:flex;flex-direction:column;
+    opacity:0;pointer-events:none;
+    transition:opacity .5s ease, transform .55s cubic-bezier(.4,0,.2,1);
+    transform:translateX(26px);
+  }
+  .page.active{opacity:1;pointer-events:auto;transform:translateX(0)}
+  .page.leaving{opacity:0;transform:translateX(-26px)}
+
+  .frame{flex:1 1 auto;display:flex;flex-direction:column;padding:4% 7% 3%;min-height:0}
+
+  /* ---- parchment-framed illustration ---- */
+  .illo{
+    flex:1 1 56%;min-height:0;position:relative;
+    display:flex;align-items:center;justify-content:center;
+    padding:14px;
+  }
+  .illo::before{
+    content:"";position:absolute;inset:0;
+    background:var(--paper);
+    border-radius:255px 12px 225px 15px / 15px 225px 12px 255px;
+    box-shadow:
+      0 1px 0 rgba(196,168,130,.4),
+      inset 0 0 22px rgba(196,168,130,.18),
+      0 6px 18px rgba(26,24,20,.06);
+    transform:rotate(-.4deg);
+  }
+  .illo img{
+    position:relative;z-index:1;
+    max-width:100%;max-height:100%;
+    object-fit:contain;
+    border-radius:200px 8px 180px 10px / 10px 180px 8px 200px;
+    mix-blend-mode:multiply;
+  }
+
+  .text{
+    flex:0 0 auto;
+    font-size:clamp(14px,3.8vw,18px);
+    line-height:1.8;font-weight:300;
+    padding:4% 2% 0;
+  }
+  .text p{margin:0 0 .6em}
+  .text em{font-style:italic;color:var(--amber)}
+  .text .lead::first-letter{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:2.5em;line-height:.8;float:left;margin:.05em .12em 0 0;color:var(--amber);
+  }
+
+  .pageno{
+    flex:0 0 auto;
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:28px;color:var(--sand);text-align:center;padding:1% 0 2%;
+  }
+
+  /* cover */
+  .page.cover .frame{justify-content:center}
+  .cover .illo{flex:1 1 64%}
+  .cover-kicker{
+    font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--sand);text-align:center;margin:4% 0 12px;
+  }
+  .cover-title{
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;
+    font-size:clamp(32px,9vw,48px);line-height:1.05;text-align:center;
+  }
+  .cover-sub{
+    font-size:13px;line-height:1.7;text-align:center;color:var(--amber);
+    margin:12px auto 0;max-width:26ch;
+  }
+
+  /* colophon / back cover */
+  .page.colophon .frame{justify-content:center}
+  .colophon .illo{flex:1 1 50%}
+  .colophon .secret{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:clamp(22px,6vw,30px);text-align:center;color:var(--amber);
+    margin:5% 0 3%;
+  }
+  .colophon .mark{
+    font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--sand);text-align:center;margin-bottom:6px;
+  }
+  .colophon .cnote{font-size:13px;line-height:1.7;text-align:center;color:var(--amber);max-width:30ch;margin:0 auto}
+
+  .nav{
+    flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;
+    padding:8px 24px 16px;gap:16px;
+  }
+  .nav button{
+    background:none;border:none;cursor:pointer;
+    font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--ink);padding:8px 4px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .nav button:disabled{color:var(--sand);opacity:.4;cursor:default}
+  .nav .arrow{font-size:18px;line-height:1}
+  .progress{flex:1 1 auto;display:flex;gap:5px;align-items:center;justify-content:center}
+  .dot{width:5px;height:5px;border-radius:50%;background:var(--sand);opacity:.4;transition:all .3s}
+  .dot.on{background:var(--amber);opacity:1;transform:scale(1.4)}
+
+  .tapzone{position:absolute;top:0;bottom:0;width:34%;z-index:5;cursor:pointer}
+  .tapzone.left{left:0}
+  .tapzone.right{right:0}
+
+  @media (prefers-reduced-motion: reduce){
+    .page{transition:opacity .2s linear}
+    .page.active,.page.leaving{transform:none}
+  }
+
+  @media (max-width: 600px) {
+    .nav { padding: 8px 16px 40px; }
+  }
+
+  /* ---- Parents Overlay ---- */
+  .parents-overlay {
+    position: fixed; top: 100%; left: 0; width: 100%; height: 100dvh;
+    background: var(--parchment); z-index: 100; overflow-y: auto;
+    transition: top 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex; flex-direction: column;
+  }
+  .parents-overlay.open { top: 0; }
+  .close-overlay {
+    position: absolute; top: 20px; right: 24px;
+    background: none; border: none; font-size: 28px;
+    color: var(--amber); cursor: pointer; z-index: 101;
+  }
+
+  /* ---- Funnel Sections ---- */
+  .landing-section {
+    padding: 80px 24px; background: var(--parchment);
+    border-top: 1px dashed var(--sand); display: flex;
+    flex-direction: column; align-items: center;
+  }
+  .section-content { width: 100%; max-width: 900px; }
+  .section-kicker {
+    font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--sand); text-align: center; margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: clamp(32px, 6vw, 42px); color: var(--amber);
+    text-align: center; margin-bottom: 12px;
+  }
+  .section-sub {
+    font-size: 16px; text-align: center; color: var(--ink);
+    opacity: 0.8; margin-bottom: 48px; max-width: 600px;
+    margin-left: auto; margin-right: auto; line-height: 1.6;
+  }
+  .grid-3 {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px; margin-bottom: 40px;
+  }
+  .info-card {
+    background: var(--paper); border: 1px solid rgba(196,168,130,0.3);
+    border-radius: 12px; padding: 30px 24px; text-align: center;
+  }
+  .info-title {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 24px; color: var(--amber); margin-bottom: 12px;
+  }
+  .info-text { font-size: 14px; line-height: 1.7; color: var(--ink); opacity: 0.85; }
+
+  /* Tienda */
+  .product-card {
+    background: var(--paper); border: 1px solid rgba(196,168,130,0.4);
+    border-radius: 12px; overflow: hidden; display: flex; flex-direction: column;
+  }
+  .product-img-box {
+    aspect-ratio: 1 / 1; background: var(--muted, #E8E4DC);
+    position: relative; border-bottom: 1px solid rgba(196,168,130,0.2);
+    overflow: hidden;
+  }
+  .product-img-box img { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: multiply; }
+  .badge {
+    position: absolute; top: 12px; right: 12px; background: var(--amber);
+    color: var(--paper); font-family: 'DM Mono', monospace; font-size: 10px;
+    padding: 4px 10px; border-radius: 20px; letter-spacing: 0.1em; z-index: 2;
+  }
+  .product-info { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+  .price-row { margin-top: auto; padding-top: 20px; display: flex; justify-content: space-between; align-items: center; }
+  .price { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: bold; color: var(--amber); }
+  .btn-buy {
+    background: var(--amber); color: var(--paper); border: none; padding: 10px 20px;
+    font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.1em;
+    text-transform: uppercase; border-radius: 20px; cursor: pointer;
+    text-decoration: none; transition: 0.3s;
+  }
+  .btn-buy:hover { background: var(--sand); }
+
+  .author-footer {
+    text-align: center; padding: 40px 20px;
+    border-top: 1px solid rgba(196,168,130,0.3);
+    font-family: 'Instrument Sans', sans-serif;
+  }
+  .author-footer a { color: var(--ink); text-decoration: none; font-weight: 500; }
+  .author-footer a:hover { color: var(--amber); }
+  .author-footer .site-link {
+    display: block; margin-top: 4px; font-family: 'DM Mono', monospace;
+    font-size: 12px; letter-spacing: 0.05em; opacity: 0.6;
+    transition: opacity .3s ease, color .3s ease;
+  }
+  .author-footer .site-link:hover { opacity: 1; color: var(--amber); }
+
+  /* ---- Landing portada ---- */
+  .landing{position:fixed;inset:0;z-index:200;background:var(--parchment);display:flex;align-items:center;justify-content:center;padding:24px;transition:opacity .5s ease,visibility .5s;}
+  .landing.hidden{opacity:0;visibility:hidden;pointer-events:none;}
+  .landing-inner{width:100%;max-width:520px;text-align:center;}
+  .landing-illo{margin:0 auto 24px;max-width:420px;padding:14px;position:relative;}
+  .landing-illo::before{content:"";position:absolute;inset:0;background:var(--paper);border-radius:255px 12px 225px 15px/15px 225px 12px 255px;box-shadow:0 1px 0 rgba(196,168,130,.4),inset 0 0 22px rgba(196,168,130,.18),0 6px 18px rgba(26,24,20,.06);transform:rotate(-.4deg);}
+  .landing-illo img{position:relative;z-index:1;width:100%;height:auto;display:block;border-radius:12px;mix-blend-mode:multiply;}
+  .landing-kicker{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--sand);margin-bottom:8px;}
+  .landing-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:clamp(40px,10vw,56px);line-height:1.05;color:var(--ink);margin-bottom:12px;}
+  .landing-sub{font-size:15px;line-height:1.6;color:var(--amber);margin:0 auto 28px;max-width:36ch;}
+  .landing-buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .landing-btn{background:var(--amber);color:var(--paper);border:1.5px solid var(--ink);padding:12px 24px;border-radius:24px;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;box-shadow:0 2px 0 var(--ink);transition:all .25s;}
+  .landing-btn:hover{background:var(--ink);box-shadow:0 2px 0 var(--amber);}
+  .landing-btn.alt{background:transparent;color:var(--ink);border-color:var(--sand);box-shadow:none;}
+  .landing-btn.alt:hover{background:var(--paper);border-color:var(--amber);}
+  .app-shell{opacity:0;transition:opacity .4s ease;}
+  .app-shell.ready{opacity:1;}
+
+
+  /* ---- Portada video ---- */
+  #bg-video{position:fixed;inset:0;width:100vw;height:100dvh;object-fit:cover;object-position:center;z-index:0}
+  .landing-screen{position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;justify-content:space-between;align-items:center;padding:24px;background:linear-gradient(to top,rgba(0,0,0,.35),transparent 40%,rgba(0,0,0,.15));transition:opacity .5s ease,visibility .5s}
+  .landing-screen.hidden{opacity:0;visibility:hidden;pointer-events:none}
+  .landing-home{margin-top:8px;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#F7F4EF;text-decoration:none;opacity:.9;text-shadow:0 1px 3px rgba(0,0,0,.6)}
+  .landing-home:hover{opacity:1}
+  .landing-btns{margin-bottom:8vh;display:flex;gap:14px;flex-wrap:wrap;background:rgba(247,244,239,.75);backdrop-filter:blur(8px);padding:14px 18px;border-radius:28px;box-shadow:0 4px 18px rgba(0,0,0,.25)}
+  .landing-btn{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;padding:12px 22px;border-radius:22px;border:1.5px solid #1A1814;background:#8B6F4E;color:#FCFAF6;cursor:pointer;box-shadow:0 2px 0 #1A1814;transition:.2s}
+  .landing-btn:hover{background:#1A1814}
+  .landing-btn.alt{background:transparent;color:#1A1814;box-shadow:none}
+  .landing-btn.alt:hover{background:rgba(255,255,255,.6)}
+  .app-shell{opacity:0;transition:opacity .4s ease}
+  .app-shell.ready{opacity:1}
+
+</style>
+</head>
+<body>
+
+  <!-- ===== PORTADA VIDEO ===== -->
+  <video id="bg-video" autoplay muted loop playsinline poster="assets/landing-bg-poster.jpg">
+    <source src="https://www.andresramirez.pro/assets/landing-bg.MP4" type="video/mp4">
+  </video>
+  <div id="landing" class="landing-screen">
+    <a href="https://andresramirez.pro" class="landing-home">andresramirez.pro</a>
+    <div class="landing-btns">
+      <button class="landing-btn" onclick="chooseLang('es')">Leer en español</button>
+      <button class="landing-btn alt" onclick="chooseLang('en')">Read in English</button>
+    </div>
+  </div>
+
+
+  <!-- ===== LANDING PORTADA ===== -->
+  <div id="landing" class="landing">
+    <div class="landing-inner">
+      <div class="landing-illo"><img src="assets/theseed/og-image.png" alt="La Semilla / The Seed"/></div>
+      <div class="landing-kicker">Self Love Club</div>
+      <h1 class="landing-title"><span data-es="La Semilla" data-en="The Seed">La Semilla</span></h1>
+      <p class="landing-sub" data-es="Una historia sobre el valor de elegir bien, desde adentro." data-en="A story about growing with love, from within.">Una historia sobre el valor de elegir bien, desde adentro.</p>
+      <div class="landing-buttons">
+        <button class="landing-btn" onclick="chooseLang('es')">Leer en Español</button>
+        <button class="landing-btn alt" onclick="chooseLang('en')">Read in English</button>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="app-shell" style="height: 100dvh; display: flex; flex-direction: column; position: relative;">
+    <div class="topbar">
+      <button class="btn-about" onclick="toggleAbout()" data-es="Acerca de" data-en="About">Acerca de</button>
+      <div class="topbar-right">
+        <button class="btn-parents" onclick="toggleStore()" data-es="Vive la experiencia" data-en="Live the experience">Vive la experiencia</button>
+        <div class="lang">
+          <button id="es" class="active" onclick="setLang('es')">Español</button>
+          <button id="en" onclick="setLang('en')">English</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="stage">
+      <div class="book" id="book">
+        <div class="tapzone left" onclick="prev()"></div>
+        <div class="tapzone right" onclick="next()"></div>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button id="prevBtn" onclick="prev()"><span class="arrow">‹</span><span data-es="Anterior" data-en="Back">Anterior</span></button>
+      <div class="progress" id="progress"></div>
+      <button id="nextBtn" onclick="next()"><span data-es="Siguiente" data-en="Next">Siguiente</span><span class="arrow">›</span></button>
+    </div>
+
+  </div>
+
+  <!-- ===== OVERLAYS ===== -->
+  <!-- ... rest of file unchanged ... -->
+</body>
+</html>
+function chooseLang(l){
+  localStorage.setItem('theseed_lang', l);
+  setLang(l);
+  document.getElementById('landing').classList.add('hidden');
+  document.querySelector('.app-shell').classList.add('ready');
+}
+// Al cargar, decide si mostrar landing
+document.addEventListener('DOMContentLoaded', function(){
+  const saved = localStorage.getItem('theseed_lang');
+  if(saved){
+    setLang(saved);
+    document.getElementById('landing').classList.add('hidden');
+    document.querySelector('.app-shell').classList.add('ready');
+  } else {
+    // mostrar landing, ocultar app
+    document.querySelector('.app-shell').classList.remove('ready');
+  }
+});
+
+
+function chooseLang(l){
+  localStorage.setItem('theseed_lang', l);
+  setLang(l);
+  document.getElementById('landing').classList.add('hidden');
+  document.querySelector('.app-shell').classList.add('ready');
+  document.getElementById('bg-video').pause();
+}
+document.addEventListener('DOMContentLoaded', function(){
+  const saved = localStorage.getItem('theseed_lang');
+  if(saved){
+    setLang(saved);
+    document.getElementById('landing').classList.add('hidden');
+    document.querySelector('.app-shell').classList.add('ready');
+    const v=document.getElementById('bg-video'); if(v) v.pause();
+  }
+});
+
+</script>E html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>La Semilla · Self Love Club</title>
+<meta property="og:title" content="La Semilla · Self Love Club">
+<meta property="og:description" content="Una historia sobre el valor de elegir bien, desde adentro. The Seed - A story about growing with love.">
+<meta property="og:image" content="https://www.andresramirez.pro/assets/theseed/og-image.png">
+<meta property="og:image:width" content="1402">
+<meta property="og:image:height" content="1122">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.andresramirez.pro/theseed">
+<meta property="fb:app_id" content="1499851408010655">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="La Semilla · Self Love Club">
+<meta name="twitter:description" content="Una historia sobre el valor de elegir bien, desde adentro.">
+<meta name="twitter:image" content="https://www.andresramirez.pro/assets/theseed/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500&family=Instrument+Sans:wght@300;400&family=DM+Mono:wght@300&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --parchment:#F7F4EF;
+    --ink:#1A1814;
+    --amber:#8B6F4E;
+    --sand:#C4A882;
+    --paper:#FCFAF6;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{height:100dvh;}
+  body{
+    background:var(--parchment);
+    color:var(--ink);
+    font-family:'Instrument Sans',sans-serif;
+    font-weight:300;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    height:100dvh;
+  }
+
+  .topbar{
+    flex:0 0 auto;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:14px 20px 6px;
+    gap: 20px;
+  }
+  .topbar-right{display:flex;align-items:center;gap:20px}
+
+  /* ---- botón "Acerca de": discreto, a la izquierda ---- */
+  .btn-about{
+    background:none;border:none;cursor:pointer;
+    font-family:'DM Mono',monospace;font-size:11px;font-weight:300;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--amber);
+    padding:8px 2px;position:relative;transition:color .3s ease;
+  }
+  .btn-about::after{
+    content:"";position:absolute;left:2px;right:2px;bottom:4px;height:1px;
+    background:var(--sand);opacity:.5;transition:opacity .3s ease;
+  }
+  .btn-about:hover{color:var(--ink)}
+  .btn-about:hover::after{opacity:1;background:var(--amber)}
+  .lang{
+    font-family:'DM Mono',monospace;font-weight:300;font-size:12px;
+    letter-spacing:.12em;text-transform:uppercase;display:flex;gap:14px;
+  }
+  .lang button{background:none;border:none;cursor:pointer;font:inherit;color:var(--sand);padding:4px 0;position:relative}
+  .lang button.active{color:var(--ink)}
+  .lang button.active::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1px;background:var(--amber)}
+
+  /* ---- botón "Vive la experiencia": presencia sin gritar ---- */
+  .btn-parents {
+    background: var(--amber);
+    color: var(--paper);
+    border: 1.5px solid var(--ink);
+    padding: 10px 22px;
+    border-radius: 22px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-shadow: 0 1px 1px rgba(26,24,20,0.3);
+    box-shadow: 0 2px 0 var(--ink);
+    transition: all 0.3s ease;
+  }
+  .btn-parents:hover {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+    text-shadow: none;
+    box-shadow: 0 2px 0 var(--amber);
+  }
+
+  .stage{
+    flex:1 1 auto;display:flex;align-items:center;justify-content:center;
+    padding:0 16px;position:relative;
+  }
+  .book{width:100%;max-width:560px;height:100%;max-height:880px;position:relative}
+
+  .page{
+    position:absolute;inset:0;
+    display:flex;flex-direction:column;
+    opacity:0;pointer-events:none;
+    transition:opacity .5s ease, transform .55s cubic-bezier(.4,0,.2,1);
+    transform:translateX(26px);
+  }
+  .page.active{opacity:1;pointer-events:auto;transform:translateX(0)}
+  .page.leaving{opacity:0;transform:translateX(-26px)}
+
+  .frame{flex:1 1 auto;display:flex;flex-direction:column;padding:4% 7% 3%;min-height:0}
+
+  /* ---- parchment-framed illustration ---- */
+  .illo{
+    flex:1 1 56%;min-height:0;position:relative;
+    display:flex;align-items:center;justify-content:center;
+    padding:14px;
+  }
+  .illo::before{
+    content:"";position:absolute;inset:0;
+    background:var(--paper);
+    border-radius:255px 12px 225px 15px / 15px 225px 12px 255px;
+    box-shadow:
+      0 1px 0 rgba(196,168,130,.4),
+      inset 0 0 22px rgba(196,168,130,.18),
+      0 6px 18px rgba(26,24,20,.06);
+    transform:rotate(-.4deg);
+  }
+  .illo img{
+    position:relative;z-index:1;
+    max-width:100%;max-height:100%;
+    object-fit:contain;
+    border-radius:200px 8px 180px 10px / 10px 180px 8px 200px;
+    mix-blend-mode:multiply;
+  }
+
+  .text{
+    flex:0 0 auto;
+    font-size:clamp(14px,3.8vw,18px);
+    line-height:1.8;font-weight:300;
+    padding:4% 2% 0;
+  }
+  .text p{margin:0 0 .6em}
+  .text em{font-style:italic;color:var(--amber)}
+  .text .lead::first-letter{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:2.5em;line-height:.8;float:left;margin:.05em .12em 0 0;color:var(--amber);
+  }
+
+  .pageno{
+    flex:0 0 auto;
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:28px;color:var(--sand);text-align:center;padding:1% 0 2%;
+  }
+
+  /* cover */
+  .page.cover .frame{justify-content:center}
+  .cover .illo{flex:1 1 64%}
+  .cover-kicker{
+    font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--sand);text-align:center;margin:4% 0 12px;
+  }
+  .cover-title{
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;
+    font-size:clamp(32px,9vw,48px);line-height:1.05;text-align:center;
+  }
+  .cover-sub{
+    font-size:13px;line-height:1.7;text-align:center;color:var(--amber);
+    margin:12px auto 0;max-width:26ch;
+  }
+
+  /* colophon / back cover */
+  .page.colophon .frame{justify-content:center}
+  .colophon .illo{flex:1 1 50%}
+  .colophon .secret{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:clamp(22px,6vw,30px);text-align:center;color:var(--amber);
+    margin:5% 0 3%;
+  }
+  .colophon .mark{
+    font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--sand);text-align:center;margin-bottom:6px;
+  }
+  .colophon .cnote{font-size:13px;line-height:1.7;text-align:center;color:var(--amber);max-width:30ch;margin:0 auto}
+
+  .nav{
+    flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;
+    padding:8px 24px 16px;gap:16px;
+  }
+  .nav button{
+    background:none;border:none;cursor:pointer;
+    font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--ink);padding:8px 4px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .nav button:disabled{color:var(--sand);opacity:.4;cursor:default}
+  .nav .arrow{font-size:18px;line-height:1}
+  .progress{flex:1 1 auto;display:flex;gap:5px;align-items:center;justify-content:center}
+  .dot{width:5px;height:5px;border-radius:50%;background:var(--sand);opacity:.4;transition:all .3s}
+  .dot.on{background:var(--amber);opacity:1;transform:scale(1.4)}
+
+  .tapzone{position:absolute;top:0;bottom:0;width:34%;z-index:5;cursor:pointer}
+  .tapzone.left{left:0}
+  .tapzone.right{right:0}
+
+  @media (prefers-reduced-motion: reduce){
+    .page{transition:opacity .2s linear}
+    .page.active,.page.leaving{transform:none}
+  }
+
+  @media (max-width: 600px) {
+    .nav { padding: 8px 16px 40px; }
+  }
+
+  /* ---- Parents Overlay ---- */
+  .parents-overlay {
+    position: fixed; top: 100%; left: 0; width: 100%; height: 100dvh;
+    background: var(--parchment); z-index: 100; overflow-y: auto;
+    transition: top 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex; flex-direction: column;
+  }
+  .parents-overlay.open { top: 0; }
+  .close-overlay {
+    position: absolute; top: 20px; right: 24px;
+    background: none; border: none; font-size: 28px;
+    color: var(--amber); cursor: pointer; z-index: 101;
+  }
+
+  /* ---- Funnel Sections ---- */
+  .landing-section {
+    padding: 80px 24px; background: var(--parchment);
+    border-top: 1px dashed var(--sand); display: flex;
+    flex-direction: column; align-items: center;
+  }
+  .section-content { width: 100%; max-width: 900px; }
+  .section-kicker {
+    font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--sand); text-align: center; margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: clamp(32px, 6vw, 42px); color: var(--amber);
+    text-align: center; margin-bottom: 12px;
+  }
+  .section-sub {
+    font-size: 16px; text-align: center; color: var(--ink);
+    opacity: 0.8; margin-bottom: 48px; max-width: 600px;
+    margin-left: auto; margin-right: auto; line-height: 1.6;
+  }
+  .grid-3 {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px; margin-bottom: 40px;
+  }
+  .info-card {
+    background: var(--paper); border: 1px solid rgba(196,168,130,0.3);
+    border-radius: 12px; padding: 30px 24px; text-align: center;
+  }
+  .info-title {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 24px; color: var(--amber); margin-bottom: 12px;
+  }
+  .info-text { font-size: 14px; line-height: 1.7; color: var(--ink); opacity: 0.85; }
+
+  /* Tienda */
+  .product-card {
+    background: var(--paper); border: 1px solid rgba(196,168,130,0.4);
+    border-radius: 12px; overflow: hidden; display: flex; flex-direction: column;
+  }
+  .product-img-box {
+    aspect-ratio: 1 / 1; background: var(--muted, #E8E4DC);
+    position: relative; border-bottom: 1px solid rgba(196,168,130,0.2);
+    overflow: hidden;
+  }
+  .product-img-box img { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: multiply; }
+  .badge {
+    position: absolute; top: 12px; right: 12px; background: var(--amber);
+    color: var(--paper); font-family: 'DM Mono', monospace; font-size: 10px;
+    padding: 4px 10px; border-radius: 20px; letter-spacing: 0.1em; z-index: 2;
+  }
+  .product-info { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+  .price-row { margin-top: auto; padding-top: 20px; display: flex; justify-content: space-between; align-items: center; }
+  .price { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: bold; color: var(--amber); }
+  .btn-buy {
+    background: var(--amber); color: var(--paper); border: none; padding: 10px 20px;
+    font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.1em;
+    text-transform: uppercase; border-radius: 20px; cursor: pointer;
+    text-decoration: none; transition: 0.3s;
+  }
+  .btn-buy:hover { background: var(--sand); }
+
+  .author-footer {
+    text-align: center; padding: 40px 20px;
+    border-top: 1px solid rgba(196,168,130,0.3);
+    font-family: 'Instrument Sans', sans-serif;
+  }
+  .author-footer a { color: var(--ink); text-decoration: none; font-weight: 500; }
+  .author-footer a:hover { color: var(--amber); }
+  .author-footer .site-link {
+    display: block; margin-top: 4px; font-family: 'DM Mono', monospace;
+    font-size: 12px; letter-spacing: 0.05em; opacity: 0.6;
+    transition: opacity .3s ease, color .3s ease;
+  }
+  .author-footer .site-link:hover { opacity: 1; color: var(--amber); }
+
+  /* ---- Landing portada ---- */
+  .landing{position:fixed;inset:0;z-index:200;background:var(--parchment);display:flex;align-items:center;justify-content:center;padding:24px;transition:opacity .5s ease,visibility .5s;}
+  .landing.hidden{opacity:0;visibility:hidden;pointer-events:none;}
+  .landing-inner{width:100%;max-width:520px;text-align:center;}
+  .landing-illo{margin:0 auto 24px;max-width:420px;padding:14px;position:relative;}
+  .landing-illo::before{content:"";position:absolute;inset:0;background:var(--paper);border-radius:255px 12px 225px 15px/15px 225px 12px 255px;box-shadow:0 1px 0 rgba(196,168,130,.4),inset 0 0 22px rgba(196,168,130,.18),0 6px 18px rgba(26,24,20,.06);transform:rotate(-.4deg);}
+  .landing-illo img{position:relative;z-index:1;width:100%;height:auto;display:block;border-radius:12px;mix-blend-mode:multiply;}
+  .landing-kicker{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--sand);margin-bottom:8px;}
+  .landing-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:clamp(40px,10vw,56px);line-height:1.05;color:var(--ink);margin-bottom:12px;}
+  .landing-sub{font-size:15px;line-height:1.6;color:var(--amber);margin:0 auto 28px;max-width:36ch;}
+  .landing-buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .landing-btn{background:var(--amber);color:var(--paper);border:1.5px solid var(--ink);padding:12px 24px;border-radius:24px;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;box-shadow:0 2px 0 var(--ink);transition:all .25s;}
+  .landing-btn:hover{background:var(--ink);box-shadow:0 2px 0 var(--amber);}
+  .landing-btn.alt{background:transparent;color:var(--ink);border-color:var(--sand);box-shadow:none;}
+  .landing-btn.alt:hover{background:var(--paper);border-color:var(--amber);}
+  .app-shell{opacity:0;transition:opacity .4s ease;}
+  .app-shell.ready{opacity:1;}
+
+</style>
+</head>
+<body>
+
+  <!-- ===== LANDING PORTADA ===== -->
+  <div id="landing" class="landing">
+    <div class="landing-inner">
+      <div class="landing-illo"><img src="assets/theseed/og-image.png" alt="La Semilla / The Seed"/></div>
+      <div class="landing-kicker">Self Love Club</div>
+      <h1 class="landing-title"><span data-es="La Semilla" data-en="The Seed">La Semilla</span></h1>
+      <p class="landing-sub" data-es="Una historia sobre el valor de elegir bien, desde adentro." data-en="A story about growing with love, from within.">Una historia sobre el valor de elegir bien, desde adentro.</p>
+      <div class="landing-buttons">
+        <button class="landing-btn" onclick="chooseLang('es')">Leer en Español</button>
+        <button class="landing-btn alt" onclick="chooseLang('en')">Read in English</button>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="app-shell" style="height: 100dvh; display: flex; flex-direction: column; position: relative;">
+    <div class="topbar">
+      <button class="btn-about" onclick="toggleAbout()" data-es="Acerca de" data-en="About">Acerca de</button>
+      <div class="topbar-right">
+        <button class="btn-parents" onclick="toggleStore()" data-es="Vive la experiencia" data-en="Live the experience">Vive la experiencia</button>
+        <div class="lang">
+          <button id="es" class="active" onclick="setLang('es')">Español</button>
+          <button id="en" onclick="setLang('en')">English</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="stage">
+      <div class="book" id="book">
+        <div class="tapzone left" onclick="prev()"></div>
+        <div class="tapzone right" onclick="next()"></div>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button id="prevBtn" onclick="prev()"><span class="arrow">‹</span><span data-es="Anterior" data-en="Back">Anterior</span></button>
+      <div class="progress" id="progress"></div>
+      <button id="nextBtn" onclick="next()"><span data-es="Siguiente" data-en="Next">Siguiente</span><span class="arrow">›</span></button>
+    </div>
+
+  </div>
+
+  <!-- ===== OVERLAYS ===== -->
+  <!-- ... rest of file unchanged ... -->
+<script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;var a=target.closest?target.closest("a[href]"):null;if(!a||!a.href||!/^https?:\/\//.test(a.href))return;if(a.href.replace(/#.*$/,"")===loc)return;var productId=extractProductId(target)||extractProductId(a);if(!productId)return;e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*")},true)})();</script></body>
+</html>
