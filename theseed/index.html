@@ -311,48 +311,48 @@
     object-fit:cover; object-position:center;
     z-index:300;
   }
-  #cover-screen{
+#cover-screen{
     position:fixed; inset:0; z-index:301;
     display:flex; flex-direction:column;
-    justify-content:space-between; align-items:center;
-    padding:28px 24px 48px;
-    background:linear-gradient(to top,rgba(26,24,20,.42),rgba(26,24,20,.10) 38%,rgba(26,24,20,.22));
+    justify-content:flex-start; align-items:flex-start;
+    padding:clamp(28px,6vw,64px) clamp(24px,6vw,72px);
+    background:linear-gradient(135deg,rgba(26,24,20,.34),rgba(26,24,20,.05) 42%,transparent 65%);
     transition:opacity .6s ease, visibility .6s ease;
   }
   #cover-screen.hidden{opacity:0; visibility:hidden; pointer-events:none}
   #cover-video.hidden{opacity:0; visibility:hidden; pointer-events:none; transition:opacity .6s ease, visibility .6s ease}
 
+  /* bloque superior-izquierdo, todo centrado dentro del bloque */
+  .cover-block{
+    display:flex; flex-direction:column;
+    align-items:center; text-align:center;
+    gap:14px; width:100%; max-width:360px;
+  }
   .cover-home{
     font-family:'DM Mono',monospace; font-size:12px; font-weight:300;
     letter-spacing:.16em; text-transform:lowercase;
-    color:var(--paper); text-decoration:none; opacity:.85;
+    color:var(--paper); text-decoration:none; opacity:.8;
     text-shadow:0 1px 6px rgba(26,24,20,.55);
     transition:opacity .3s ease;
   }
   .cover-home:hover{opacity:1}
-
-  .cover-center{
-    flex:1 1 auto; display:flex; flex-direction:column;
-    align-items:center; justify-content:flex-end; gap:6px; width:100%;
-  }
   .cover-kick{
     font-family:'DM Mono',monospace; font-size:11px;
     letter-spacing:.24em; text-transform:uppercase;
-    color:var(--paper); opacity:.9; margin-bottom:4px;
+    color:var(--paper); opacity:.92; margin-top:2px;
     text-shadow:0 1px 8px rgba(26,24,20,.6);
   }
   .cover-h1{
     font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:500;
-    font-size:clamp(40px,12vw,72px); line-height:1; color:var(--paper);
+    font-size:clamp(38px,9vw,62px); line-height:1; color:var(--paper);
     text-align:center; text-shadow:0 2px 18px rgba(26,24,20,.55);
+    margin-bottom:4px;
   }
-
   .cover-btns{
-    display:flex; gap:14px; justify-content:center; flex-wrap:wrap;
-    width:100%; max-width:420px;
+    display:flex; flex-direction:column; gap:12px;
+    width:100%; align-items:stretch;
   }
   .cover-btn{
-    flex:1 1 auto; min-width:150px;
     background:var(--paper); color:var(--ink);
     border:1.5px solid var(--paper);
     padding:15px 22px; border-radius:30px;
@@ -362,9 +362,7 @@
     transition:all .3s ease;
   }
   .cover-btn:hover{background:transparent; color:var(--paper)}
-  .cover-btn.alt{
-    background:transparent; color:var(--paper);
-  }
+  .cover-btn.alt{background:transparent; color:var(--paper)}
   .cover-btn.alt:hover{background:var(--paper); color:var(--ink)}
 </style>
 </head>
@@ -376,14 +374,14 @@
     <source src="assets/theseed/landing-bg.MP4" type="video/mp4">
   </video>
   <div id="cover-screen">
-    <a href="https://andresramirez.pro" class="cover-home">andresramirez.pro</a>
-    <div class="cover-center">
+    <div class="cover-block">
+      <a href="https://andresramirez.pro" class="cover-home">andresramirez.pro</a>
       <div class="cover-kick">Self Love Club</div>
       <h1 class="cover-h1">La Semilla</h1>
-    </div>
-    <div class="cover-btns">
-      <button class="cover-btn" onclick="chooseLang('es')">Leer en español</button>
-      <button class="cover-btn alt" onclick="chooseLang('en')">Read in English</button>
+      <div class="cover-btns">
+        <button class="cover-btn" onclick="chooseLang('es')">Leer en español</button>
+        <button class="cover-btn alt" onclick="chooseLang('en')">Read in English</button>
+      </div>
     </div>
   </div>
 
