@@ -1,465 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-<head><style>
-@font-face {
-  font-family: "Optimistic";
-  font-style: normal;
-  font-weight: 400 600;
-  font-display: swap;
-  src: url("/fonts/OptimisticAI_VF_Optimized.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Optimistic Mono";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/fonts/OptimisticMono_W_TextRegular.woff2") format("woff2");
-}
-:where(html) {
-  font-family: "Optimistic", system-ui, sans-serif;
-}
-:where(code, pre, kbd, samp) {
-  font-family: "Optimistic Mono", ui-monospace, monospace;
-}
-</style>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>La Semilla · Self Love Club</title>
-<meta property="og:title" content="La Semilla · Self Love Club">
-<meta property="og:description" content="Una historia sobre el valor de elegir bien, desde adentro. The Seed - A story about growing with love.">
-<meta property="og:image" content="https://www.andresramirez.pro/assets/theseed/og-image.png">
-<meta property="og:image:width" content="1402">
-<meta property="og:image:height" content="1122">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://www.andresramirez.pro/theseed">
-<meta property="fb:app_id" content="1499851408010655">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="La Semilla · Self Love Club">
-<meta name="twitter:description" content="Una historia sobre el valor de elegir bien, desde adentro.">
-<meta name="twitter:image" content="https://www.andresramirez.pro/assets/theseed/og-image.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500&family=Instrument+Sans:wght@300;400&family=DM+Mono:wght@300&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --parchment:#F7F4EF;
-    --ink:#1A1814;
-    --amber:#8B6F4E;
-    --sand:#C4A882;
-    --paper:#FCFAF6;
-  }
-  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  html,body{height:100dvh;}
-  body{
-    background:var(--parchment);
-    color:var(--ink);
-    font-family:'Instrument Sans',sans-serif;
-    font-weight:300;
-    overflow:hidden;
-    display:flex;
-    flex-direction:column;
-    height:100dvh;
-  }
-
-  .topbar{
-    flex:0 0 auto;
-    display:flex;justify-content:space-between;align-items:center;
-    padding:14px 20px 6px;
-    gap: 20px;
-  }
-  .topbar-right{display:flex;align-items:center;gap:20px}
-
-  /* ---- botón "Acerca de": discreto, a la izquierda ---- */
-  .btn-about{
-    background:none;border:none;cursor:pointer;
-    font-family:'DM Mono',monospace;font-size:11px;font-weight:300;
-    letter-spacing:.14em;text-transform:uppercase;color:var(--amber);
-    padding:8px 2px;position:relative;transition:color .3s ease;
-  }
-  .btn-about::after{
-    content:"";position:absolute;left:2px;right:2px;bottom:4px;height:1px;
-    background:var(--sand);opacity:.5;transition:opacity .3s ease;
-  }
-  .btn-about:hover{color:var(--ink)}
-  .btn-about:hover::after{opacity:1;background:var(--amber)}
-  .lang{
-    font-family:'DM Mono',monospace;font-weight:300;font-size:12px;
-    letter-spacing:.12em;text-transform:uppercase;display:flex;gap:14px;
-  }
-  .lang button{background:none;border:none;cursor:pointer;font:inherit;color:var(--sand);padding:4px 0;position:relative}
-  .lang button.active{color:var(--ink)}
-  .lang button.active::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1px;background:var(--amber)}
-
-  /* ---- botón "Vive la experiencia": presencia sin gritar ---- */
-  .btn-parents {
-    background: var(--amber);
-    color: var(--paper);
-    border: 1.5px solid var(--ink);
-    padding: 10px 22px;
-    border-radius: 22px;
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    font-weight: 400;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    cursor: pointer;
-    text-shadow: 0 1px 1px rgba(26,24,20,0.3);
-    box-shadow: 0 2px 0 var(--ink);
-    transition: all 0.3s ease;
-  }
-  .btn-parents:hover {
-    background: var(--ink);
-    color: var(--paper);
-    border-color: var(--ink);
-    text-shadow: none;
-    box-shadow: 0 2px 0 var(--amber);
-  }
-
-  .stage{
-    flex:1 1 auto;display:flex;align-items:center;justify-content:center;
-    padding:0 16px;position:relative;
-  }
-  .book{width:100%;max-width:560px;height:100%;max-height:880px;position:relative}
-
-  .page{
-    position:absolute;inset:0;
-    display:flex;flex-direction:column;
-    opacity:0;pointer-events:none;
-    transition:opacity .5s ease, transform .55s cubic-bezier(.4,0,.2,1);
-    transform:translateX(26px);
-  }
-  .page.active{opacity:1;pointer-events:auto;transform:translateX(0)}
-  .page.leaving{opacity:0;transform:translateX(-26px)}
-
-  .frame{flex:1 1 auto;display:flex;flex-direction:column;padding:4% 7% 3%;min-height:0}
-
-  /* ---- parchment-framed illustration ---- */
-  .illo{
-    flex:1 1 56%;min-height:0;position:relative;
-    display:flex;align-items:center;justify-content:center;
-    padding:14px;
-  }
-  .illo::before{
-    content:"";position:absolute;inset:0;
-    background:var(--paper);
-    border-radius:255px 12px 225px 15px / 15px 225px 12px 255px;
-    box-shadow:
-      0 1px 0 rgba(196,168,130,.4),
-      inset 0 0 22px rgba(196,168,130,.18),
-      0 6px 18px rgba(26,24,20,.06);
-    transform:rotate(-.4deg);
-  }
-  .illo img{
-    position:relative;z-index:1;
-    max-width:100%;max-height:100%;
-    object-fit:contain;
-    border-radius:200px 8px 180px 10px / 10px 180px 8px 200px;
-    mix-blend-mode:multiply;
-  }
-
-  .text{
-    flex:0 0 auto;
-    font-size:clamp(14px,3.8vw,18px);
-    line-height:1.8;font-weight:300;
-    padding:4% 2% 0;
-  }
-  .text p{margin:0 0 .6em}
-  .text em{font-style:italic;color:var(--amber)}
-  .text .lead::first-letter{
-    font-family:'Cormorant Garamond',serif;font-style:italic;
-    font-size:2.5em;line-height:.8;float:left;margin:.05em .12em 0 0;color:var(--amber);
-  }
-
-  .pageno{
-    flex:0 0 auto;
-    font-family:'Cormorant Garamond',serif;font-style:italic;
-    font-size:28px;color:var(--sand);text-align:center;padding:1% 0 2%;
-  }
-
-  /* cover */
-  .page.cover .frame{justify-content:center}
-  .cover .illo{flex:1 1 64%}
-  .cover-kicker{
-    font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.22em;
-    text-transform:uppercase;color:var(--sand);text-align:center;margin:4% 0 12px;
-  }
-  .cover-title{
-    font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;
-    font-size:clamp(32px,9vw,48px);line-height:1.05;text-align:center;
-  }
-  .cover-sub{
-    font-size:13px;line-height:1.7;text-align:center;color:var(--amber);
-    margin:12px auto 0;max-width:26ch;
-  }
-
-  /* colophon / back cover */
-  .page.colophon .frame{justify-content:center}
-  .colophon .illo{flex:1 1 50%}
-  .colophon .secret{
-    font-family:'Cormorant Garamond',serif;font-style:italic;
-    font-size:clamp(22px,6vw,30px);text-align:center;color:var(--amber);
-    margin:5% 0 3%;
-  }
-  .colophon .mark{
-    font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.22em;
-    text-transform:uppercase;color:var(--sand);text-align:center;margin-bottom:6px;
-  }
-  .colophon .cnote{font-size:13px;line-height:1.7;text-align:center;color:var(--amber);max-width:30ch;margin:0 auto}
-
-  .nav{
-    flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;
-    padding:8px 24px 16px;gap:16px;
-  }
-  .nav button{
-    background:none;border:none;cursor:pointer;
-    font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.12em;
-    text-transform:uppercase;color:var(--ink);padding:8px 4px;
-    display:flex;align-items:center;gap:8px;
-  }
-  .nav button:disabled{color:var(--sand);opacity:.4;cursor:default}
-  .nav .arrow{font-size:18px;line-height:1}
-  .progress{flex:1 1 auto;display:flex;gap:5px;align-items:center;justify-content:center}
-  .dot{width:5px;height:5px;border-radius:50%;background:var(--sand);opacity:.4;transition:all .3s}
-  .dot.on{background:var(--amber);opacity:1;transform:scale(1.4)}
-
-  .tapzone{position:absolute;top:0;bottom:0;width:34%;z-index:5;cursor:pointer}
-  .tapzone.left{left:0}
-  .tapzone.right{right:0}
-
-  @media (prefers-reduced-motion: reduce){
-    .page{transition:opacity .2s linear}
-    .page.active,.page.leaving{transform:none}
-  }
-
-  @media (max-width: 600px) {
-    .nav { padding: 8px 16px 40px; }
-  }
-
-  /* ---- Parents Overlay ---- */
-  .parents-overlay {
-    position: fixed; top: 100%; left: 0; width: 100%; height: 100dvh;
-    background: var(--parchment); z-index: 100; overflow-y: auto;
-    transition: top 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    display: flex; flex-direction: column;
-  }
-  .parents-overlay.open { top: 0; }
-  .close-overlay {
-    position: absolute; top: 20px; right: 24px;
-    background: none; border: none; font-size: 28px;
-    color: var(--amber); cursor: pointer; z-index: 101;
-  }
-
-  /* ---- Funnel Sections ---- */
-  .landing-section {
-    padding: 80px 24px; background: var(--parchment);
-    border-top: 1px dashed var(--sand); display: flex;
-    flex-direction: column; align-items: center;
-  }
-  .section-content { width: 100%; max-width: 900px; }
-  .section-kicker {
-    font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.22em;
-    text-transform: uppercase; color: var(--sand); text-align: center; margin-bottom: 10px;
-  }
-  .section-title {
-    font-family: 'Cormorant Garamond', serif; font-style: italic;
-    font-size: clamp(32px, 6vw, 42px); color: var(--amber);
-    text-align: center; margin-bottom: 12px;
-  }
-  .section-sub {
-    font-size: 16px; text-align: center; color: var(--ink);
-    opacity: 0.8; margin-bottom: 48px; max-width: 600px;
-    margin-left: auto; margin-right: auto; line-height: 1.6;
-  }
-  .grid-3 {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 24px; margin-bottom: 40px;
-  }
-  .info-card {
-    background: var(--paper); border: 1px solid rgba(196,168,130,0.3);
-    border-radius: 12px; padding: 30px 24px; text-align: center;
-  }
-  .info-title {
-    font-family: 'Cormorant Garamond', serif; font-style: italic;
-    font-size: 24px; color: var(--amber); margin-bottom: 12px;
-  }
-  .info-text { font-size: 14px; line-height: 1.7; color: var(--ink); opacity: 0.85; }
-
-  /* Tienda */
-  .product-card {
-    background: var(--paper); border: 1px solid rgba(196,168,130,0.4);
-    border-radius: 12px; overflow: hidden; display: flex; flex-direction: column;
-  }
-  .product-img-box {
-    aspect-ratio: 1 / 1; background: var(--muted, #E8E4DC);
-    position: relative; border-bottom: 1px solid rgba(196,168,130,0.2);
-    overflow: hidden;
-  }
-  .product-img-box img { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: multiply; }
-  .badge {
-    position: absolute; top: 12px; right: 12px; background: var(--amber);
-    color: var(--paper); font-family: 'DM Mono', monospace; font-size: 10px;
-    padding: 4px 10px; border-radius: 20px; letter-spacing: 0.1em; z-index: 2;
-  }
-  .product-info { padding: 24px; flex: 1; display: flex; flex-direction: column; }
-  .price-row { margin-top: auto; padding-top: 20px; display: flex; justify-content: space-between; align-items: center; }
-  .price { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: bold; color: var(--amber); }
-  .btn-buy {
-    background: var(--amber); color: var(--paper); border: none; padding: 10px 20px;
-    font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.1em;
-    text-transform: uppercase; border-radius: 20px; cursor: pointer;
-    text-decoration: none; transition: 0.3s;
-  }
-  .btn-buy:hover { background: var(--sand); }
-
-  .author-footer {
-    text-align: center; padding: 40px 20px;
-    border-top: 1px solid rgba(196,168,130,0.3);
-    font-family: 'Instrument Sans', sans-serif;
-  }
-  .author-footer a { color: var(--ink); text-decoration: none; font-weight: 500; }
-  .author-footer a:hover { color: var(--amber); }
-  .author-footer .site-link {
-    display: block; margin-top: 4px; font-family: 'DM Mono', monospace;
-    font-size: 12px; letter-spacing: 0.05em; opacity: 0.6;
-    transition: opacity .3s ease, color .3s ease;
-  }
-  .author-footer .site-link:hover { opacity: 1; color: var(--amber); }
-
-  /* ---- Landing portada ---- */
-  .landing{position:fixed;inset:0;z-index:200;background:var(--parchment);display:flex;align-items:center;justify-content:center;padding:24px;transition:opacity .5s ease,visibility .5s;}
-  .landing.hidden{opacity:0;visibility:hidden;pointer-events:none;}
-  .landing-inner{width:100%;max-width:520px;text-align:center;}
-  .landing-illo{margin:0 auto 24px;max-width:420px;padding:14px;position:relative;}
-  .landing-illo::before{content:"";position:absolute;inset:0;background:var(--paper);border-radius:255px 12px 225px 15px/15px 225px 12px 255px;box-shadow:0 1px 0 rgba(196,168,130,.4),inset 0 0 22px rgba(196,168,130,.18),0 6px 18px rgba(26,24,20,.06);transform:rotate(-.4deg);}
-  .landing-illo img{position:relative;z-index:1;width:100%;height:auto;display:block;border-radius:12px;mix-blend-mode:multiply;}
-  .landing-kicker{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--sand);margin-bottom:8px;}
-  .landing-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:clamp(40px,10vw,56px);line-height:1.05;color:var(--ink);margin-bottom:12px;}
-  .landing-sub{font-size:15px;line-height:1.6;color:var(--amber);margin:0 auto 28px;max-width:36ch;}
-  .landing-buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
-  .landing-btn{background:var(--amber);color:var(--paper);border:1.5px solid var(--ink);padding:12px 24px;border-radius:24px;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;box-shadow:0 2px 0 var(--ink);transition:all .25s;}
-  .landing-btn:hover{background:var(--ink);box-shadow:0 2px 0 var(--amber);}
-  .landing-btn.alt{background:transparent;color:var(--ink);border-color:var(--sand);box-shadow:none;}
-  .landing-btn.alt:hover{background:var(--paper);border-color:var(--amber);}
-  .app-shell{opacity:0;transition:opacity .4s ease;}
-  .app-shell.ready{opacity:1;}
-
-
-  /* ---- Portada video ---- */
-  #bg-video{position:fixed;inset:0;width:100vw;height:100dvh;object-fit:cover;object-position:center;z-index:0}
-  .landing-screen{position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;justify-content:space-between;align-items:center;padding:24px;background:linear-gradient(to top,rgba(0,0,0,.35),transparent 40%,rgba(0,0,0,.15));transition:opacity .5s ease,visibility .5s}
-  .landing-screen.hidden{opacity:0;visibility:hidden;pointer-events:none}
-  .landing-home{margin-top:8px;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#F7F4EF;text-decoration:none;opacity:.9;text-shadow:0 1px 3px rgba(0,0,0,.6)}
-  .landing-home:hover{opacity:1}
-  .landing-btns{margin-bottom:8vh;display:flex;gap:14px;flex-wrap:wrap;background:rgba(247,244,239,.75);backdrop-filter:blur(8px);padding:14px 18px;border-radius:28px;box-shadow:0 4px 18px rgba(0,0,0,.25)}
-  .landing-btn{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;padding:12px 22px;border-radius:22px;border:1.5px solid #1A1814;background:#8B6F4E;color:#FCFAF6;cursor:pointer;box-shadow:0 2px 0 #1A1814;transition:.2s}
-  .landing-btn:hover{background:#1A1814}
-  .landing-btn.alt{background:transparent;color:#1A1814;box-shadow:none}
-  .landing-btn.alt:hover{background:rgba(255,255,255,.6)}
-  .app-shell{opacity:0;transition:opacity .4s ease}
-  .app-shell.ready{opacity:1}
-
-</style>
-</head>
-<body>
-
-  <!-- ===== PORTADA VIDEO ===== -->
-  <video id="bg-video" autoplay muted loop playsinline poster="assets/landing-bg-poster.jpg">
-    <source src="https://www.andresramirez.pro/assets/landing-bg.MP4" type="video/mp4">
-  </video>
-  <div id="landing" class="landing-screen">
-    <a href="https://andresramirez.pro" class="landing-home">andresramirez.pro</a>
-    <div class="landing-btns">
-      <button class="landing-btn" onclick="chooseLang('es')">Leer en español</button>
-      <button class="landing-btn alt" onclick="chooseLang('en')">Read in English</button>
-    </div>
-  </div>
-
-
-  <!-- ===== LANDING PORTADA ===== -->
-  <div id="landing" class="landing">
-    <div class="landing-inner">
-      <div class="landing-illo"><img src="assets/theseed/og-image.png" alt="La Semilla / The Seed"/></div>
-      <div class="landing-kicker">Self Love Club</div>
-      <h1 class="landing-title"><span data-es="La Semilla" data-en="The Seed">La Semilla</span></h1>
-      <p class="landing-sub" data-es="Una historia sobre el valor de elegir bien, desde adentro." data-en="A story about growing with love, from within.">Una historia sobre el valor de elegir bien, desde adentro.</p>
-      <div class="landing-buttons">
-        <button class="landing-btn" onclick="chooseLang('es')">Leer en Español</button>
-        <button class="landing-btn alt" onclick="chooseLang('en')">Read in English</button>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="app-shell" style="height: 100dvh; display: flex; flex-direction: column; position: relative;">
-    <div class="topbar">
-      <button class="btn-about" onclick="toggleAbout()" data-es="Acerca de" data-en="About">Acerca de</button>
-      <div class="topbar-right">
-        <button class="btn-parents" onclick="toggleStore()" data-es="Vive la experiencia" data-en="Live the experience">Vive la experiencia</button>
-        <div class="lang">
-          <button id="es" class="active" onclick="setLang('es')">Español</button>
-          <button id="en" onclick="setLang('en')">English</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="stage">
-      <div class="book" id="book">
-        <div class="tapzone left" onclick="prev()"></div>
-        <div class="tapzone right" onclick="next()"></div>
-      </div>
-    </div>
-
-    <div class="nav">
-      <button id="prevBtn" onclick="prev()"><span class="arrow">‹</span><span data-es="Anterior" data-en="Back">Anterior</span></button>
-      <div class="progress" id="progress"></div>
-      <button id="nextBtn" onclick="next()"><span data-es="Siguiente" data-en="Next">Siguiente</span><span class="arrow">›</span></button>
-    </div>
-
-  </div>
-
-  <!-- ===== OVERLAYS ===== -->
-  <!-- ... rest of file unchanged ... -->
-</body>
-</html>
-function chooseLang(l){
-  localStorage.setItem('theseed_lang', l);
-  setLang(l);
-  document.getElementById('landing').classList.add('hidden');
-  document.querySelector('.app-shell').classList.add('ready');
-}
-// Al cargar, decide si mostrar landing
-document.addEventListener('DOMContentLoaded', function(){
-  const saved = localStorage.getItem('theseed_lang');
-  if(saved){
-    setLang(saved);
-    document.getElementById('landing').classList.add('hidden');
-    document.querySelector('.app-shell').classList.add('ready');
-  } else {
-    // mostrar landing, ocultar app
-    document.querySelector('.app-shell').classList.remove('ready');
-  }
-});
-
-
-function chooseLang(l){
-  localStorage.setItem('theseed_lang', l);
-  setLang(l);
-  document.getElementById('landing').classList.add('hidden');
-  document.querySelector('.app-shell').classList.add('ready');
-  document.getElementById('bg-video').pause();
-}
-document.addEventListener('DOMContentLoaded', function(){
-  const saved = localStorage.getItem('theseed_lang');
-  if(saved){
-    setLang(saved);
-    document.getElementById('landing').classList.add('hidden');
-    document.querySelector('.app-shell').classList.add('ready');
-    const v=document.getElementById('bg-video'); if(v) v.pause();
-  }
-});
-
-</script>E html>
-<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -764,42 +304,88 @@ document.addEventListener('DOMContentLoaded', function(){
   }
   .author-footer .site-link:hover { opacity: 1; color: var(--amber); }
 
-  /* ---- Landing portada ---- */
-  .landing{position:fixed;inset:0;z-index:200;background:var(--parchment);display:flex;align-items:center;justify-content:center;padding:24px;transition:opacity .5s ease,visibility .5s;}
-  .landing.hidden{opacity:0;visibility:hidden;pointer-events:none;}
-  .landing-inner{width:100%;max-width:520px;text-align:center;}
-  .landing-illo{margin:0 auto 24px;max-width:420px;padding:14px;position:relative;}
-  .landing-illo::before{content:"";position:absolute;inset:0;background:var(--paper);border-radius:255px 12px 225px 15px/15px 225px 12px 255px;box-shadow:0 1px 0 rgba(196,168,130,.4),inset 0 0 22px rgba(196,168,130,.18),0 6px 18px rgba(26,24,20,.06);transform:rotate(-.4deg);}
-  .landing-illo img{position:relative;z-index:1;width:100%;height:auto;display:block;border-radius:12px;mix-blend-mode:multiply;}
-  .landing-kicker{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--sand);margin-bottom:8px;}
-  .landing-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:clamp(40px,10vw,56px);line-height:1.05;color:var(--ink);margin-bottom:12px;}
-  .landing-sub{font-size:15px;line-height:1.6;color:var(--amber);margin:0 auto 28px;max-width:36ch;}
-  .landing-buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
-  .landing-btn{background:var(--amber);color:var(--paper);border:1.5px solid var(--ink);padding:12px 24px;border-radius:24px;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;box-shadow:0 2px 0 var(--ink);transition:all .25s;}
-  .landing-btn:hover{background:var(--ink);box-shadow:0 2px 0 var(--amber);}
-  .landing-btn.alt{background:transparent;color:var(--ink);border-color:var(--sand);box-shadow:none;}
-  .landing-btn.alt:hover{background:var(--paper);border-color:var(--amber);}
-  .app-shell{opacity:0;transition:opacity .4s ease;}
-  .app-shell.ready{opacity:1;}
+  /* ===== PORTADA DE VIDEO (página principal) ===== */
+  #cover-video{
+    position:fixed; inset:0;
+    width:100vw; height:100dvh;
+    object-fit:cover; object-position:center;
+    z-index:300;
+  }
+  #cover-screen{
+    position:fixed; inset:0; z-index:301;
+    display:flex; flex-direction:column;
+    justify-content:space-between; align-items:center;
+    padding:28px 24px 48px;
+    background:linear-gradient(to top,rgba(26,24,20,.42),rgba(26,24,20,.10) 38%,rgba(26,24,20,.22));
+    transition:opacity .6s ease, visibility .6s ease;
+  }
+  #cover-screen.hidden{opacity:0; visibility:hidden; pointer-events:none}
+  #cover-video.hidden{opacity:0; visibility:hidden; pointer-events:none; transition:opacity .6s ease, visibility .6s ease}
 
+  .cover-home{
+    font-family:'DM Mono',monospace; font-size:12px; font-weight:300;
+    letter-spacing:.16em; text-transform:lowercase;
+    color:var(--paper); text-decoration:none; opacity:.85;
+    text-shadow:0 1px 6px rgba(26,24,20,.55);
+    transition:opacity .3s ease;
+  }
+  .cover-home:hover{opacity:1}
+
+  .cover-center{
+    flex:1 1 auto; display:flex; flex-direction:column;
+    align-items:center; justify-content:flex-end; gap:6px; width:100%;
+  }
+  .cover-kick{
+    font-family:'DM Mono',monospace; font-size:11px;
+    letter-spacing:.24em; text-transform:uppercase;
+    color:var(--paper); opacity:.9; margin-bottom:4px;
+    text-shadow:0 1px 8px rgba(26,24,20,.6);
+  }
+  .cover-h1{
+    font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:500;
+    font-size:clamp(40px,12vw,72px); line-height:1; color:var(--paper);
+    text-align:center; text-shadow:0 2px 18px rgba(26,24,20,.55);
+  }
+
+  .cover-btns{
+    display:flex; gap:14px; justify-content:center; flex-wrap:wrap;
+    width:100%; max-width:420px;
+  }
+  .cover-btn{
+    flex:1 1 auto; min-width:150px;
+    background:var(--paper); color:var(--ink);
+    border:1.5px solid var(--paper);
+    padding:15px 22px; border-radius:30px;
+    font-family:'DM Mono',monospace; font-size:12px; font-weight:400;
+    letter-spacing:.12em; text-transform:uppercase; cursor:pointer;
+    box-shadow:0 6px 22px rgba(26,24,20,.28);
+    transition:all .3s ease;
+  }
+  .cover-btn:hover{background:transparent; color:var(--paper)}
+  .cover-btn.alt{
+    background:transparent; color:var(--paper);
+  }
+  .cover-btn.alt:hover{background:var(--paper); color:var(--ink)}
 </style>
 </head>
 <body>
 
-  <!-- ===== LANDING PORTADA ===== -->
-  <div id="landing" class="landing">
-    <div class="landing-inner">
-      <div class="landing-illo"><img src="assets/theseed/og-image.png" alt="La Semilla / The Seed"/></div>
-      <div class="landing-kicker">Self Love Club</div>
-      <h1 class="landing-title"><span data-es="La Semilla" data-en="The Seed">La Semilla</span></h1>
-      <p class="landing-sub" data-es="Una historia sobre el valor de elegir bien, desde adentro." data-en="A story about growing with love, from within.">Una historia sobre el valor de elegir bien, desde adentro.</p>
-      <div class="landing-buttons">
-        <button class="landing-btn" onclick="chooseLang('es')">Leer en Español</button>
-        <button class="landing-btn alt" onclick="chooseLang('en')">Read in English</button>
-      </div>
+  <!-- ===== PORTADA DE VIDEO ===== -->
+  <video id="cover-video" autoplay muted loop playsinline
+         poster="assets/theseed/landing-bg.PNG">
+    <source src="assets/theseed/landing-bg.MP4" type="video/mp4">
+  </video>
+  <div id="cover-screen">
+    <a href="https://andresramirez.pro" class="cover-home">andresramirez.pro</a>
+    <div class="cover-center">
+      <div class="cover-kick">Self Love Club</div>
+      <h1 class="cover-h1">La Semilla</h1>
+    </div>
+    <div class="cover-btns">
+      <button class="cover-btn" onclick="chooseLang('es')">Leer en español</button>
+      <button class="cover-btn alt" onclick="chooseLang('en')">Read in English</button>
     </div>
   </div>
-
 
   <div class="app-shell" style="height: 100dvh; display: flex; flex-direction: column; position: relative;">
     <div class="topbar">
@@ -828,7 +414,259 @@ document.addEventListener('DOMContentLoaded', function(){
 
   </div>
 
-  <!-- ===== OVERLAYS ===== -->
-  <!-- ... rest of file unchanged ... -->
-<script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;var a=target.closest?target.closest("a[href]"):null;if(!a||!a.href||!/^https?:\/\//.test(a.href))return;if(a.href.replace(/#.*$/,"")===loc)return;var productId=extractProductId(target)||extractProductId(a);if(!productId)return;e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*")},true)})();</script></body>
+  <!-- ===== OVERLAY: VIVE LA EXPERIENCIA (solo productos) ===== -->
+  <div id="storeOverlay" class="parents-overlay">
+    <button class="close-overlay" onclick="toggleStore()">×</button>
+
+    <section class="landing-section">
+      <div class="section-content">
+        <div class="section-kicker" data-es="Self Love Club · La Semilla" data-en="Self Love Club · The Seed">Self Love Club · La Semilla</div>
+        <h2 class="section-title" data-es="Vive la experiencia" data-en="Live the experience">Vive la experiencia</h2>
+        <p class="section-sub" data-es="Materiales descargables diseñados para enriquecer la experiencia y transformar la lectura en un ritual familiar." data-en="Downloadable materials designed to enrich the experience and transform reading into a family ritual.">Materiales descargables diseñados para enriquecer la experiencia y transformar la lectura en un ritual familiar.</p>
+
+        <div class="grid-3">
+          <div class="product-card">
+            <div class="product-img-box">
+              <span class="badge">PDF</span>
+              <img src="assets/theseed/lapiz.JPG" alt="Libro para Colorear" onerror="this.style.display='none'">
+            </div>
+            <div class="product-info">
+              <h3 class="info-title" style="font-size: 20px;" data-es="Libro para Colorear" data-en="Coloring Book">Libro para Colorear</h3>
+              <p class="info-text" data-es="Siete láminas originales que siguen la historia de la semilla, listas para colorear en calma." data-en="Seven original pages that follow the seed's story, ready to color calmly.">Siete láminas originales que siguen la historia de la semilla, listas para colorear en calma.</p>
+              <div class="price-row">
+                <span class="price">$9.99</span>
+                <a class="btn-buy" href="https://andresramirezpro.gumroad.com/l/theseed-coloringbook" target="_blank" data-es="Comprar" data-en="Buy">Comprar</a>
+              </div>
+            </div>
+          </div>
+          <div class="product-card">
+            <div class="product-img-box">
+              <span class="badge">PDF</span>
+              <img src="assets/theseed/familia.JPG" alt="Libro + Diploma" onerror="this.style.display='none'">
+            </div>
+            <div class="product-info">
+              <h3 class="info-title" style="font-size: 20px;" data-es="Libro + Diploma" data-en="Book + Diploma">Libro + Diploma</h3>
+              <p class="info-text" data-es="El libro para colorear y el diploma de Agüita Clara, para colorear, firmar y regalar." data-en="The coloring book and the Clear Water diploma, to color, sign and give away.">El libro para colorear y el diploma de Agüita Clara, para colorear, firmar y regalar.</p>
+              <div class="price-row">
+                <span class="price">$14.99</span>
+                <a class="btn-buy" href="https://andresramirezpro.gumroad.com/l/Theseed-bookanddiploma" target="_blank" data-es="Comprar" data-en="Buy">Comprar</a>
+              </div>
+            </div>
+          </div>
+          <div class="product-card">
+            <div class="product-img-box">
+              <span class="badge">PDF</span>
+              <img src="assets/theseed/flor.JPG" alt="La Experiencia Completa" onerror="this.style.display='none'">
+            </div>
+            <div class="product-info">
+              <h3 class="info-title" style="font-size: 20px;" data-es="La Experiencia Completa" data-en="The Complete Experience">La Experiencia Completa</h3>
+              <p class="info-text" data-es="Las tres piezas: libro para colorear, diploma de Agüita Clara y guía familiar." data-en="All three pieces: coloring book, Clear Water diploma and family guide.">Las tres piezas: libro para colorear, diploma de Agüita Clara y guía familiar.</p>
+              <div class="price-row">
+                <span class="price">$19.99</span>
+                <a class="btn-buy" href="https://andresramirezpro.gumroad.com/l/theseed-theexperience" target="_blank" data-es="Comprar" data-en="Buy">Comprar</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="author-footer">
+      <p style="font-size: 14px; color: var(--ink); opacity: 0.7; margin-bottom: 8px;" data-es="Una experiencia creada por" data-en="An experience created by">Una experiencia creada por</p>
+      <a href="https://www.andresramirez.pro" target="_blank" style="font-size: 18px; font-family: 'Cormorant Garamond', serif; font-style: italic;">Andrés Ramírez</a>
+      <a href="https://www.andresramirez.pro" target="_blank" class="site-link">andresramirez.pro</a>
+    </footer>
+  </div>
+
+  <!-- ===== OVERLAY: ACERCA DE (solo el club) ===== -->
+  <div id="aboutOverlay" class="parents-overlay">
+    <button class="close-overlay" onclick="toggleAbout()">×</button>
+
+    <section class="landing-section">
+      <div class="section-content">
+        <div class="section-kicker" data-es="Self Love Club" data-en="Self Love Club">Self Love Club</div>
+        <h2 class="section-title" data-es="Acerca de" data-en="About">Acerca de</h2>
+        <p class="section-sub" data-es="En el Self Love Club escribimos para todas las familias. Creamos historias y materiales que convierten la lectura en un momento de conexión tranquila, y que acompañan la crianza con intención. La Semilla es una de esas publicaciones." data-en="At the Self Love Club we write for all families. We create stories and materials that turn reading into a moment of quiet connection, and that accompany parenting with intention. The Seed is one of those publications.">En el Self Love Club escribimos para todas las familias. Creamos historias y materiales que convierten la lectura en un momento de conexión tranquila, y que acompañan la crianza con intención. La Semilla es una de esas publicaciones.</p>
+
+        <div class="grid-3">
+          <div class="info-card">
+            <h3 class="info-title" data-es="Inclusión" data-en="Inclusivity">Inclusión</h3>
+            <p class="info-text" data-es="Diseñamos para todas las familias. Abuelos, familias monoparentales o tradicionales. Aquí todos son bienvenidos." data-en="We design for all families. Grandparents, single-parent, or traditional families. Everyone is welcome here.">Diseñamos para todas las familias. Abuelos, familias monoparentales o tradicionales. Aquí todos son bienvenidos.</p>
+          </div>
+          <div class="info-card">
+            <h3 class="info-title" data-es="Calma" data-en="Calm">Calma</h3>
+            <p class="info-text" data-es="En un mundo acelerado, ofrecemos herramientas emocionales para momentos de frustración, necesidad de calma o descanso." data-en="In a fast-paced world, we offer emotional tools for moments of frustration, a need for calm, or rest.">En un mundo acelerado, ofrecemos herramientas emocionales para momentos de frustración, necesidad de calma o descanso.</p>
+          </div>
+          <div class="info-card">
+            <h3 class="info-title" data-es="Autenticidad" data-en="Authenticity">Autenticidad</h3>
+            <p class="info-text" data-es="Rechazamos lo artificial. Arte original e historias creadas con intención, hechas a mano y con cuidado." data-en="We reject the artificial. Original art and stories crafted with intention, made by hand and with care.">Rechazamos lo artificial. Arte original e historias creadas con intención, hechas a mano y con cuidado.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="author-footer">
+      <p style="font-size: 14px; color: var(--ink); opacity: 0.7; margin-bottom: 8px;" data-es="Una experiencia creada por" data-en="An experience created by">Una experiencia creada por</p>
+      <a href="https://www.andresramirez.pro" target="_blank" style="font-size: 18px; font-family: 'Cormorant Garamond', serif; font-style: italic;">Andrés Ramírez</a>
+      <a href="https://www.andresramirez.pro" target="_blank" class="site-link">andresramirez.pro</a>
+      <a href="https://www.andresramirez.pro/selfloveclub" target="_blank" class="site-link" data-es="Visita el Self Love Club" data-en="Visit the Self Love Club">Visita el Self Love Club</a>
+    </footer>
+  </div>
+
+<script>
+const IMG = "assets/theseed/";
+
+const SCENES = [
+  { type:"cover", img:"portada.png",
+    kicker_es:"Self Love Club", kicker_en:"Self Love Club",
+    title_es:"La Semilla", title_en:"The Seed",
+    sub_es:"Una historia sobre el valor de elegir bien, desde adentro.",
+    sub_en:"A story about the courage to choose well, from within." },
+
+  { img:"p1.png",
+    es:["Debajo de la tierra, una semilla esperaba.","No quería ser la más grande.","No quería crecer rápido.","Solo quería crecer bien, desde adentro.","Y eso le pedía algo: decidir."],
+    en:["Beneath the earth, a seed waited.","It did not want to be the biggest.","It did not want to grow fast.","It only wanted to grow well, from within.","And that required something of her: to decide."] },
+
+  { img:"p2.png",
+    es:["Cada mañana, la semilla tenía opciones:","Agua turbia o agua limpia.","Sombra profunda o luz tibia.","Tierra apretada o tierra suelta.","Sus padres traían las opciones.","Pero ella decidía cuál necesitaba."],
+    en:["Every morning, the seed had choices:","Murky water or clean water.","Deep shadow or warm light.","Tight soil or loose soil.","Her parents brought the options.","But she decided which one she needed."] },
+
+  { img:"p3.png",
+    es:["Pasaron días.","Y la semilla comenzó a notar algo claro:","Cuando elegía agua limpia, sus raíces crecían firmes. Cuando bebía agua turbia, se debilitaba.","No todas las opciones valían igual.","Algunas la fortalecían. Otras la gastaban.","La semilla aprendió a escuchar lo que su cuerpo le decía."],
+    en:["Days passed.","And the seed began to notice something clear:","When she chose clean water, her roots grew firm. When she drank murky water, she felt herself weaken.","Not all choices were equal.","Some strengthened her. Others wore her down.","The seed learned to listen to what her own body told her."] },
+
+  { img:"p4.png",
+    es:["Un día, una semilla cercana le susurró:","<em>\u201c¿Por qué eres tan exigente contigo misma? Yo bebo cualquier agua. Crezco igual.\u201d</em>","Otra preguntó:","<em>\u201c¿No es egoísmo pensar tanto en lo que necesitas? Las semillas de verdad no eligen. Solo crecen.\u201d</em>","La semilla sintió la duda. ¿Estaba sola por elegir bien? ¿Era egoísmo cuidarse a sí misma?"],
+    en:["One day, a seed nearby whispered to her:","<em>\u201cWhy are you so demanding of yourself? I drink any water. I grow the same.\u201d</em>","Another asked:","<em>\u201cIsn\u2019t it selfish to think so much about what you need? Real seeds don\u2019t choose. They just grow.\u201d</em>","The seed felt the doubt. Was she alone for choosing well? Was caring for herself selfish?"] },
+
+  { img:"p5.png",
+    es:["Más tiempo después, vio a la otra semilla.","La que decía que todas las aguas valían igual.","Estaba débil. Sus raíces apenas sostenían el peso.","Entonces la semilla entendió sin necesidad de sermón:","Cuidarse a sí misma no era egoísmo. Era la única manera de poder cuidar a otros."],
+    en:["More time passed.","She saw the other seed, the one who said all waters were equal.","It was weak. Its roots barely held its weight.","Then the seed understood without any lesson needed:","Caring for herself was not selfishness. It was the only way she could care for others."] },
+
+  { img:"p6.png",
+    es:["Pasó un año.","La semilla era ahora un árbol joven y firme.","Sus raíces eran profundas. Sus ramas, fuertes.","Y ahora podía hacer cosas que antes no podía:","Ofrecer sombra fresca a quien tenía calor. Sostener flores. Alimentar pájaros. Abrazar a sus padres con raíces profundas y seguras.","Todo eso vino de haber elegido bien cuando era solo una semilla en la oscuridad."],
+    en:["One year passed.","The seed was now a young tree.","Its roots were deep. Its branches, strong.","And now it could do things it never could before:","Offer cool shade to those who had heat. Hold flowers. Feed birds. Hold its parents with roots deep and sure.","All of that came from choosing well, when it was only a seed in the dark."] },
+
+  { img:"p7.png",
+    es:["El árbol joven seguía en el mismo bosque.","Cada día, nuevas semillas llegaban con la misma pregunta:","<em>\u201c¿No es egoísmo pensar en lo que yo necesito?\u201d</em>","El árbol sonrió. Y dijo algo que nunca olvidarían:","\u201cEl amor propio no es lo opuesto al amor por otros. Es el inicio.\u201d","Cuando aprendas a elegir bien para ti, cuando crezcas fuerte desde adentro, tendrás todo lo que necesitas para amar de verdad.","Y eso es el regalo más grande que puedes darle a quienes te aman."],
+    en:["The young tree stayed in the same forest.","Each day, new seeds came with the same question:","<em>\u201cIsn\u2019t it selfish to think about what I need?\u201d</em>","The tree smiled. And said something they would never forget:","\u201cSelf-love is not the opposite of love for others. It is the beginning.\u201d","When you learn to choose well for yourself, when you grow strong from within, you will have everything you need to love truly.","And that is the greatest gift you can give to those who love you."] },
+
+  { type:"colophon", img:"contraportada.png",
+    secret_es:"Y todo vuelve a empezar.", secret_en:"And it all begins again.",
+    mark_es:"Self Love Club · La Semilla", mark_en:"Self Love Club · The Seed",
+    cnote_es:"Un protocolo de amor propio para quien aún crece.",
+    cnote_en:"A protocol of self-love for those who are still growing." }
+];
+
+let lang="es", idx=0;
+
+function chooseLang(l){
+  setLang(l);                                  // aplica idioma elegido
+  const v = document.getElementById("cover-video");
+  const s = document.getElementById("cover-screen");
+  if(v) v.classList.add("hidden");
+  if(s) s.classList.add("hidden");
+  if(v){ try{ v.pause(); }catch(e){} }
+  setTimeout(()=>{                             // libera memoria tras la transición
+    if(v){ v.removeAttribute("src"); const src=v.querySelector("source"); if(src) src.removeAttribute("src"); v.load(); v.style.display="none"; }
+    if(s) s.style.display="none";
+  }, 700);
+}
+const book=document.getElementById("book");
+
+function buildPage(s,i){
+  const p=document.createElement("div");
+  p.className="page";
+  if(s.type==="cover"){
+    p.classList.add("cover");
+    p.innerHTML=`<div class="frame">
+      <div class="illo"><img src="${IMG}${s.img}" alt=""></div>
+      <div class="cover-kicker" data-es="${s.kicker_es}" data-en="${s.kicker_en}">${s.kicker_es}</div>
+      <div class="cover-title" data-es="${s.title_es}" data-en="${s.title_en}">${s.title_es}</div>
+      <div class="cover-sub" data-es="${s.sub_es}" data-en="${s.sub_en}">${s.sub_es}</div>
+    </div>`;
+  } else if(s.type==="colophon"){
+    p.classList.add("colophon");
+    p.innerHTML=`<div class="frame">
+      <div class="illo"><img src="${IMG}${s.img}" alt=""></div>
+      <div class="secret" data-es="${s.secret_es}" data-en="${s.secret_en}">${s.secret_es}</div>
+      <div class="mark" data-es="${s.mark_es}" data-en="${s.mark_en}">${s.mark_es}</div>
+      <div class="cnote" data-es="${s.cnote_es}" data-en="${s.cnote_en}">${s.cnote_es}</div>
+    </div>`;
+  } else {
+    const esH=s.es.map((t,k)=>`<p class="${k===0?'lead':''}">${t}</p>`).join("");
+    const enH=s.en.map((t,k)=>`<p class="${k===0?'lead':''}">${t}</p>`).join("");
+    p.innerHTML=`<div class="frame">
+      <div class="illo"><img src="${IMG}${s.img}" alt=""></div>
+      <div class="text" data-es-html="${encodeURIComponent(esH)}" data-en-html="${encodeURIComponent(enH)}">${esH}</div>
+      <div class="pageno">${i}</div>
+    </div>`;
+  }
+  return p;
+}
+
+SCENES.forEach((s,i)=>book.appendChild(buildPage(s,i)));
+const pages=[...book.querySelectorAll(".page")];
+
+const progress=document.getElementById("progress");
+SCENES.forEach(()=>{const d=document.createElement("div");d.className="dot";progress.appendChild(d)});
+const dots=[...progress.querySelectorAll(".dot")];
+
+function render(){
+  pages.forEach((p,i)=>p.classList.toggle("active",i===idx));
+  dots.forEach((d,i)=>d.classList.toggle("on",i===idx));
+  document.getElementById("prevBtn").disabled=idx===0;
+  document.getElementById("nextBtn").disabled=idx===pages.length-1;
+}
+function go(n){
+  if(n<0||n>pages.length-1)return;
+  const cur=pages[idx];
+  cur.classList.add("leaving");
+  setTimeout(()=>cur.classList.remove("leaving"),550);
+  idx=n;render();
+}
+function prev(){go(idx-1)}
+function next(){go(idx+1)}
+
+function setLang(l){
+  lang=l;
+  document.querySelectorAll(".lang button").forEach(b=>b.classList.toggle("active",b.id===l));
+
+  document.querySelectorAll("[data-es]").forEach(el=>{
+    el.textContent = el.getAttribute("data-"+l);
+  });
+
+  pages.forEach((p) => {
+    const textEl = p.querySelector(".text");
+    if(textEl) {
+      const html = decodeURIComponent(textEl.getAttribute("data-"+l+"-html"));
+      textEl.innerHTML = html;
+    }
+    const kicker = p.querySelector(".cover-kicker");
+    if(kicker) kicker.textContent = kicker.getAttribute("data-"+l);
+    const title = p.querySelector(".cover-title");
+    if(title) title.textContent = title.getAttribute("data-"+l);
+    const sub = p.querySelector(".cover-sub");
+    if(sub) sub.textContent = sub.getAttribute("data-"+l);
+    const secret = p.querySelector(".secret");
+    if(secret) secret.textContent = secret.getAttribute("data-"+l);
+    const mark = p.querySelector(".mark");
+    if(mark) mark.textContent = mark.getAttribute("data-"+l);
+    const cnote = p.querySelector(".cnote");
+    if(cnote) cnote.textContent = cnote.getAttribute("data-"+l);
+  });
+}
+
+render();
+
+function toggleStore() {
+  document.getElementById('aboutOverlay').classList.remove('open');
+  document.getElementById('storeOverlay').classList.toggle('open');
+}
+function toggleAbout() {
+  document.getElementById('storeOverlay').classList.remove('open');
+  document.getElementById('aboutOverlay').classList.toggle('open');
+}
+</script>
+</body>
 </html>
