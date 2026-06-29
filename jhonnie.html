@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>The Seed · Special Edition for Johnnie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500;1,600&family=Instrument+Sans:wght@300;400&family=DM+Mono:wght@300&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --parchment:#F7F4EF;--ink:#1A1814;--amber:#8B6F4E;--sand:#C4A882;--paper:#FCFAF6;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:#e8e3da;color:var(--ink);font-family:'Instrument Sans',sans-serif;font-weight:300;}
+
+  .page{
+    width:148mm;height:210mm;background:var(--parchment);margin:12px auto;position:relative;
+    display:flex;flex-direction:column;overflow:hidden;box-shadow:0 4px 20px rgba(26,24,20,.12);
+  }
+  .frame{flex:1 1 auto;display:flex;flex-direction:column;padding:14mm 13mm 10mm;min-height:0;}
+
+  .illo{flex:1 1 54%;min-height:0;position:relative;display:flex;align-items:center;justify-content:center;padding:8px;}
+  .illo::before{
+    content:"";position:absolute;inset:0;background:var(--paper);
+    border-radius:255px 12px 225px 15px / 15px 225px 12px 255px;
+    box-shadow:0 1px 0 rgba(196,168,130,.4),inset 0 0 22px rgba(196,168,130,.18),0 6px 18px rgba(26,24,20,.06);
+    transform:rotate(-.4deg);
+  }
+  .illo img{position:relative;z-index:1;max-width:100%;max-height:100%;object-fit:contain;
+    border-radius:200px 8px 180px 10px / 10px 180px 8px 200px;mix-blend-mode:multiply;}
+
+  .text{flex:0 0 auto;font-size:11.5pt;line-height:1.8;font-weight:300;padding:5mm 2mm 0;}
+  .text p{margin:0 0 .55em}
+  .text em{font-style:italic;color:var(--amber)}
+  .text .lead::first-letter{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:2.5em;line-height:.8;float:left;margin:.05em .12em 0 0;color:var(--amber);}
+
+  .pageno{flex:0 0 auto;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20pt;color:var(--sand);text-align:center;padding:3mm 0 1mm;}
+
+  /* COVER */
+  .page.cover{padding:0}
+  .cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+
+  /* JOHNNIE DEDICATION */
+  .page.ded{background:var(--parchment);padding:0;}
+  .ded-inner{position:absolute;inset:0;display:flex;flex-direction:column;}
+  .ded-kicker{font-family:'DM Mono',monospace;font-size:8.5pt;letter-spacing:.24em;text-transform:uppercase;color:var(--sand);padding:16mm 16mm 0;}
+  .ded-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;font-size:30pt;color:var(--ink);padding:3mm 16mm 0;line-height:1;}
+  .ded-msg{font-size:12.5pt;line-height:1.7;font-weight:300;padding:8mm 16mm 0;max-width:44ch;}
+  .ded-msg .ps{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13.5pt;color:var(--amber);margin-top:6mm;display:block;}
+  .ded-art{margin-top:auto;width:100%;display:flex;align-items:flex-end;justify-content:center;}
+  .ded-art img{width:120mm;max-width:100%;height:auto;display:block;mix-blend-mode:multiply;}
+
+  /* COLOPHON */
+  .page.colophon .frame{justify-content:center;align-items:center}
+  .colophon .secret{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:24pt;text-align:center;color:var(--amber);margin:0 0 8mm;}
+  .colophon .mark{font-family:'DM Mono',monospace;font-size:9pt;letter-spacing:.22em;text-transform:uppercase;color:var(--sand);text-align:center;margin-bottom:3mm;}
+  .colophon .cnote{font-size:10.5pt;line-height:1.7;text-align:center;color:var(--amber);max-width:32ch}
+  .colophon .url{font-family:'DM Mono',monospace;font-size:8.5pt;letter-spacing:.14em;color:var(--sand);text-align:center;margin-top:8mm;}
+
+  @media print{
+    body{background:none}
+    .page{margin:0;box-shadow:none;page-break-after:always;break-after:page;}
+    .page:last-child{page-break-after:auto;break-after:auto}
+    @page{size:148mm 210mm;margin:0}
+    .printbar{display:none !important}
+  }
+  .printbar{background:var(--ink);color:var(--parchment);font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.04em;text-align:center;padding:14px 16px;max-width:148mm;margin:16px auto 0;border-radius:4px;line-height:1.7;}
+  .printbar strong{color:#fff}
+  .printbar button{background:var(--amber);color:#fff;border:none;padding:7px 18px;margin-top:8px;border-radius:3px;cursor:pointer;font-family:inherit;font-size:11px;letter-spacing:.05em;display:inline-block;}
+</style>
+</head>
+<body>
+
+  <div class="printbar">
+    To save as PDF: <strong>Print → Save as PDF → Paper size A5 → Margins “None” → enable background graphics</strong>
+    <br><button onclick="window.print()">Print / Save PDF</button>
+  </div>
+
+  <!-- 1 · COVER -->
+  <section class="page cover">
+    <img src="assets/theseed/portada1.png" alt="The Seed">
+  </section>
+
+  <!-- 2 · JOHNNIE DEDICATION -->
+  <section class="page ded">
+    <div class="ded-inner">
+      <div class="ded-kicker">A page just for you</div>
+      <div class="ded-title">For Johnnie</div>
+      <div class="ded-msg">
+        Take care of the one who gives you clean water — and keep being shade and light for others.
+        <span class="ps">And thank you for paying my ticket. 🎫</span>
+      </div>
+      <div class="ded-art">
+        <img src="assets/theseed/johnnie-dedication.jpg" alt="Johnnie and Semillita">
+      </div>
+    </div>
+  </section>
+
+  <!-- STORY PAGES -->
+  <section class="page story">
+    <div class="frame">
+      <div class="illo"><img src="assets/theseed/p1.png" alt=""></div>
+      <div class="text"><p class="lead">Beneath the earth, a seed waited.</p><p>It did not want to be the biggest.</p><p>It did not want to grow fast.</p><p>It only wanted to grow well, from within.</p><p>And that required something of her: to decide.</p></div>
+      <div class="pageno">1</div>
+    </div>
+  </section>
+
+  <section class="page story">
+    <div class="frame">
+      <div class="illo"><img src="assets/theseed/p2.png" alt=""></div>
+      <div class="text"><p class="lead">Every morning, the seed had choices:</p><p>Murky water or clean water.</p><p>Deep shadow or warm light.</p><p>Tight soil or loose soil.</p><p>Her parents brought the options.</p><p>But she decided which one she needed.</p></div>
+      <div class="pageno">2</div>
+    </div>
+  </section>
+
+  <section class="page story">
+    <div class="frame">
+      <div class="illo"><img src="assets/theseed/p3.png" alt=""></div>
+      <div class="text"><p class="lead">Days passed.</p><p>And the seed began to notice something clear:</p><p>When she chose clean water, her roots grew firm. When she drank murky water, she felt herself weaken.</p><p>Not all choices were equal.</p><p>Some strengthened her. Others wore her down.</p><p>The seed learned to listen to what her own body told her.</p></div>
+      <div class="pageno">3</div>
+    </div>
+  </section>
+
+  <section class="page story">
+    <div class="frame">
+      <div class="illo"><img src="assets/theseed/p4.png" alt=""></div>
+      <div class="text"><p class="lead">One day, a seed nearby whispered to her:</p><p><em>“Why are you so demanding of yourself? I drink any water. I grow the same.”</em></p><p>Another asked:</p><p><em>“Isn’t it selfish to think so much about what you need? Real seeds don’t choose. They just grow.”</em></p><p>The seed felt the doubt. Was she alone for choosing well? Was caring for herself selfish?</p></div>
+      <div class="pageno">4</div>
+    </div>
+  </section>
+
+  <section class="page story">
+    <div class="frame">
+      <div class="illo"><img src="assets/theseed/p5.png" alt=""></div>
+      <div class="text"><p class="lead">More time passed.</p><p>She saw the other seed, the one who said all waters were equal.</p><p>It was weak. Its roots barely held its weight.</p><p>Then the seed understood without any lesson needed:</p><p>Caring for herself was not selfishness. It was the only way she could care for others.</p></div>
+      <div class="pageno">5</div>
+    </div>
+  </section>
+
+  <section class="page story">
+    <div class="frame">
+      <div class="illo"><img src="assets/theseed/p6.png" alt=""></div>
+      <div class="text"><p class="lead">One year passed.</p><p>The seed was now a young tree.</p><p>Its roots were deep. Its branches, strong.</p><p>And now it could do things it never could before:</p><p>Offer cool shade to those who had heat. Hold flowers. Feed birds. Hold its parents with roots deep and sure.</p><p>All of that came from choosing well, when it was only a seed in the dark.</p></div>
+      <div class="pageno">6</div>
+    </div>
+  </section>
+
+  <section class="page story">
+    <div class="frame">
+      <div class="illo"><img src="assets/theseed/p7.png" alt=""></div>
+      <div class="text"><p class="lead">The young tree stayed in the same forest.</p><p>Each day, new seeds came with the same question:</p><p><em>“Isn’t it selfish to think about what I need?”</em></p><p>The tree smiled. And said something they would never forget:</p><p>“Self-love is not the opposite of love for others. It is the beginning.”</p><p>When you learn to choose well for yourself, when you grow strong from within, you will have everything you need to love truly.</p><p>And that is the greatest gift you can give to those who love you.</p></div>
+      <div class="pageno">7</div>
+    </div>
+  </section>
+
+  <!-- COLOPHON -->
+  <section class="page colophon">
+    <div class="frame">
+      <div class="secret">And it all begins again.</div>
+      <div class="mark">Self Love Club · The Seed</div>
+      <div class="cnote">A self-love protocol, told for those who are still growing.</div>
+      <div class="url">andresramirez.pro</div>
+    </div>
+  </section>
+
+</body>
+</html>
