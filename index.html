@@ -79,7 +79,7 @@
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
     }
-    .nav-inner {
+    .nav-inner { position: relative;
       display: flex; justify-content: space-between; align-items: center;
       padding: 16px var(--gutter); max-width: var(--max); margin: 0 auto; gap: 16px;
     }
@@ -284,7 +284,40 @@
       .nav-brand { font-size: 9px; }
       .hero-num { display: none; }
     }
-  </style>
+  
+  /* MOBILE MENU FIX */
+  .nav-toggle {
+    display: none;
+    background: none; border: 1px solid var(--rule-strong); cursor: pointer;
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    padding: 8px 14px; color: var(--ink);
+  }
+  @media (max-width: 768px) {
+    .nav-toggle { display: inline-block; }
+    .nav-links {
+      display: none !important;
+      flex-direction: column; align-items: stretch; gap: 0;
+      position: absolute; top: 100%; left: 0; right: 0;
+      background: var(--parchment); border-bottom: 1px solid var(--rule);
+      padding: 4px var(--gutter) 20px;
+    }
+    .nav-links.open { display: flex !important; }
+    .nav-links .nav-link {
+      padding: 14px 0; border-bottom: 1px solid var(--rule);
+    }
+    .pubs-quicklink {
+      display: inline-block; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em;
+      text-transform: uppercase; opacity: 0.85; padding: 8px 0;
+    }
+    .pubs-in-menu { display: none !important; }
+    .nav-cta { display: none !important; }
+    .nav-link-featured { display: block !important; color: var(--amber); }
+  }
+  @media (min-width: 769px) {
+    .pubs-quicklink { display: none; }
+    .nav-link-featured { display: none; }
+  }
+</style>
 </head>
 
 <body>
@@ -296,7 +329,18 @@
       Andrés Ramírez · <em>Clarity</em>
     </div>
     <div class="nav-right">
+      <!-- Visible siempre en móvil, fuera del menú -->
+      <a href="books/index.html" class="pubs-quicklink">
+        <span data-lang="es" class="active">Publicaciones</span>
+        <span data-lang="en">Publications</span>
+      </a>
+      <button class="nav-toggle" id="navToggle" onclick="toggleMenu()">MENU</button>
       <div class="nav-links">
+        <!-- PRODUCTO DEL MES — destacado, primer ítem del menú en móvil; oculto en desktop (ya está la caja de la derecha) -->
+        <a href="books/la-semilla/index.html" class="nav-link nav-link-featured">
+          <span data-lang="es" class="active">★ La Semilla</span>
+          <span data-lang="en">★ The Seed</span>
+        </a>
         <span class="nav-link" onclick="scrollToSection('home')">
           <span data-lang="es" class="active">Inicio</span>
           <span data-lang="en">Home</span>
@@ -309,7 +353,7 @@
           <span data-lang="es" class="active">Ensayos</span>
           <span data-lang="en">Essays</span>
         </span>
-        <a href="books/index.html" class="nav-link">
+        <a href="books/index.html" class="nav-link pubs-in-menu">
           <span data-lang="es" class="active">Publicaciones</span>
           <span data-lang="en">Publications</span>
         </a>
@@ -318,11 +362,8 @@
           <span data-lang="en">Lab</span>
         </a>
       </div>
-      <!-- PRODUCTO DEL MES — etiqueta y link cambian juntos cada vez que rotes el destacado -->
-      <a href="books/la-semilla/index.html"
-         class="nav-cta"
-         data-href-es="books/la-semilla/index.html"
-         data-href-en="books/the-seed/index.html">
+      <!-- PRODUCTO DEL MES — caja visible solo en desktop; se oculta en móvil (ver versión dentro del menú) -->
+      <a href="books/la-semilla/index.html" class="nav-cta">
         <span data-lang="es" class="active">La Semilla</span>
         <span data-lang="en">The Seed</span>
       </a>
@@ -574,6 +615,13 @@
 </footer>
 
 <script>
+
+  function toggleMenu() {
+    const links = document.querySelector('.nav-links');
+    const btn = document.getElementById('navToggle');
+    const open = links.classList.toggle('open');
+    btn.textContent = open ? 'CERRAR' : 'MENU';
+  }
   // Language switching
   function setLang(l) {
     document.querySelectorAll('[data-lang]').forEach(el => {
