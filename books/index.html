@@ -12,46 +12,24 @@
 
 <style>
   :root {
-    --parchment: #F7F4EF;
-    --ink: #1A1814;
-    --amber: #8B6F4E;
-    --sand: #C4A882;
-    --rule: rgba(26, 24, 20, 0.14);
-    --rule-strong: rgba(26, 24, 20, 0.28);
+    --parchment: #F7F4EF; --ink: #1A1814; --amber: #8B6F4E; --sand: #C4A882;
+    --rule: rgba(26, 24, 20, 0.14); --rule-strong: rgba(26, 24, 20, 0.28);
     --font-display: "Cormorant Garamond", "Times New Roman", serif;
     --font-body: "Instrument Sans", -apple-system, sans-serif;
     --font-mono: "DM Mono", "Courier New", monospace;
-    --max: 1180px;
-    --gutter: 6vw;
+    --max: 1180px; --gutter: 6vw;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  body {
-    background: var(--parchment); color: var(--ink);
-    font-family: var(--font-body); font-weight: 300;
-    font-size: 17px; line-height: 1.65; letter-spacing: 0.005em;
-    -webkit-font-smoothing: antialiased;
-  }
+  body { background: var(--parchment); color: var(--ink); font-family: var(--font-body); font-weight: 300; font-size: 17px; line-height: 1.65; letter-spacing: 0.005em; -webkit-font-smoothing: antialiased; }
   a { color: inherit; text-decoration: none; }
   [data-lang] { display: none; }
   [data-lang].active { display: inline; }
   .container { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
-  .meta {
-    font-family: var(--font-mono); font-weight: 300; font-size: 11px;
-    letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.6;
-  }
+  .meta { font-family: var(--font-mono); font-weight: 300; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.6; }
 
-  /* NAV */
-  .nav {
-    position: sticky; top: 0; z-index: 50;
-    background: rgba(247, 244, 239, 0.92);
-    border-bottom: 1px solid var(--rule);
-    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-  }
-  .nav-inner {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 16px var(--gutter); max-width: var(--max); margin: 0 auto; gap: 16px;
-  }
+  .nav { position: sticky; top: 0; z-index: 50; background: rgba(247, 244, 239, 0.92); border-bottom: 1px solid var(--rule); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+  .nav-inner { position: relative; display: flex; justify-content: space-between; align-items: center; padding: 16px var(--gutter); max-width: var(--max); margin: 0 auto; gap: 16px; }
   .nav-brand { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; }
   .nav-brand em { font-family: var(--font-display); font-style: italic; text-transform: none; letter-spacing: 0; font-size: 14px; color: var(--amber); }
   .nav-right { display: flex; align-items: center; gap: 18px; }
@@ -63,47 +41,35 @@
   .lang-btn + .lang-btn { border-left: 1px solid var(--rule-strong); }
   .lang-btn.active { background: var(--ink); color: var(--parchment); opacity: 1; }
   .lang-btn:hover:not(.active) { opacity: 1; }
-  @media (max-width: 768px) { .nav-links { display: none; } .nav-brand { font-size: 9px; } }
+  .nav-toggle { display: none; background: none; border: 1px solid var(--rule-strong); cursor: pointer; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; padding: 8px 14px; color: var(--ink); }
+  @media (max-width: 768px) {
+    .nav-toggle { display: inline-block; }
+    .nav-links { display: none !important; flex-direction: column; align-items: stretch; gap: 0; position: absolute; top: 100%; left: 0; right: 0; background: var(--parchment); border-bottom: 1px solid var(--rule); padding: 4px var(--gutter) 20px; }
+    .nav-links.open { display: flex !important; }
+    .nav-links .nav-link { padding: 14px 0; border-bottom: 1px solid var(--rule); }
+    .nav-brand { font-size: 9px; }
+  }
 
   .crumb { padding: 4vh var(--gutter) 0; max-width: var(--max); margin: 0 auto; }
   .crumb a { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.55; transition: opacity .25s; }
   .crumb a:hover { opacity: 1; }
 
-  /* HERO */
   .hub-hero { padding: 6vh var(--gutter) 8vh; max-width: var(--max); margin: 0 auto; }
   .hub-num { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.22em; color: var(--amber); margin-bottom: 3vh; }
-  .hub-hero h1 {
-    font-family: var(--font-display); font-weight: 400; font-style: italic;
-    font-size: clamp(42px, 6vw, 72px); line-height: 1.05; letter-spacing: -0.02em;
-    margin-bottom: 3vh; max-width: 14ch;
-  }
+  .hub-hero h1 { font-family: var(--font-display); font-weight: 400; font-style: italic; font-size: clamp(42px, 6vw, 72px); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 3vh; max-width: 14ch; }
   .hub-hero p { font-size: 17px; line-height: 1.7; max-width: 54ch; opacity: 0.82; }
 
-  /* CAROUSEL */
   .carousel-wrap { position: relative; padding: 0 0 10vh; }
-  .carousel-head {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 0 var(--gutter); max-width: var(--max); margin: 0 auto 4vh;
-  }
+  .carousel-head { display: flex; justify-content: space-between; align-items: center; padding: 0 var(--gutter); max-width: var(--max); margin: 0 auto 4vh; }
   .carousel-count { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; opacity: 0.55; }
   .carousel-arrows { display: flex; gap: 10px; }
-  .arrow-btn {
-    width: 40px; height: 40px; border: 1px solid var(--rule-strong);
-    background: none; cursor: pointer; font-family: var(--font-mono); font-size: 15px;
-    color: var(--ink); transition: all .25s; display: flex; align-items: center; justify-content: center;
-  }
+  .arrow-btn { width: 40px; height: 40px; border: 1px solid var(--rule-strong); background: none; cursor: pointer; font-family: var(--font-mono); font-size: 15px; color: var(--ink); transition: all .25s; display: flex; align-items: center; justify-content: center; }
   .arrow-btn:hover { background: var(--ink); color: var(--parchment); border-color: var(--ink); }
 
-  .carousel {
-    display: flex; gap: 5vw; overflow-x: auto; scroll-snap-type: x mandatory;
-    padding: 0 var(--gutter); scrollbar-width: none; -ms-overflow-style: none;
-  }
+  .carousel { display: flex; gap: 5vw; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 var(--gutter); scrollbar-width: none; -ms-overflow-style: none; }
   .carousel::-webkit-scrollbar { display: none; }
 
   .card { flex: 0 0 auto; width: 240px; scroll-snap-align: start; display: flex; flex-direction: column; }
-  .card[data-lang] { display: none; }
-  .card[data-lang].active { display: flex; }
-  .card-both { display: flex; }
   .card-num { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; color: var(--amber); margin-bottom: 1.5vh; }
   .card-cover { aspect-ratio: 2/3; border: 1px solid var(--rule-strong); overflow: hidden; margin-bottom: 2.2vh; }
   .card-cover img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease; }
@@ -123,11 +89,11 @@
 </head>
 <body>
 
-<!-- NAV -->
 <nav class="nav">
   <div class="nav-inner">
     <a href="../index.html" class="nav-brand">Andrés Ramírez · <em>Clarity</em></a>
     <div class="nav-right">
+      <button class="nav-toggle" id="navToggle" onclick="toggleMenu()">MENU</button>
       <div class="nav-links">
         <a href="../laboratorio.html" class="nav-link">
           <span data-lang="es" class="active">Laboratorio</span>
@@ -149,7 +115,6 @@
   </a>
 </div>
 
-<!-- HERO -->
 <section class="hub-hero">
   <div class="hub-num reveal">02</div>
   <h1 class="reveal">
@@ -162,10 +127,9 @@
   </p>
 </section>
 
-<!-- CAROUSEL -->
 <section class="carousel-wrap">
   <div class="carousel-head reveal">
-    <span class="carousel-count" id="carouselCount">01 / 09</span>
+    <span class="carousel-count">01 / 05</span>
     <div class="carousel-arrows">
       <button class="arrow-btn" onclick="scrollCarousel(-1)" aria-label="Anterior">←</button>
       <button class="arrow-btn" onclick="scrollCarousel(1)" aria-label="Siguiente">→</button>
@@ -174,92 +138,75 @@
 
   <div class="carousel reveal" id="carousel">
 
-    <a class="card" href="la-semilla/index.html" data-lang="es">
-      <span class="card-num"></span>
-      <div class="card-cover"><img src="../assets/covers/lasemilla-caratula.PNG" alt="La Semilla"></div>
-      <div class="card-title">La Semilla</div>
+    <a class="card" href="la-semilla/index.html">
+      <span class="card-num">01</span>
+      <div class="card-cover">
+        <img data-src-es="../assets/covers/lasemilla-caratula.PNG" data-src-en="../assets/covers/theseed-cover.PNG" src="../assets/covers/lasemilla-caratula.PNG" alt="La Semilla / The Seed">
+      </div>
+      <div class="card-title">
+        <span data-lang="es" class="active">La Semilla</span>
+        <span data-lang="en">The Seed</span>
+      </div>
       <div class="card-sub">
         <span data-lang="es" class="active">Un cuento sobre crecer desde adentro</span>
         <span data-lang="en">A story about growing from within</span>
       </div>
       <div class="card-format">EPUB</div>
     </a>
-    <a class="card" href="the-seed/index.html" data-lang="en">
-      <span class="card-num"></span>
-      <div class="card-cover"><img src="../assets/covers/theseed-cover.PNG" alt="The Seed"></div>
-      <div class="card-title">The Seed</div>
-      <div class="card-sub">
-        <span data-lang="es" class="active">Un cuento sobre crecer desde adentro</span>
-        <span data-lang="en">A story about growing from within</span>
+
+    <a class="card" href="mindful-match/index.html">
+      <span class="card-num">02</span>
+      <div class="card-cover">
+        <img data-src-es="../assets/covers/05-match-consciente.jpg" data-src-en="../assets/covers/03-mindful-match.jpg" src="../assets/covers/05-match-consciente.jpg" alt="Mindful Match / Match Consciente">
       </div>
-      <div class="card-format">EPUB</div>
-    </a>
-    <a class="card" href="match-consciente/index.html" data-lang="es">
-      <span class="card-num"></span>
-      <div class="card-cover"><img src="../assets/covers/05-match-consciente.jpg" alt="Match Consciente"></div>
-      <div class="card-title">Match Consciente</div>
+      <div class="card-title">
+        <span data-lang="es" class="active">Match Consciente</span>
+        <span data-lang="en">Mindful Match</span>
+      </div>
       <div class="card-sub">
         <span data-lang="es" class="active">Encontrar el amor sin perderte</span>
         <span data-lang="en">Finding love without losing yourself</span>
       </div>
       <div class="card-format">EPUB</div>
     </a>
-    <a class="card" href="mindful-match/index.html" data-lang="en">
-      <span class="card-num"></span>
-      <div class="card-cover"><img src="../assets/covers/03-mindful-match.jpg" alt="Mindful Match"></div>
-      <div class="card-title">Mindful Match</div>
-      <div class="card-sub">
-        <span data-lang="es" class="active">Encontrar el amor sin perderte</span>
-        <span data-lang="en">Finding love without losing yourself</span>
+
+    <a class="card" href="clarity/index.html">
+      <span class="card-num">03</span>
+      <div class="card-cover">
+        <img data-src-es="../assets/covers/claridad.JPEG" data-src-en="../assets/covers/clarity.JPEG" src="../assets/covers/claridad.JPEG" alt="Clarity / Claridad">
       </div>
-      <div class="card-format">EPUB</div>
-    </a>
-    <a class="card" href="no-te-abandones-buscar-pareja/index.html" data-lang="es">
-      <span class="card-num"></span>
-      <div class="card-cover"><img src="../assets/covers/07-no-te-abandones.jpg" alt="No Te Abandones al Buscar Pareja"></div>
-      <div class="card-title">No Te Abandones al Buscar Pareja</div>
-      <div class="card-sub">
-        <span data-lang="es" class="active">Cuaderno de trabajo</span>
-        <span data-lang="en">Workbook</span>
+      <div class="card-title">
+        <span data-lang="es" class="active">Claridad</span>
+        <span data-lang="en">Clarity</span>
       </div>
-      <div class="card-format">PDF WORKBOOK</div>
-    </a>
-    <a class="card" href="dont-lose-yourself-dating/index.html" data-lang="en">
-      <span class="card-num"></span>
-      <div class="card-cover"><img src="../assets/covers/06-dont-lose-yourself.jpg" alt="Don't Lose Yourself While Dating"></div>
-      <div class="card-title">Don't Lose Yourself While Dating</div>
-      <div class="card-sub">
-        <span data-lang="es" class="active">Cuaderno de trabajo</span>
-        <span data-lang="en">Workbook</span>
-      </div>
-      <div class="card-format">PDF WORKBOOK</div>
-    </a>
-    <a class="card" href="claridad/index.html" data-lang="es">
-      <span class="card-num"></span>
-      <div class="card-cover"><img src="../assets/covers/claridad.JPEG" alt="Claridad"></div>
-      <div class="card-title">Claridad</div>
-      <div class="card-sub">
-        <span data-lang="es" class="active">Doce ensayos compilados</span>
-        <span data-lang="en">Twelve essays compiled</span>
-      </div>
-      <div class="card-format">
-        <span data-lang="es" class="active">PDF / EPUB</span>
-        <span data-lang="en">PDF / EPUB</span>
-      </div>
-    </a>
-    <a class="card" href="clarity/index.html" data-lang="en">
-      <span class="card-num"></span>
-      <div class="card-cover"><img src="../assets/covers/clarity.JPEG" alt="Clarity"></div>
-      <div class="card-title">Clarity</div>
       <div class="card-sub">
         <span data-lang="es" class="active">Doce ensayos compilados</span>
         <span data-lang="en">Twelve essays compiled</span>
       </div>
       <div class="card-format">PDF / EPUB</div>
     </a>
-    <a class="card card-both" href="../protocolo/index.html">
-      <span class="card-num"></span>
-      <div class="card-cover"><img src="../assets/covers/protocolo-claridad-cover.jpeg" alt="El Protocolo de Claridad"></div>
+
+    <a class="card" href="dont-lose-yourself-dating/index.html">
+      <span class="card-num">04</span>
+      <div class="card-cover">
+        <img data-src-es="../assets/covers/07-no-te-abandones.jpg" data-src-en="../assets/covers/06-dont-lose-yourself.jpg" src="../assets/covers/07-no-te-abandones.jpg" alt="No Te Abandones al Buscar Pareja / Don't Lose Yourself While Dating">
+      </div>
+      <div class="card-title">
+        <span data-lang="es" class="active">No Te Abandones al Buscar Pareja</span>
+        <span data-lang="en">Don't Lose Yourself While Dating</span>
+      </div>
+      <div class="card-sub">
+        <span data-lang="es" class="active">Cuaderno de trabajo</span>
+        <span data-lang="en">Workbook</span>
+      </div>
+      <div class="card-format">PDF WORKBOOK</div>
+    </a>
+
+    <a class="card" href="../protocolo/index.html">
+      <span class="card-num">05</span>
+      <div class="card-cover">
+        <img src="../assets/covers/protocolo-claridad-cover.jpeg" alt="El Protocolo de Claridad">
+      </div>
       <div class="card-title">
         <span data-lang="es" class="active">El Protocolo de Claridad</span>
         <span data-lang="en">The Clarity Protocol</span>
@@ -268,16 +215,12 @@
         <span data-lang="es" class="active">Un sistema, no un curso</span>
         <span data-lang="en">A system, not a course</span>
       </div>
-      <div class="card-format">
-        <span data-lang="es" class="active">DIGITAL</span>
-        <span data-lang="en">DIGITAL</span>
-      </div>
+      <div class="card-format">DIGITAL</div>
     </a>
 
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="meta">© Self Love Club · MMXXVI</div>
   <div class="footer-links">
@@ -294,27 +237,18 @@
     document.querySelectorAll('[data-lang]').forEach(el => el.classList.remove('active'));
     document.querySelectorAll('[data-lang="' + l + '"]').forEach(el => el.classList.add('active'));
     document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.toggle('active', btn.textContent.trim() === l.toUpperCase()));
-    renumberCarousel();
+    document.querySelectorAll('[data-src-es]').forEach(el => el.setAttribute('src', el.getAttribute('data-src-' + l)));
     try { localStorage.setItem('clarity-lang', l); } catch (e) {}
   }
-  function renumberCarousel() {
-    const carousel = document.getElementById('carousel');
-    if (!carousel) return;
-    const visible = Array.from(carousel.querySelectorAll('.card')).filter(c => getComputedStyle(c).display !== 'none');
-    visible.forEach((card, i) => {
-      const numEl = card.querySelector('.card-num');
-      if (numEl) numEl.textContent = String(i + 1).padStart(2, '0');
-    });
-    const countEl = document.getElementById('carouselCount');
-    if (countEl) {
-      const n = String(visible.length).padStart(2, '0');
-      countEl.textContent = '01 / ' + n;
-    }
-    carousel.scrollTo({ left: 0 });
+  function toggleMenu() {
+    const links = document.querySelector('.nav-links');
+    const btn = document.getElementById('navToggle');
+    const open = links.classList.toggle('open');
+    btn.textContent = open ? 'CERRAR' : 'MENU';
   }
   function scrollCarousel(dir) {
     const el = document.getElementById('carousel');
-    const cardWidth = el.querySelector('.card').offsetWidth + 48; // width + gap
+    const cardWidth = el.querySelector('.card').offsetWidth + 48;
     el.scrollBy({ left: dir * cardWidth * 2, behavior: 'smooth' });
   }
   const observer = new IntersectionObserver((entries) => {
