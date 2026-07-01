@@ -122,6 +122,7 @@
       font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
       padding: 9px 18px; border: 1px solid var(--ink);
       transition: all .25s ease;
+      display: inline-block;
     }
     .nav-cta:hover { background: var(--ink); color: var(--parchment); }
 
@@ -243,83 +244,6 @@
     }
     .essay-card a:hover { opacity: 1; }
 
-    /* BOOKS SECTION */
-    .books-grid {
-      display: grid; grid-template-columns: repeat(2, 1fr);
-      gap: 8vh; margin-top: 8vh;
-    }
-    @media (max-width: 800px) { .books-grid { grid-template-columns: 1fr; } }
-
-    .book-item {
-      display: grid; grid-template-columns: 120px 1fr;
-      gap: 6vh; align-items: start;
-    }
-    .book-cover {
-      aspect-ratio: 2/3; border: 1px solid var(--rule);
-      display: flex; flex-direction: column; justify-content: space-between;
-      padding: 16px; background: var(--ink); color: var(--parchment);
-      font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.15em;
-    }
-    .book-title {
-      font-family: var(--font-display); font-style: italic;
-      font-size: 16px; line-height: 1.2;
-    }
-    .book-info h3 {
-      font-family: var(--font-display); font-weight: 400; font-style: italic;
-      font-size: clamp(18px, 2vw, 22px); line-height: 1.3;
-      margin-bottom: 2vh;
-    }
-    .book-info p {
-      font-size: 15px; line-height: 1.6; opacity: 0.75; margin-bottom: 3vh;
-    }
-    .book-info a {
-      font-family: var(--font-mono);
-      font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
-      opacity: 0.6; transition: all 0.25s;
-    }
-    .book-info a:hover { opacity: 1; }
-
-    /* PROTOCOL SECTION */
-    .protocol-section {
-      background: linear-gradient(135deg, rgba(139, 111, 78, 0.08) 0%, rgba(196, 168, 130, 0.04) 100%);
-      border: 1px solid var(--rule-strong);
-      padding: 8vh var(--gutter);
-      border-radius: 2px;
-    }
-    .protocol-inner {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 8vw; align-items: center;
-    }
-    @media (max-width: 900px) { .protocol-inner { grid-template-columns: 1fr; } }
-
-    .protocol-content h2 {
-      font-family: var(--font-display); font-weight: 400;
-      font-size: clamp(34px, 4.6vw, 58px);
-      line-height: 1.08; letter-spacing: -0.02em;
-      margin-bottom: 4vh;
-    }
-    .protocol-content h2 em { font-style: italic; color: var(--amber); }
-    .protocol-content p {
-      font-size: 17px; line-height: 1.7; opacity: 0.85; margin-bottom: 3vh;
-    }
-    .protocol-meta {
-      display: flex; flex-direction: column; gap: 2vh;
-      margin-top: 6vh;
-    }
-    .protocol-meta-item {
-      display: grid; grid-template-columns: 100px 1fr;
-      gap: 2vh;
-    }
-    .protocol-meta-item .key {
-      font-family: var(--font-mono);
-      font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--amber);
-    }
-    .protocol-meta-item .val {
-      font-family: var(--font-display); font-style: italic;
-      font-size: 18px; line-height: 1.3;
-    }
-
     /* FOOTER */
     footer {
       padding: 12vh var(--gutter);
@@ -373,30 +297,34 @@
     </div>
     <div class="nav-right">
       <div class="nav-links">
-        <span class="nav-link" onclick="scrollToSection('home')" data-lang="es" class="active">
+        <span class="nav-link" onclick="scrollToSection('home')">
           <span data-lang="es" class="active">Inicio</span>
           <span data-lang="en">Home</span>
         </span>
-        <span class="nav-link" onclick="scrollToSection('about')" data-lang="es" class="active">
+        <span class="nav-link" onclick="scrollToSection('about')">
           <span data-lang="es" class="active">Autor</span>
           <span data-lang="en">Author</span>
         </span>
-        <span class="nav-link" onclick="scrollToSection('essays')" data-lang="es" class="active">
+        <span class="nav-link" onclick="scrollToSection('essays')">
           <span data-lang="es" class="active">Ensayos</span>
           <span data-lang="en">Essays</span>
         </span>
-        <span class="nav-link" onclick="scrollToSection('books')" data-lang="es" class="active">
-          <span data-lang="es" class="active">Libros</span>
-          <span data-lang="en">Books</span>
-        </span>
-        <a href="laboratorio.html" class="nav-link" data-lang="es" class="active">
+        <a href="books/index.html" class="nav-link">
+          <span data-lang="es" class="active">Publicaciones</span>
+          <span data-lang="en">Publications</span>
+        </a>
+        <a href="laboratorio.html" class="nav-link">
           <span data-lang="es" class="active">Laboratorio</span>
           <span data-lang="en">Lab</span>
         </a>
       </div>
-      <a href="protocolo/index.html" class="nav-cta" data-lang="es" class="active">
-        <span data-lang="es" class="active">Protocolo</span>
-        <span data-lang="en">Protocol</span>
+      <!-- PRODUCTO DEL MES — etiqueta y link cambian juntos cada vez que rotes el destacado -->
+      <a href="books/la-semilla/index.html"
+         class="nav-cta"
+         data-href-es="books/la-semilla/index.html"
+         data-href-en="books/the-seed/index.html">
+        <span data-lang="es" class="active">La Semilla</span>
+        <span data-lang="en">The Seed</span>
       </a>
       <div class="lang-btns">
         <button class="lang-btn active" onclick="setLang('es')">ES</button>
@@ -594,145 +522,11 @@
   </div>
 </section>
 
-<!-- BOOKS -->
-<section class="section" id="books">
-  <div class="container">
-    <div class="sec-label reveal">
-      <span class="num">03</span>
-      <span class="name">
-        <span data-lang="es" class="active">Libros Publicados</span>
-        <span data-lang="en">Published Books</span>
-      </span>
-    </div>
-    <h2 class="sec-h reveal">
-      <span data-lang="es" class="active">Guías para la <em>claridad.</em></span>
-      <span data-lang="en">Guides for <em>clarity.</em></span>
-    </h2>
-
-    <div class="books-grid reveal">
-      <div class="book-item">
-        <div class="book-cover">
-          <div class="meta">Andrés Ramírez</div>
-          <div class="book-title">Match Consciente</div>
-          <div class="meta">Amazon</div>
-        </div>
-        <div class="book-info">
-          <h3>
-            <span data-lang="es" class="active">Match Consciente</span>
-            <span data-lang="en">Mindful Match</span>
-          </h3>
-          <p>
-            <span data-lang="es" class="active">Una guía consciente para buscar pareja con claridad, límites y respeto propio.</span>
-            <span data-lang="en">A conscious guide to dating with clarity, boundaries, and self-respect.</span>
-          </p>
-          <a href="https://www.amazon.com/Match-Consciente-Encontrar-Perderse-Spanish-ebook/dp/B0GLB3NJ1F" target="_blank" rel="noopener">
-            <span data-lang="es" class="active">Leer en Amazon</span>
-            <span data-lang="en">Read on Amazon</span>
-          </a>
-        </div>
-      </div>
-
-      <div class="book-item">
-        <div class="book-cover">
-          <div class="meta">Andrés Ramírez</div>
-          <div class="book-title">No te Abandones</div>
-          <div class="meta">Workbook</div>
-        </div>
-        <div class="book-info">
-          <h3>
-            <span data-lang="es" class="active">No Te Abandones Al Buscar Pareja</span>
-            <span data-lang="en">Don't Lose Yourself While Dating</span>
-          </h3>
-          <p>
-            <span data-lang="es" class="active">Un cuaderno de trabajo práctico para establecer límites y proteger tu identidad.</span>
-            <span data-lang="en">A practical workbook for setting boundaries and protecting your identity.</span>
-          </p>
-          <a href="https://www.amazon.com/No-Abandones-Buscar-Pareja-Spanish-ebook/dp/B0GCRCDMQL" target="_blank" rel="noopener">
-            <span data-lang="es" class="active">Leer en Amazon</span>
-            <span data-lang="en">Read on Amazon</span>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PROTOCOL SECTION -->
-<section class="section" id="protocol">
-  <div class="container">
-    <div class="sec-label reveal">
-      <span class="num">04</span>
-      <span class="name">
-        <span data-lang="es" class="active">Sistema de Precisión</span>
-        <span data-lang="en">Precision System</span>
-      </span>
-    </div>
-    <div class="protocol-section reveal">
-      <div class="protocol-inner">
-        <div class="protocol-content">
-          <h2>
-            <span data-lang="es" class="active">The Clarity <em>Protocol.</em></span>
-            <span data-lang="en">The Clarity <em>Protocol.</em></span>
-          </h2>
-          <p>
-            <span data-lang="es" class="active">Diez módulos secuenciales. Un sistema con principio, cuerpo y cierre. No es un curso. Es un protocolo de precisión para tomar decisiones bajo presión emocional.</span>
-            <span data-lang="en">Ten sequential modules. A system with beginning, body, and closure. Not a course. A precision protocol for making decisions under emotional pressure.</span>
-          </p>
-          <p>
-            <span data-lang="es" class="active">Cada módulo entrega una frase clave, un resumen analítico, puntos operativos, una conclusión, un micro-glosario y tres preguntas reflexivas con espacio de escritura.</span>
-            <span data-lang="en">Each module delivers a key phrase, analytical summary, operational points, conclusion, micro-glossary, and three reflective questions with writing space.</span>
-          </p>
-          <div class="protocol-meta">
-            <div class="protocol-meta-item">
-              <span class="key">
-                <span data-lang="es" class="active">Formato</span>
-                <span data-lang="en">Format</span>
-              </span>
-              <span class="val">
-                <span data-lang="es" class="active">Documento + PDF</span>
-                <span data-lang="en">Document + PDF</span>
-              </span>
-            </div>
-            <div class="protocol-meta-item">
-              <span class="key">
-                <span data-lang="es" class="active">Acceso</span>
-                <span data-lang="en">Access</span>
-              </span>
-              <span class="val">
-                <span data-lang="es" class="active">De por vida</span>
-                <span data-lang="en">Lifetime</span>
-              </span>
-            </div>
-            <div class="protocol-meta-item">
-              <span class="key">
-                <span data-lang="es" class="active">Inversión</span>
-                <span data-lang="en">Investment</span>
-              </span>
-              <span class="val">$49 USD</span>
-            </div>
-          </div>
-          <a href="protocolo/index.html" class="btn-primary" style="margin-top: 6vh;">
-            <span data-lang="es" class="active">Explorar el Protocolo</span>
-            <span data-lang="en">Explore Protocol</span>
-          </a>
-        </div>
-        <div class="reveal" style="text-align: center;">
-          <img src="assets/images/protocolocase.JPG" alt="Protocol" style="max-width: 100%; height: auto; border: 1px solid var(--rule); display: block;">
-          <span class="img-meta" style="display: block; margin-top: 3vh;">
-            <span data-lang="es" class="active">The Clarity Protocol · Vol. 01</span>
-            <span data-lang="en">The Clarity Protocol · Vol. 01</span>
-          </span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- SELF LOVE CLUB & LAB -->
 <section class="section" id="ecosystem">
   <div class="container">
     <div class="sec-label reveal">
-      <span class="num">05</span>
+      <span class="num">03</span>
       <span class="name">
         <span data-lang="es" class="active">Ecosistema</span>
         <span data-lang="en">Ecosystem</span>
@@ -790,6 +584,10 @@
     });
     document.querySelectorAll('.lang-btn').forEach(btn => {
       btn.classList.toggle('active', btn.textContent.trim() === l.toUpperCase());
+    });
+    // Producto del mes: el link cambia junto con el idioma
+    document.querySelectorAll('[data-href-es]').forEach(el => {
+      el.setAttribute('href', el.getAttribute('data-href-' + l));
     });
     try { localStorage.setItem('clarity-lang', l); } catch (e) {}
   }
