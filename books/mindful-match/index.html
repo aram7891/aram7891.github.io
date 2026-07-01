@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mindful Match | Andrés Ramírez</title>
-<meta name="description" content="Mindful Match — Find love without losing yourself. A book by Andrés Ramírez, Self Love Club.">
+<title>Mindful Match / Match Consciente | Andrés Ramírez</title>
+<meta name="description" content="Mindful Match / Match Consciente — encontrar el amor sin perderte. Un libro de Andrés Ramírez, Self Love Club.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,19 +21,13 @@
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  body {
-    background: var(--parchment); color: var(--ink);
-    font-family: var(--font-body); font-weight: 300;
-    font-size: 17px; line-height: 1.65; letter-spacing: 0.005em;
-    -webkit-font-smoothing: antialiased;
-  }
+  body { background: var(--parchment); color: var(--ink); font-family: var(--font-body); font-weight: 300; font-size: 17px; line-height: 1.65; letter-spacing: 0.005em; -webkit-font-smoothing: antialiased; }
   a { color: inherit; text-decoration: none; }
   [data-lang] { display: none; }
   [data-lang].active { display: inline; }
   .container { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
   .meta { font-family: var(--font-mono); font-weight: 300; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.6; }
 
-  /* NAV */
   .nav { position: sticky; top: 0; z-index: 50; background: rgba(247, 244, 239, 0.92); border-bottom: 1px solid var(--rule); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
   .nav-inner { position: relative; display: flex; justify-content: space-between; align-items: center; padding: 16px var(--gutter); max-width: var(--max); margin: 0 auto; gap: 16px; }
   .nav-brand { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; }
@@ -60,7 +54,6 @@
   .crumb a { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.55; transition: opacity .25s; }
   .crumb a:hover { opacity: 1; }
 
-  /* HERO */
   .hero { padding: 6vh var(--gutter) 12vh; max-width: var(--max); margin: 0 auto; }
   .hero-grid { display: grid; grid-template-columns: 340px 1fr; gap: 8vw; align-items: start; }
   @media (max-width: 820px) { .hero-grid { grid-template-columns: 1fr; gap: 5vh; } }
@@ -85,7 +78,6 @@
   .store-secondary a { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.55; transition: opacity .25s; border-bottom: 1px solid var(--rule-strong); padding-bottom: 2px; }
   .store-secondary a:hover { opacity: 1; }
 
-  /* SECTIONS */
   .section { padding: 10vh 0; border-top: 1px solid var(--rule); }
   .sec-label { display: flex; align-items: baseline; gap: 18px; margin-bottom: 5vh; }
   .sec-label .num { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.22em; color: var(--amber); }
@@ -132,8 +124,8 @@
         </a>
       </div>
       <div class="lang-btns">
-        <button class="lang-btn" onclick="setLang('es')">ES</button>
-        <button class="lang-btn active" onclick="setLang('en')">EN</button>
+        <button class="lang-btn active" onclick="setLang('es')">ES</button>
+        <button class="lang-btn" onclick="setLang('en')">EN</button>
       </div>
     </div>
   </div>
@@ -150,27 +142,53 @@
   <div class="hero-grid">
     <div class="reveal">
       <div class="cover-frame">
-        <img src="../../assets/covers/03-mindful-match.jpg" alt="Mindful Match — cover">
+        <img id="coverImg"
+             src="../../assets/covers/05-match-consciente.jpg"
+             data-src-es="../../assets/covers/05-match-consciente.jpg"
+             data-src-en="../../assets/covers/03-mindful-match.jpg"
+             alt="Mindful Match / Match Consciente — portada">
       </div>
-      <span class="cover-cap meta">Mindful Match · Self Love Club</span>
+      <span class="cover-cap meta">Self Love Club</span>
     </div>
 
     <div class="reveal">
-      <div class="hero-num">03 / 09</div>
-      <h1>Mindful Match</h1>
-      <div class="hero-sub">Find Love Without Losing Yourself</div>
+      <div class="hero-num">02 / 05</div>
+      <h1>
+        <span data-lang="es" class="active">Match Consciente</span>
+        <span data-lang="en">Mindful Match</span>
+      </h1>
+      <div class="hero-sub">
+        <span data-lang="es" class="active">Encontrar el amor sin perderte a ti mismo</span>
+        <span data-lang="en">Find Love Without Losing Yourself</span>
+      </div>
+
       <div class="hero-desc">
-        <p>Dating today means navigating apps, contradictory advice, and the idea that someone "perfect" is out there waiting. In the process, the first thing you lose isn't time: it's yourself.</p>
-        <p><em>Mindful Match</em> offers something different. Not tricks to be more likable, but a framework for deciding with clarity: who you let in, which patterns you repeat, and what you're actually willing to hold.</p>
-        <p>This book helps you:</p>
-        <ul>
-          <li>Recognize the patterns and beliefs that sabotage your love life.</li>
-          <li>Build a sense of self-worth that doesn't depend on outside validation.</li>
-          <li>Get to know someone without abandoning yourself in the process.</li>
-          <li>Move through the early stages of a relationship with honesty, not strategy.</li>
-        </ul>
-        <p>Whether you're single or in a relationship, the underlying question is the same: can you move toward another person without moving away from yourself?</p>
-        <p class="lead">This isn't a guide for finding a partner at any cost. It's a system for choosing better.</p>
+        <span data-lang="es" class="active">
+          <p>Salir con alguien hoy significa navegar apps, consejos contradictorios y la idea de que existe alguien "perfecto" esperando en algún lugar. En el proceso, lo primero que se pierde no es tiempo: eres tú mismo.</p>
+          <p><em>Match Consciente</em> ofrece algo distinto. No trucos para caer mejor, sino un marco para decidir con claridad: a quién dejas entrar, qué patrones repites, y qué estás realmente dispuesto a sostener.</p>
+          <p>Este libro te ayuda a:</p>
+          <ul>
+            <li>Reconocer los patrones y creencias que sabotean tu vida amorosa.</li>
+            <li>Construir un sentido de valor propio que no dependa de la validación externa.</li>
+            <li>Conocer a alguien sin abandonarte a ti mismo en el proceso.</li>
+            <li>Transitar las primeras etapas de una relación con honestidad, no con estrategia.</li>
+          </ul>
+          <p>Ya sea que estés soltero o en una relación, la pregunta de fondo es la misma: ¿puedes acercarte a otra persona sin alejarte de ti mismo?</p>
+          <p class="lead">Esto no es una guía para conseguir pareja a cualquier precio. Es un sistema para elegir mejor.</p>
+        </span>
+        <span data-lang="en">
+          <p>Dating today means navigating apps, contradictory advice, and the idea that someone "perfect" is out there waiting. In the process, the first thing you lose isn't time: it's yourself.</p>
+          <p><em>Mindful Match</em> offers something different. Not tricks to be more likable, but a framework for deciding with clarity: who you let in, which patterns you repeat, and what you're actually willing to hold.</p>
+          <p>This book helps you:</p>
+          <ul>
+            <li>Recognize the patterns and beliefs that sabotage your love life.</li>
+            <li>Build a sense of self-worth that doesn't depend on outside validation.</li>
+            <li>Get to know someone without abandoning yourself in the process.</li>
+            <li>Move through the early stages of a relationship with honesty, not strategy.</li>
+          </ul>
+          <p>Whether you're single or in a relationship, the underlying question is the same: can you move toward another person without moving away from yourself?</p>
+          <p class="lead">This isn't a guide for finding a partner at any cost. It's a system for choosing better.</p>
+        </span>
       </div>
 
       <div class="store-block">
@@ -178,11 +196,23 @@
           <span data-lang="es" class="active">Disponible en</span>
           <span data-lang="en">Available on</span>
         </div>
-        <a class="apple-badge" href="https://books.apple.com/us/book/mindful-match-finding-love-without-losing-yourself/id6784083818" target="_blank" rel="noopener" aria-label="Mindful Match on Apple Books">
-          <img src="../../assets/theseed/badge.svg" data-src-es="../../assets/theseed/badgeESP.svg" data-src-en="../../assets/theseed/badge.svg" alt="Available on Apple Books">
+        <a class="apple-badge" id="appleLink"
+           href="https://books.apple.com/us/book/match-consciente-encontrar-el-amor-sin-perderte/id6784085913"
+           data-href-es="https://books.apple.com/us/book/match-consciente-encontrar-el-amor-sin-perderte/id6784085913"
+           data-href-en="https://books.apple.com/us/book/mindful-match-finding-love-without-losing-yourself/id6784083818"
+           target="_blank" rel="noopener" aria-label="Apple Books">
+          <img id="appleBadge"
+               src="../../assets/theseed/badgeESP.svg"
+               data-src-es="../../assets/theseed/badgeESP.svg"
+               data-src-en="../../assets/theseed/badge.svg"
+               alt="Disponible en Apple Books">
         </a>
         <div class="store-secondary">
-          <a href="https://a.co/d/09Y1XYJV" target="_blank" rel="noopener">Amazon</a>
+          <a id="amazonLink"
+             href="https://a.co/d/02HzkcC4"
+             data-href-es="https://a.co/d/02HzkcC4"
+             data-href-en="https://a.co/d/09Y1XYJV"
+             target="_blank" rel="noopener">Amazon</a>
         </div>
       </div>
     </div>
@@ -208,24 +238,23 @@
       </div>
       <div class="ficha-item">
         <span class="key">
-          <span data-lang="es" class="active">Idioma</span>
-          <span data-lang="en">Language</span>
+          <span data-lang="es" class="active">Idioma de esta edición</span>
+          <span data-lang="en">This edition's language</span>
         </span>
-        <span class="val">English</span>
-      </div>
-      <div class="ficha-item">
-        <span class="key">
-          <span data-lang="es" class="active">Edición hermana</span>
-          <span data-lang="en">Sister edition</span>
+        <span class="val">
+          <span data-lang="es" class="active">Español</span>
+          <span data-lang="en">English</span>
         </span>
-        <span class="val"><a href="../match-consciente/index.html">Match Consciente (ES)</a></span>
       </div>
       <div class="ficha-item">
         <span class="key">
           <span data-lang="es" class="active">Cuaderno complementario</span>
           <span data-lang="en">Companion workbook</span>
         </span>
-        <span class="val"><a href="../dont-lose-yourself-dating/index.html">Don't Lose Yourself While Dating</a></span>
+        <span class="val"><a href="../dont-lose-yourself-dating/index.html">
+          <span data-lang="es" class="active">No Te Abandones al Buscar Pareja</span>
+          <span data-lang="en">Don't Lose Yourself While Dating</span>
+        </a></span>
       </div>
     </div>
   </div>
@@ -239,9 +268,9 @@
           <span data-lang="es" class="active">Siguiente publicación</span>
           <span data-lang="en">Next publication</span>
         </span>
-        <div class="next-title">Don't Lose Yourself While Dating</div>
+        <div class="next-title">Clarity</div>
       </div>
-      <a href="../dont-lose-yourself-dating/index.html" class="next-link">
+      <a href="../clarity/index.html" class="next-link">
         <span data-lang="es" class="active">Ver ficha →</span>
         <span data-lang="en">View page →</span>
       </a>
@@ -270,6 +299,7 @@
     document.querySelectorAll('[data-lang="' + l + '"]').forEach(el => el.classList.add('active'));
     document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.toggle('active', btn.textContent.trim() === l.toUpperCase()));
     document.querySelectorAll('[data-src-es]').forEach(el => el.setAttribute('src', el.getAttribute('data-src-' + l)));
+    document.querySelectorAll('[data-href-es]').forEach(el => el.setAttribute('href', el.getAttribute('data-href-' + l)));
     try { localStorage.setItem('clarity-lang', l); } catch (e) {}
   }
   function toggleMenu() {
@@ -284,7 +314,7 @@
     });
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => { el.style.animationPlayState = 'paused'; observer.observe(el); });
-  window.addEventListener('load', () => { setLang(localStorage.getItem('clarity-lang') || 'en'); });
+  window.addEventListener('load', () => { setLang(localStorage.getItem('clarity-lang') || 'es'); });
 </script>
 
 </body>
