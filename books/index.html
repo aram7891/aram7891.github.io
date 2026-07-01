@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Publicaciones | Andrés Ramírez</title>
+<meta name="description" content="Catálogo completo de publicaciones de Andrés Ramírez — libros, cuadernos de trabajo y el Protocolo de Claridad.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Instrument+Sans:wght@400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --parchment: #F7F4EF;
+    --ink: #1A1814;
+    --amber: #8B6F4E;
+    --sand: #C4A882;
+    --rule: rgba(26, 24, 20, 0.14);
+    --rule-strong: rgba(26, 24, 20, 0.28);
+    --font-display: "Cormorant Garamond", "Times New Roman", serif;
+    --font-body: "Instrument Sans", -apple-system, sans-serif;
+    --font-mono: "DM Mono", "Courier New", monospace;
+    --max: 1180px;
+    --gutter: 6vw;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--parchment); color: var(--ink);
+    font-family: var(--font-body); font-weight: 300;
+    font-size: 17px; line-height: 1.65; letter-spacing: 0.005em;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  [data-lang] { display: none; }
+  [data-lang].active { display: inline; }
+  .container { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+  .meta {
+    font-family: var(--font-mono); font-weight: 300; font-size: 11px;
+    letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.6;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(247, 244, 239, 0.92);
+    border-bottom: 1px solid var(--rule);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  }
+  .nav-inner {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px var(--gutter); max-width: var(--max); margin: 0 auto; gap: 16px;
+  }
+  .nav-brand { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; }
+  .nav-brand em { font-family: var(--font-display); font-style: italic; text-transform: none; letter-spacing: 0; font-size: 14px; color: var(--amber); }
+  .nav-right { display: flex; align-items: center; gap: 18px; }
+  .nav-links { display: flex; align-items: center; gap: 24px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; }
+  .nav-link { opacity: 0.7; transition: opacity 0.25s; }
+  .nav-link:hover { opacity: 1; }
+  .lang-btns { display: flex; border: 1px solid var(--rule-strong); }
+  .lang-btn { background: none; border: 0; cursor: pointer; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; padding: 7px 11px; color: var(--ink); opacity: 0.5; transition: all .25s; }
+  .lang-btn + .lang-btn { border-left: 1px solid var(--rule-strong); }
+  .lang-btn.active { background: var(--ink); color: var(--parchment); opacity: 1; }
+  .lang-btn:hover:not(.active) { opacity: 1; }
+  @media (max-width: 768px) { .nav-links { display: none; } .nav-brand { font-size: 9px; } }
+
+  .crumb { padding: 4vh var(--gutter) 0; max-width: var(--max); margin: 0 auto; }
+  .crumb a { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.55; transition: opacity .25s; }
+  .crumb a:hover { opacity: 1; }
+
+  /* HERO */
+  .hub-hero { padding: 6vh var(--gutter) 8vh; max-width: var(--max); margin: 0 auto; }
+  .hub-num { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.22em; color: var(--amber); margin-bottom: 3vh; }
+  .hub-hero h1 {
+    font-family: var(--font-display); font-weight: 400; font-style: italic;
+    font-size: clamp(42px, 6vw, 72px); line-height: 1.05; letter-spacing: -0.02em;
+    margin-bottom: 3vh; max-width: 14ch;
+  }
+  .hub-hero p { font-size: 17px; line-height: 1.7; max-width: 54ch; opacity: 0.82; }
+
+  /* CAROUSEL */
+  .carousel-wrap { position: relative; padding: 0 0 10vh; }
+  .carousel-head {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0 var(--gutter); max-width: var(--max); margin: 0 auto 4vh;
+  }
+  .carousel-count { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; opacity: 0.55; }
+  .carousel-arrows { display: flex; gap: 10px; }
+  .arrow-btn {
+    width: 40px; height: 40px; border: 1px solid var(--rule-strong);
+    background: none; cursor: pointer; font-family: var(--font-mono); font-size: 15px;
+    color: var(--ink); transition: all .25s; display: flex; align-items: center; justify-content: center;
+  }
+  .arrow-btn:hover { background: var(--ink); color: var(--parchment); border-color: var(--ink); }
+
+  .carousel {
+    display: flex; gap: 5vw; overflow-x: auto; scroll-snap-type: x mandatory;
+    padding: 0 var(--gutter); scrollbar-width: none; -ms-overflow-style: none;
+  }
+  .carousel::-webkit-scrollbar { display: none; }
+
+  .card { flex: 0 0 auto; width: 240px; scroll-snap-align: start; display: flex; flex-direction: column; }
+  .card[data-lang] { display: none; }
+  .card[data-lang].active { display: flex; }
+  .card-both { display: flex; }
+  .card-num { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; color: var(--amber); margin-bottom: 1.5vh; }
+  .card-cover { aspect-ratio: 2/3; border: 1px solid var(--rule-strong); overflow: hidden; margin-bottom: 2.2vh; }
+  .card-cover img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease; }
+  .card:hover .card-cover img { transform: scale(1.03); }
+  .card-title { font-family: var(--font-display); font-style: italic; font-size: 20px; line-height: 1.25; margin-bottom: 0.8vh; }
+  .card-sub { font-size: 13.5px; line-height: 1.5; opacity: 0.7; margin-bottom: 1.5vh; }
+  .card-format { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.5; margin-top: auto; }
+
+  footer { padding: 10vh var(--gutter); border-top: 1px solid var(--rule); text-align: center; }
+  .footer-links { display: flex; justify-content: center; gap: 32px; margin-top: 3vh; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; }
+  .footer-links a { opacity: 0.6; transition: opacity .25s; }
+  .footer-links a:hover { opacity: 1; }
+
+  .reveal { opacity: 0; animation: fadeInUp 0.8s ease-out forwards; }
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-brand">Andrés Ramírez · <em>Clarity</em></a>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="../laboratorio.html" class="nav-link">
+          <span data-lang="es" class="active">Laboratorio</span>
+          <span data-lang="en">Lab</span>
+        </a>
+      </div>
+      <div class="lang-btns">
+        <button class="lang-btn active" onclick="setLang('es')">ES</button>
+        <button class="lang-btn" onclick="setLang('en')">EN</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="crumb reveal">
+  <a href="../index.html">
+    <span data-lang="es" class="active">← Inicio</span>
+    <span data-lang="en">← Home</span>
+  </a>
+</div>
+
+<!-- HERO -->
+<section class="hub-hero">
+  <div class="hub-num reveal">02</div>
+  <h1 class="reveal">
+    <span data-lang="es" class="active">Publicaciones</span>
+    <span data-lang="en">Publications</span>
+  </h1>
+  <p class="reveal">
+    <span data-lang="es" class="active">Libros, cuadernos de trabajo y el sistema de precisión — todo lo publicado hasta hoy, en un solo lugar.</span>
+    <span data-lang="en">Books, workbooks, and the precision system — everything published so far, in one place.</span>
+  </p>
+</section>
+
+<!-- CAROUSEL -->
+<section class="carousel-wrap">
+  <div class="carousel-head reveal">
+    <span class="carousel-count" id="carouselCount">01 / 09</span>
+    <div class="carousel-arrows">
+      <button class="arrow-btn" onclick="scrollCarousel(-1)" aria-label="Anterior">←</button>
+      <button class="arrow-btn" onclick="scrollCarousel(1)" aria-label="Siguiente">→</button>
+    </div>
+  </div>
+
+  <div class="carousel reveal" id="carousel">
+
+    <a class="card" href="la-semilla/index.html" data-lang="es">
+      <span class="card-num"></span>
+      <div class="card-cover"><img src="../assets/covers/lasemilla-caratula.PNG" alt="La Semilla"></div>
+      <div class="card-title">La Semilla</div>
+      <div class="card-sub">
+        <span data-lang="es" class="active">Un cuento sobre crecer desde adentro</span>
+        <span data-lang="en">A story about growing from within</span>
+      </div>
+      <div class="card-format">EPUB</div>
+    </a>
+    <a class="card" href="the-seed/index.html" data-lang="en">
+      <span class="card-num"></span>
+      <div class="card-cover"><img src="../assets/covers/theseed-cover.PNG" alt="The Seed"></div>
+      <div class="card-title">The Seed</div>
+      <div class="card-sub">
+        <span data-lang="es" class="active">Un cuento sobre crecer desde adentro</span>
+        <span data-lang="en">A story about growing from within</span>
+      </div>
+      <div class="card-format">EPUB</div>
+    </a>
+    <a class="card" href="match-consciente/index.html" data-lang="es">
+      <span class="card-num"></span>
+      <div class="card-cover"><img src="../assets/covers/05-match-consciente.jpg" alt="Match Consciente"></div>
+      <div class="card-title">Match Consciente</div>
+      <div class="card-sub">
+        <span data-lang="es" class="active">Encontrar el amor sin perderte</span>
+        <span data-lang="en">Finding love without losing yourself</span>
+      </div>
+      <div class="card-format">EPUB</div>
+    </a>
+    <a class="card" href="mindful-match/index.html" data-lang="en">
+      <span class="card-num"></span>
+      <div class="card-cover"><img src="../assets/covers/03-mindful-match.jpg" alt="Mindful Match"></div>
+      <div class="card-title">Mindful Match</div>
+      <div class="card-sub">
+        <span data-lang="es" class="active">Encontrar el amor sin perderte</span>
+        <span data-lang="en">Finding love without losing yourself</span>
+      </div>
+      <div class="card-format">EPUB</div>
+    </a>
+    <a class="card" href="no-te-abandones-buscar-pareja/index.html" data-lang="es">
+      <span class="card-num"></span>
+      <div class="card-cover"><img src="../assets/covers/07-no-te-abandones.jpg" alt="No Te Abandones al Buscar Pareja"></div>
+      <div class="card-title">No Te Abandones al Buscar Pareja</div>
+      <div class="card-sub">
+        <span data-lang="es" class="active">Cuaderno de trabajo</span>
+        <span data-lang="en">Workbook</span>
+      </div>
+      <div class="card-format">PDF WORKBOOK</div>
+    </a>
+    <a class="card" href="dont-lose-yourself-dating/index.html" data-lang="en">
+      <span class="card-num"></span>
+      <div class="card-cover"><img src="../assets/covers/06-dont-lose-yourself.jpg" alt="Don't Lose Yourself While Dating"></div>
+      <div class="card-title">Don't Lose Yourself While Dating</div>
+      <div class="card-sub">
+        <span data-lang="es" class="active">Cuaderno de trabajo</span>
+        <span data-lang="en">Workbook</span>
+      </div>
+      <div class="card-format">PDF WORKBOOK</div>
+    </a>
+    <a class="card" href="claridad/index.html" data-lang="es">
+      <span class="card-num"></span>
+      <div class="card-cover"><img src="../assets/covers/claridad.JPEG" alt="Claridad"></div>
+      <div class="card-title">Claridad</div>
+      <div class="card-sub">
+        <span data-lang="es" class="active">Doce ensayos compilados</span>
+        <span data-lang="en">Twelve essays compiled</span>
+      </div>
+      <div class="card-format">
+        <span data-lang="es" class="active">PDF / EPUB</span>
+        <span data-lang="en">PDF / EPUB</span>
+      </div>
+    </a>
+    <a class="card" href="clarity/index.html" data-lang="en">
+      <span class="card-num"></span>
+      <div class="card-cover"><img src="../assets/covers/clarity.JPEG" alt="Clarity"></div>
+      <div class="card-title">Clarity</div>
+      <div class="card-sub">
+        <span data-lang="es" class="active">Doce ensayos compilados</span>
+        <span data-lang="en">Twelve essays compiled</span>
+      </div>
+      <div class="card-format">PDF / EPUB</div>
+    </a>
+    <a class="card card-both" href="../protocolo/index.html">
+      <span class="card-num"></span>
+      <div class="card-cover"><img src="../assets/covers/protocolo-claridad-cover.jpeg" alt="El Protocolo de Claridad"></div>
+      <div class="card-title">
+        <span data-lang="es" class="active">El Protocolo de Claridad</span>
+        <span data-lang="en">The Clarity Protocol</span>
+      </div>
+      <div class="card-sub">
+        <span data-lang="es" class="active">Un sistema, no un curso</span>
+        <span data-lang="en">A system, not a course</span>
+      </div>
+      <div class="card-format">
+        <span data-lang="es" class="active">DIGITAL</span>
+        <span data-lang="en">DIGITAL</span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="meta">© Self Love Club · MMXXVI</div>
+  <div class="footer-links">
+    <a href="../index.html">
+      <span data-lang="es" class="active">Inicio</span>
+      <span data-lang="en">Home</span>
+    </a>
+    <a href="https://www.instagram.com/selfloveclubusa" target="_blank" rel="noopener">Instagram</a>
+  </div>
+</footer>
+
+<script>
+  function setLang(l) {
+    document.querySelectorAll('[data-lang]').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('[data-lang="' + l + '"]').forEach(el => el.classList.add('active'));
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.toggle('active', btn.textContent.trim() === l.toUpperCase()));
+    renumberCarousel();
+    try { localStorage.setItem('clarity-lang', l); } catch (e) {}
+  }
+  function renumberCarousel() {
+    const carousel = document.getElementById('carousel');
+    if (!carousel) return;
+    const visible = Array.from(carousel.querySelectorAll('.card')).filter(c => getComputedStyle(c).display !== 'none');
+    visible.forEach((card, i) => {
+      const numEl = card.querySelector('.card-num');
+      if (numEl) numEl.textContent = String(i + 1).padStart(2, '0');
+    });
+    const countEl = document.getElementById('carouselCount');
+    if (countEl) {
+      const n = String(visible.length).padStart(2, '0');
+      countEl.textContent = '01 / ' + n;
+    }
+    carousel.scrollTo({ left: 0 });
+  }
+  function scrollCarousel(dir) {
+    const el = document.getElementById('carousel');
+    const cardWidth = el.querySelector('.card').offsetWidth + 48; // width + gap
+    el.scrollBy({ left: dir * cardWidth * 2, behavior: 'smooth' });
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.style.animationPlayState = 'running'; observer.unobserve(entry.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => { el.style.animationPlayState = 'paused'; observer.observe(el); });
+  window.addEventListener('load', () => { setLang(localStorage.getItem('clarity-lang') || 'es'); });
+</script>
+
+</body>
+</html>
