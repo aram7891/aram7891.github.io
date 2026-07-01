@@ -317,6 +317,41 @@
     .pubs-quicklink { display: none; }
     .nav-link-featured { display: none; }
   }
+
+  /* SEED PROMO STRIP */
+  .seed-strip {
+    display: block;
+    background: var(--sand);
+    border-bottom: 1px solid var(--rule-strong);
+  }
+  .seed-strip-inner {
+    max-width: var(--max); margin: 0 auto; padding: 14px var(--gutter);
+    display: flex; align-items: center; gap: 20px;
+  }
+  .seed-strip-img {
+    width: 46px; height: 46px; border-radius: 50%; object-fit: cover;
+    border: 1px solid var(--ink); flex-shrink: 0;
+  }
+  .seed-strip-text { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+  .seed-strip-eyebrow {
+    font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--ink); opacity: 0.65;
+  }
+  .seed-strip-main {
+    font-family: var(--font-display); font-style: italic; font-size: 16px; color: var(--ink); line-height: 1.2;
+  }
+  .seed-strip-sub {
+    font-family: var(--font-body); font-size: 12.5px; color: var(--ink); opacity: 0.75;
+  }
+  .seed-strip-cta {
+    font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase;
+    white-space: nowrap; border-bottom: 1px solid var(--ink); padding-bottom: 2px; flex-shrink: 0;
+  }
+  @media (max-width: 600px) {
+    .seed-strip-inner { flex-wrap: wrap; padding: 12px var(--gutter); }
+    .seed-strip-sub { display: none; }
+    .seed-strip-cta { margin-left: 66px; margin-top: 6px; }
+  }
 </style>
 </head>
 
@@ -374,6 +409,31 @@
     </div>
   </div>
 </nav>
+
+<!-- SEED PROMO STRIP -->
+<a href="https://andresramirez.pro/theseed" target="_blank" rel="noopener" class="seed-strip reveal">
+  <div class="seed-strip-inner">
+    <img src="assets/images/theseed-shhh.jpg" alt="Shhh — La Semilla" class="seed-strip-img">
+    <div class="seed-strip-text">
+      <span class="seed-strip-eyebrow">
+        <span data-lang="es" class="active"> UN SECRETO ENTRE NOSOTROS</span>
+        <span data-lang="en"> JUST BETWEEN US</span>
+      </span>
+      <span class="seed-strip-main">
+        <span data-lang="es" class="active">El cuento está gratis. Por poco tiempo.</span>
+        <span data-lang="en">The story is free. For a little while.</span>
+      </span>
+      <span class="seed-strip-sub">
+        <span data-lang="es" class="active">¿Ya leíste a Semillita?</span>
+        <span data-lang="en">Have you met Little Seed yet?</span>
+      </span>
+    </div>
+    <span class="seed-strip-cta">
+      <span data-lang="es" class="active">Leer gratis →</span>
+      <span data-lang="en">Read free →</span>
+    </span>
+  </div>
+</a>
 
 <!-- HERO -->
 <section class="section hero" id="home">
