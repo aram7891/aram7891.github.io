@@ -6,7 +6,7 @@
     <title>Laboratorio de Claridad | Andrés Ramírez</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Instrument+Sans:wght@400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Instrument+Sans:wght@300;400;500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
@@ -14,7 +14,6 @@
             --ink: #1A1814;
             --amber: #8B6F4E;
             --sand: #C4A882;
-            --blue: #0047AB;
             --line: 1px solid rgba(26,24,20,0.1);
         }
 
@@ -24,8 +23,9 @@
             background: var(--parchment);
             color: var(--ink);
             font-family: 'Instrument Sans', sans-serif;
-            font-size: 14px;
-            line-height: 1.6;
+            font-weight: 300;
+            font-size: 15px;
+            line-height: 1.65;
             display: flex;
             flex-direction: column;
             height: 100vh;
@@ -37,31 +37,31 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0.65rem 4%;
+            padding: 0.75rem 4%;
             background: white;
             border-bottom: var(--line);
             flex-shrink: 0;
         }
         .topbar-left { display: flex; align-items: center; gap: 2rem; }
         .back-link {
-            font-family: 'DM Mono', monospace; font-size: 10px;
-            color: var(--sand); text-decoration: none;
-            text-transform: uppercase; letter-spacing: 1px; transition: color 0.2s;
+            font-family: 'DM Mono', monospace; font-weight: 400; font-size: 10px;
+            color: rgba(26,24,20,0.5); text-decoration: none;
+            text-transform: uppercase; letter-spacing: 1.5px; transition: color 0.2s;
         }
-        .back-link:hover { color: var(--blue); }
+        .back-link:hover { color: var(--amber); }
         .brand-title {
             font-family: 'Cormorant Garamond', serif;
-            font-style: italic; font-size: 1.25rem; font-weight: 300;
+            font-style: italic; font-size: 1.5rem; font-weight: 300;
         }
         .brand-sub {
-            font-family: 'DM Mono', monospace; font-size: 9px;
+            font-family: 'DM Mono', monospace; font-weight: 400; font-size: 10px;
             color: var(--amber); text-transform: uppercase; letter-spacing: 1.5px;
         }
         .lang-toggle button {
             background: none; border: none; font-family: 'DM Mono', monospace;
-            font-size: 11px; color: var(--sand); cursor: pointer; padding: 0.3rem 0.5rem;
+            font-weight: 400; font-size: 11px; color: rgba(26,24,20,0.4); cursor: pointer; padding: 0.3rem 0.5rem;
         }
-        .lang-toggle button.active { color: var(--blue); font-weight: 600; border-bottom: 1px solid var(--blue); }
+        .lang-toggle button.active { color: var(--amber); font-weight: 600; border-bottom: 1px solid var(--amber); }
 
         /* ── MODULE TABS ── */
         .module-tabs {
@@ -71,7 +71,7 @@
             flex-shrink: 0;
         }
         .tab-btn {
-            padding: 0.75rem 2.5rem;
+            padding: 0.85rem 2.5rem;
             background: none; border: none;
             border-bottom: 2px solid transparent;
             cursor: pointer;
@@ -79,20 +79,20 @@
             transition: all 0.22s;
         }
         .tab-btn .t-num {
-            font-family: 'DM Mono', monospace; font-size: 9px;
-            color: var(--sand); letter-spacing: 2px; display: block; margin-bottom: 0.1rem;
+            font-family: 'DM Mono', monospace; font-weight: 500; font-size: 10px;
+            color: var(--amber); letter-spacing: 2px; display: block; margin-bottom: 0.15rem;
         }
         .tab-btn .t-name {
-            font-family: 'DM Mono', monospace; font-size: 11px;
-            color: var(--sand); letter-spacing: 0.5px; display: block;
+            font-family: 'DM Mono', monospace; font-weight: 400; font-size: 12px;
+            color: rgba(26,24,20,0.55); letter-spacing: 0.5px; display: block;
         }
         .tab-btn .t-desc {
-            font-family: 'Instrument Sans', sans-serif; font-size: 10px;
-            color: var(--sand); display: block; margin-top: 0.15rem;
+            font-family: 'Instrument Sans', sans-serif; font-weight: 300; font-size: 11px;
+            color: rgba(26,24,20,0.42); display: block; margin-top: 0.2rem;
         }
-        .tab-btn.active { background: white; border-bottom: 2px solid var(--blue); }
+        .tab-btn.active { background: white; border-bottom: 2px solid var(--amber); }
         .tab-btn.active .t-num,
-        .tab-btn.active .t-name { color: var(--blue); }
+        .tab-btn.active .t-name { color: var(--ink); }
         .tab-btn.active .t-desc { color: var(--amber); }
         .tab-btn:hover:not(.active) { background: rgba(255,255,255,0.5); }
 
@@ -113,30 +113,31 @@
             background: white;
         }
         .panel-label {
-            font-family: 'DM Mono', monospace; font-size: 9px;
-            color: var(--sand); text-transform: uppercase; letter-spacing: 2px;
+            font-family: 'DM Mono', monospace; font-weight: 500; font-size: 10px;
+            color: var(--amber); text-transform: uppercase; letter-spacing: 2px;
             margin-bottom: 0.8rem;
             display: flex; justify-content: space-between;
         }
         .char-count {
-            font-family: 'DM Mono', monospace; font-size: 9px; color: var(--sand);
+            font-family: 'DM Mono', monospace; font-weight: 400; font-size: 10px; color: rgba(26,24,20,0.4);
         }
         .char-count.warn { color: var(--amber); }
-        .char-count.danger { color: #c00; }
+        .char-count.danger { color: #a13a2e; }
 
         textarea {
             flex: 1; width: 100%;
             padding: 1.2rem;
             font-family: 'Instrument Sans', sans-serif;
-            font-size: 14px; line-height: 1.75;
+            font-weight: 300;
+            font-size: 15px; line-height: 1.75;
             background: var(--parchment); border: var(--line);
             resize: none; outline: none; color: var(--ink);
             transition: border-color 0.3s;
         }
         textarea::placeholder {
-            color: var(--sand); font-style: italic; font-size: 13px; line-height: 1.7;
+            color: rgba(26,24,20,0.35); font-style: italic; font-size: 14px; line-height: 1.7;
         }
-        textarea:focus { border-color: rgba(0,71,171,0.2); }
+        textarea:focus { border-color: rgba(139,111,78,0.4); }
 
         .input-controls {
             display: flex; justify-content: space-between;
@@ -145,29 +146,29 @@
         .tone-wrap { display: flex; flex-direction: column; gap: 0.3rem; }
         .tone-row { display: flex; align-items: center; gap: 0.8rem; }
         .tone-lbl {
-            font-family: 'DM Mono', monospace; font-size: 10px;
-            color: var(--sand); letter-spacing: 1px;
+            font-family: 'DM Mono', monospace; font-weight: 500; font-size: 10px;
+            color: var(--amber); letter-spacing: 1.5px;
         }
         .tone-desc {
-            font-family: 'DM Mono', monospace; font-size: 9px; color: var(--sand);
+            font-family: 'DM Mono', monospace; font-weight: 400; font-size: 10px; color: rgba(26,24,20,0.42);
         }
         .btn-tone {
-            font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1px;
-            padding: 0.3rem 1rem; background: #EEEBE6; color: var(--ink);
+            font-family: 'DM Mono', monospace; font-weight: 500; font-size: 10px; letter-spacing: 1px;
+            padding: 0.3rem 1rem; background: rgba(196,168,130,0.18); color: var(--ink);
             border: none; cursor: pointer; transition: all 0.2s;
         }
-        .btn-tone.brutal { background: var(--ink); color: white; }
+        .btn-tone.brutal { background: var(--ink); color: var(--parchment); }
 
-        .analyze-wrap { display: flex; flex-direction: column; align-items: flex-end; gap: 0.2rem; }
+        .analyze-wrap { display: flex; flex-direction: column; align-items: flex-end; gap: 0.25rem; }
         .btn-analyze {
-            font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 1.5px;
+            font-family: 'DM Mono', monospace; font-weight: 500; font-size: 11px; letter-spacing: 1.5px;
             padding: 0.65rem 1.8rem; background: var(--ink); color: var(--parchment);
             border: none; cursor: pointer; transition: background 0.22s; white-space: nowrap;
         }
-        .btn-analyze:hover { background: var(--blue); }
+        .btn-analyze:hover { background: var(--amber); }
         .btn-analyze:disabled { opacity: 0.4; cursor: not-allowed; }
         .shortcut-hint {
-            font-family: 'DM Mono', monospace; font-size: 9px; color: var(--sand);
+            font-family: 'DM Mono', monospace; font-weight: 400; font-size: 10px; color: rgba(26,24,20,0.35);
         }
 
         /* ── RIGHT PANEL ── */
@@ -178,8 +179,8 @@
             overflow-y: auto;
         }
         .output-lbl {
-            font-family: 'DM Mono', monospace; font-size: 9px;
-            color: var(--sand); text-transform: uppercase; letter-spacing: 2px;
+            font-family: 'DM Mono', monospace; font-weight: 500; font-size: 10px;
+            color: var(--amber); text-transform: uppercase; letter-spacing: 2px;
             margin-bottom: 1.2rem; flex-shrink: 0;
         }
         #output { flex: 1; }
@@ -192,24 +193,24 @@
         .out-empty .dots { display: flex; gap: 6px; }
         .out-empty .dot {
             width: 5px; height: 5px; border-radius: 50%;
-            background: var(--sand); opacity: 0.25;
+            background: var(--sand); opacity: 0.5;
         }
         .out-empty p {
-            font-family: 'Cormorant Garamond', serif; font-style: italic;
-            font-size: 1.1rem; color: rgba(26,24,20,0.27);
+            font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300;
+            font-size: 1.15rem; color: rgba(26,24,20,0.45);
             line-height: 1.65; max-width: 340px;
         }
 
         /* processing */
         .out-processing {
             display: flex; align-items: center; gap: 0.8rem;
-            font-family: 'Cormorant Garamond', serif; font-style: italic;
-            font-size: 1rem; color: var(--sand); padding: 2rem 0;
+            font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300;
+            font-size: 1.05rem; color: var(--amber); padding: 2rem 0;
         }
         .spinner {
             width: 13px; height: 13px; flex-shrink: 0;
-            border: 2px solid rgba(196,168,130,0.3);
-            border-top: 2px solid var(--sand);
+            border: 2px solid rgba(139,111,78,0.25);
+            border-top: 2px solid var(--amber);
             border-radius: 50%;
             animation: spin 0.85s linear infinite;
         }
@@ -222,34 +223,34 @@
             to   { opacity:1; transform:translateY(0); }
         }
         .result-meta {
-            font-family: 'DM Mono', monospace; font-size: 9px;
-            color: var(--sand); letter-spacing: 1.5px; text-transform: uppercase;
+            font-family: 'DM Mono', monospace; font-weight: 500; font-size: 10px;
+            color: var(--amber); letter-spacing: 1.5px; text-transform: uppercase;
             padding-bottom: 0.8rem; border-bottom: var(--line); margin-bottom: 1.2rem;
         }
         .result-body {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.2rem; line-height: 1.85; color: var(--ink);
+            font-family: 'Cormorant Garamond', serif; font-weight: 300;
+            font-size: 1.25rem; line-height: 1.85; color: var(--ink);
             white-space: pre-wrap;
         }
 
         /* error */
         .out-error {
-            font-family: 'DM Mono', monospace; font-size: 11px; color: #c00;
-            padding: 1rem; background: #fff0f0; border-left: 3px solid #c00;
+            font-family: 'DM Mono', monospace; font-weight: 400; font-size: 11px; color: #a13a2e;
+            padding: 1rem; background: rgba(161,58,46,0.06); border-left: 3px solid #a13a2e;
         }
 
         /* ── FOOTER ── */
         .footer {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 0.65rem 4%; background: white; border-top: var(--line); flex-shrink: 0;
+            padding: 0.75rem 4%; background: white; border-top: var(--line); flex-shrink: 0;
         }
         .footer-brand { display: flex; align-items: center; gap: 1rem; }
         .footer-brand img { width: 26px; height: 26px; border-radius: 50%; object-fit: cover; filter: grayscale(100%); }
-        .f-name { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.95rem; }
-        .f-role { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--sand); text-transform: uppercase; letter-spacing: 1px; }
+        .f-name { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300; font-size: 1rem; }
+        .f-role { font-family: 'DM Mono', monospace; font-weight: 400; font-size: 10px; color: var(--amber); text-transform: uppercase; letter-spacing: 1px; }
         .footer-links { display: flex; gap: 1.5rem; }
-        .footer-links a { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--ink); text-decoration: none; transition: color 0.2s; }
-        .footer-links a:hover { color: var(--blue); }
+        .footer-links a { font-family: 'DM Mono', monospace; font-weight: 400; font-size: 10px; color: var(--ink); text-decoration: none; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--amber); }
 
         /* ── MOBILE ── */
         @media (max-width: 768px) {
