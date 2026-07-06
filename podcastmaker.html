@@ -239,5 +239,10 @@ Clarity is a choice.
         // Inicializar iconos de Lucide después de renderizar
         setTimeout(() => lucide.createIcons(), 500);
     </script>
+
+    <script type="module">
+      import { inject } from '/node_modules/@vercel/analytics/dist/index.mjs';
+      inject();
+    </script>
 </body>
 </html>
