@@ -114,7 +114,9 @@
 
   /* ---- parchment-framed illustration ---- */
   .illo{
-    flex:1 1 56%;min-height:0;position:relative;
+    flex:1 1 56%;
+    min-height:130px; /* piso para que la imagen no desaparezca en pantallas bajas */
+    position:relative;
     display:flex;align-items:center;justify-content:center;
     padding:14px;
   }
@@ -137,7 +139,9 @@
   }
 
   .text{
-    flex:0 0 auto;
+    flex:0 1 auto; /* puede ceder espacio en vez de empujar la imagen */
+    overflow-y:auto; /* si el texto no cabe, scroll interno */
+    max-height:44%;
     font-size:clamp(14px,3.8vw,18px);
     line-height:1.8;font-weight:300;
     padding:4% 2% 0;
@@ -615,6 +619,8 @@ function chooseLang(l){
     if(v){ v.removeAttribute("src"); const src=v.querySelector("source"); if(src) src.removeAttribute("src"); v.load(); v.style.display="none"; }
     if(s) s.style.display="none";
   }, 700);
+  preloadScene(0); // recién ahora, con el video ya liberado, se adelanta la primera imagen
+  preloadScene(1);
 }
 const book=document.getElementById("book");
 
@@ -665,13 +671,20 @@ function buildPage(s,i){
 SCENES.forEach((s,i)=>book.appendChild(buildPage(s,i)));
 const pages=[...book.querySelectorAll(".page")];
 
-/* precarga las imágenes de todas las páginas para evitar parpadeos en conexiones lentas */
-SCENES.forEach(s=>{
-  if(s.img){
-    const pre=new Image();
-    pre.src=IMG+s.img;
-  }
-});
+/* precarga secuencial: solo la imagen siguiente, no las 9 a la vez.
+   así la página actual no compite por ancho de banda con el resto. */
+const preloaded = new Set();
+function preloadScene(i){
+  if(i<0 || i>=SCENES.length) return;
+  const s = SCENES[i];
+  if(!s.img || preloaded.has(s.img)) return;
+  preloaded.add(s.img);
+  const pre = new Image();
+  pre.src = IMG + s.img;
+}
+/* nota: no se precarga aquí todavía — el video de portada ya está
+   consumiendo el ancho de banda. se dispara desde chooseLang() abajo,
+   justo cuando el usuario entra al cuento. */
 
 const progress=document.getElementById("progress");
 SCENES.forEach(()=>{const d=document.createElement("div");d.className="dot";progress.appendChild(d)});
@@ -689,6 +702,7 @@ function go(n){
   cur.classList.add("leaving");
   setTimeout(()=>cur.classList.remove("leaving"),550);
   idx=n;render();
+  preloadScene(idx+1); // adelanta la próxima imagen apenas se navega
 }
 function prev(){go(idx-1)}
 function next(){go(idx+1)}
@@ -758,3 +772,5 @@ window.addEventListener('load', function(){
 </script>
 </body>
 </html>
+
+Mejor? 
