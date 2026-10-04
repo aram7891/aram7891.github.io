@@ -4,16 +4,20 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Clarity Protocol · No es coaching. Es diseño de decisiones.</title>
+<meta name="description" content="No es coaching. Es diseño de decisiones. Un sistema cerrado de 10 módulos. Acceso de por vida, $49.">
+<link rel="canonical" href="https://www.andresramirez.pro/protocolo">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.andresramirez.pro/protocolo">
-<meta property="og:title" content="The Clarity Protocol: Mindset & Strategy System | Andrés Ramírez">
-<meta property="og:description" content="Optimiza tu rendimiento cognitivo y toma de decisiones con The Clarity Protocol. Un sistema de precisión técnica diseñado para el alto desempeño humano.">
+<meta property="og:title" content="The Clarity Protocol · No es coaching. Es diseño de decisiones.">
+<meta property="og:description" content="No es coaching. Es diseño de decisiones. Un sistema cerrado de 10 módulos. Acceso de por vida, $49.">
 <meta property="og:image" content="https://www.andresramirez.pro/assets/images/andres-og.png">
+<meta property="og:locale" content="es_ES">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://www.andresramirez.pro/protocolo">
-<meta name="twitter:title" content="The Clarity Protocol: Mindset & Strategy System | Andrés Ramírez">
-<meta name="twitter:description" content="Optimiza tu rendimiento cognitivo y toma de decisiones con The Clarity Protocol. Un sistema de precisión técnica diseñado para el alto desempeño humano.">
+<meta name="twitter:title" content="The Clarity Protocol · No es coaching. Es diseño de decisiones.">
+<meta name="twitter:description" content="No es coaching. Es diseño de decisiones. Un sistema cerrado de 10 módulos. Acceso de por vida, $49.">
 <meta name="twitter:image" content="https://www.andresramirez.pro/assets/images/andres-og.png">
 
 
@@ -1074,12 +1078,12 @@
     try { localStorage.setItem('slc-lang', l); } catch (e) {}
   }
 
-  // Initial language: stored > browser > 'es'
+  // Initial language: stored choice, otherwise Spanish.
+  // Do not follow navigator.language: a Spanish post must open in Spanish.
   (function () {
     var stored;
     try { stored = localStorage.getItem('slc-lang'); } catch (e) {}
-    var nav = (navigator.language || 'es').slice(0, 2).toLowerCase();
-    var initial = stored || (nav === 'en' ? 'en' : 'es');
+    var initial = (stored === 'en' || stored === 'es') ? stored : 'es';
     setLang(initial);
   })();
 
