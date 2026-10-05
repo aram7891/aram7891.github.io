@@ -163,10 +163,10 @@ export default async function handler(req, res) {
         console.error("Error completo en el servidor:", error);
 
         let errorMessage = error.message;
-        if (error.status === 401) errorMessage = "❌ API KEY DE OPENAI INVÁLIDA O NO CONFIGURADA en Vercel";
-        else if (error.status === 429) errorMessage = "❌ RATE LIMIT alcanzado (demasiadas peticiones). Espera unos segundos";
-        else if (error.status === 500) errorMessage = "❌ Error interno de OpenAI";
-        else if (error.code === 'ECONNREFUSED' || error.message.includes('fetch')) errorMessage = "❌ No hay conexión a internet o Vercel no puede alcanzar OpenAI";
+        if (error.status === 401) errorMessage = " API KEY DE OPENAI INVALIDA O NO CONFIGURADA en Vercel";
+        else if (error.status === 429) errorMessage = " RATE LIMIT alcanzado (demasiadas peticiones). Espera unos segundos";
+        else if (error.status === 500) errorMessage = " Error interno de OpenAI";
+        else if (error.code === 'ECONNREFUSED' || error.message.includes('fetch')) errorMessage = " No hay conexión a internet o Vercel no puede alcanzar OpenAI";
 
         return res.status(500).json({ 
             success:
