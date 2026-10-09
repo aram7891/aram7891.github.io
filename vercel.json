@@ -1,5 +1,18 @@
 {
   "version": 2,
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "andresramirez.pro"
+        }
+      ],
+      "destination": "https://www.andresramirez.pro/:path*",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/api/chat",
